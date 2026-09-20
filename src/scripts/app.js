@@ -904,86 +904,6 @@
   };
 
 
-  /* -- Box domande: elenco, filtro e risposte gia' scritte -----------------*/
-  const askBox = () => {
-    const box = $('[data-ask]');
-    if (!box) return;
-    const panel = $('.ask__panel', box);
-    const toggle = $('.ask__toggle', box);
-    const lista = $('[data-ask-list]', box);
-    const ricerca = $('[data-ask-search]', box);
-    const vuoto = $('[data-ask-empty]', box);
-    const voci = $$('.ask__questions li', box);
-    const risposte = $$('.ask__answer', box);
-    const topics = $$('.ask__topic', box);
-    let topic = 'all';
-
-    const mostraElenco = () => {
-      risposte.forEach((r) => (r.hidden = true));
-      lista.hidden = false;
-      box.querySelector('.ask__body').scrollTop = 0;
-    };
-
-    const apri = (id) => {
-      const target = $('#ask-' + CSS.escape(id), box);
-      if (!target) return;
-      lista.hidden = true;
-      risposte.forEach((r) => (r.hidden = r !== target));
-      box.querySelector('.ask__body').scrollTop = 0;
-      target.focus({ preventScroll: true });
-    };
-
-    const filtra = () => {
-      const q = (ricerca?.value || '').trim().toLowerCase();
-      let visibili = 0;
-      voci.forEach((li) => {
-        const okTopic = topic === 'all' || li.dataset.topic === topic;
-        const okTesto = !q || li.dataset.text.includes(q);
-        li.hidden = !(okTopic && okTesto);
-        if (!li.hidden) visibili++;
-      });
-      if (vuoto) vuoto.hidden = visibili > 0;
-    };
-
-    const apriPannello = () => {
-      panel.hidden = false;
-      requestAnimationFrame(() => box.classList.add('is-open'));
-      toggle.setAttribute('aria-expanded', 'true');
-      setTimeout(() => ricerca?.focus({ preventScroll: true }), 260);
-    };
-    const chiudiPannello = () => {
-      box.classList.remove('is-open');
-      toggle.setAttribute('aria-expanded', 'false');
-      setTimeout(() => { panel.hidden = true; }, 320);
-      toggle.focus({ preventScroll: true });
-    };
-
-    toggle.addEventListener('click', apriPannello);
-    $('.ask__close', box)?.addEventListener('click', chiudiPannello);
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && box.classList.contains('is-open')) chiudiPannello();
-    });
-    document.addEventListener('click', (e) => {
-      if (box.classList.contains('is-open') && !box.contains(e.target)) chiudiPannello();
-    });
-
-    box.addEventListener('click', (e) => {
-      const apriBtn = e.target.closest('[data-open]');
-      if (apriBtn) { apri(apriBtn.dataset.open); return; }
-      if (e.target.closest('[data-ask-back]')) mostraElenco();
-    });
-
-    topics.forEach((t) => {
-      t.addEventListener('click', () => {
-        topic = t.dataset.topic;
-        topics.forEach((x) => x.setAttribute('aria-pressed', String(x === t)));
-        filtra();
-      });
-    });
-    ricerca?.addEventListener('input', filtra);
-    filtra();
-  };
-
   /* -- Transizione di pagina ----------------------------------------------*/
   const transitions = () => {
     requestAnimationFrame(() => document.body.classList.add('is-ready'));
@@ -1006,7 +926,7 @@
   /* -- Avvio ---------------------------------------------------------------*/
   const init = () => {
     year(); header(); sectionNav(); reveals(); parallax(); rails();
-    faq(); beforeAfter(); filters(); forms(); wizard(); askBox(); transitions(); smoothScroll();
+    faq(); beforeAfter(); filters(); forms(); wizard(); transitions(); smoothScroll();
   };
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);

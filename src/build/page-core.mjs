@@ -432,7 +432,7 @@ ${pageHero({
             <label class="field"><span class="field__label label">Nome *</span><input type="text" name="nome" required autocomplete="given-name"><span class="field__error">Campo obbligatorio</span></label>
             <label class="field"><span class="field__label label">Cognome *</span><input type="text" name="cognome" required autocomplete="family-name"><span class="field__error">Campo obbligatorio</span></label>
             <label class="field"><span class="field__label label">Email *</span><input type="email" name="email" required autocomplete="email"><span class="field__error">Inserisci un indirizzo email valido</span></label>
-            <label class="field"><span class="field__label label">Telefono *</span><input type="tel" name="telefono" required autocomplete="tel" pattern="[0-9 +().-]{6,}"><span class="field__error">Inserisci un numero valido</span></label>
+            <label class="field"><span class="field__label label">Telefono *</span><input type="tel" name="telefono" required autocomplete="tel" pattern="[0-9 +\\(\\)\\.\\-]{6,}"><span class="field__error">Inserisci un numero valido</span></label>
           </div>
           <label class="field mt-3"><span class="field__label label">Come possiamo aiutarti?</span><textarea name="messaggio" rows="4" placeholder="Descrivi brevemente la tua richiesta"></textarea></label>
           <label class="check mt-3">
@@ -522,7 +522,7 @@ ${pageHero({
                 <label class="field"><span class="field__label label">Nome *</span><input type="text" name="nome" required autocomplete="given-name"><span class="field__error">Campo obbligatorio</span></label>
                 <label class="field"><span class="field__label label">Cognome *</span><input type="text" name="cognome" required autocomplete="family-name"><span class="field__error">Campo obbligatorio</span></label>
                 <label class="field"><span class="field__label label">Email *</span><input type="email" name="email" required autocomplete="email"><span class="field__error">Inserisci un indirizzo email valido</span></label>
-                <label class="field"><span class="field__label label">Telefono *</span><input type="tel" name="telefono" required autocomplete="tel" pattern="[0-9 +().-]{6,}"><span class="field__error">Inserisci un numero valido</span></label>
+                <label class="field"><span class="field__label label">Telefono *</span><input type="tel" name="telefono" required autocomplete="tel" pattern="[0-9 +\\(\\)\\.\\-]{6,}"><span class="field__error">Inserisci un numero valido</span></label>
               </div>
               <label class="field mt-3"><span class="field__label label">Note</span><textarea name="messaggio" rows="3" placeholder="Qualcosa che è utile sapere prima dell'appuntamento"></textarea></label>
 

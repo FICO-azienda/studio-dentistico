@@ -13,7 +13,6 @@ export const journal = read('journal.json');
 export const cases = read('cases.json');
 export const faqs = read('faq.json');
 export const reviews = read('reviews.json');
-export const assistant = read('assistant.json');
 
 export const byTreatment = Object.fromEntries(treatments.items.map((t) => [t.slug, t]));
 export const byPerson = Object.fromEntries(team.map((p) => [p.slug, p]));

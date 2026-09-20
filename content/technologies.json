@@ -1,0 +1,50 @@
+[
+  {
+    "slug": "scanner-intraorale",
+    "num": "01",
+    "title": "Scanner intraorale",
+    "text": "Impronte digitali in pochi minuti, senza paste né conati. Il modello tridimensionale della bocca è immediatamente disponibile e condiviso con il laboratorio.",
+    "image": "tech-scanner",
+    "kicker": "Diagnostica digitale"
+  },
+  {
+    "slug": "radiologia-digitale",
+    "num": "02",
+    "title": "Radiologia digitale",
+    "text": "Radiografie endorali, panoramiche e TC cone beam a bassa dose. Fino all'80% di radiazioni in meno rispetto alla radiologia tradizionale.",
+    "image": "tech-radiologia",
+    "kicker": "Imaging a bassa dose"
+  },
+  {
+    "slug": "implantologia-guidata",
+    "num": "03",
+    "title": "Implantologia guidata",
+    "text": "L'intervento viene simulato al computer sulla TC del paziente. In sala operatoria una dima chirurgica trasferisce il progetto al millimetro.",
+    "image": "tech-implantologia",
+    "kicker": "Chirurgia pianificata"
+  },
+  {
+    "slug": "microscopia",
+    "num": "04",
+    "title": "Microscopia odontoiatrica",
+    "text": "Ingrandimenti fino a 25×: canali radicolari, margini e fratture diventano visibili. È ciò che separa una cura riuscita da una da rifare.",
+    "image": "tech-microscopio",
+    "kicker": "Precisione microscopica"
+  },
+  {
+    "slug": "digital-smile-design",
+    "num": "05",
+    "title": "Digital Smile Design",
+    "text": "Il sorriso viene progettato sul volto prima di toccare un dente. Il paziente vede, discute e approva il risultato in anticipo.",
+    "image": "tech-dsd",
+    "kicker": "Progetto estetico"
+  },
+  {
+    "slug": "stampa-3d",
+    "num": "06",
+    "title": "Stampa 3D",
+    "text": "Modelli, dime chirurgiche, provvisori e allineatori prodotti internamente. Meno passaggi esterni, tempi di consegna più brevi.",
+    "image": "tech-stampa3d",
+    "kicker": "Produzione interna"
+  }
+]

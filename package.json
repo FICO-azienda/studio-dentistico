@@ -1,0 +1,15 @@
+{
+  "name": "studio-canova",
+  "version": "1.0.0",
+  "description": "Sito dello Studio Odontoiatrico Canova — generatore statico senza dipendenze",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs",
+    "images": "node scripts/fetch-images.mjs",
+    "icons": "node scripts/make-icons.mjs",
+    "serve": "python3 -m http.server 4173 --directory dist",
+    "dev": "npm run build && npm run serve"
+  },
+  "engines": { "node": ">=20" }
+}

@@ -1,0 +1,6 @@
+node_modules/
+.DS_Store
+_preview/
+
+# output del generatore: si ricostruisce con `npm run build`
+dist/

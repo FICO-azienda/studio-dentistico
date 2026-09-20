@@ -1,0 +1,303 @@
+{
+  "hero-studio": {
+    "id": "_kKTH1pEZ-I",
+    "author": "Caroline Badran",
+    "authorUrl": "https://unsplash.com/@___atmos",
+    "link": "https://unsplash.com/photos/modern-interior-with-warm-wood-and-marble-accents-_kKTH1pEZ-I",
+    "color": "#8c5940"
+  },
+  "studio-interno": {
+    "id": "IAKubWDzTQA",
+    "author": "Caroline Badran",
+    "authorUrl": "https://unsplash.com/@___atmos",
+    "link": "https://unsplash.com/photos/modern-office-space-with-wood-paneling-and-plants-IAKubWDzTQA",
+    "color": "#f3f3f3"
+  },
+  "studio-scala": {
+    "id": "0B7ijYKaKcE",
+    "author": "Alesia Kazantceva",
+    "authorUrl": "https://unsplash.com/@alesiaskaz",
+    "link": "https://unsplash.com/photos/minimalist-concrete-staircase-with-vase-0B7ijYKaKcE",
+    "color": "#d9d9d9"
+  },
+  "studio-attesa": {
+    "id": "Um6FLceJexg",
+    "author": "Evan Marvell",
+    "authorUrl": "https://unsplash.com/@evan_marvell",
+    "link": "https://unsplash.com/photos/two-cream-sofas-flank-a-potted-plant-in-a-corner-Um6FLceJexg",
+    "color": "#737359"
+  },
+  "studio-reception": {
+    "id": "OLGmV4jisi8",
+    "author": "Adiptalk",
+    "authorUrl": "https://unsplash.com/@adiptaagung_w",
+    "link": "https://unsplash.com/photos/a-counter-in-a-restaurant-with-a-man-behind-it-OLGmV4jisi8",
+    "color": "#d9d9d9"
+  },
+  "studio-dettaglio": {
+    "id": "1ptwQdf0N8s",
+    "author": "lost voyager",
+    "authorUrl": "https://unsplash.com/@lostvoyager",
+    "link": "https://unsplash.com/photos/geometric-shadows-cast-by-pillars-in-a-bright-hall-1ptwQdf0N8s",
+    "color": "#262626"
+  },
+  "cat-generale": {
+    "id": "BiknMFl7iOw",
+    "author": "D Dental Office",
+    "authorUrl": "https://unsplash.com/@ddentalof1",
+    "link": "https://unsplash.com/photos/dentist-examining-teeth-in-dental-office-BiknMFl7iOw",
+    "color": "#c0c0c0"
+  },
+  "cat-estetica": {
+    "id": "1AhGNGKuhR0",
+    "author": "Lesly Juarez",
+    "authorUrl": "https://unsplash.com/@jblesly",
+    "link": "https://unsplash.com/photos/long-black-haired-woman-smiling-close-up-photography-1AhGNGKuhR0",
+    "color": "#262626"
+  },
+  "cat-implantologia": {
+    "id": "hl6uG9cHW5A",
+    "author": "Jonathan Borba",
+    "authorUrl": "https://unsplash.com/@jonathanborba",
+    "link": "https://unsplash.com/photos/dentists-performing-procedure-in-clinic-hl6uG9cHW5A",
+    "color": "#d9d9d9"
+  },
+  "cat-ortodonzia": {
+    "id": "WFsNCIn8OF4",
+    "author": "Candid",
+    "authorUrl": "https://unsplash.com/@candid",
+    "link": "https://unsplash.com/photos/hands-holding-dental-aligners-and-whitener-WFsNCIn8OF4",
+    "color": "#d9f3f3"
+  },
+  "trattamento-lavoro": {
+    "id": "rm7Mgu33tHU",
+    "author": "Filip Rankovic Grobgaard",
+    "authorUrl": "https://unsplash.com/@filipgrobgaard",
+    "link": "https://unsplash.com/photos/dentist-examining-patient-in-dental-office-rm7Mgu33tHU",
+    "color": "#262626"
+  },
+  "trattamento-equipe": {
+    "id": "hl6uG9cHW5A",
+    "author": "Jonathan Borba",
+    "authorUrl": "https://unsplash.com/@jonathanborba",
+    "link": "https://unsplash.com/photos/dentists-performing-procedure-in-clinic-hl6uG9cHW5A",
+    "color": "#d9d9d9"
+  },
+  "trattamento-visita": {
+    "id": "QA9fRIi6sFw",
+    "author": "Caroline LM",
+    "authorUrl": "https://unsplash.com/@carocaro1987",
+    "link": "https://unsplash.com/photos/man-in-white-dress-shirt-sitting-on-black-office-rolling-chair-QA9fRIi6sFw",
+    "color": "#c0c0c0"
+  },
+  "trattamento-cura": {
+    "id": "8BkF0sTC6Uo",
+    "author": "Caroline LM",
+    "authorUrl": "https://unsplash.com/@carocaro1987",
+    "link": "https://unsplash.com/photos/dental-exam-with-mirror-and-tool-8BkF0sTC6Uo",
+    "color": "#d9c0a6"
+  },
+  "strumenti-vassoio": {
+    "id": "o7781uRTkeE",
+    "author": "camera obscura",
+    "authorUrl": "https://unsplash.com/@cameraobscura2000",
+    "link": "https://unsplash.com/photos/dental-mirrors-and-instruments-are-organized-in-a-tray-o7781uRTkeE",
+    "color": "#262626"
+  },
+  "strumenti-macro": {
+    "id": "t3Z9mIBv-kY",
+    "author": "Ozkan Guner",
+    "authorUrl": "https://unsplash.com/@dentistozkanguner",
+    "link": "https://unsplash.com/photos/a-group-of-dental-tools-sitting-on-top-of-a-table-t3Z9mIBv-kY",
+    "color": "#a6a6a6"
+  },
+  "strumenti-set": {
+    "id": "B7QPNXOrpwA",
+    "author": "syahmi syahir",
+    "authorUrl": "https://unsplash.com/@subspace_stills",
+    "link": "https://unsplash.com/photos/a-group-of-surgical-instruments-sitting-on-top-of-a-table-B7QPNXOrpwA",
+    "color": "#f3f3f3"
+  },
+  "tech-scanner": {
+    "id": "4wrZr7RYyw8",
+    "author": "Cosmin Ursea",
+    "authorUrl": "https://unsplash.com/@cosminursea",
+    "link": "https://unsplash.com/photos/a-close-up-of-a-person-wearing-blue-gloves-holding-a-toothbrush-4wrZr7RYyw8",
+    "color": "#262626"
+  },
+  "tech-radiologia": {
+    "id": "v_2FRXEba94",
+    "author": "Jonathan Borba",
+    "authorUrl": "https://unsplash.com/@jonathanborba",
+    "link": "https://unsplash.com/photos/dentist-examining-dental-x-ray-scans-v_2FRXEba94",
+    "color": "#f3f3f3"
+  },
+  "tech-implantologia": {
+    "id": "eHwRLpfHSKY",
+    "author": "Katarzyna Zygnerska",
+    "authorUrl": "https://unsplash.com/@katasha",
+    "link": "https://unsplash.com/photos/gloved-hand-holding-a-dental-implant-and-crown-eHwRLpfHSKY",
+    "color": "#d9d9d9"
+  },
+  "tech-microscopio": {
+    "id": "E-HzFfsQLKk",
+    "author": "Westpoint Dental Clinic",
+    "authorUrl": "https://unsplash.com/@westpointdental",
+    "link": "https://unsplash.com/photos/dentist-using-microscope-on-patient-in-dental-chair-E-HzFfsQLKk",
+    "color": "#d9d9d9"
+  },
+  "tech-dsd": {
+    "id": "VckdJzo7ig0",
+    "author": "Quang Tri NGUYEN",
+    "authorUrl": "https://unsplash.com/@quangtri",
+    "link": "https://unsplash.com/photos/dentist-pointing-at-dental-scan-VckdJzo7ig0",
+    "color": "#f3f3f3"
+  },
+  "tech-stampa3d": {
+    "id": "6dvjlBU3pQQ",
+    "author": "Adrian Sulyok",
+    "authorUrl": "https://unsplash.com/@sulyok_imaging",
+    "link": "https://unsplash.com/photos/dentist-crafting-a-dental-prosthesis-with-tools-6dvjlBU3pQQ",
+    "color": "#8c7359"
+  },
+  "sorriso-01": {
+    "id": "RCQnbyQsnUg",
+    "author": "Kamal Hoseinianzade",
+    "authorUrl": "https://unsplash.com/@teravis_sk",
+    "link": "https://unsplash.com/photos/a-close-up-of-a-womans-mouth-with-white-teeth-RCQnbyQsnUg",
+    "color": "#f3f3f3"
+  },
+  "sorriso-02": {
+    "id": "glPVwPr1FKo",
+    "author": "Tony Litvyak",
+    "authorUrl": "https://unsplash.com/@justatony",
+    "link": "https://unsplash.com/photos/a-close-up-of-a-womans-mouth-with-white-teeth-glPVwPr1FKo",
+    "color": "#d9c0a6"
+  },
+  "sorriso-03": {
+    "id": "yN07lt_5wso",
+    "author": "Zulfugar Karimov",
+    "authorUrl": "https://unsplash.com/@zulfugarkarimov",
+    "link": "https://unsplash.com/photos/a-young-woman-with-dark-hair-smiling-slightly-yN07lt_5wso",
+    "color": "#c0a68c"
+  },
+  "sorriso-04": {
+    "id": "nkRvJgdnc5c",
+    "author": "Sibel Kusdemir",
+    "authorUrl": "https://unsplash.com/@skusdemi",
+    "link": "https://unsplash.com/photos/a-young-woman-with-blonde-hair-smiles-outdoors-nkRvJgdnc5c",
+    "color": "#59590c"
+  },
+  "sorriso-05": {
+    "id": "prwns8SwDhw",
+    "author": "Zulfugar Karimov",
+    "authorUrl": "https://unsplash.com/@zulfugarkarimov",
+    "link": "https://unsplash.com/photos/womans-nose-and-mouth-smiling-with-blurred-green-background-prwns8SwDhw",
+    "color": "#0c4026"
+  },
+  "sorriso-06": {
+    "id": "47fKvu4niMk",
+    "author": "Laurent Yasiel",
+    "authorUrl": "https://unsplash.com/@laurentyasiel",
+    "link": "https://unsplash.com/photos/a-woman-is-smiling-while-holding-a-toothbrush-47fKvu4niMk",
+    "color": "#0c2626"
+  },
+  "igiene-filo": {
+    "id": "cADflhZzgyo",
+    "author": "The Humble Co.",
+    "authorUrl": "https://unsplash.com/@thehumbleco",
+    "link": "https://unsplash.com/photos/blue-and-white-toothbrush-in-clear-glass-jar-cADflhZzgyo",
+    "color": "#f3f3f3"
+  },
+  "allineatori-mano": {
+    "id": "uTUsnv_UCSQ",
+    "author": "Harold Hisona",
+    "authorUrl": "https://unsplash.com/@harold_angus",
+    "link": "https://unsplash.com/photos/woman-adjusting-clear-dental-aligners-on-teeth-uTUsnv_UCSQ",
+    "color": "#d9a68c"
+  },
+  "allineatori-dettaglio": {
+    "id": "fmB7IdFjhTM",
+    "author": "Diana Polekhina",
+    "authorUrl": "https://unsplash.com/@diana_pole",
+    "link": "https://unsplash.com/photos/person-inserting-clear-dental-aligner-fmB7IdFjhTM",
+    "color": "#d98c73"
+  },
+  "impianto-modello": {
+    "id": "W9YEY6G8LVM",
+    "author": "Jonathan Borba",
+    "authorUrl": "https://unsplash.com/@jonathanborba",
+    "link": "https://unsplash.com/photos/dental-implant-model-with-teeth-W9YEY6G8LVM",
+    "color": "#260c0c"
+  },
+  "team-vitali": {
+    "id": "i8tPCHU4hNY",
+    "author": "Christoph Aigner",
+    "authorUrl": "https://unsplash.com/@christophaigner",
+    "link": "https://unsplash.com/photos/man-in-a-dark-suit-jacket-and-shirt-i8tPCHU4hNY",
+    "color": "#d9d9d9"
+  },
+  "team-bonetti": {
+    "id": "s3aDHKxHZSc",
+    "author": "Vitaly Gariev",
+    "authorUrl": "https://unsplash.com/@silverkblack",
+    "link": "https://unsplash.com/photos/a-woman-with-glasses-smiles-against-a-gray-background-s3aDHKxHZSc",
+    "color": "#405959"
+  },
+  "team-ferretti": {
+    "id": "bbOOTiq-EPA",
+    "author": "Tony Luginsland",
+    "authorUrl": "https://unsplash.com/@tonyluginsland",
+    "link": "https://unsplash.com/photos/a-man-in-a-suit-posing-for-a-picture-bbOOTiq-EPA",
+    "color": "#737373"
+  },
+  "team-ranieri": {
+    "id": "jayzO5nC4d4",
+    "author": "Mate Vanyek",
+    "authorUrl": "https://unsplash.com/@vanyekmate04",
+    "link": "https://unsplash.com/photos/a-woman-smiling-and-holding-a-wooden-box-jayzO5nC4d4",
+    "color": "#594040"
+  },
+  "team-moretti": {
+    "id": "Hoc8u4HJO7w",
+    "author": "Alex Larrondo",
+    "authorUrl": "https://unsplash.com/@alexlarrondo",
+    "link": "https://unsplash.com/photos/woman-with-dark-wavy-hair-wearing-a-black-turtleneck-Hoc8u4HJO7w",
+    "color": "#f3f3f3"
+  },
+  "team-sartori": {
+    "id": "VBU3WW_Japk",
+    "author": "Christoph Aigner",
+    "authorUrl": "https://unsplash.com/@christophaigner",
+    "link": "https://unsplash.com/photos/smiling-man-in-a-dark-jacket-against-a-gray-background-VBU3WW_Japk",
+    "color": "#d9d9d9"
+  },
+  "team-pace": {
+    "id": "UZmSn5GaSWY",
+    "author": "Beatriz Cattel",
+    "authorUrl": "https://unsplash.com/@bicattel",
+    "link": "https://unsplash.com/photos/young-woman-with-long-brown-hair-wearing-a-black-shirt-UZmSn5GaSWY",
+    "color": "#f3f3f3"
+  },
+  "team-colombo": {
+    "id": "5FqewAqvzqU",
+    "author": "Melanie Rosillo Galvan",
+    "authorUrl": "https://unsplash.com/@meroga_",
+    "link": "https://unsplash.com/photos/a-woman-wearing-glasses-and-a-dress-5FqewAqvzqU",
+    "color": "#262626"
+  },
+  "team-ferrari": {
+    "id": "0Zx1bDv5BNY",
+    "author": "Christina @ wocintechchat.com M",
+    "authorUrl": "https://unsplash.com/@wocintechchat",
+    "link": "https://unsplash.com/photos/shallow-focus-photo-of-woman-in-gray-jacket-0Zx1bDv5BNY",
+    "color": "#260c0c"
+  },
+  "studio-corridoio": {
+    "id": "HIB5kZNkVjo",
+    "author": "Jose Losada",
+    "authorUrl": "https://unsplash.com/@joselosada",
+    "link": "https://unsplash.com/photos/gray-sofa-chairs-on-brown-wooden-floor-HIB5kZNkVjo",
+    "color": "#595959"
+  }
+}

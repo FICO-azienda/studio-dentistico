@@ -1,0 +1,20 @@
+{
+  "note": "Le immagini dei casi sono dimostrative e non rappresentano pazienti dello studio. Vanno sostituite con documentazione clinica reale, previo consenso informato scritto del paziente.",
+  "items": [
+    { "id": "c1", "cat": "estetica", "title": "Chiusura di diastema con faccette", "summary": "Diastema centrale e incisivi laterali conoidi, risolti con quattro faccette in ceramica dopo sbiancamento preliminare.", "duration": "5 settimane", "doctor": "sofia-ranieri", "before": "sorriso-03", "after": "sorriso-01" },
+    { "id": "c2", "cat": "implantologia", "title": "Impianto singolo in zona estetica", "summary": "Incisivo laterale non recuperabile sostituito con impianto a carico differito e corona in ceramica integrale.", "duration": "5 mesi", "doctor": "andrea-vitali", "before": "sorriso-05", "after": "sorriso-02" },
+    { "id": "c3", "cat": "ortodonzia", "title": "Affollamento moderato con allineatori", "summary": "Affollamento dell'arcata inferiore corretto in undici mesi con allineatori trasparenti e contenzione fissa.", "duration": "11 mesi", "doctor": "chiara-bonetti", "before": "sorriso-04", "after": "sorriso-06" },
+    { "id": "c4", "cat": "riabilitazione", "title": "Riabilitazione completa su impianti", "summary": "Arcata superiore compromessa da parodontite avanzata, riabilitata con protesi fissa su sei impianti.", "duration": "7 mesi", "doctor": "andrea-vitali", "before": "sorriso-02", "after": "sorriso-01" },
+    { "id": "c5", "cat": "estetica", "title": "Ricostruzione di usure da bruxismo", "summary": "Usura generalizzata dei settori anteriori ricostruita con restauri adesivi e protezione notturna.", "duration": "8 settimane", "doctor": "marco-ferretti", "before": "sorriso-06", "after": "sorriso-03" },
+    { "id": "c6", "cat": "ortodonzia", "title": "Morso profondo in adolescenza", "summary": "Correzione con apparecchio fisso ed elastici intermascellari, seguita da contenzione notturna.", "duration": "19 mesi", "doctor": "chiara-bonetti", "before": "sorriso-01", "after": "sorriso-04" },
+    { "id": "c7", "cat": "implantologia", "title": "Rialzo di seno e due impianti", "summary": "Settore posteriore superiore con osso insufficiente, trattato con rialzo del seno e riabilitazione fissa.", "duration": "9 mesi", "doctor": "luca-sartori", "before": "sorriso-03", "after": "sorriso-05" },
+    { "id": "c8", "cat": "riabilitazione", "title": "Ritrattamento endodontico e intarsio", "summary": "Molare con lesione apicale ritrattato al microscopio e ricostruito con intarsio in ceramica.", "duration": "6 settimane", "doctor": "marco-ferretti", "before": "sorriso-04", "after": "sorriso-02" }
+  ],
+  "categories": [
+    { "value": "all", "label": "Tutti" },
+    { "value": "estetica", "label": "Estetica" },
+    { "value": "implantologia", "label": "Implantologia" },
+    { "value": "ortodonzia", "label": "Ortodonzia" },
+    { "value": "riabilitazione", "label": "Riabilitazione" }
+  ]
+}

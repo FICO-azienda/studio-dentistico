@@ -1,0 +1,52 @@
+{
+  "name": "Studio Canova",
+  "wordmark": "Canova",
+  "legalName": "Studio Odontoiatrico Canova S.r.l.",
+  "tagline": "Odontoiatria contemporanea",
+  "claim": "Your smile.\nOur commitment.",
+  "url": "https://www.studiocanova.it",
+  "lang": "it-IT",
+  "city": "Milano",
+  "address": {
+    "street": "Via Antonio Canova 14",
+    "zip": "20145",
+    "city": "Milano",
+    "region": "MI",
+    "country": "IT",
+    "lat": 45.4788,
+    "lng": 9.1682
+  },
+  "phone": "+39 02 4700 1188",
+  "phoneHref": "+390247001188",
+  "whatsapp": "+39 340 118 4477",
+  "whatsappHref": "393401184477",
+  "email": "info@studiocanova.it",
+  "vat": "IT 09 8741 2209 6",
+  "director": "Dr. Andrea Vitali — Direttore Sanitario, Albo degli Odontoiatri di Milano n. 7412",
+  "hours": [
+    { "d": "Lunedì — Venerdì", "h": "08:30 — 19:30" },
+    { "d": "Sabato", "h": "09:00 — 13:00 (su appuntamento)" },
+    { "d": "Domenica", "h": "Chiuso" }
+  ],
+  "directions": [
+    { "label": "Metro", "value": "M5 Domodossola · M1 Amendola Fiera — 6 minuti a piedi" },
+    { "label": "Parcheggio", "value": "Posti riservati ai pazienti in cortile interno" },
+    { "label": "Superficie", "value": "Tram 1 e 19 · Bus 57, fermata Canova" }
+  ],
+  "social": [
+    { "label": "Instagram", "url": "https://instagram.com" },
+    { "label": "LinkedIn", "url": "https://linkedin.com" }
+  ],
+  "stats": [
+    { "value": 20, "suffix": "+", "label": "anni di esperienza clinica" },
+    { "value": 8000, "suffix": "+", "label": "pazienti seguiti" },
+    { "value": 12, "suffix": "", "label": "professionisti in studio" },
+    { "value": 4.9, "suffix": "/5", "label": "valutazione dei pazienti", "decimals": 1 }
+  ],
+  "values": [
+    { "title": "Precisione", "text": "Ogni fase è misurata, pianificata e verificata. La tecnologia digitale ci permette di lavorare su margini di errore minimi." },
+    { "title": "Ascolto", "text": "La diagnosi comincia da una conversazione. Prima di guardare i denti, guardiamo la persona che li porta." },
+    { "title": "Tecnologia", "text": "Strumenti scelti per ridurre l'invasività, i tempi e il numero di sedute necessarie." },
+    { "title": "Prevenzione", "text": "Il trattamento migliore è quello che non serve. Costruiamo percorsi di mantenimento su misura." }
+  ]
+}

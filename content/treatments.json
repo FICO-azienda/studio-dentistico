@@ -1,0 +1,1387 @@
+{
+  "categories": [
+    {
+      "slug": "odontoiatria-generale",
+      "num": "01",
+      "title": "Odontoiatria generale",
+      "lead": "La base di tutto: diagnosi accurata, cure conservative e un programma di prevenzione che tiene stabile il risultato negli anni.",
+      "image": "cat-generale",
+      "items": [
+        "igiene-e-prevenzione",
+        "conservativa",
+        "endodonzia",
+        "parodontologia"
+      ]
+    },
+    {
+      "slug": "estetica-dentale",
+      "num": "02",
+      "title": "Estetica dentale",
+      "lead": "Interventi mirati e poco invasivi, progettati sul volto prima che sui denti. L'obiettivo non è un sorriso perfetto: è un sorriso credibile.",
+      "image": "cat-estetica",
+      "items": [
+        "sbiancamento",
+        "faccette",
+        "estetica-del-sorriso",
+        "ricostruzioni-estetiche"
+      ]
+    },
+    {
+      "slug": "implantologia",
+      "num": "03",
+      "title": "Implantologia",
+      "lead": "Sostituire un dente mancante con una soluzione fissa, pianificata al computer e verificata in ogni fase chirurgica e protesica.",
+      "image": "cat-implantologia",
+      "items": [
+        "implantologia",
+        "chirurgia-orale",
+        "riabilitazione-completa",
+        "protesi"
+      ]
+    },
+    {
+      "slug": "ortodonzia",
+      "num": "04",
+      "title": "Ortodonzia",
+      "lead": "Allineare i denti in età adulta o guidare la crescita nei più piccoli, con dispositivi che si vedono il meno possibile.",
+      "image": "cat-ortodonzia",
+      "items": [
+        "ortodonzia-invisibile",
+        "allineatori-trasparenti",
+        "ortodonzia-tradizionale",
+        "ortodonzia-pediatrica"
+      ]
+    }
+  ],
+  "items": [
+    {
+      "slug": "igiene-e-prevenzione",
+      "category": "odontoiatria-generale",
+      "title": "Igiene e prevenzione",
+      "short": "Sedute di igiene professionale e richiami personalizzati.",
+      "lead": "Una seduta di igiene non è una pulizia: è il controllo periodico che intercetta i problemi quando costano poco, in tempo e in denaro.",
+      "image": "trattamento-visita",
+      "featured": true,
+      "intro": [
+        "L'igiene professionale rimuove placca e tartaro dove lo spazzolino non arriva — sotto il margine gengivale e negli spazi interdentali — e restituisce alla bocca una condizione che puoi mantenere a casa.",
+        "Ogni seduta comprende un controllo completo: cercare una carie iniziale, una gengiva che sanguina o una vecchia otturazione che si sta scollando costa dieci minuti oggi, e spesso evita un trattamento complesso domani."
+      ],
+      "indicated": [
+        "Tutti i pazienti, con cadenza personalizzata",
+        "Gengive che sanguinano durante lo spazzolamento",
+        "Alitosi persistente o accumulo rapido di tartaro",
+        "Portatori di impianti, protesi o apparecchi ortodontici"
+      ],
+      "how": [
+        "Usiamo strumenti a ultrasuoni per il tartaro, curette per la rifinitura sotto gengiva e air-polishing con polveri a bassa abrasività per le pigmentazioni da caffè, tè e fumo.",
+        "La seduta si chiude con la lucidatura delle superfici — un dente liscio trattiene meno placca — e con le istruzioni di igiene domiciliare calibrate sulle tue difficoltà reali, non su un modello standard."
+      ],
+      "phases": [
+        {
+          "title": "Valutazione",
+          "text": "Rilevazione di placca e sanguinamento, sondaggio parodontale, controllo di otturazioni e protesi esistenti."
+        },
+        {
+          "title": "Detartrasi",
+          "text": "Rimozione di tartaro sopra e sotto gengiva con ultrasuoni e strumenti manuali."
+        },
+        {
+          "title": "Air-polishing",
+          "text": "Rimozione delle pigmentazioni con polveri a bassa abrasività, sicure anche su impianti e ceramiche."
+        },
+        {
+          "title": "Mantenimento",
+          "text": "Istruzioni personalizzate e definizione del richiamo successivo, da tre a dodici mesi."
+        }
+      ],
+      "tech": [
+        "radiologia-digitale",
+        "scanner-intraorale"
+      ],
+      "specs": [
+        {
+          "label": "Durata seduta",
+          "value": "45 — 60 min"
+        },
+        {
+          "label": "Richiamo tipico",
+          "value": "6 mesi"
+        },
+        {
+          "label": "Anestesia",
+          "value": "Non necessaria"
+        }
+      ],
+      "faq": [
+        {
+          "q": "L'igiene rovina lo smalto?",
+          "a": "No. Gli strumenti a ultrasuoni agiscono sul tartaro, non sullo smalto, e le polveri utilizzate per le pigmentazioni hanno un'abrasività minima. Ciò che danneggia lo smalto, semmai, è lo spazzolamento troppo energico a casa."
+        },
+        {
+          "q": "Perché sento i denti più sensibili dopo?",
+          "a": "Rimuovendo il tartaro si espongono superfici radicolari che erano coperte. La sensibilità è transitoria e si risolve in pochi giorni; se persiste applichiamo un desensibilizzante."
+        },
+        {
+          "q": "Ogni quanto devo tornare?",
+          "a": "Dipende dalla tua risposta biologica. Sei mesi è la media, ma in presenza di parodontite o impianti il richiamo può essere trimestrale."
+        }
+      ],
+      "doctor": "elena-moretti",
+      "related": [
+        "parodontologia",
+        "sbiancamento",
+        "conservativa"
+      ],
+      "seo": {
+        "title": "Igiene dentale e prevenzione a Milano",
+        "description": "Sedute di igiene professionale, detartrasi e air-polishing con richiami personalizzati. Studio Canova, Milano zona Fiera."
+      }
+    },
+    {
+      "slug": "conservativa",
+      "category": "odontoiatria-generale",
+      "title": "Conservativa",
+      "short": "Cura della carie con tecniche adesive e minima rimozione di tessuto.",
+      "lead": "Curare una carie significa togliere il meno possibile e ricostruire il resto con materiali che si legano al dente, non che lo sostituiscono.",
+      "image": "trattamento-cura",
+      "intro": [
+        "L'odontoiatria conservativa si occupa di trattare la carie preservando il massimo di tessuto sano. Le tecniche adesive contemporanee permettono di eliminare solo la parte infetta e sigillare il resto con compositi che aderiscono chimicamente allo smalto e alla dentina.",
+        "La scelta del materiale e della stratificazione determina quanto l'otturazione durerà e quanto sarà visibile. Lavoriamo con compositi a più opacità, stratificati per riprodurre la traslucenza del dente naturale."
+      ],
+      "indicated": [
+        "Carie iniziali e profonde",
+        "Sostituzione di vecchie otturazioni in amalgama",
+        "Piccole fratture e usure dello smalto",
+        "Colletti sensibili e abrasioni da spazzolamento"
+      ],
+      "how": [
+        "La carie viene individuata con l'esame clinico, le radiografie bitewing e, quando serve, la transilluminazione. L'isolamento con diga di gomma tiene il campo asciutto: senza di essa l'adesione non è affidabile.",
+        "Dopo la rimozione del tessuto infetto ricostruiamo il dente per strati successivi, ciascuno polimerizzato con lampada dedicata, per controllare la contrazione del materiale e la forma finale."
+      ],
+      "phases": [
+        {
+          "title": "Diagnosi",
+          "text": "Esame clinico, radiografie mirate e valutazione della profondità della lesione."
+        },
+        {
+          "title": "Isolamento",
+          "text": "Applicazione della diga di gomma: campo asciutto, adesione prevedibile, nessun contatto con saliva."
+        },
+        {
+          "title": "Rimozione selettiva",
+          "text": "Eliminazione del solo tessuto infetto, preservando dentina riparabile."
+        },
+        {
+          "title": "Ricostruzione",
+          "text": "Stratificazione del composito, modellazione anatomica, rifinitura e controllo dell'occlusione."
+        }
+      ],
+      "tech": [
+        "microscopia",
+        "radiologia-digitale"
+      ],
+      "specs": [
+        {
+          "label": "Durata seduta",
+          "value": "40 — 75 min"
+        },
+        {
+          "label": "Sedute",
+          "value": "1 per elemento"
+        },
+        {
+          "label": "Anestesia",
+          "value": "Locale, se necessaria"
+        }
+      ],
+      "faq": [
+        {
+          "q": "Le otturazioni bianche durano meno di quelle in amalgama?",
+          "a": "Con una tecnica adesiva corretta e l'isolamento con diga, la durata è sovrapponibile. La differenza la fa il protocollo, non il materiale in sé."
+        },
+        {
+          "q": "È sempre necessaria l'anestesia?",
+          "a": "Per le carie superficiali spesso no. Per quelle profonde la consigliamo: lavorare su un paziente rilassato permette una qualità di esecuzione più alta."
+        },
+        {
+          "q": "Quando invece serve una corona?",
+          "a": "Quando la struttura residua è insufficiente a sostenere il carico masticatorio. In molti casi intermedi un intarsio è la soluzione più conservativa."
+        }
+      ],
+      "doctor": "marco-ferretti",
+      "related": [
+        "endodonzia",
+        "ricostruzioni-estetiche",
+        "igiene-e-prevenzione"
+      ],
+      "seo": {
+        "title": "Odontoiatria conservativa e cura della carie a Milano",
+        "description": "Otturazioni estetiche in composito con isolamento e tecnica adesiva. Studio Canova, Milano."
+      }
+    },
+    {
+      "slug": "endodonzia",
+      "category": "odontoiatria-generale",
+      "title": "Endodonzia",
+      "short": "Devitalizzazioni e ritrattamenti eseguiti al microscopio operatorio.",
+      "lead": "La cura canalare salva un dente che altrimenti andrebbe estratto. Eseguita bene, al microscopio, ha percentuali di successo superiori al 90%.",
+      "image": "tech-microscopio",
+      "intro": [
+        "Quando l'infezione raggiunge la polpa, il dente va trattato dall'interno: si rimuove il tessuto infiammato, si detergono e si sagomano i canali radicolari e si sigillano in modo che i batteri non possano ricolonizzarli.",
+        "È una procedura di precisione millimetrica. Lavoriamo sempre con ingrandimenti elevati, strumenti in nichel-titanio e localizzatore d'apice: l'anatomia interna di un molare è più complessa di quanto una radiografia bidimensionale riesca a mostrare."
+      ],
+      "indicated": [
+        "Pulpite: dolore spontaneo, notturno o al caldo",
+        "Ascesso e granuloma apicale",
+        "Dente necrotico a seguito di trauma",
+        "Ritrattamento di cure canalari fallite"
+      ],
+      "how": [
+        "Dopo anestesia e isolamento con diga, si accede alla camera pulpare, si individuano tutti i canali — spesso ce n'è uno in più di quelli attesi — e si misura la lunghezza di lavoro con il localizzatore elettronico.",
+        "La detersione con soluzioni irriganti attivate è la parte che determina il successo: la sagomatura serve soprattutto a permettere agli irriganti di raggiungere ogni ramificazione. Si chiude poi con guttaperca e cemento, e si ricostruisce il dente nella stessa seduta o in quella successiva."
+      ],
+      "phases": [
+        {
+          "title": "Diagnosi",
+          "text": "Test di vitalità, radiografie endorali e, nei casi complessi, TC cone beam a campo ridotto."
+        },
+        {
+          "title": "Accesso e detersione",
+          "text": "Isolamento, apertura, individuazione dei canali e irrigazione attivata."
+        },
+        {
+          "title": "Otturazione canalare",
+          "text": "Sigillo tridimensionale con guttaperca termoplastica."
+        },
+        {
+          "title": "Ricostruzione",
+          "text": "Restauro adesivo o intarsio; sul dente posteriore la copertura cuspidale previene le fratture."
+        }
+      ],
+      "tech": [
+        "microscopia",
+        "radiologia-digitale"
+      ],
+      "specs": [
+        {
+          "label": "Durata seduta",
+          "value": "60 — 120 min"
+        },
+        {
+          "label": "Sedute",
+          "value": "1 — 2"
+        },
+        {
+          "label": "Anestesia",
+          "value": "Locale"
+        }
+      ],
+      "faq": [
+        {
+          "q": "La devitalizzazione fa male?",
+          "a": "Durante la seduta no: si lavora in anestesia. Nei due o tre giorni successivi può comparire un fastidio alla masticazione, che si controlla con un antinfiammatorio comune."
+        },
+        {
+          "q": "Un dente devitalizzato dura meno?",
+          "a": "Diventa più fragile perché perde struttura e idratazione. Per questo, sui denti posteriori, la ricostruzione che copre le cuspidi è parte integrante della cura, non un'aggiunta."
+        },
+        {
+          "q": "Si può rifare una devitalizzazione mal riuscita?",
+          "a": "Sì, il ritrattamento è spesso possibile ed è la prima opzione da valutare prima di pensare all'estrazione e all'impianto."
+        }
+      ],
+      "doctor": "marco-ferretti",
+      "related": [
+        "conservativa",
+        "protesi",
+        "chirurgia-orale"
+      ],
+      "seo": {
+        "title": "Endodonzia e devitalizzazione al microscopio a Milano",
+        "description": "Cure canalari e ritrattamenti eseguiti al microscopio operatorio. Studio Canova, Milano."
+      }
+    },
+    {
+      "slug": "parodontologia",
+      "category": "odontoiatria-generale",
+      "title": "Parodontologia",
+      "short": "Diagnosi e terapia della parodontite, dal trattamento causale al mantenimento.",
+      "lead": "La parodontite è la principale causa di perdita dei denti nell'adulto. Non fa male, per questo va cercata prima che si manifesti.",
+      "image": "trattamento-lavoro",
+      "intro": [
+        "La parodontite è un'infezione cronica che distrugge progressivamente l'osso attorno ai denti. Procede in silenzio per anni: quando compaiono mobilità o migrazioni dentali, la perdita ossea è già consistente.",
+        "La terapia non chirurgica, eseguita in modo sistematico e seguita da un mantenimento regolare, arresta la malattia nella grande maggioranza dei casi. La chirurgia è riservata ai siti che non rispondono."
+      ],
+      "indicated": [
+        "Gengive che sanguinano o si ritirano",
+        "Alitosi e sensazione di denti che si allungano",
+        "Mobilità dentale o comparsa di spazi tra i denti",
+        "Pazienti fumatori o con diabete, a rischio aumentato"
+      ],
+      "how": [
+        "Si parte da una cartella parodontale completa: sei misurazioni per dente, indici di sanguinamento e placca, radiografie endorali. È la mappa che rende misurabile il risultato della terapia.",
+        "La terapia causale consiste nella strumentazione sottogengivale di tutte le tasche, in una o due sedute ravvicinate. Dopo sei-otto settimane rivalutiamo: i siti guariti passano al mantenimento, quelli residui vengono ritrattati o valutati chirurgicamente."
+      ],
+      "phases": [
+        {
+          "title": "Cartella parodontale",
+          "text": "Sondaggio completo, indici clinici e stato radiografico dell'osso."
+        },
+        {
+          "title": "Terapia causale",
+          "text": "Strumentazione sottogengivale di tutte le tasche, con controllo del biofilm."
+        },
+        {
+          "title": "Rivalutazione",
+          "text": "A sei-otto settimane: misuriamo la risposta sito per sito."
+        },
+        {
+          "title": "Mantenimento",
+          "text": "Richiami calibrati sul rischio individuale, da tre a sei mesi."
+        }
+      ],
+      "tech": [
+        "radiologia-digitale",
+        "scanner-intraorale"
+      ],
+      "specs": [
+        {
+          "label": "Terapia causale",
+          "value": "2 sedute"
+        },
+        {
+          "label": "Rivalutazione",
+          "value": "6 — 8 settimane"
+        },
+        {
+          "label": "Mantenimento",
+          "value": "3 — 6 mesi"
+        }
+      ],
+      "faq": [
+        {
+          "q": "La parodontite si guarisce?",
+          "a": "Si arresta e si controlla. L'osso perso non torna spontaneamente, ma la progressione si ferma e i denti restano funzionali per decenni, a condizione di rispettare i richiami."
+        },
+        {
+          "q": "Serve l'antibiotico?",
+          "a": "Nella maggior parte dei casi no. Viene riservato a forme aggressive o a pazienti con condizioni sistemiche particolari, sempre associato alla strumentazione meccanica."
+        },
+        {
+          "q": "Posso mettere impianti se ho la parodontite?",
+          "a": "Solo dopo aver stabilizzato la malattia. Un impianto inserito in una bocca con infezione attiva ha un rischio elevato di perimplantite."
+        }
+      ],
+      "doctor": "elena-moretti",
+      "related": [
+        "igiene-e-prevenzione",
+        "implantologia",
+        "chirurgia-orale"
+      ],
+      "seo": {
+        "title": "Parodontologia e cura della parodontite a Milano",
+        "description": "Diagnosi parodontale, terapia causale e mantenimento personalizzato. Studio Canova, Milano."
+      }
+    },
+    {
+      "slug": "sbiancamento",
+      "category": "estetica-dentale",
+      "title": "Sbiancamento",
+      "short": "Sbiancamento professionale in studio e domiciliare controllato.",
+      "lead": "Il trattamento estetico meno invasivo che esista: non tocca lo smalto, agisce sui pigmenti che si sono depositati al suo interno.",
+      "image": "sorriso-01",
+      "featured": true,
+      "intro": [
+        "Lo sbiancamento professionale utilizza perossido di idrogeno o di carbammide che penetra nello smalto e scompone le molecole responsabili del colore. Non asporta tessuto e non assottiglia il dente.",
+        "Prima di qualunque sbiancamento serve una bocca sana: carie, otturazioni infiltrate e gengive infiammate vanno trattate prima, altrimenti il risultato è disomogeneo e la sensibilità aumenta."
+      ],
+      "indicated": [
+        "Discromie da caffè, tè, vino rosso e fumo",
+        "Ingiallimento fisiologico legato all'età",
+        "Prima di faccette o restauri estetici, per definire il colore base",
+        "Dente singolo scurito dopo devitalizzazione (sbiancamento interno)"
+      ],
+      "how": [
+        "In studio applichiamo un gel ad alta concentrazione protetto da una diga gengivale, in due o tre applicazioni nella stessa seduta. Il risultato è immediato e visibile.",
+        "Il protocollo domiciliare usa mascherine su misura e gel a bassa concentrazione, da portare qualche ora al giorno per due settimane. Spesso combiniamo i due approcci: seduta in studio per l'effetto iniziale, mascherine per stabilizzarlo."
+      ],
+      "phases": [
+        {
+          "title": "Valutazione",
+          "text": "Controllo di carie, restauri e gengive; rilevazione del colore di partenza con scala e fotografia."
+        },
+        {
+          "title": "Igiene preliminare",
+          "text": "Una seduta di igiene rimuove le pigmentazioni superficiali e uniforma il punto di partenza."
+        },
+        {
+          "title": "Sbiancamento",
+          "text": "Seduta in studio e/o mascherine domiciliari su misura."
+        },
+        {
+          "title": "Controllo",
+          "text": "Verifica del risultato a distanza e indicazioni per il mantenimento nel tempo."
+        }
+      ],
+      "tech": [
+        "scanner-intraorale",
+        "digital-smile-design"
+      ],
+      "specs": [
+        {
+          "label": "Seduta in studio",
+          "value": "60 — 90 min"
+        },
+        {
+          "label": "Domiciliare",
+          "value": "10 — 14 giorni"
+        },
+        {
+          "label": "Durata risultato",
+          "value": "1 — 3 anni"
+        }
+      ],
+      "faq": [
+        {
+          "q": "Dà sensibilità?",
+          "a": "Può dare una sensibilità transitoria al freddo nelle 24-48 ore successive. Si previene con gel desensibilizzanti prima e dopo, e si risolve da sola."
+        },
+        {
+          "q": "Sbianca anche otturazioni e capsule?",
+          "a": "No. I materiali da restauro non cambiano colore: dopo lo sbiancamento potrebbero risultare più scuri e richiedere una sostituzione, che pianifichiamo insieme."
+        },
+        {
+          "q": "I kit da supermercato funzionano?",
+          "a": "Contengono concentrazioni molto basse e mascherine standard che fanno colare il gel sulle gengive. Il risultato è modesto e il rischio di irritazione più alto."
+        }
+      ],
+      "doctor": "sofia-ranieri",
+      "related": [
+        "igiene-e-prevenzione",
+        "faccette",
+        "estetica-del-sorriso"
+      ],
+      "seo": {
+        "title": "Sbiancamento dentale professionale a Milano",
+        "description": "Sbiancamento in studio e domiciliare con mascherine su misura. Studio Canova, Milano."
+      }
+    },
+    {
+      "slug": "faccette",
+      "category": "estetica-dentale",
+      "title": "Faccette dentali",
+      "short": "Sottili lamine in ceramica per forma, colore e proporzioni del sorriso.",
+      "lead": "Sottilissime lamine in ceramica applicate sulla superficie visibile del dente. Cambiano forma, colore e proporzioni con una preparazione minima, a volte nulla.",
+      "image": "sorriso-02",
+      "featured": true,
+      "intro": [
+        "Le faccette risolvono in poche sedute ciò che altrimenti richiederebbe anni di ortodonzia o restauri ripetuti: denti scheggiati, diastemi, discromie che non rispondono allo sbiancamento, forme irregolari.",
+        "Il punto critico non è la ceramica, ma il progetto. Il sorriso viene disegnato sul volto, provato in bocca con un mock-up in resina e approvato dal paziente prima che si tocchi un solo dente."
+      ],
+      "indicated": [
+        "Diastemi e spazi tra gli incisivi",
+        "Denti scheggiati, usurati o di forma irregolare",
+        "Discromie resistenti allo sbiancamento",
+        "Piccoli disallineamenti in pazienti che non vogliono l'ortodonzia"
+      ],
+      "how": [
+        "Partiamo da fotografie, video del sorriso e scansione digitale. Il progetto viene realizzato con Digital Smile Design e trasferito in bocca come mock-up: si guarda allo specchio, si parla, si sorride e si decide.",
+        "Solo dopo l'approvazione si procede con la preparazione, guidata dal mock-up stesso e quindi limitata al minimo necessario. Le faccette definitive vengono cementate adesivamente in un'unica seduta."
+      ],
+      "phases": [
+        {
+          "title": "Progetto",
+          "text": "Fotografia clinica, scansione e Digital Smile Design sul volto."
+        },
+        {
+          "title": "Mock-up",
+          "text": "Prova estetica in resina direttamente in bocca, modificabile fino all'approvazione."
+        },
+        {
+          "title": "Preparazione e provvisori",
+          "text": "Preparazione guidata, impronta digitale e provvisori che riproducono il progetto."
+        },
+        {
+          "title": "Cementazione",
+          "text": "Prova delle ceramiche, controllo del colore e cementazione adesiva definitiva."
+        }
+      ],
+      "tech": [
+        "digital-smile-design",
+        "scanner-intraorale",
+        "stampa-3d"
+      ],
+      "specs": [
+        {
+          "label": "Durata percorso",
+          "value": "3 — 5 settimane"
+        },
+        {
+          "label": "Sedute",
+          "value": "4 — 5"
+        },
+        {
+          "label": "Spessore tipico",
+          "value": "0,3 — 0,7 mm"
+        }
+      ],
+      "faq": [
+        {
+          "q": "Bisogna limare i denti?",
+          "a": "La preparazione è minima e in alcuni casi selezionati assente. Il mock-up ci dice esattamente quanto spazio serve: si prepara solo dove serve, non su tutta la superficie per abitudine."
+        },
+        {
+          "q": "Quanto durano?",
+          "a": "La letteratura riporta oltre il 90% di sopravvivenza a dieci anni. Molto dipende dall'occlusione: in presenza di bruxismo prescriviamo un bite notturno."
+        },
+        {
+          "q": "Si vede che sono finte?",
+          "a": "Dipende interamente dal progetto e dal ceramista. Lavoriamo con proporzioni e traslucenze calibrate sul viso, non su un modello uguale per tutti."
+        }
+      ],
+      "doctor": "sofia-ranieri",
+      "related": [
+        "estetica-del-sorriso",
+        "sbiancamento",
+        "ricostruzioni-estetiche"
+      ],
+      "seo": {
+        "title": "Faccette dentali in ceramica a Milano",
+        "description": "Faccette in ceramica con progetto Digital Smile Design e mock-up di prova. Studio Canova, Milano."
+      }
+    },
+    {
+      "slug": "estetica-del-sorriso",
+      "category": "estetica-dentale",
+      "title": "Estetica del sorriso",
+      "short": "Progettazione complessiva del sorriso con Digital Smile Design.",
+      "lead": "Non un singolo trattamento, ma il progetto che li coordina: proporzioni, linea del sorriso, rapporto con labbra e viso.",
+      "image": "tech-dsd",
+      "intro": [
+        "Un sorriso armonioso dipende da poche regole che riguardano l'insieme: la linea incisale che segue il labbro inferiore, la simmetria rispetto alla linea mediana del viso, la proporzione tra larghezza e altezza degli incisivi, la quantità di gengiva visibile.",
+        "Il percorso di estetica del sorriso parte da un'analisi del volto e definisce quale combinazione di interventi — sbiancamento, ortodonzia, faccette, chirurgia gengivale — serve davvero per arrivare al risultato con il minor sacrificio di tessuto."
+      ],
+      "indicated": [
+        "Sorriso asimmetrico o linea incisale irregolare",
+        "Sorriso gengivale (gengiva molto visibile)",
+        "Denti consumati dal bruxismo o dall'età",
+        "Riabilitazioni estetiche complesse su più elementi"
+      ],
+      "how": [
+        "Raccogliamo fotografie standardizzate, un video del sorriso in movimento e la scansione intraorale. Su questi dati costruiamo il progetto digitale, che mostra il risultato sul tuo volto e non su un rendering generico.",
+        "Il progetto viene poi provato fisicamente con un mock-up. È il momento in cui si discute, si modifica e si decide: solo ciò che è stato approvato viene realizzato."
+      ],
+      "phases": [
+        {
+          "title": "Analisi del volto",
+          "text": "Fotografia clinica, video del sorriso, scansione e analisi delle proporzioni."
+        },
+        {
+          "title": "Progetto digitale",
+          "text": "Simulazione del risultato sul volto e definizione degli interventi necessari."
+        },
+        {
+          "title": "Prova estetica",
+          "text": "Mock-up in bocca: si valuta parlando e sorridendo, non solo allo specchio."
+        },
+        {
+          "title": "Realizzazione",
+          "text": "Esecuzione coordinata dei trattamenti approvati, con controlli a ogni passaggio."
+        }
+      ],
+      "tech": [
+        "digital-smile-design",
+        "scanner-intraorale",
+        "stampa-3d"
+      ],
+      "specs": [
+        {
+          "label": "Progetto",
+          "value": "2 sedute"
+        },
+        {
+          "label": "Percorso completo",
+          "value": "1 — 9 mesi"
+        },
+        {
+          "label": "Approvazione",
+          "value": "Prima di ogni preparazione"
+        }
+      ],
+      "faq": [
+        {
+          "q": "Posso vedere il risultato prima di decidere?",
+          "a": "Sì: è esattamente lo scopo del mock-up. Lo porti in bocca, lo fotografi, lo mostri a chi vuoi. Nessuna preparazione irreversibile avviene prima della tua approvazione."
+        },
+        {
+          "q": "Serve sempre mettere faccette?",
+          "a": "No. In molti casi la combinazione di ortodonzia leggera e sbiancamento raggiunge l'obiettivo senza toccare lo smalto. Lo valutiamo nel progetto."
+        },
+        {
+          "q": "Quanto costa?",
+          "a": "Varia con il numero di elementi e i trattamenti coinvolti. Il preventivo dettagliato, voce per voce, viene consegnato al termine della fase di progetto."
+        }
+      ],
+      "doctor": "sofia-ranieri",
+      "related": [
+        "faccette",
+        "sbiancamento",
+        "ortodonzia-invisibile"
+      ],
+      "seo": {
+        "title": "Estetica del sorriso e Digital Smile Design a Milano",
+        "description": "Progettazione digitale del sorriso con prova estetica prima del trattamento. Studio Canova, Milano."
+      }
+    },
+    {
+      "slug": "ricostruzioni-estetiche",
+      "category": "estetica-dentale",
+      "title": "Ricostruzioni estetiche",
+      "short": "Restauri in composito e intarsi per denti fratturati o usurati.",
+      "lead": "Ricostruire un dente compromesso senza ricorrere alla corona, con materiali che si legano al tessuto residuo e ne restituiscono la forma.",
+      "image": "strumenti-macro",
+      "intro": [
+        "Tra l'otturazione semplice e la corona protesica esiste una zona intermedia molto ampia, dove i restauri adesivi diretti e gli intarsi permettono di conservare la struttura del dente invece di eliminarla.",
+        "È l'approccio che utilizziamo per i denti fratturati, per le usure da bruxismo e per la sostituzione di vecchie amalgame estese, con un guadagno in termini di longevità del dente naturale."
+      ],
+      "indicated": [
+        "Denti fratturati o con cuspidi mancanti",
+        "Usura da bruxismo o da erosione acida",
+        "Sostituzione di amalgame estese",
+        "Ricostruzione di denti dopo cura canalare"
+      ],
+      "how": [
+        "I restauri diretti si realizzano in un'unica seduta, stratificando il composito sotto isolamento. Gli intarsi — in ceramica o composito — si costruiscono in laboratorio o internamente su progetto digitale e si cementano adesivamente.",
+        "Nei casi di usura generalizzata la ricostruzione viene pianificata su tutte le arcate, ristabilendo la dimensione verticale corretta prima di intervenire sui singoli elementi."
+      ],
+      "phases": [
+        {
+          "title": "Analisi occlusale",
+          "text": "Valutazione dei contatti, delle usure e della presenza di bruxismo."
+        },
+        {
+          "title": "Progetto",
+          "text": "Ceratura digitale della forma da ricostruire e prova in bocca."
+        },
+        {
+          "title": "Realizzazione",
+          "text": "Restauro diretto stratificato o intarsio cementato adesivamente."
+        },
+        {
+          "title": "Protezione",
+          "text": "Bite notturno su misura quando la causa dell'usura è parafunzionale."
+        }
+      ],
+      "tech": [
+        "scanner-intraorale",
+        "stampa-3d",
+        "microscopia"
+      ],
+      "specs": [
+        {
+          "label": "Restauro diretto",
+          "value": "1 seduta"
+        },
+        {
+          "label": "Intarsio",
+          "value": "2 sedute"
+        },
+        {
+          "label": "Riabilitazione usure",
+          "value": "4 — 8 sedute"
+        }
+      ],
+      "faq": [
+        {
+          "q": "Meglio un intarsio o una corona?",
+          "a": "L'intarsio, ogni volta che la struttura residua lo consente: richiede una preparazione molto più conservativa. La corona resta indicata quando le pareti del dente sono troppo compromesse."
+        },
+        {
+          "q": "I compositi si macchiano?",
+          "a": "Con il tempo possono assorbire pigmenti, soprattutto ai margini. Una lucidatura in sede di igiene ripristina la superficie; la sostituzione è raramente necessaria prima di molti anni."
+        },
+        {
+          "q": "Il bite è davvero necessario?",
+          "a": "Se digrigni, sì. Ricostruire senza proteggere significa esporre il nuovo restauro alle stesse forze che hanno consumato il dente originale."
+        }
+      ],
+      "doctor": "marco-ferretti",
+      "related": [
+        "conservativa",
+        "protesi",
+        "faccette"
+      ],
+      "seo": {
+        "title": "Ricostruzioni estetiche e intarsi dentali a Milano",
+        "description": "Restauri adesivi e intarsi per denti fratturati o usurati. Studio Canova, Milano."
+      }
+    },
+    {
+      "slug": "implantologia",
+      "category": "implantologia",
+      "title": "Implantologia",
+      "short": "Sostituzione dei denti mancanti con impianti pianificati digitalmente.",
+      "lead": "Una radice artificiale in titanio che sostituisce quella persa e sostiene un dente fisso, senza coinvolgere i denti vicini.",
+      "image": "cat-implantologia",
+      "featured": true,
+      "intro": [
+        "L'impianto è una vite in titanio inserita nell'osso mascellare o mandibolare, che dopo alcuni mesi si integra stabilmente con il tessuto osseo. Su di essa viene avvitata la corona protesica.",
+        "È la soluzione che preserva meglio il resto della bocca: a differenza del ponte tradizionale non richiede di limare i denti adiacenti, e mantiene l'osso stimolato dove altrimenti si riassorbirebbe."
+      ],
+      "indicated": [
+        "Perdita di uno o più denti",
+        "Protesi mobili instabili da stabilizzare",
+        "Sostituzione di denti non recuperabili",
+        "Riabilitazioni complete di arcata"
+      ],
+      "how": [
+        "La pianificazione avviene su una TC cone beam sovrapposta alla scansione intraorale: decidiamo al computer posizione, inclinazione e lunghezza dell'impianto in funzione della protesi che dovrà sostenere, non del contrario.",
+        "In sala operatoria una dima chirurgica stampata in 3D trasferisce il progetto alla bocca. L'intervento avviene in anestesia locale e dura, per un singolo impianto, circa quarantacinque minuti."
+      ],
+      "phases": [
+        {
+          "title": "Diagnosi e progetto",
+          "text": "TC cone beam, scansione, pianificazione digitale e valutazione del volume osseo disponibile."
+        },
+        {
+          "title": "Intervento",
+          "text": "Inserimento guidato dell'impianto in anestesia locale, con dima chirurgica su misura."
+        },
+        {
+          "title": "Osteointegrazione",
+          "text": "Da 8 a 16 settimane di guarigione, con provvisorio quando esteticamente necessario."
+        },
+        {
+          "title": "Protesi definitiva",
+          "text": "Impronta digitale, prova e avvitamento della corona in ceramica integrale."
+        }
+      ],
+      "tech": [
+        "implantologia-guidata",
+        "radiologia-digitale",
+        "scanner-intraorale"
+      ],
+      "specs": [
+        {
+          "label": "Intervento",
+          "value": "45 — 90 min"
+        },
+        {
+          "label": "Guarigione",
+          "value": "8 — 16 settimane"
+        },
+        {
+          "label": "Anestesia",
+          "value": "Locale, sedazione su richiesta"
+        }
+      ],
+      "faq": [
+        {
+          "q": "Quanto dura un impianto?",
+          "a": "Gli studi a lungo termine riportano sopravvivenze superiori al 95% a dieci anni. La variabile principale non è l'impianto ma l'igiene e i controlli periodici: la perimplantite si previene, non si cura facilmente."
+        },
+        {
+          "q": "Serve sempre l'innesto osseo?",
+          "a": "No. Serve quando il volume osseo residuo è insufficiente, condizione che valutiamo sulla TC prima di programmare qualsiasi intervento."
+        },
+        {
+          "q": "Posso mettere il dente subito?",
+          "a": "In casi selezionati, con osso di buona qualità e stabilità primaria adeguata, il carico immediato è possibile. Non è una regola generale: dipende dalla misurazione effettuata durante l'intervento."
+        },
+        {
+          "q": "Posso farlo se fumo?",
+          "a": "Il fumo aumenta il rischio di fallimento e di perimplantite. Non è una controindicazione assoluta, ma ne discutiamo apertamente prima di procedere."
+        }
+      ],
+      "doctor": "andrea-vitali",
+      "related": [
+        "chirurgia-orale",
+        "riabilitazione-completa",
+        "protesi"
+      ],
+      "seo": {
+        "title": "Implantologia dentale a Milano — impianti guidati",
+        "description": "Impianti dentali pianificati digitalmente e inseriti con dima chirurgica. Studio Canova, Milano zona Fiera."
+      }
+    },
+    {
+      "slug": "chirurgia-orale",
+      "category": "implantologia",
+      "title": "Chirurgia orale",
+      "short": "Estrazioni complesse, denti del giudizio e chirurgia rigenerativa.",
+      "lead": "Interventi ambulatoriali eseguiti in anestesia locale, con protocolli che riducono gonfiore e tempi di recupero.",
+      "image": "trattamento-equipe",
+      "intro": [
+        "La chirurgia orale comprende le estrazioni complesse, i denti del giudizio inclusi, le apicectomie, la chirurgia rigenerativa e la preparazione dei siti implantari.",
+        "Tutti gli interventi si svolgono in studio, in anestesia locale. Per i pazienti con forte ansia o riflesso faringeo accentuato è disponibile la sedazione cosciente con monitoraggio anestesiologico."
+      ],
+      "indicated": [
+        "Denti del giudizio inclusi o semi-inclusi",
+        "Estrazioni di radici e denti fratturati",
+        "Rigenerazione ossea e rialzo del seno mascellare",
+        "Frenuli, piccole lesioni dei tessuti molli"
+      ],
+      "how": [
+        "Ogni intervento parte dalla TC cone beam, che mostra i rapporti con il nervo alveolare inferiore e con il seno mascellare. Sapere in anticipo dove si lavora riduce i tempi e le complicanze.",
+        "Utilizziamo protocolli che privilegiano la conservazione dei tessuti: alveolo preservato quando è previsto un impianto, sutura accurata, indicazioni post-operatorie scritte e reperibilità telefonica nelle 48 ore successive."
+      ],
+      "phases": [
+        {
+          "title": "Valutazione",
+          "text": "TC cone beam, anamnesi medica e farmacologica, valutazione del rischio."
+        },
+        {
+          "title": "Intervento",
+          "text": "Anestesia locale, procedura chirurgica, eventuale innesto e sutura."
+        },
+        {
+          "title": "Post-operatorio",
+          "text": "Istruzioni scritte, terapia antidolorifica e contatto diretto nelle prime 48 ore."
+        },
+        {
+          "title": "Controllo",
+          "text": "Rimozione dei punti a 7-10 giorni e verifica della guarigione."
+        }
+      ],
+      "tech": [
+        "implantologia-guidata",
+        "radiologia-digitale"
+      ],
+      "specs": [
+        {
+          "label": "Intervento",
+          "value": "30 — 90 min"
+        },
+        {
+          "label": "Recupero",
+          "value": "2 — 5 giorni"
+        },
+        {
+          "label": "Sedazione",
+          "value": "Disponibile su richiesta"
+        }
+      ],
+      "faq": [
+        {
+          "q": "Quanto gonfiore devo aspettarmi?",
+          "a": "Dipende dall'intervento. Per un dente del giudizio incluso il picco è in seconda giornata e si risolve in quattro o cinque giorni; il ghiaccio nelle prime ore riduce sensibilmente l'edema."
+        },
+        {
+          "q": "Posso tornare a lavorare il giorno dopo?",
+          "a": "Per estrazioni semplici sì. Per interventi più estesi consigliamo di programmare l'intervento a fine settimana."
+        },
+        {
+          "q": "Prendo anticoagulanti: posso operarmi?",
+          "a": "Nella maggior parte dei casi sì, senza sospendere la terapia, adottando protocolli emostatici locali. Valutiamo sempre insieme al tuo medico curante."
+        }
+      ],
+      "doctor": "luca-sartori",
+      "related": [
+        "implantologia",
+        "parodontologia",
+        "endodonzia"
+      ],
+      "seo": {
+        "title": "Chirurgia orale e denti del giudizio a Milano",
+        "description": "Estrazioni complesse, chirurgia rigenerativa e sedazione cosciente. Studio Canova, Milano."
+      }
+    },
+    {
+      "slug": "riabilitazione-completa",
+      "category": "implantologia",
+      "title": "Riabilitazione completa",
+      "short": "Ricostruzione di un'intera arcata su impianti, fissa e funzionale.",
+      "lead": "Quando i denti di un'arcata non sono più recuperabili, una riabilitazione fissa su impianti restituisce funzione ed estetica in tempi definiti.",
+      "image": "tech-implantologia",
+      "intro": [
+        "Una riabilitazione completa sostituisce tutti i denti di un'arcata con una protesi fissa sostenuta da quattro a sei impianti, sfruttando le zone dove l'osso è ancora disponibile.",
+        "È un percorso pianificato per intero prima di iniziare: si stabilisce il risultato protesico finale e si costruisce la chirurgia attorno a quello, non viceversa."
+      ],
+      "indicated": [
+        "Arcate con denti gravemente compromessi da parodontite",
+        "Protesi totali mobili instabili",
+        "Edentulia completa o quasi completa",
+        "Riabilitazioni fallite da rifare"
+      ],
+      "how": [
+        "La pianificazione integra TC, scansione del volto e progetto protesico digitale. In molti casi è possibile consegnare una protesi provvisoria fissa entro 24-48 ore dall'intervento.",
+        "Dopo l'osteointegrazione si realizza la protesi definitiva, in ceramica o in materiali composti ad alta resistenza, avvitata e quindi rimovibile dal clinico per la manutenzione periodica."
+      ],
+      "phases": [
+        {
+          "title": "Progetto globale",
+          "text": "Analisi del volto, TC, scansione e simulazione del risultato protesico finale."
+        },
+        {
+          "title": "Chirurgia",
+          "text": "Inserimento guidato degli impianti, eventuali estrazioni contestuali."
+        },
+        {
+          "title": "Provvisorio fisso",
+          "text": "Consegna entro 24-48 ore di una protesi fissa provvisoria funzionale ed estetica."
+        },
+        {
+          "title": "Definitiva",
+          "text": "Dopo la guarigione, realizzazione e avvitamento della protesi definitiva."
+        }
+      ],
+      "tech": [
+        "implantologia-guidata",
+        "scanner-intraorale",
+        "stampa-3d"
+      ],
+      "specs": [
+        {
+          "label": "Provvisorio fisso",
+          "value": "24 — 48 ore"
+        },
+        {
+          "label": "Percorso completo",
+          "value": "4 — 8 mesi"
+        },
+        {
+          "label": "Manutenzione",
+          "value": "Ogni 4 — 6 mesi"
+        }
+      ],
+      "faq": [
+        {
+          "q": "Resterò senza denti in qualche momento?",
+          "a": "No. Il provvisorio fisso viene consegnato entro poche ore dall'intervento, proprio per evitare qualsiasi fase senza denti."
+        },
+        {
+          "q": "Si sente come i denti naturali?",
+          "a": "La funzione masticatoria è molto vicina a quella naturale e nettamente superiore a una protesi mobile. Cambia la percezione tattile, perché manca il legamento parodontale."
+        },
+        {
+          "q": "Quanta manutenzione richiede?",
+          "a": "Igiene domiciliare accurata con scovolini e idropulsore, più richiami professionali ogni quattro-sei mesi in cui la protesi viene svitata e pulita."
+        }
+      ],
+      "doctor": "andrea-vitali",
+      "related": [
+        "implantologia",
+        "protesi",
+        "chirurgia-orale"
+      ],
+      "seo": {
+        "title": "Riabilitazione completa su impianti a Milano",
+        "description": "Protesi fissa su impianti per arcate complete, con provvisorio in 24-48 ore. Studio Canova, Milano."
+      }
+    },
+    {
+      "slug": "protesi",
+      "category": "implantologia",
+      "title": "Protesi",
+      "short": "Corone, ponti e protesi su impianti con flusso interamente digitale.",
+      "lead": "Sostituire ciò che manca e proteggere ciò che resta, con manufatti progettati digitalmente e realizzati in laboratorio interno.",
+      "image": "impianto-modello",
+      "intro": [
+        "La protesi comprende corone singole, ponti, protesi su impianti e protesi rimovibili. Il criterio di scelta è sempre lo stesso: la soluzione che risolve il problema conservando più tessuto sano possibile.",
+        "Il flusso digitale — scansione intraorale, progettazione CAD, fresatura o stampa — elimina l'impronta tradizionale e riduce gli errori di trasferimento tra studio e laboratorio."
+      ],
+      "indicated": [
+        "Denti molto compromessi o devitalizzati",
+        "Sostituzione di elementi mancanti",
+        "Corone e ponti vecchi da rifare",
+        "Protesi rimovibili da stabilizzare su impianti"
+      ],
+      "how": [
+        "Dopo la preparazione, la scansione intraorale sostituisce l'impronta in silicone. Il progetto CAD viene condiviso e verificato, poi il manufatto viene realizzato in ceramica integrale o zirconia.",
+        "La prova in bocca verifica adattamento marginale, contatti e colore alla luce naturale. Solo a quel punto si cementa o si avvita in via definitiva."
+      ],
+      "phases": [
+        {
+          "title": "Preparazione",
+          "text": "Preparazione conservativa dell'elemento e scansione digitale."
+        },
+        {
+          "title": "Progetto CAD",
+          "text": "Progettazione del manufatto con controllo di forma, contatti e spessori."
+        },
+        {
+          "title": "Prova",
+          "text": "Verifica di adattamento, occlusione e colore in luce naturale."
+        },
+        {
+          "title": "Consegna",
+          "text": "Cementazione o avvitamento definitivo e istruzioni di manutenzione."
+        }
+      ],
+      "tech": [
+        "scanner-intraorale",
+        "stampa-3d",
+        "digital-smile-design"
+      ],
+      "specs": [
+        {
+          "label": "Corona singola",
+          "value": "2 — 3 sedute"
+        },
+        {
+          "label": "Tempi laboratorio",
+          "value": "7 — 12 giorni"
+        },
+        {
+          "label": "Materiali",
+          "value": "Ceramica integrale, zirconia"
+        }
+      ],
+      "faq": [
+        {
+          "q": "Meglio zirconia o ceramica integrale?",
+          "a": "La ceramica integrale ha una resa estetica superiore nei settori anteriori; la zirconia offre più resistenza nei posteriori. La scelta dipende dalla posizione e dal carico."
+        },
+        {
+          "q": "La corona si può scurire al bordo?",
+          "a": "Succede con le vecchie corone su metallo, quando la gengiva si ritira. Con le ceramiche integrali attuali il problema non si presenta."
+        },
+        {
+          "q": "Quanto dura una corona?",
+          "a": "Dieci-quindici anni sono la norma, spesso di più. A determinarne la durata è soprattutto la salute del dente sottostante, quindi igiene e controlli."
+        }
+      ],
+      "doctor": "marta-colombo",
+      "related": [
+        "implantologia",
+        "riabilitazione-completa",
+        "ricostruzioni-estetiche"
+      ],
+      "seo": {
+        "title": "Protesi dentale digitale a Milano — corone e ponti",
+        "description": "Corone, ponti e protesi su impianti con flusso digitale e laboratorio interno. Studio Canova, Milano."
+      }
+    },
+    {
+      "slug": "ortodonzia-invisibile",
+      "category": "ortodonzia",
+      "title": "Ortodonzia invisibile",
+      "short": "Allineare i denti senza che si veda l'apparecchio.",
+      "lead": "Allineatori trasparenti o attacchi linguali: due strade diverse per ottenere lo stesso risultato senza mostrare l'apparecchio.",
+      "image": "cat-ortodonzia",
+      "intro": [
+        "L'ortodonzia invisibile raccoglie le tecniche che rendono il trattamento impercettibile: gli allineatori trasparenti, rimovibili e praticamente invisibili, e l'ortodonzia linguale, con attacchi fissati sulla faccia interna dei denti.",
+        "La scelta tra le due dipende dal tipo di movimento richiesto e dallo stile di vita. In prima visita simuliamo digitalmente il caso e mostriamo quale tecnica arriva al risultato nel modo più prevedibile."
+      ],
+      "indicated": [
+        "Affollamento dentale lieve o moderato",
+        "Diastemi e spazi da chiudere",
+        "Ricadute post-ortodontiche",
+        "Adulti che non vogliono apparecchi visibili"
+      ],
+      "how": [
+        "Il percorso inizia con scansione intraorale, fotografie e radiografie. Su questi dati costruiamo il piano di movimento dente per dente e la simulazione del risultato finale.",
+        "Con gli allineatori, ogni mascherina produce uno spostamento di qualche decimo di millimetro e si cambia ogni sette-dieci giorni. Con la tecnica linguale gli attacchi sono personalizzati e gli aggiustamenti avvengono in studio ogni quattro-sei settimane."
+      ],
+      "phases": [
+        {
+          "title": "Diagnosi",
+          "text": "Scansione, fotografie, radiografie e analisi cefalometrica."
+        },
+        {
+          "title": "Simulazione",
+          "text": "Piano di movimento digitale con visualizzazione del risultato atteso."
+        },
+        {
+          "title": "Trattamento attivo",
+          "text": "Serie di allineatori o attacchi linguali, con controlli periodici."
+        },
+        {
+          "title": "Contenzione",
+          "text": "Filo fisso linguale e/o mascherina notturna per stabilizzare il risultato."
+        }
+      ],
+      "tech": [
+        "scanner-intraorale",
+        "stampa-3d",
+        "radiologia-digitale"
+      ],
+      "specs": [
+        {
+          "label": "Durata media",
+          "value": "6 — 18 mesi"
+        },
+        {
+          "label": "Controlli",
+          "value": "Ogni 6 — 8 settimane"
+        },
+        {
+          "label": "Contenzione",
+          "value": "Necessaria, a lungo termine"
+        }
+      ],
+      "faq": [
+        {
+          "q": "Funziona come l'apparecchio fisso tradizionale?",
+          "a": "Per la maggior parte dei casi sì. In alcune malocclusioni scheletriche o in movimenti radicolari complessi la tecnica fissa resta più efficiente: te lo diciamo in fase di diagnosi."
+        },
+        {
+          "q": "Si vede quando parlo?",
+          "a": "Gli allineatori sono praticamente impercettibili a distanza di conversazione. Gli attacchi linguali non sono visibili affatto, ma richiedono qualche settimana di adattamento della lingua."
+        },
+        {
+          "q": "Dopo, i denti tornano storti?",
+          "a": "Senza contenzione sì, con una certa probabilità. La contenzione fa parte del trattamento e va mantenuta e controllata negli anni."
+        }
+      ],
+      "doctor": "chiara-bonetti",
+      "related": [
+        "allineatori-trasparenti",
+        "ortodonzia-tradizionale",
+        "estetica-del-sorriso"
+      ],
+      "seo": {
+        "title": "Ortodonzia invisibile a Milano — allineatori e linguale",
+        "description": "Ortodonzia invisibile con allineatori trasparenti o tecnica linguale. Studio Canova, Milano."
+      }
+    },
+    {
+      "slug": "allineatori-trasparenti",
+      "category": "ortodonzia",
+      "title": "Allineatori trasparenti",
+      "short": "Mascherine rimovibili su misura, cambiate ogni 7-10 giorni.",
+      "lead": "Una serie di mascherine trasparenti costruite sulla tua bocca, che spostano i denti gradualmente e si tolgono per mangiare e lavarsi i denti.",
+      "image": "allineatori-mano",
+      "featured": true,
+      "intro": [
+        "Ogni allineatore è progettato per produrre uno spostamento minimo e controllato. Indossandoli almeno ventidue ore al giorno e sostituendoli secondo il calendario, i denti percorrono il tragitto pianificato al computer.",
+        "Il vantaggio principale non è solo estetico: potendo rimuovere le mascherine, l'igiene domiciliare resta identica a prima del trattamento, con un rischio di carie e infiammazione gengivale molto più basso rispetto all'apparecchio fisso."
+      ],
+      "indicated": [
+        "Affollamento lieve e moderato",
+        "Spazi tra i denti da chiudere",
+        "Piccoli disallineamenti e ricadute",
+        "Pre-trattamento estetico prima di faccette o protesi"
+      ],
+      "how": [
+        "Dalla scansione intraorale nasce il piano digitale: ogni fase di movimento è visibile e discutibile prima di iniziare. Le mascherine vengono poi prodotte in serie e consegnate a blocchi.",
+        "Su alcuni denti si applicano piccoli attacchi in composito del colore del dente, che danno all'allineatore la presa necessaria per movimenti più complessi. Vengono rimossi a fine trattamento senza lasciare traccia."
+      ],
+      "phases": [
+        {
+          "title": "Scansione e piano",
+          "text": "Impronta digitale e costruzione del piano di movimento, con simulazione del risultato."
+        },
+        {
+          "title": "Consegna",
+          "text": "Applicazione degli attacchi e consegna delle prime mascherine con istruzioni d'uso."
+        },
+        {
+          "title": "Trattamento attivo",
+          "text": "Cambio ogni 7-10 giorni e controlli in studio ogni 6-8 settimane."
+        },
+        {
+          "title": "Rifinitura e contenzione",
+          "text": "Eventuali mascherine aggiuntive per la rifinitura, poi contenzione fissa o notturna."
+        }
+      ],
+      "tech": [
+        "scanner-intraorale",
+        "stampa-3d"
+      ],
+      "specs": [
+        {
+          "label": "Durata media",
+          "value": "4 — 18 mesi"
+        },
+        {
+          "label": "Ore al giorno",
+          "value": "22 ore"
+        },
+        {
+          "label": "Controlli",
+          "value": "Ogni 6 — 8 settimane"
+        }
+      ],
+      "faq": [
+        {
+          "q": "Fanno male?",
+          "a": "Nei primi due giorni dopo ogni cambio si avverte una pressione: è il segnale che il dispositivo sta lavorando. Non è dolore acuto e si attenua rapidamente."
+        },
+        {
+          "q": "Cosa succede se dimentico di metterli?",
+          "a": "Il trattamento rallenta e le mascherine successive non calzano più. La costanza è il vero fattore di successo: senza le ventidue ore, il piano digitale non si realizza."
+        },
+        {
+          "q": "Posso bere il caffè con gli allineatori?",
+          "a": "Solo acqua. Bevande calde o pigmentate vanno consumate dopo averli rimossi, per evitare deformazioni e macchie."
+        }
+      ],
+      "doctor": "chiara-bonetti",
+      "related": [
+        "ortodonzia-invisibile",
+        "ortodonzia-tradizionale",
+        "sbiancamento"
+      ],
+      "seo": {
+        "title": "Allineatori trasparenti a Milano — ortodonzia invisibile",
+        "description": "Trattamento con allineatori trasparenti su misura e simulazione digitale del risultato. Studio Canova, Milano."
+      }
+    },
+    {
+      "slug": "ortodonzia-tradizionale",
+      "category": "ortodonzia",
+      "title": "Ortodonzia tradizionale",
+      "short": "Apparecchio fisso con attacchi estetici o metallici.",
+      "lead": "L'apparecchio fisso resta la tecnica più efficiente per i casi complessi. Cambia il modo in cui lo si porta: attacchi più piccoli, fili più efficienti, controlli meno frequenti.",
+      "image": "allineatori-dettaglio",
+      "intro": [
+        "L'apparecchio fisso permette un controllo tridimensionale del movimento che nessun'altra tecnica raggiunge con la stessa prevedibilità, soprattutto nelle malocclusioni scheletriche e nei casi che richiedono movimenti radicolari importanti.",
+        "Gli attacchi ceramici del colore del dente riducono sensibilmente l'impatto estetico, e i fili in lega di nichel-titanio applicano forze leggere e continue, più confortevoli rispetto al passato."
+      ],
+      "indicated": [
+        "Affollamenti severi",
+        "Malocclusioni scheletriche di seconda e terza classe",
+        "Denti inclusi da recuperare",
+        "Casi pre-chirurgici"
+      ],
+      "how": [
+        "Dopo la diagnosi cefalometrica e l'analisi dei modelli digitali, gli attacchi vengono posizionati con mascherina di trasferimento, per una collocazione precisa e ripetibile.",
+        "I controlli avvengono ogni sei-otto settimane, con sostituzione progressiva dei fili. A fine trattamento gli attacchi vengono rimossi e lo smalto ripulito e lucidato."
+      ],
+      "phases": [
+        {
+          "title": "Diagnosi ortodontica",
+          "text": "Radiografie, cefalometria, fotografie e modelli digitali."
+        },
+        {
+          "title": "Applicazione",
+          "text": "Posizionamento degli attacchi con mascherina di trasferimento e primo arco."
+        },
+        {
+          "title": "Fase attiva",
+          "text": "Sequenza di fili e controlli ogni 6-8 settimane."
+        },
+        {
+          "title": "Rimozione e contenzione",
+          "text": "Debonding, lucidatura dello smalto e applicazione della contenzione."
+        }
+      ],
+      "tech": [
+        "radiologia-digitale",
+        "scanner-intraorale"
+      ],
+      "specs": [
+        {
+          "label": "Durata media",
+          "value": "12 — 24 mesi"
+        },
+        {
+          "label": "Controlli",
+          "value": "Ogni 6 — 8 settimane"
+        },
+        {
+          "label": "Attacchi",
+          "value": "Ceramici o metallici"
+        }
+      ],
+      "faq": [
+        {
+          "q": "Gli attacchi rovinano lo smalto?",
+          "a": "Se la rimozione è eseguita correttamente, no. Il rischio reale è la demineralizzazione da placca attorno agli attacchi: per questo le sedute di igiene durante il trattamento sono obbligatorie."
+        },
+        {
+          "q": "Quanto è visibile con gli attacchi ceramici?",
+          "a": "Molto poco a distanza di conversazione. I fili sono la parte più visibile e in alcune fasi possono essere rivestiti."
+        },
+        {
+          "q": "Posso passare agli allineatori a metà trattamento?",
+          "a": "In alcuni casi sì, tipicamente nella fase di rifinitura. Lo valutiamo insieme quando la parte più complessa del movimento è stata completata."
+        }
+      ],
+      "doctor": "chiara-bonetti",
+      "related": [
+        "ortodonzia-invisibile",
+        "ortodonzia-pediatrica",
+        "allineatori-trasparenti"
+      ],
+      "seo": {
+        "title": "Ortodonzia fissa tradizionale a Milano",
+        "description": "Apparecchio fisso con attacchi estetici per malocclusioni complesse. Studio Canova, Milano."
+      }
+    },
+    {
+      "slug": "ortodonzia-pediatrica",
+      "category": "ortodonzia",
+      "title": "Ortodonzia pediatrica",
+      "short": "Intercettare i problemi di crescita nel momento giusto.",
+      "lead": "Tra i sei e i dieci anni si può guidare la crescita delle ossa mascellari. È una finestra che non torna.",
+      "image": "sorriso-06",
+      "intro": [
+        "L'ortodonzia intercettiva sfrutta la crescita per correggere alla radice problemi che in età adulta richiederebbero estrazioni o chirurgia: palato stretto, morso incrociato, morso aperto da abitudini viziate.",
+        "Non tutti i bambini hanno bisogno di un apparecchio, e non tutti nello stesso momento. La prima visita ortodontica serve proprio a stabilire se e quando intervenire."
+      ],
+      "indicated": [
+        "Palato stretto e morso incrociato",
+        "Abitudini viziate: succhiamento, deglutizione atipica",
+        "Affollamento precoce e spazi insufficienti",
+        "Denti permanenti che non erompono"
+      ],
+      "how": [
+        "La valutazione combina esame clinico, radiografia panoramica e, quando indicato, teleradiografia. Consideriamo l'età scheletrica, non solo quella anagrafica.",
+        "I dispositivi utilizzati sono in genere semplici e ben tollerati — espansore rapido, placche, mantenitori di spazio — e si portano per periodi limitati, seguiti da un monitoraggio fino alla permuta completa."
+      ],
+      "phases": [
+        {
+          "title": "Prima visita",
+          "text": "Intorno ai 5-6 anni, o prima in presenza di abitudini viziate o traumi."
+        },
+        {
+          "title": "Monitoraggio",
+          "text": "Controlli periodici della permuta e della crescita, senza intervenire se non serve."
+        },
+        {
+          "title": "Fase intercettiva",
+          "text": "Dispositivo mirato per il periodo necessario, in genere 6-12 mesi."
+        },
+        {
+          "title": "Seconda fase",
+          "text": "Se necessaria, ortodonzia fissa o allineatori in adolescenza."
+        }
+      ],
+      "tech": [
+        "radiologia-digitale",
+        "scanner-intraorale",
+        "stampa-3d"
+      ],
+      "specs": [
+        {
+          "label": "Prima visita",
+          "value": "5 — 6 anni"
+        },
+        {
+          "label": "Fase intercettiva",
+          "value": "6 — 12 mesi"
+        },
+        {
+          "label": "Controlli",
+          "value": "Ogni 4 — 6 mesi"
+        }
+      ],
+      "faq": [
+        {
+          "q": "Non è troppo presto a sei anni?",
+          "a": "La visita non significa mettere l'apparecchio. Serve a vedere se la crescita sta procedendo correttamente: nella maggior parte dei casi si conclude con un semplice controllo tra sei mesi."
+        },
+        {
+          "q": "Meglio aspettare che cadano tutti i denti da latte?",
+          "a": "Per alcuni problemi sì, per altri è esattamente l'errore da evitare: un palato stretto si espande molto più facilmente a otto anni che a quindici."
+        },
+        {
+          "q": "Mio figlio ha paura del dentista.",
+          "a": "Le prime sedute sono dedicate solo a conoscersi e a prendere confidenza con lo studio. Nessuna manovra viene forzata: il tempo investito all'inizio si recupera tutto dopo."
+        }
+      ],
+      "doctor": "giulia-pace",
+      "related": [
+        "ortodonzia-tradizionale",
+        "igiene-e-prevenzione",
+        "ortodonzia-invisibile"
+      ],
+      "seo": {
+        "title": "Ortodonzia pediatrica e intercettiva a Milano",
+        "description": "Prima visita ortodontica e terapia intercettiva per bambini. Studio Canova, Milano."
+      }
+    }
+  ]
+}

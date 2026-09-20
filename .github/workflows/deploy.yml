@@ -1,10 +1,14 @@
-# Costruisce il sito e lo pubblica su GitHub Pages a ogni push su main.
-# Va attivato una volta sola: Settings -> Pages -> Source: GitHub Actions.
+# CI: a ogni push ricostruisce il sito e passa il controllo qualita'.
+#
+# Il deploy su GitHub Pages e' un job separato e manuale: prima va attivato
+# Pages una volta sola (Settings -> Pages -> Source: GitHub Actions), poi si
+# lancia da Actions -> "Build e deploy" -> Run workflow.
 name: Build e deploy
 
 on:
   push:
     branches: [main]
+  pull_request:
   workflow_dispatch:
 
 permissions:
@@ -17,7 +21,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build:
+  verifica:
+    name: Build e controllo qualita'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -26,19 +31,27 @@ jobs:
           node-version: 22
       - name: Genera il sito
         run: node build.mjs
-      - name: Controllo qualita'
+      - name: Controlla link, alt, title e dati strutturati
         run: node scripts/check.mjs
-      - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: dist
+      - name: Fallisci se il controllo segnala problemi
+        run: node scripts/check.mjs | grep -q "Nessun problema rilevato"
 
   deploy:
-    needs: build
+    name: Pubblica su GitHub Pages
+    if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node build.mjs
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
       - id: deployment
         uses: actions/deploy-pages@v4

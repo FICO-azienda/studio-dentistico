@@ -1,8 +1,7 @@
-# CI: a ogni push ricostruisce il sito e passa il controllo qualita'.
+# A ogni push su main: ricostruisce il sito, passa il controllo qualita' e
+# pubblica su GitHub Pages. Sulle pull request si ferma alla verifica.
 #
-# Il deploy su GitHub Pages e' un job separato e manuale: prima va attivato
-# Pages una volta sola (Settings -> Pages -> Source: GitHub Actions), poi si
-# lancia da Actions -> "Build e deploy" -> Run workflow.
+# Sito pubblicato: https://cesarecicogna04-spec.github.io/studio-dentistico/
 name: Build e deploy
 
 on:
@@ -38,7 +37,8 @@ jobs:
 
   deploy:
     name: Pubblica su GitHub Pages
-    if: github.event_name == 'workflow_dispatch'
+    needs: verifica
+    if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     environment:
       name: github-pages

@@ -142,20 +142,20 @@ export const ANCHORS = {
  * In homepage punta alle ancore con scroll morbido e voce attiva durante lo
  * scorrimento; nelle pagine interne porta alle pagine corrispondenti.
  */
-const subnav = (base, current, isHome) => `
-<nav class="subnav" aria-label="${attr(t('nav.sections'))}"${isHome ? ' data-scrollspy' : ''}>
+const subnav = (base, current, isHome) => {
+  // solo in homepage: nelle pagine interne ripeterebbe il menu dell'header
+  if (!isHome) return '<div class="header-spacer" aria-hidden="true"></div>';
+  return `
+<nav class="subnav" aria-label="${attr(t('nav.sections'))}" data-scrollspy>
   <div class="wrap" style="height:100%">
     <div class="subnav__track">
       ${nav()
-        .map((n) =>
-          isHome
-            ? `<a class="subnav__link" href="#${ANCHORS[n.key]}" data-spy="${ANCHORS[n.key]}">${esc(n.label)}</a>`
-            : `<a class="subnav__link" href="${base}${n.href}"${current === n.href ? ' aria-current="page"' : ''}>${esc(n.label)}</a>`
-        )
+        .map((n) => `<a class="subnav__link" href="#${ANCHORS[n.key]}" data-spy="${ANCHORS[n.key]}">${esc(n.label)}</a>`)
         .join('\n      ')}
     </div>
   </div>
 </nav>`;
+};
 
 /* -- footer --------------------------------------------------------------- */
 const footer = (base) => `
@@ -181,11 +181,8 @@ const footer = (base) => `
         <span class="label">Trattamenti</span>
         <ul>
           <li><a href="${base}${PATH.treatments}">Tutte le aree</a></li>
-          <li><a href="${base}${PATH.treatments}odontoiatria-generale/">Odontoiatria generale</a></li>
-          <li><a href="${base}${PATH.treatments}estetica-dentale/">Estetica dentale</a></li>
-          <li><a href="${base}${PATH.treatments}implantologia/">Implantologia</a></li>
-          <li><a href="${base}${PATH.treatments}ortodonzia/">Ortodonzia</a></li>
-          <li><a href="${base}${PATH.cases}">Casi clinici</a></li>
+          ${treatments.categories.map((c) => `<li><a href="${base}${catPath(c)}">${esc(c.title)}</a></li>`).join('\n          ')}
+                    <li><a href="${base}${PATH.cases}">Casi clinici</a></li>
           <li><a href="${base}${PATH.journal}">Journal</a></li>
         </ul>
       </nav>
@@ -246,6 +243,7 @@ export function layout({
   const canonical = `${site.url}/${localePath}`;
   // le pagine-file (404) non hanno un equivalente tradotto: si punta alla home
   const isFile = pagePath.endsWith('.html');
+  const isHome = depth === 0 && pagePath === '';
   const altFor = (l) => (isFile ? '' : l === lang ? pagePath : altPath(pagePath, lang, l));
   const alternates = LANGS.map((l) => ({ lang: l, href: `${site.url}/${l}/${altFor(l)}` }));
   const ld = [...jsonLd];
@@ -285,11 +283,11 @@ ${LANGS.filter((l) => l !== lang).map((l) => `<meta property="og:locale:alternat
 ${preload.map((p) => `<link rel="preload" as="image" href="${asset}images/${p}-1280.webp" imagesrcset="${asset}images/${p}-640.webp 640w, ${asset}images/${p}-1280.webp 1280w, ${asset}images/${p}-1920.webp 1920w" imagesizes="70vw" fetchpriority="high">`).join('\n')}
 <script type="application/ld+json">${JSON.stringify(graph)}</script>
 </head>
-<body class="${bodyClass}">
+<body class="${bodyClass}${isHome ? '' : ' no-subnav'}">
 <div class="page-veil" aria-hidden="true"></div>
 <a class="skip-link" href="#main">${esc(t('nav.skip'))}</a>
 ${header(base, current, lang, asset, altFor)}
-${subnav(base, current, depth === 0 && pagePath === '')}
+${subnav(base, current, isHome)}
 <main id="main">
 ${main}
 </main>

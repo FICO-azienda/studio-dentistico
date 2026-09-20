@@ -125,8 +125,9 @@ export const rel = (depth) => '../'.repeat(depth);
 
 /* -- percorsi dei contenuti ------------------------------------------------ */
 export const catOf = (x) => byCategory[x.category];
-export const catPath = (c) => `${PATH.treatments}${c.slug}/`;
-export const treatmentPath = (x) => `${PATH.treatments}${x.category}/${x.slug}/`;
+/** le aree non sono piu' pagine: sono sezioni dell'indice trattamenti */
+export const catPath = (c) => `${PATH.treatments}#${c.slug}`;
+export const treatmentPath = (x) => `${PATH.treatments}${x.slug}/`;
 export const teamPath = (p) => `${PATH.team}${p.slug}/`;
 export const articlePath = (a) => `${PATH.journal}${a.slug}/`;
 

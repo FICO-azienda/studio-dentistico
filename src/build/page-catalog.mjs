@@ -4,9 +4,52 @@ import { getLang, t } from './i18n.mjs';
 import { sectionHead, bookingBand, faqList, faqLd, pageHero, articleCard, personCard } from './components.mjs';
 
 /* ==================================================== /trattamenti ======= */
-/** Indice: solo i quattro gruppi, con ingresso alle pagine dedicate. */
+/**
+ * Una sola pagina per tutti i trattamenti: le quattro aree sono sezioni con
+ * la loro ancora, non pagine separate. Da qui si arriva a un trattamento con
+ * un solo click, invece dei tre che servivano prima.
+ */
 export const treatmentsIndex = () => {
   const base = '../';
+
+  const sezione = (c) => {
+    const items = c.items.map((x) => byTreatment[x]).filter(Boolean);
+    const docs = specialistsOf(c);
+    return `
+<section class="section section--sm" id="${c.slug}">
+  <div class="wrap">
+    <div class="grid">
+      <div class="col-4">
+        <p class="treatment-row__num reveal">${esc(c.num)}</p>
+        <h2 class="h2 reveal">${esc(c.title)}</h2>
+        <p class="body mt-3 measure-sm reveal">${esc(c.lead)}</p>
+        ${
+          docs.length
+            ? `<p class="small mt-3 reveal" style="color:var(--stone-light)">
+          ${esc(t('common.specialists'))}: ${docs.map((p) => `<a class="link-inline" href="${base}${teamPath(p)}">${esc(personName(p))}</a>`).join(', ')}
+        </p>`
+            : ''
+        }
+      </div>
+      <div class="col-7 start-7">
+        <div class="article-list">
+          ${items
+            .map(
+              (x) => `<a class="article-card reveal" href="${base}${treatmentPath(x)}">
+            <div class="media media--ar media__zoom" style="--ar:4/3">${imgTag(x.image, { base, sizes: '(max-width:900px) 50vw, 28vw' })}</div>
+            <h3 class="h3 mt-2">${esc(x.title)}</h3>
+            <p>${esc(x.short)}</p>
+            <p class="mt-2"><span class="link-u">${esc(t('common.discover'))} ${arrow}</span></p>
+          </a>`
+            )
+            .join('')}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>`;
+  };
+
   const main = `
 ${pageHero({
     label: `01 — ${t('nav.treatments')}`,
@@ -16,30 +59,24 @@ ${pageHero({
     crumbs: [{ label: t('nav.home'), path: '' }, { label: t('nav.treatments') }],
     base
   })}
-<section class="section section--flush-top">
+
+<section class="section section--flush-top section--sm">
   <div class="wrap">
-    <div class="team-grid team-grid--2">
+    <nav class="areanav" aria-label="${attr(t('nav.treatmentAreas'))}">
       ${treatments.categories
         .map(
-          (c) => `<a class="person reveal" href="${base}${catPath(c)}">
-        <div class="media media--ar media__zoom" style="--ar:4/3">
-          ${imgTag(c.image, { base, sizes: '(max-width: 760px) 100vw, 46vw' })}
-        </div>
-        <div class="person__info">
-          <div class="row row--between" style="gap:1rem">
-            <h2 class="h3">${esc(c.title)}</h2>
-            <span class="num" style="color:var(--stone-light)">${esc(c.num)}</span>
-          </div>
-          <p class="body mt-1 measure-sm">${esc(c.lead)}</p>
-          <p class="small mt-2" style="color:var(--stone-light)">${c.items.map((x) => esc(byTreatment[x].title)).join(' · ')}</p>
-          <p class="mt-3"><span class="link-u">${esc(t('common.discover'))} ${arrow}</span></p>
-        </div>
+          (c) => `<a class="areanav__item" href="#${c.slug}">
+        <span class="num">${esc(c.num)}</span>
+        <span class="areanav__label h4">${esc(c.title)}</span>
+        <span class="small" style="color:var(--stone-light)">${c.items.length} ${esc(t('cat.treatmentsCount'))}</span>
       </a>`
         )
         .join('')}
-    </div>
+    </nav>
   </div>
 </section>
+
+${treatments.categories.map(sezione).join('')}
 ${bookingBand(base)}`;
 
   return layout({
@@ -49,148 +86,26 @@ ${bookingBand(base)}`;
     depth: 1,
     current: PATH.treatments,
     crumbs: [{ label: t('nav.home'), path: '' }, { label: t('nav.treatments'), path: PATH.treatments }],
-    main
-  });
-};
-
-/* ========================================= /trattamenti/[gruppo] ========= */
-export const categoryPage = (c) => {
-  const base = '../../';
-  const items = c.items.map((s) => byTreatment[s]).filter(Boolean);
-  const techs = techOf(c);
-  const docs = specialistsOf(c);
-  const faq = items.map((x) => x.faq[0]).filter(Boolean);
-
-  const main = `
-${pageHero({
-    label: `${c.num} — ${t('cat.areaLabel')}`,
-    title: lines([esc(c.title)]),
-    lead: esc(c.lead),
-    aside: `${items.length} ${t('cat.treatmentsCount')}<br>${docs.length} ${t('cat.specialistsCount')}`,
-    crumbs: [{ label: t('nav.home'), path: '' }, { label: t('nav.treatments'), path: PATH.treatments }, { label: c.title }],
-    base,
-    media: c.image,
-    mediaAr: '21/9'
-  })}
-
-<section class="section">
-  <div class="wrap">
-    <div class="grid">
-      <div class="col-5">
-        <span class="label reveal">${esc(t('cat.theArea'))}</span>
-        <h2 class="h2 mt-2 reveal">${lines([t('cat.howT1'), `<em class="serif-italic">${t('cat.howT2')}</em>`])}</h2>
-      </div>
-      <div class="col-6 start-7 prose reveal">
-        ${c.intro.map((p) => `<p>${esc(p)}</p>`).join('')}
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="section section--flush-top">
-  <div class="wrap">
-    ${sectionHead({
-      label: t('cat.included'),
-      title: lines([t('cat.includedT1'), `<em class="serif-italic">${esc(c.title.toLowerCase())}.</em>`]),
-      aside: t('cat.includedAside')
-    })}
-    <div class="article-list">
-      ${items
-        .map(
-          (r) => `<a class="article-card reveal" href="${base}${treatmentPath(r)}">
-        <div class="media media--ar media__zoom" style="--ar:4/3">${imgTag(r.image, { base, sizes: '(max-width:900px) 50vw, 33vw' })}</div>
-        <h3 class="h3 mt-2">${esc(r.title)}</h3>
-        <p>${esc(r.short)}</p>
-        <p class="mt-2"><span class="link-u">${esc(t('common.discover'))} ${arrow}</span></p>
-      </a>`
-        )
-        .join('')}
-    </div>
-  </div>
-</section>
-
-<section class="section dark">
-  <div class="wrap">
-    ${sectionHead({
-      label: t('common.technologyUsed'),
-      title: lines([t('tr.toolsT1'), `<em class="serif-italic">${t('tr.toolsAreaT2')}</em>`]),
-      link: { href: PATH.technologies, label: t('common.allTechnologies') },
-      base
-    })}
-    <div class="team-grid team-grid--3">
-      ${techs
-        .map(
-          (x) => `<a class="person reveal" href="${base}${PATH.technologies}#${x.slug}">
-        <div class="media media--ar media--duo media__zoom" style="--ar:3/4">
-          ${imgTag(x.image, { base, sizes: '(max-width: 560px) 100vw, (max-width: 1000px) 50vw, 33vw' })}
-          <div class="person__overlay"><p>${esc(x.text)}</p><span class="link-u">${esc(t('common.discoverTechnology'))} ${arrow}</span></div>
-        </div>
-        <div class="person__info">
-          <h3 class="h4">${esc(x.title)}</h3>
-          <p class="person__role">${esc(x.kicker)}</p>
-        </div>
-      </a>`
-        )
-        .join('')}
-    </div>
-  </div>
-</section>
-
-<section class="section">
-  <div class="wrap">
-    ${sectionHead({
-      label: t('common.specialists'),
-      title: lines([t('cat.whoT1'), `<em class="serif-italic">${t('cat.whoT2')}</em>`]),
-      link: { href: PATH.team, label: 'Tutto il team' },
-      base
-    })}
-    <div class="team-grid">${docs.map((p) => personCard(p, base)).join('')}</div>
-  </div>
-</section>
-
-<section class="section section--flush-top">
-  <div class="wrap">
-    <div class="grid">
-      <div class="col-4">
-        <span class="label reveal">${esc(t('common.faqTitle'))}</span>
-        <h2 class="h2 mt-2 reveal">${lines([esc(c.title) + '.'])}</h2>
-        <p class="body mt-3 measure-sm reveal">${esc(t('page.faqAside'))}</p>
-        <p class="mt-3 reveal"><a class="link-u" href="${base}${PATH.contact}">${esc(t('common.askQuestion'))} ${arrow}</a></p>
-      </div>
-      <div class="col-7 start-7">${faqList(faq, 'cat')}</div>
-    </div>
-  </div>
-</section>
-${bookingBand(base)}`;
-
-  return layout({
-    title: metaTitle(c.seo.title),
-    description: c.seo.description,
-    path: catPath(c),
-    depth: 2,
-    current: PATH.treatments,
-    preload: [c.image],
-    crumbs: [
-      { label: t('nav.home'), path: '' },
-      { label: t('nav.treatments'), path: PATH.treatments },
-      { label: c.title, path: catPath(c) }
-    ],
     jsonLd: [
+      dentistLd(),
       {
-        '@type': 'MedicalSpecialty',
-        name: c.title,
-        description: c.lead,
-        url: `${site.url}/${catPath(c)}`
-      },
-      faqLd(faq)
+        '@type': 'ItemList',
+        name: t('nav.treatments'),
+        itemListElement: treatments.items.map((x, i) => ({
+          '@type': 'ListItem',
+          position: i + 1,
+          name: x.title,
+          url: `${site.url}/${getLang()}/${treatmentPath(x)}`
+        }))
+      }
     ],
     main
   });
 };
 
-/* ================================ /trattamenti/[gruppo]/[slug] =========== */
+/* ========================================= /trattamenti/[slug] =========== */
 export const treatmentPage = (tr) => {
-  const base = '../../../';
+  const base = '../../';
   const cat = byCategory[tr.category];
   const doc = byPerson[tr.doctor];
   const related = tr.related.map((s) => byTreatment[s]).filter(Boolean);
@@ -205,7 +120,6 @@ ${pageHero({
     crumbs: [
       { label: t('nav.home'), path: '' },
       { label: t('nav.treatments'), path: PATH.treatments },
-      { label: cat.title, path: catPath(cat) },
       { label: tr.title }
     ],
     base,
@@ -340,13 +254,12 @@ ${bookingBand(base)}`;
     title: metaTitle(tr.seo.title),
     description: tr.seo.description,
     path: treatmentPath(tr),
-    depth: 3,
+    depth: 2,
     current: PATH.treatments,
     preload: [tr.image],
     crumbs: [
       { label: t('nav.home'), path: '' },
       { label: t('nav.treatments'), path: PATH.treatments },
-      { label: cat.title, path: catPath(cat) },
       { label: tr.title, path: treatmentPath(tr) }
     ],
     jsonLd: [

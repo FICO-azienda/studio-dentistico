@@ -559,8 +559,8 @@ const UI = {
   'book.title1': ['Prenota', 'Book'],
   'book.title2': ['una visita.', 'an appointment.'],
   'book.lead': [
-    'Scegli il servizio: le domande cambiano di conseguenza e sono al massimo cinque. Puoi prenotare un appuntamento oppure chiedere di essere ricontattato.',
-    'Choose the service: the questions change accordingly, and there are never more than five. You can book an appointment or ask us to call you back.'
+    'Due minuti. Puoi fissare un appuntamento oppure chiedere di essere ricontattato.',
+    'Two minutes. You can book an appointment or ask us to call you back.'
   ],
   'book.preferPhone': ['Preferisci parlare?', 'Prefer to talk?'],
   'book.step': ['Passo', 'Step'],

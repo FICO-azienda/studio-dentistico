@@ -15,7 +15,7 @@ import { emailPaziente, emailStudio, emailConferma } from '../api/_lib/templates
 import { buildIcs, localeToUtc } from '../api/_lib/ics.mjs';
 import { studio } from '../api/_lib/studio.mjs';
 import { rateLimit, _reset } from '../api/_lib/ratelimit.mjs';
-import { byService, visibleQuestions, computePriority, computeTags, buildSummary, validateAnswers } from '../api/_lib/flows.mjs';
+import { flows, byService, visibleQuestions, computePriority, computeTags, buildSummary, validateAnswers } from '../api/_lib/flows.mjs';
 
 // niente email vere durante i test
 const ENV = { MAIL_PROVIDER: 'console', BOOKING_STORE: 'log', BOOKING_NOTIFY_EMAIL: 'studio@example.it' };
@@ -134,10 +134,19 @@ test('tag automatici: servizio piu\' eventuali tag delle risposte', () => {
 
 test('riepilogo: una riga per domanda pertinente', () => {
   const s = byService.sbiancamento;
-  const a = { 'gia-fatto': 'mai', obiettivo: 'ridurre-macchie', sensibilita: 'no', tempi: 'non-ho-fretta' };
+  const a = { 'gia-fatto': 'mai', obiettivo: 'ridurre-macchie', sensibilita: 'no' };
   const r = buildSummary(s, a);
-  assert.equal(r.length, 4);
+  assert.equal(r.length, 3);
   assert.equal(r[1].value, 'Ridurre macchie');
+});
+
+test('nessun percorso supera le quattro domande', () => {
+  for (const s of flows.services) {
+    assert.ok(
+      s.questions.length <= 4,
+      s.id + ' ha ' + s.questions.length + ' domande'
+    );
+  }
 });
 
 test('risposta non prevista dalla configurazione: rifiutata', () => {

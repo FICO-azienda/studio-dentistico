@@ -1,7 +1,7 @@
 # A ogni push su main: ricostruisce il sito, passa il controllo qualita' e
 # pubblica su GitHub Pages. Sulle pull request si ferma alla verifica.
 #
-# Sito pubblicato: https://cesarecicogna04-spec.github.io/studio-dentistico/
+# Sito pubblicato: https://fico-azienda.github.io/studio-dentistico/
 name: Build e deploy
 
 on:

@@ -1,0 +1,628 @@
+{
+  "_nota": "Traduzione inglese dei percorsi di prenotazione. I VALORI delle opzioni restano quelli italiani: sono identificatori stabili, non testo. Qui si traducono solo le etichette. 'common' copre le risposte che ricorrono in piu' servizi; 'services' contiene le specifiche.",
+
+  "chooseLabel": "What do you need?",
+  "chooseHint": "Choose the service: the questions change accordingly. There are never more than five.",
+  "searchPlaceholder": "Search for a service…",
+
+  "groups": {
+    "visite": "Visits and check-ups",
+    "estetica": "Cosmetic",
+    "ortodonzia": "Orthodontics",
+    "mancanti": "Missing teeth and restorations",
+    "cure": "Treatment",
+    "chirurgia": "Surgery",
+    "urgenze": "Urgent care",
+    "informazioni": "Information"
+  },
+
+  "tail": {
+    "modalita": {
+      "q": "How would you like to proceed?",
+      "o": { "prenota": "Book an appointment", "ricontatto": "Ask us to call you back" }
+    },
+    "canale": {
+      "q": "How would you prefer to be contacted?",
+      "o": { "telefono": "Phone", "whatsapp": "WhatsApp", "email": "Email" }
+    },
+    "fascia": {
+      "q": "When would you prefer to be contacted?",
+      "o": { "mattina": "Morning", "pausa-pranzo": "Lunchtime", "pomeriggio": "Afternoon", "sera": "Evening" }
+    }
+  },
+
+  "common": {
+    "si": "Yes",
+    "no": "No",
+    "non-so": "I'm not sure",
+    "non-lo-so": "I don't know",
+    "non-ricordo": "I don't remember",
+    "altro": "Something else",
+    "mai": "Never",
+    "nessuno": "None",
+    "lieve": "Mild",
+    "moderato": "Moderate",
+    "forte": "Severe",
+    "dolore": "Pain",
+    "gonfiore": "Swelling",
+    "trauma": "Injury",
+    "sanguinamento": "Bleeding",
+    "dente-rotto": "Broken tooth",
+    "sensibilita": "Sensitivity",
+    "sensibilita-dentale": "Tooth sensitivity",
+    "alito-cattivo": "Bad breath",
+    "sanguinamento-gengivale": "Bleeding gums",
+    "macchie": "Staining",
+    "controllo": "Check-up",
+    "meno-di-6-mesi": "Less than 6 months",
+    "6-12-mesi": "6-12 months",
+    "1-2-anni": "1-2 years",
+    "piu-di-2-anni": "More than 2 years",
+    "piu-di-un-anno": "More than a year",
+    "meno-di-6-mesi-fa": "Less than 6 months ago",
+    "6-12-mesi-fa": "6-12 months ago",
+    "1-2-anni-fa": "1-2 years ago",
+    "piu-di-2-anni-fa": "More than 2 years ago",
+    "da-oggi": "Since today",
+    "da-alcuni-giorni": "A few days",
+    "da-alcune-settimane": "A few weeks",
+    "da-piu-tempo": "Longer than that",
+    "1-3-giorni": "1-3 days",
+    "piu-di-3-giorni": "More than 3 days",
+    "allineatori": "Clear aligners",
+    "impianti": "Implants",
+    "protesi": "A denture or restoration",
+    "protesi-mobile": "Removable denture",
+    "protesi-fissa": "Fixed restoration",
+    "apparecchio-fisso": "Fixed braces",
+    "corona": "Crown",
+    "ponte": "Bridge",
+    "consulenza": "A full consultation",
+    "prima-visita": "First visit",
+    "igiene": "Hygiene",
+    "ortodonzia": "Orthodontics",
+    "implantologia": "Implants",
+    "estetica": "Cosmetic dentistry",
+    "chirurgia": "Surgery",
+    "devitalizzazione": "Root canal treatment",
+    "sbiancamento": "Whitening",
+    "faccette": "Veneers",
+    "otturazione": "Filling",
+    "estrazione": "Extraction",
+    "impianto": "Implant",
+    "gengive": "Gums",
+    "denti-storti": "Crooked teeth",
+    "denti-mancanti": "Missing teeth",
+    "problema-estetico": "The way they look",
+    "motivo-estetico": "For appearance",
+    "migliorare-il-sorriso": "Improve my smile",
+    "ricostruzioni": "Aesthetic restorations",
+    "durante-la-masticazione": "When chewing",
+    "difficolta-nella-masticazione": "Difficulty chewing"
+  },
+
+  "services": {
+    "prima-visita": {
+      "label": "First visit",
+      "hint": "Full examination, radiographs and treatment plan.",
+      "q": {
+        "prima-volta": { "q": "Is this your first time at our practice?" },
+        "motivo": {
+          "q": "What is the main reason for your visit?",
+          "o": {
+            "controllo-generale": "A general check-up",
+            "dolore-o-fastidio": "Pain or discomfort",
+            "vorrei-migliorare-il-mio-sorriso": "I would like to improve my smile",
+            "non-ho-un-problema-specifico": "No specific problem"
+          }
+        },
+        "dolore": { "q": "Are you in pain or discomfort right now?" },
+        "ultima-visita": { "q": "When did you last see a dentist?" }
+      }
+    },
+
+    "controllo-generale": {
+      "label": "General check-up",
+      "hint": "Routine check of teeth, gums and existing restorations.",
+      "q": {
+        "ultimo-controllo": { "q": "How long since your last check-up?" },
+        "segnalazione": {
+          "q": "Is there anything specific you would like to mention?",
+          "o": { "fastidio-durante-la-masticazione": "Discomfort when chewing" }
+        },
+        "gia-paziente": { "q": "Have you had treatment at our practice before?" }
+      }
+    },
+
+    "igiene": {
+      "label": "Dental hygiene",
+      "hint": "Professional hygiene appointment and personalised advice.",
+      "q": {
+        "ultima-igiene": { "q": "When did you last have a professional hygiene appointment?" },
+        "problemi": { "q": "Do you have any of these?", "o": { "tartaro-evidente": "Visible calculus" } },
+        "dispositivi": { "q": "Do you wear any appliances or have any restorations?" }
+      }
+    },
+
+    "sbiancamento": {
+      "label": "Teeth whitening",
+      "hint": "Professional whitening in the practice or at home.",
+      "q": {
+        "gia-fatto": {
+          "q": "Have you had whitening before?",
+          "o": { "si-una-volta": "Yes, once", "si-piu-volte": "Yes, more than once" }
+        },
+        "obiettivo": {
+          "q": "What are you hoping for?",
+          "o": {
+            "schiarire-il-colore-generale": "A lighter overall shade",
+            "ridurre-macchie": "Reduce staining",
+            "prepararmi-per-un-evento": "Getting ready for an occasion",
+            "vorrei-prima-una-consulenza": "I would like advice first"
+          }
+        },
+        "sensibilita": { "q": "Do you have sensitive teeth?", "o": { "occasionale": "Occasionally", "frequente": "Often" } },
+        "tempi": {
+          "q": "When would you like the result?",
+          "o": {
+            "il-prima-possibile": "As soon as possible",
+            "entro-un-mese": "Within a month",
+            "entro-3-mesi": "Within three months",
+            "non-ho-fretta": "No rush"
+          }
+        }
+      }
+    },
+
+    "ortodonzia": {
+      "label": "Orthodontics",
+      "hint": "Orthodontic assessment for adults and teenagers.",
+      "q": {
+        "per-chi": { "q": "Who is the appointment for?", "o": { "me": "For me", "figlio": "For my child" } },
+        "motivo": {
+          "q": "What is the main reason?",
+          "o": {
+            "denti-affollati": "Crowded teeth",
+            "spazi-tra-i-denti": "Gaps between teeth",
+            "problemi-di-morso": "Bite problems",
+            "recidiva-dopo-apparecchio": "Relapse after previous braces",
+            "non-lo-so-vorrei-una-valutazione": "I'm not sure, I would like an assessment"
+          }
+        },
+        "gia-trattato": { "q": "Have you had orthodontic treatment before?" },
+        "soluzione": {
+          "q": "What kind of solution interests you?",
+          "o": {
+            "allineatori-trasparenti": "Clear aligners",
+            "apparecchio-tradizionale": "Conventional braces",
+            "non-ho-preferenze": "No preference",
+            "vorrei-capire-le-alternative": "I would like to understand the options"
+          }
+        }
+      }
+    },
+
+    "allineatori": {
+      "label": "Clear aligners",
+      "hint": "Custom removable trays.",
+      "q": {
+        "valutazione": { "q": "Have you already had an orthodontic assessment?" },
+        "apparecchi-passati": { "q": "Have you worn orthodontic appliances before?" },
+        "obiettivo": {
+          "q": "What is your main goal?",
+          "o": {
+            "allineare-i-denti-anteriori": "Align the front teeth",
+            "correggere-affollamento": "Correct crowding",
+            "chiudere-spazi": "Close gaps",
+            "correggere-il-morso": "Correct the bite",
+            "migliorare-l-estetica": "Improve appearance"
+          }
+        },
+        "visibilita": {
+          "q": "How important is it that treatment is discreet?",
+          "o": {
+            "molto-importante": "Very important",
+            "abbastanza-importante": "Fairly important",
+            "non-e-prioritario": "Not a priority"
+          }
+        }
+      }
+    },
+
+    "implantologia": {
+      "label": "Dental implants",
+      "hint": "Replacing missing teeth with implants.",
+      "q": {
+        "quanti-denti": {
+          "q": "How many teeth need replacing?",
+          "o": { "piu-di-3": "More than 3", "arcata-completa": "A full arch" }
+        },
+        "estratto": { "q": "Has the tooth already been removed?", "o": { "parzialmente": "Partly" } },
+        "da-quanto": { "q": "How long has the tooth been missing?" },
+        "esami": { "q": "Have you already had radiographs or a CT scan?" },
+        "preventivo-ricevuto": { "q": "Have you already received an estimate or a treatment plan?" }
+      }
+    },
+
+    "faccette": {
+      "label": "Dental veneers",
+      "hint": "Ceramic laminates for shape, colour and proportion.",
+      "q": {
+        "obiettivo": {
+          "q": "What are you hoping for?",
+          "o": {
+            "cambiare-forma-dei-denti": "Change the shape of my teeth",
+            "cambiare-colore": "Change the colour",
+            "chiudere-piccoli-spazi": "Close small gaps",
+            "correggere-denti-consumati": "Repair worn teeth"
+          }
+        },
+        "quanti-denti": { "q": "How many teeth would you like to improve?", "o": { "piu-di-6": "More than 6" } },
+        "gia-estetici": { "q": "Have you had cosmetic dental treatment before?" },
+        "simulazione": {
+          "q": "Would you like a simulation of the result?",
+          "o": { "vorrei-maggiori-informazioni": "I would like more information" }
+        }
+      }
+    },
+
+    "estetica": {
+      "label": "Cosmetic dentistry",
+      "hint": "Not sure where to start: we will guide you.",
+      "q": {
+        "migliorare": {
+          "q": "What would you like to improve?",
+          "o": {
+            "colore-dei-denti": "The colour of my teeth",
+            "forma": "Their shape",
+            "allineamento": "Their alignment",
+            "spazi": "Gaps",
+            "denti-consumati": "Worn teeth",
+            "sorriso-nel-suo-complesso": "My smile as a whole"
+          }
+        },
+        "percorso": { "q": "Which route interests you?" }
+      }
+    },
+
+    "conservativa": {
+      "label": "Fillings / Restorative",
+      "hint": "Treating decay and restorations.",
+      "q": {
+        "motivo": {
+          "q": "What is the reason for your request?",
+          "o": {
+            "carie-diagnosticata": "Decay already diagnosed",
+            "dente-sensibile": "A sensitive tooth",
+            "vecchia-otturazione": "An old filling",
+            "otturazione-persa": "A filling has come out",
+            "dente-scheggiato": "A chipped tooth"
+          }
+        },
+        "dolore": {
+          "q": "Are you in pain?",
+          "o": { "solo-con-caldo-freddo": "Only with hot or cold", "continuo": "Constant" }
+        },
+        "da-quanto": { "q": "How long have you had this problem?" }
+      }
+    },
+
+    "endodonzia": {
+      "label": "Root canal treatment",
+      "hint": "Root canals and retreatment under the microscope.",
+      "q": {
+        "consigliata": { "q": "Has root canal treatment already been recommended to you?" },
+        "dolore": { "q": "Are you in pain?" },
+        "quando-dolore": {
+          "q": "When does the pain appear?",
+          "o": {
+            "con-caldo-freddo": "With hot or cold",
+            "spontaneamente": "Spontaneously",
+            "di-notte": "At night",
+            "continuamente": "All the time"
+          }
+        },
+        "gia-trattato": { "q": "Has this tooth been treated before?" }
+      }
+    },
+
+    "parodontologia": {
+      "label": "Gums / Periodontology",
+      "hint": "Bleeding, swollen gums, loose teeth.",
+      "q": {
+        "problema": {
+          "q": "What are you experiencing?",
+          "o": {
+            "gengive-gonfie": "Swollen gums",
+            "recessione-gengivale": "Receding gums",
+            "mobilita-dentale": "Loose teeth"
+          }
+        },
+        "frequenza": {
+          "q": "How often do your gums bleed?",
+          "o": { "occasionalmente": "Occasionally", "spesso": "Often", "ogni-giorno": "Every day" }
+        },
+        "diagnosi": { "q": "Have you been diagnosed with periodontitis?" },
+        "gia-trattamenti": { "q": "Have you had gum treatment before?" }
+      }
+    },
+
+    "protesi": {
+      "label": "Dental restorations",
+      "hint": "Not sure which solution is right for you.",
+      "q": {
+        "problema": {
+          "q": "What kind of problem do you have?",
+          "o": {
+            "dente-mancante": "A missing tooth",
+            "piu-denti-mancanti": "Several missing teeth",
+            "protesi-esistente-da-sostituire": "An existing restoration to replace",
+            "protesi-danneggiata": "A damaged restoration"
+          }
+        },
+        "protesi-attuale": { "q": "Do you already wear a denture or restoration?" },
+        "percorso": { "q": "Which solution would you like to explore?" }
+      }
+    },
+
+    "corona": {
+      "label": "Crown",
+      "hint": "Rebuilding a compromised tooth.",
+      "q": {
+        "motivo": {
+          "q": "Why do you need a crown?",
+          "o": {
+            "dente-devitalizzato": "A root-treated tooth",
+            "corona-esistente-danneggiata": "An existing crown is damaged",
+            "mi-e-stata-consigliata": "It has been recommended to me"
+          }
+        },
+        "corona-presente": { "q": "Do you already have a crown on this tooth?" },
+        "dolore": { "q": "Any pain or discomfort?", "o": { "si-lieve": "Yes, mild", "si-forte": "Yes, severe" } }
+      }
+    },
+
+    "ponte": {
+      "label": "Dental bridge",
+      "hint": "Replacing one or more missing teeth.",
+      "q": {
+        "quanti": { "q": "How many teeth are missing?", "o": { "3-o-piu": "3 or more" } },
+        "ponte-presente": { "q": "Do you already have a bridge?" },
+        "alternative": {
+          "q": "Would you also like to consider implants?",
+          "o": { "vorrei-capire-le-differenze": "I would like to understand the differences" }
+        }
+      }
+    },
+
+    "dentiera": {
+      "label": "Dentures",
+      "hint": "Removable dentures: new, replacement or stabilised.",
+      "q": {
+        "usa-protesi": { "q": "Do you already wear a removable denture?" },
+        "problema": {
+          "q": "What is the main problem?",
+          "o": {
+            "la-protesi-si-muove": "The denture moves",
+            "fa-male": "It hurts",
+            "e-rotta": "It is broken",
+            "e-molto-vecchia": "It is very old",
+            "vorrei-una-nuova-protesi": "I would like a new one",
+            "vorrei-una-soluzione-piu-stabile": "I would like something more stable"
+          }
+        },
+        "impianti": { "q": "Would you like to consider an implant-supported solution?", "o": { "vorrei-informazioni": "I would like information" } }
+      }
+    },
+
+    "chirurgia": {
+      "label": "Oral surgery",
+      "hint": "Extractions, impacted teeth, outpatient procedures.",
+      "q": {
+        "motivo": {
+          "q": "What is the reason for your visit?",
+          "o": {
+            "estrazione-dentale": "A tooth extraction",
+            "dente-incluso": "An impacted tooth",
+            "cisti": "A cyst",
+            "intervento-consigliato": "Surgery has been recommended"
+          }
+        },
+        "esami": { "q": "Have you already had radiographs?" },
+        "sintomi": { "q": "Any pain or swelling?", "o": { "entrambi": "Both" } }
+      }
+    },
+
+    "dente-del-giudizio": {
+      "label": "Wisdom tooth",
+      "hint": "Assessment or removal of a third molar.",
+      "q": {
+        "problema": {
+          "q": "What is the problem?",
+          "o": {
+            "dente-parzialmente-uscito": "The tooth is partly through",
+            "dente-incluso": "The tooth is impacted",
+            "mi-e-stata-consigliata-l-estrazione": "Removal has been recommended"
+          }
+        },
+        "panoramica": { "q": "Have you had a panoramic radiograph?" },
+        "apertura": {
+          "q": "Any swelling or difficulty opening your mouth?",
+          "o": { "si-leggero": "Yes, slight", "si-importante": "Yes, marked" }
+        }
+      }
+    },
+
+    "pediatrica": {
+      "label": "Children's dentistry",
+      "hint": "Visits and treatment for children and teenagers.",
+      "q": {
+        "eta": { "q": "How old is the child?" },
+        "motivo": { "q": "What is the reason for the visit?", "o": { "carie": "Decay" } },
+        "prima-volta": { "q": "Is this the child's first dental visit?" },
+        "dolore": { "q": "Is the child in pain right now?" }
+      }
+    },
+
+    "bruxismo": {
+      "label": "Bruxism / Night guard",
+      "hint": "Grinding, clenching, custom night guards.",
+      "q": {
+        "problema": {
+          "q": "What are you experiencing?",
+          "o": {
+            "digrigno-i-denti": "I grind my teeth",
+            "stringo-i-denti": "I clench my teeth",
+            "dolore-mandibolare": "Jaw pain",
+            "mal-di-testa": "Headaches",
+            "denti-consumati": "Worn teeth",
+            "bite-da-sostituire": "A night guard to replace"
+          }
+        },
+        "quando": {
+          "q": "When do you notice it most?",
+          "o": { "di-notte": "At night", "al-risveglio": "On waking", "durante-il-giorno": "During the day", "sempre": "All the time" }
+        },
+        "bite-usato": { "q": "Have you worn a night guard before?" }
+      }
+    },
+
+    "urgenza": {
+      "label": "Pain / Urgent",
+      "hint": "A short path: four questions and we call you back.",
+      "note": "If you are in severe pain, have swelling that is spreading, a fever or difficulty swallowing, call the practice instead of booking online.",
+      "q": {
+        "problema": {
+          "q": "What is the problem?",
+          "o": { "dolore-forte": "Severe pain", "otturazione-corona-persa": "A filling or crown has come out" }
+        },
+        "da-quanto": { "q": "How long has it been going on?" },
+        "intensita": { "q": "How intense is the pain, from 1 to 10?" },
+        "gonfiore": { "q": "Do you have any swelling?" }
+      }
+    },
+
+    "dente-rotto": {
+      "label": "Broken tooth",
+      "hint": "A fractured or chipped tooth.",
+      "q": {
+        "come": {
+          "q": "How did it break?",
+          "o": {
+            "durante-la-masticazione": "While chewing",
+            "si-e-rotto-spontaneamente": "It broke on its own"
+          }
+        },
+        "dolore": { "q": "Are you in pain?" },
+        "entita": {
+          "q": "Has a significant part of the tooth come away?",
+          "o": {
+            "piccola-scheggiatura": "A small chip",
+            "parte-del-dente": "Part of the tooth",
+            "gran-parte-del-dente": "Most of the tooth"
+          }
+        }
+      }
+    },
+
+    "trauma": {
+      "label": "Dental injury",
+      "hint": "A knock, a fall, a tooth moved or knocked out.",
+      "note": "If a tooth has come out completely, keep it in milk and call the practice straight away: time matters.",
+      "q": {
+        "quando": {
+          "q": "When did the injury happen?",
+          "o": {
+            "meno-di-2-ore-fa": "Less than 2 hours ago",
+            "oggi": "Today",
+            "ieri": "Yesterday",
+            "piu-di-un-giorno-fa": "More than a day ago"
+          }
+        },
+        "cosa": {
+          "q": "What happened?",
+          "o": {
+            "dente-scheggiato": "A tooth is chipped",
+            "dente-spostato": "A tooth has moved",
+            "dente-perso": "A tooth came out"
+          }
+        }
+      }
+    },
+
+    "secondo-parere": {
+      "label": "Second opinion",
+      "hint": "A review of a treatment plan received elsewhere.",
+      "q": {
+        "ambito": { "q": "Which treatment would you like a second opinion on?" },
+        "piano": { "q": "Have you already received a treatment plan?" },
+        "documentazione": {
+          "q": "What documentation do you have?",
+          "note": "Please do not upload documents here: bring them to your appointment, or we will ask for them through a secure channel.",
+          "o": {
+            "radiografie": "Radiographs",
+            "tac": "CT scan",
+            "preventivo": "An estimate",
+            "piano-di-trattamento": "A treatment plan",
+            "nessuna-documentazione": "No documentation"
+          }
+        }
+      }
+    },
+
+    "preventivo": {
+      "label": "Request an estimate",
+      "hint": "Information about the cost of treatment.",
+      "note": "Published prices are indicative. A definitive estimate requires clinical assessment: we cannot calculate it from a form.",
+      "q": {
+        "trattamento": {
+          "q": "Which treatment would you like cost information about?",
+          "o": {
+            "igiene-dentale": "Dental hygiene",
+            "ortodonzia-o-allineatori": "Orthodontics or aligners",
+            "faccette-o-estetica": "Veneers or cosmetic dentistry",
+            "otturazioni": "Fillings",
+            "protesi-corona-o-ponte": "A denture, crown or bridge"
+          }
+        },
+        "visita-fatta": { "q": "Have you already had a visit?" },
+        "diagnosi": { "q": "Do you already have a diagnosis or a treatment plan?" }
+      }
+    },
+
+    "post-trattamento": {
+      "label": "Follow-up check",
+      "hint": "A review after treatment you have already had.",
+      "q": {
+        "trattamento": { "q": "Which treatment did you have?" },
+        "quando": {
+          "q": "When did you have it?",
+          "o": {
+            "questa-settimana": "This week",
+            "1-4-settimane-fa": "1-4 weeks ago",
+            "1-6-mesi-fa": "1-6 months ago",
+            "piu-di-6-mesi-fa": "More than 6 months ago"
+          }
+        },
+        "problema": {
+          "q": "Is anything wrong?",
+          "o": {
+            "fastidio": "Discomfort",
+            "problema-con-la-protesi-apparecchio": "A problem with the restoration or appliance"
+          }
+        }
+      }
+    },
+
+    "altro": {
+      "label": "Something else",
+      "hint": "Your request does not fit the categories.",
+      "q": {
+        "descrizione": {
+          "q": "Briefly describe the reason for your request",
+          "placeholder": "A couple of lines is enough: it helps us direct you to the right person."
+        }
+      }
+    }
+  }
+}

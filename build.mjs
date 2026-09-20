@@ -14,7 +14,7 @@ import { LANGS, DEFAULT_LANG, ROUTES, altPath, setLang } from './src/build/i18n.
 import { homePage } from './src/build/page-home.mjs';
 import { studioPage, teamPage, personPage, techPage, firstVisitPage, contactPage, bookingPage } from './src/build/page-core.mjs';
 import { treatmentsIndex, categoryPage, treatmentPage, casesPage, journalIndex, articlePage, legalPage, notFoundPage } from './src/build/page-catalog.mjs';
-import { LEGAL } from './src/build/legal.mjs';
+import { legalPages } from './src/build/legal.mjs';
 
 const OUT = path.join(ROOT, 'dist');
 
@@ -56,7 +56,7 @@ for (const lang of LANGS) {
   add(R.firstVisit, firstVisitPage());
   add(R.contact, contactPage());
   add(R.book, bookingPage());
-  LEGAL.forEach((l) => add(R[l.routeKey], legalPage(l)));
+  legalPages().forEach((l) => add(R[l.routeKey], legalPage(l)));
 }
 
 /* -- 404 e ingresso senza lingua ------------------------------------------- */

@@ -39,6 +39,44 @@ Per rigenerare le fotografie: `npm run images`. Per le icone: `npm run icons`.
 
 ---
 
+## Bilingue italiano / inglese
+
+Il sito viene generato due volte: **`/it/`** e **`/en/`**, 47 pagine per lingua.
+La radice smista verso la lingua del browser e, senza JavaScript, mostra una
+pagina di scelta.
+
+Tre meccanismi, tutti in `src/build/i18n.mjs` e `content/en/`:
+
+1. **Indirizzi tradotti.** `/it/trattamenti/` diventa `/en/treatments/`,
+   `/prima-visita/` diventa `/first-visit/`, `/casi-clinici/` diventa
+   `/case-studies/`. Gli slug dei contenuti restano gli stessi in entrambe le
+   lingue, cosi' `altPath()` ritrova sempre la pagina corrispondente.
+2. **Interfaccia.** Un dizionario di oltre 300 chiavi: `t('nav.book')` restituisce
+   "Prenota una visita" oppure "Book an appointment".
+3. **Contenuti.** `content/en/*.json` traduce chiave per chiave i file italiani.
+   Cio' che non e' ancora tradotto **ricade sull'italiano** invece di sparire:
+   un trattamento aggiunto oggi funziona subito in entrambe le lingue.
+
+```
+content/treatments.json          italiano, la fonte
+content/en/treatments.json       { "items": { "faccette": { "title": "Dental veneers", … } } }
+```
+
+Ogni pagina dichiara `hreflang` reciproci piu' `x-default`, `og:locale` e le sue
+alternative; la sitemap elenca entrambe le lingue con `xhtml:link`. Nell'header
+c'e' un selettore IT/EN che porta alla pagina equivalente, non alla home.
+
+**Email.** Le due email automatiche e quella di conferma seguono la lingua del
+sito che il paziente ha usato — il campo `lang` viaggia con la richiesta. La
+notifica interna resta in italiano, perche' la legge la segreteria.
+
+**Percorsi di prenotazione.** `content/en/booking-flows.json` traduce le
+etichette dei 27 servizi e delle loro domande. I **valori** delle risposte
+restano gli identificatori italiani: sono chiavi, non testo, e questo mantiene
+stabili priorita', tag e archivio a prescindere dalla lingua.
+
+---
+
 ## Il CMS
 
 Tutto il sito è generato dai file JSON in `content/`. Per aggiornare una sezione

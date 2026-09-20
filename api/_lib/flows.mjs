@@ -15,10 +15,10 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
-function carica() {
+function carica(relativo, obbligatorio = true) {
   const candidati = [
-    path.resolve(process.cwd(), 'content', 'booking-flows.json'),
-    path.resolve(import.meta.dirname, '..', '..', 'content', 'booking-flows.json')
+    path.resolve(process.cwd(), 'content', relativo),
+    path.resolve(import.meta.dirname, '..', '..', 'content', relativo)
   ];
   for (const p of candidati) {
     try {
@@ -27,7 +27,8 @@ function carica() {
       /* prova il successivo */
     }
   }
-  throw new Error('content/booking-flows.json non trovato');
+  if (obbligatorio) throw new Error('content/' + relativo + ' non trovato');
+  return null;
 }
 
 export const slug = (s) =>
@@ -80,7 +81,52 @@ function normalizza(raw) {
   };
 }
 
-export const flows = normalizza(carica());
+export const flows = normalizza(carica('booking-flows.json'));
+
+/** Traduzione inglese: solo etichette, i valori restano identificatori stabili. */
+const EN = carica(path.join('en', 'booking-flows.json'), false);
+
+/**
+ * Versione tradotta della configurazione. Cio' che non e' tradotto resta in
+ * italiano, cosi' un servizio nuovo funziona comunque in entrambe le lingue.
+ */
+export function flowsFor(lang = 'it') {
+  if (lang !== 'en' || !EN) return flows;
+  const comuni = EN.common || {};
+  const trS = EN.services || {};
+
+  const opz = (o, mappa) => ({ ...o, l: mappa?.[o.v] || comuni[o.v] || o.l });
+  const dom = (q, trQ) => ({
+    ...q,
+    q: trQ?.q || q.q,
+    note: trQ?.note ?? q.note,
+    placeholder: trQ?.placeholder ?? q.placeholder,
+    options: q.options.map((o) => opz(o, trQ?.o))
+  });
+
+  return {
+    ...flows,
+    chooseLabel: EN.chooseLabel || flows.chooseLabel,
+    chooseHint: EN.chooseHint || flows.chooseHint,
+    searchPlaceholder: EN.searchPlaceholder || flows.searchPlaceholder,
+    groups: flows.groups.map((g) => ({ ...g, label: EN.groups?.[g.id] || g.label })),
+    tail: {
+      modeQuestion: dom(flows.tail.modeQuestion, EN.tail?.modalita),
+      channelQuestion: dom(flows.tail.channelQuestion, EN.tail?.canale),
+      windowQuestion: dom(flows.tail.windowQuestion, EN.tail?.fascia)
+    },
+    services: flows.services.map((s) => {
+      const tr = trS[s.id];
+      return {
+        ...s,
+        label: tr?.label || s.label,
+        hint: tr?.hint ?? s.hint,
+        note: tr?.note ?? s.note,
+        questions: s.questions.map((q) => dom(q, tr?.q?.[q.id]))
+      };
+    })
+  };
+}
 export const byService = Object.fromEntries(flows.services.map((s) => [s.id, s]));
 
 /**
@@ -128,7 +174,11 @@ export function computeTags(service, answers = {}) {
 }
 
 /** Riepilogo leggibile: una riga per domanda pertinente. */
-export function buildSummary(service, answers = {}) {
+export function buildSummary(service, answers = {}, lang = 'it') {
+  if (lang === 'en') {
+    const f = flowsFor('en');
+    service = f.services.find((s) => s.id === service.id) || service;
+  }
   const righe = [];
   for (const q of visibleQuestions(service, answers)) {
     const val = answers[q.id];
@@ -177,14 +227,16 @@ export function validateAnswers(serviceId, answers = {}) {
   return Object.keys(errors).length ? { ok: false, errors } : { ok: true, answers: puliti, service };
 }
 
-/** Configurazione alleggerita da consegnare al browser. */
-export const clientConfig = () => ({
-  chooseLabel: flows.chooseLabel,
-  chooseHint: flows.chooseHint,
-  searchPlaceholder: flows.searchPlaceholder,
-  groups: flows.groups,
-  tail: flows.tail,
-  services: flows.services.map((s) => ({
+/** Configurazione alleggerita da consegnare al browser, nella lingua richiesta. */
+export const clientConfig = (lang = 'it') => {
+  const f = flowsFor(lang);
+  return {
+  chooseLabel: f.chooseLabel,
+  chooseHint: f.chooseHint,
+  searchPlaceholder: f.searchPlaceholder,
+  groups: f.groups,
+  tail: f.tail,
+  services: f.services.map((s) => ({
     id: s.id,
     group: s.group,
     label: s.label,
@@ -201,4 +253,5 @@ export const clientConfig = () => ({
       options: q.options.map((o) => ({ v: o.v, l: o.l, goto: o.goto }))
     }))
   }))
-});
+  };
+};

@@ -849,6 +849,7 @@
         privacy: form.privacy.checked,
         comunicazioni: form.comunicazioni?.checked || false,
         azienda: form.azienda?.value || '',
+        lang: document.documentElement.lang || 'it',
         startedAt: apertoIl
       };
 

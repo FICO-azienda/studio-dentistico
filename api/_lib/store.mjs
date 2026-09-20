@@ -57,6 +57,7 @@ export function buildRecord(data, { bookingId, ip = '', userAgent = '', now = ne
     ora_richiesta: data.oraRichiesta,
     seconda_preferenza: seconda,
     messaggio: data.messaggio,
+    lingua: data.lang || 'it',
     consenso_privacy: data.privacy,
     consenso_comunicazioni: data.comunicazioni,
     status: 'PENDING',

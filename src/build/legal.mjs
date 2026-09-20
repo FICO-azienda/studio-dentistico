@@ -1,6 +1,7 @@
 import { site } from './utils.mjs';
+import { getLang } from './i18n.mjs';
 
-export const LEGAL = [
+const LEGAL_IT = [
   {
     slug: 'privacy',
     routeKey: 'privacy',
@@ -71,3 +72,129 @@ export const LEGAL = [
     ]
   }
 ];
+
+const LEGAL_EN = [
+  {
+    slug: 'privacy',
+    routeKey: 'privacy',
+    title: 'Privacy Policy',
+    description: 'Information on the processing of personal data by Studio Liddi, under Regulation (EU) 2016/679.',
+    intro:
+      'Notice provided under Articles 13 and 14 of Regulation (EU) 2016/679 (GDPR) to users of this website and patients of the practice.',
+    sections: [
+      {
+        h: 'Data controller',
+        p: [
+          `${site.legalName}, ${site.address.street}, ${site.address.zip} ${site.address.city}, Italy — VAT no. ${site.vat}. Email: ${site.email}. Phone: ${site.phone}.`
+        ]
+      },
+      {
+        h: 'Data processed',
+        p: [
+          'Browsing data collected automatically by the website (IP address, browser type, pages visited) for technical purposes and for statistics in aggregate form.',
+          'Identification and contact data provided voluntarily through the contact and booking forms: first name, last name, email, phone and any notes.',
+          'Health data, processed exclusively within the provision of dental care and never collected through the online forms.'
+        ]
+      },
+      {
+        h: 'Purposes and legal basis',
+        p: [
+          'Data provided through the forms is processed to respond to enquiries and manage appointments, on the basis of consent and of pre-contractual measures.',
+          'Health data is processed for the purposes of preventive medicine, diagnosis and care under Article 9(2)(h) GDPR, and to comply with legal obligations in health, tax and administrative matters.'
+        ]
+      },
+      {
+        h: 'Retention',
+        p: [
+          'Contact data is kept for as long as needed to deal with the enquiry and, where a course of care begins, for the period required by the rules on health records.',
+          'Clinical records are kept indefinitely, as provided by Italian ministerial guidance on outpatient records.'
+        ]
+      },
+      {
+        h: 'Disclosure',
+        p: [
+          'Data may be disclosed to parties acting as processors (dental laboratories, IT consultants, accountants) and to the competent authorities in the cases provided by law. It is not disseminated and is not transferred outside the EU.'
+        ]
+      },
+      {
+        h: 'Your rights',
+        p: [
+          'You may exercise at any time the rights under Articles 15-22 GDPR — access, rectification, erasure, restriction, portability and objection — by writing to ' + site.email + '.',
+          'You also have the right to lodge a complaint with the Italian Data Protection Authority (www.garanteprivacy.it).'
+        ]
+      }
+    ]
+  },
+  {
+    slug: 'cookie-policy',
+    routeKey: 'cookie',
+    title: 'Cookie Policy',
+    description: 'Information on the cookies used by the Studio Liddi website.',
+    intro:
+      'This website uses only technical cookies necessary for it to function. It does not use profiling cookies or advertising trackers.',
+    sections: [
+      {
+        h: 'Technical cookies',
+        p: [
+          'These are the cookies needed to allow browsing and to provide the services requested. Their use does not require consent under Article 122 of the Italian Privacy Code.'
+        ]
+      },
+      {
+        h: 'Third-party cookies',
+        p: [
+          'The maps embedded in the Contact page are provided by the OpenStreetMap Foundation and may set their own technical cookies. Typefaces are served by Google Fonts.',
+          'No analytics or remarketing service is currently active on this site. Should any be activated in future, this notice will be updated and prior consent will be requested.'
+        ]
+      },
+      {
+        h: 'Managing cookies',
+        p: [
+          'You can delete or block cookies at any time through your browser settings. Disabling technical cookies may impair some features of the site.'
+        ]
+      }
+    ]
+  },
+  {
+    slug: 'termini',
+    routeKey: 'terms',
+    title: 'Terms and conditions',
+    description: 'Terms of use of the website and information on the dental services provided by Studio Liddi.',
+    intro: 'Terms of use of this website and the information required by Italian rules on healthcare communication.',
+    sections: [
+      {
+        h: 'Nature of the information',
+        p: [
+          'The content published on this site is for information only and in no way replaces the opinion of a healthcare professional. Nothing here constitutes a diagnosis, a prescription or a promise of results.',
+          'Every treatment described requires individual clinical assessment: indications, duration, outcomes and costs may vary considerably from patient to patient.'
+        ]
+      },
+      {
+        h: 'Healthcare communication',
+        p: [
+          `The information published complies with the transparency requirements of Article 9-bis of Italian Decree-Law 145/2013 as amended. Clinical director: ${site.director}.`
+        ]
+      },
+      {
+        h: 'Case studies and testimonials',
+        p: [
+          'Case images are illustrative and published with written informed consent. The results shown relate to individual situations and cannot be extended to other patients.',
+          'The reviews shown come from public platforms and are published in their original form, without selection for promotional purposes.'
+        ]
+      },
+      {
+        h: 'Intellectual property',
+        p: ['Texts, images and design are protected by copyright. Reproduction without written permission is prohibited.']
+      },
+      {
+        h: 'Online booking',
+        p: [
+          'An appointment request sent through this website is not a confirmation: our front desk contacts the patient to check actual availability and confirm the date and time.'
+        ]
+      }
+    ]
+  }
+];
+
+/** Pagine legali nella lingua corrente. */
+export const LEGAL_BY_LANG = { it: LEGAL_IT, en: LEGAL_EN };
+export const legalPages = () => LEGAL_BY_LANG[getLang()] || LEGAL_IT;

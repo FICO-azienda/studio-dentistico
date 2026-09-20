@@ -79,6 +79,112 @@ const shell = (titolo, contenuto, { preheader = '' } = {}) => `<!DOCTYPE html>
 </body>
 </html>`;
 
+/* -- stringhe delle email, per lingua del paziente ------------------------ */
+const L = {
+  it: {
+    subjReceived: (n) => `Richiesta di appuntamento ricevuta — ${n}`,
+    subjConfirmed: (d, o, n) => `Appuntamento confermato — ${d} alle ${o} — ${n}`,
+    received: 'Richiesta ricevuta',
+    hi: (n) => `Ciao ${n},`,
+    intro: (n) => `abbiamo ricevuto correttamente la tua richiesta di appuntamento presso ${n}. Di seguito trovi il riepilogo.`,
+    notConfirmed:
+      'La richiesta è stata inviata correttamente. Il nostro team ti contatterà per confermare definitivamente giorno e orario dell&#39;appuntamento.',
+    contactCta: 'Contatta lo studio',
+    changeNote: (c) => `Se hai necessità di modificare o annullare la richiesta, rispondi a questa email indicando il codice ${c}.`,
+    auto: 'Questa email è stata generata automaticamente in seguito a una richiesta effettuata tramite il nostro sito.',
+    preheaderReceived: (c) => `Richiesta ${c} ricevuta. Ti contatteremo per confermare giorno e orario.`,
+    rows: {
+      code: 'Codice richiesta',
+      name: 'Nome',
+      treatment: 'Trattamento / motivo',
+      date: 'Data richiesta',
+      time: 'Orario richiesto',
+      second: 'Seconda preferenza',
+      mode: 'Modalità',
+      callback: 'Richiamata',
+      channel: 'Canale preferito',
+      window: 'Fascia oraria',
+      professional: 'Professionista',
+      phone: 'Telefono',
+      email: 'Email',
+      message: 'Messaggio',
+      receivedAt: 'Ricevuta il',
+      where: 'Dove',
+      studioNote: 'Nota dello studio'
+    },
+    confirmLabel: 'Appuntamento confermato',
+    confirmTitle: (n) => `Ti aspettiamo, ${n}.`,
+    confirmIntro: 'Abbiamo verificato la disponibilità e il tuo appuntamento è confermato. Ecco i dettagli.',
+    when: 'Quando',
+    at: 'alle',
+    invite:
+      'A questa email è allegato l&#39;invito per il calendario: aprilo e l&#39;appuntamento entra in agenda con i promemoria il giorno prima e due ore prima.',
+    calendarCta: 'Aggiungi a Google Calendar',
+    directionsCta: 'Indicazioni stradali',
+    beforeLabel: 'Prima di venire',
+    before:
+      'Porta un documento d&#39;identità, la tessera sanitaria, eventuali radiografie precedenti e l&#39;elenco dei farmaci che assumi. Arriva cinque minuti prima: servono per l&#39;accettazione.',
+    cancelNote: (tel) =>
+      `Se non puoi presentarti, avvisaci con almeno 24 ore di anticipo chiamando ${tel}: quel posto viene offerto a un altro paziente.`,
+    preheaderConfirmed: (d, o) => `Appuntamento confermato per ${d} alle ${o}.`
+  },
+  en: {
+    subjReceived: (n) => `Appointment request received — ${n}`,
+    subjConfirmed: (d, o, n) => `Appointment confirmed — ${d} at ${o} — ${n}`,
+    received: 'Request received',
+    hi: (n) => `Hello ${n},`,
+    intro: (n) => `we have received your appointment request at ${n}. Here is a summary.`,
+    notConfirmed:
+      'Your request has been sent successfully. Our team will contact you to confirm the date and time of your appointment.',
+    contactCta: 'Contact the practice',
+    changeNote: (c) => `If you need to change or cancel your request, reply to this email quoting reference ${c}.`,
+    auto: 'This email was generated automatically following a request made through our website.',
+    preheaderReceived: (c) => `Request ${c} received. We will contact you to confirm the date and time.`,
+    rows: {
+      code: 'Request reference',
+      name: 'Name',
+      treatment: 'Treatment / reason',
+      date: 'Requested date',
+      time: 'Requested time',
+      second: 'Second preference',
+      mode: 'Format',
+      callback: 'Call back',
+      channel: 'Preferred channel',
+      window: 'Preferred time',
+      professional: 'Practitioner',
+      phone: 'Phone',
+      email: 'Email',
+      message: 'Message',
+      receivedAt: 'Received on',
+      where: 'Where',
+      studioNote: 'Note from the practice'
+    },
+    confirmLabel: 'Appointment confirmed',
+    confirmTitle: (n) => `We look forward to seeing you, ${n}.`,
+    confirmIntro: 'We have checked availability and your appointment is confirmed. Here are the details.',
+    when: 'When',
+    at: 'at',
+    invite:
+      'A calendar invitation is attached to this email: open it and the appointment goes straight into your diary, with reminders the day before and two hours ahead.',
+    calendarCta: 'Add to Google Calendar',
+    directionsCta: 'Directions',
+    beforeLabel: 'Before you come',
+    before:
+      'Please bring photo ID, your health card, any previous radiographs and a list of the medicines you take. Arrive five minutes early for check-in.',
+    cancelNote: (tel) =>
+      `If you cannot attend, please let us know at least 24 hours in advance by calling ${tel}: the slot is offered to another patient.`,
+    preheaderConfirmed: (d, o) => `Appointment confirmed for ${d} at ${o}.`
+  }
+};
+
+const tr = (r) => L[r?.lingua === 'en' ? 'en' : 'it'];
+const dataLoc = (r, iso) => {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(iso || '')) return iso;
+  return new Date(iso + 'T12:00:00Z').toLocaleDateString(r?.lingua === 'en' ? 'en-GB' : 'it-IT', {
+    weekday: 'long', day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC'
+  });
+};
+
 const CANALE = { telefono: 'Telefono', whatsapp: 'WhatsApp', email: 'Email' };
 const FASCIA = { mattina: 'Mattina', 'pausa-pranzo': 'Pausa pranzo', pomeriggio: 'Pomeriggio', sera: 'Sera' };
 const PRIORITA = { normal: 'Normale', high: 'Alta', urgent: 'Urgente' };
@@ -89,30 +195,33 @@ const righeServizio = (r) =>
 
 /** Riepilogo condiviso dalle due email. */
 function riepilogo(r, { perStudio = false } = {}) {
+  const T = perStudio ? L.it : tr(r);
+  const R = T.rows;
+  const D = (iso) => (perStudio ? dateIt(iso) : dataLoc(r, iso));
   const seconda = r.seconda_preferenza
-    ? escapeHtml(dateIt(r.seconda_preferenza.slice(0, 10))) +
-      (r.seconda_preferenza.length > 10 ? ' alle ' + escapeHtml(r.seconda_preferenza.slice(11)) : '')
+    ? escapeHtml(D(r.seconda_preferenza.slice(0, 10))) +
+      (r.seconda_preferenza.length > 10 ? ' ' + T.at + ' ' + escapeHtml(r.seconda_preferenza.slice(11)) : '')
     : '—';
   return `
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-top:1px solid ${LINE}">
-  ${row('Codice richiesta', `<span style="font-family:'SFMono-Regular',Menlo,Consolas,monospace;letter-spacing:.04em">${escapeHtml(r.booking_id)}</span>`, { mono: true })}
-  ${row('Nome', escapeHtml(r.nome + ' ' + r.cognome))}
-  ${row('Trattamento / motivo', escapeHtml(r.tipo_visita))}
+  ${row(R.code, `<span style="font-family:'SFMono-Regular',Menlo,Consolas,monospace;letter-spacing:.04em">${escapeHtml(r.booking_id)}</span>`, { mono: true })}
+  ${row(R.name, escapeHtml(r.nome + ' ' + r.cognome))}
+  ${row(R.treatment, escapeHtml(r.tipo_visita))}
   ${righeServizio(r)}
   ${
     r.modalita === 'ricontatto'
-      ? row('Modalita', 'Richiamata') +
-        row('Canale preferito', escapeHtml(CANALE[r.canale_contatto] || r.canale_contatto || '—')) +
-        row('Fascia oraria', escapeHtml(FASCIA[r.fascia_contatto] || r.fascia_contatto || '—'))
-      : row('Data richiesta', escapeHtml(dateIt(r.data_richiesta))) +
-        row('Orario richiesto', escapeHtml(r.ora_richiesta)) +
-        row('Seconda preferenza', seconda)
+      ? row(R.mode, R.callback) +
+        row(R.channel, escapeHtml(CANALE[r.canale_contatto] || r.canale_contatto || '—')) +
+        row(R.window, escapeHtml(FASCIA[r.fascia_contatto] || r.fascia_contatto || '—'))
+      : row(R.date, escapeHtml(D(r.data_richiesta))) +
+        row(R.time, escapeHtml(r.ora_richiesta)) +
+        row(R.second, seconda)
   }
-  ${row('Professionista', escapeHtml(r.professionista))}
-  ${row('Telefono', `<a href="tel:${escapeHtml(r.telefono.replace(/\s/g, ''))}" style="color:${NAVY};text-decoration:none">${escapeHtml(r.telefono)}</a>`)}
-  ${row('Email', `<a href="mailto:${escapeHtml(r.email)}" style="color:${NAVY};text-decoration:none">${escapeHtml(r.email)}</a>`)}
-  ${row('Messaggio', r.messaggio ? nl2br(r.messaggio) : '—')}
-  ${perStudio ? row('Ricevuta il', escapeHtml(new Date(r.created_at).toLocaleString('it-IT', { timeZone: 'Europe/Rome' }))) : ''}
+  ${row(R.professional, escapeHtml(r.professionista))}
+  ${row(R.phone, `<a href="tel:${escapeHtml(r.telefono.replace(/\s/g, ''))}" style="color:${NAVY};text-decoration:none">${escapeHtml(r.telefono)}</a>`)}
+  ${row(R.email, `<a href="mailto:${escapeHtml(r.email)}" style="color:${NAVY};text-decoration:none">${escapeHtml(r.email)}</a>`)}
+  ${row(R.message, r.messaggio ? nl2br(r.messaggio) : '—')}
+  ${perStudio ? row(R.receivedAt, escapeHtml(new Date(r.created_at).toLocaleString('it-IT', { timeZone: 'Europe/Rome' }))) : ''}
 </table>`;
 }
 
@@ -148,58 +257,54 @@ const riepilogoTesto = (r, { perStudio = false } = {}) =>
 /* e' ricevuta, non ancora verificata dalla segreteria.                */
 /* ------------------------------------------------------------------ */
 export function emailPaziente(r) {
+  const T = tr(r);
   const contatto = studio.whatsappHref
     ? 'https://wa.me/' + studio.whatsappHref
     : 'tel:' + studio.telefonoHref;
 
   const html = shell(
-    'Richiesta di appuntamento ricevuta',
+    T.received,
     `
-<p style="margin:0 0 6px;font:500 11px/1 Helvetica,Arial,sans-serif;letter-spacing:.18em;text-transform:uppercase;color:${MUTED}">Richiesta ricevuta</p>
-<h1 style="margin:0 0 18px;font:400 30px/1.15 Georgia,'Times New Roman',serif;color:${NAVY}">Ciao ${escapeHtml(r.nome)},</h1>
+<p style="margin:0 0 6px;font:500 11px/1 Helvetica,Arial,sans-serif;letter-spacing:.18em;text-transform:uppercase;color:${MUTED}">${escapeHtml(T.received)}</p>
+<h1 style="margin:0 0 18px;font:400 30px/1.15 Georgia,'Times New Roman',serif;color:${NAVY}">${escapeHtml(T.hi(r.nome))}</h1>
 <p style="margin:0 0 22px;font:400 16px/1.65 Helvetica,Arial,sans-serif;color:${INK}">
-  abbiamo ricevuto correttamente la tua richiesta di appuntamento presso ${escapeHtml(studio.nome)}.
-  Di seguito trovi il riepilogo.
+  ${escapeHtml(T.intro(studio.nome))}
 </p>
 ${riepilogo(r)}
 <p style="margin:24px 0 24px;padding:16px 18px;background:#f7f7f5;font:400 15px/1.6 Helvetica,Arial,sans-serif;color:${INK}">
-  La richiesta è stata inviata correttamente. Il nostro team ti contatterà per confermare
-  definitivamente giorno e orario dell&#39;appuntamento.
+  ${T.notConfirmed}
 </p>
-${button(contatto, 'Contatta lo studio')}
+${button(contatto, T.contactCta)}
 <p style="margin:18px 0 0;font:400 13px/1.7 Helvetica,Arial,sans-serif;color:${MUTED}">
-  Se hai necessità di modificare o annullare la richiesta, rispondi a questa email
-  indicando il codice ${escapeHtml(r.booking_id)}.
+  ${escapeHtml(T.changeNote(r.booking_id))}
 </p>`,
-    { preheader: `Richiesta ${r.booking_id} ricevuta. Ti contatteremo per confermare giorno e orario.` }
+    { preheader: T.preheaderReceived(r.booking_id) }
   );
 
   const text = [
-    `Ciao ${r.nome},`,
+    T.hi(r.nome),
     '',
-    `abbiamo ricevuto correttamente la tua richiesta di appuntamento presso ${studio.nome}.`,
-    'Di seguito trovi il riepilogo della richiesta:',
+    T.intro(studio.nome).replace(/&#39;/g, "'"),
     '',
     riepilogoTesto(r),
     '',
     'La richiesta è stata inviata correttamente. Il nostro team ti contatterà per',
     "confermare definitivamente giorno e orario dell'appuntamento.",
     '',
-    studio.telefono ? 'Contatta lo studio: ' + studio.telefono : '',
+    studio.telefono ? T.contactCta + ': ' + studio.telefono : '',
     studio.whatsapp ? 'WhatsApp: ' + studio.whatsapp : '',
     '',
     studio.nome,
     studio.indirizzo,
     [studio.telefono, studio.email].filter(Boolean).join(' · '),
     '',
-    'Questa email è stata generata automaticamente in seguito a una richiesta',
-    'effettuata tramite il nostro sito.'
+    T.auto
   ]
     .filter((l) => l !== undefined)
     .join('\n');
 
   return {
-    subject: `Richiesta di appuntamento ricevuta — ${studio.nome}`,
+    subject: T.subjReceived(studio.nome),
     html,
     text
   };
@@ -275,6 +380,7 @@ ${wa ? button('https://wa.me/' + wa, 'WhatsApp', { light: true }) : ''}
 /* la segreteria ha verificato la disponibilita'.                      */
 /* ------------------------------------------------------------------ */
 export function emailConferma(r, { professionista = '', note = '' } = {}) {
+  const T = tr(r);
   const prof = professionista || r.professionista || '';
   const mappa =
     'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(studio.indirizzo);
@@ -291,72 +397,67 @@ export function emailConferma(r, { professionista = '', note = '' } = {}) {
     '&details=' + encodeURIComponent(`Codice richiesta ${r.booking_id}. Per modifiche: ${studio.telefono}`);
 
   const html = shell(
-    'Appuntamento confermato',
+    T.confirmLabel,
     `
-<p style="margin:0 0 6px;font:500 11px/1 Helvetica,Arial,sans-serif;letter-spacing:.18em;text-transform:uppercase;color:${MUTED}">Appuntamento confermato</p>
-<h1 style="margin:0 0 18px;font:400 30px/1.15 Georgia,'Times New Roman',serif;color:${NAVY}">Ti aspettiamo, ${escapeHtml(r.nome)}.</h1>
-<p style="margin:0 0 22px;font:400 16px/1.65 Helvetica,Arial,sans-serif;color:${INK}">
-  Abbiamo verificato la disponibilit&agrave; e il tuo appuntamento &egrave; confermato.
-  Ecco i dettagli.
-</p>
+<p style="margin:0 0 6px;font:500 11px/1 Helvetica,Arial,sans-serif;letter-spacing:.18em;text-transform:uppercase;color:${MUTED}">${escapeHtml(T.confirmLabel)}</p>
+<h1 style="margin:0 0 18px;font:400 30px/1.15 Georgia,'Times New Roman',serif;color:${NAVY}">${escapeHtml(T.confirmTitle(r.nome))}</h1>
+<p style="margin:0 0 22px;font:400 16px/1.65 Helvetica,Arial,sans-serif;color:${INK}">${escapeHtml(T.confirmIntro)}</p>
 
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:0 0 24px">
   <tr><td bgcolor="#f7f7f5" style="padding:22px 24px;border-left:3px solid ${NAVY}">
-    <p style="margin:0;font:500 11px/1 Helvetica,Arial,sans-serif;letter-spacing:.18em;text-transform:uppercase;color:${MUTED}">Quando</p>
+    <p style="margin:0;font:500 11px/1 Helvetica,Arial,sans-serif;letter-spacing:.18em;text-transform:uppercase;color:${MUTED}">${escapeHtml(T.when)}</p>
     <p style="margin:8px 0 0;font:400 26px/1.25 Georgia,'Times New Roman',serif;color:${NAVY}">
-      ${escapeHtml(dateIt(r.data_richiesta))}<br>alle ${escapeHtml(r.ora_richiesta)}
+      ${escapeHtml(dataLoc(r, r.data_richiesta))}<br>${escapeHtml(T.at)} ${escapeHtml(r.ora_richiesta)}
     </p>
   </td></tr>
 </table>
 
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-top:1px solid ${LINE}">
-  ${row('Trattamento', escapeHtml(r.tipo_visita))}
-  ${prof ? row('Professionista', escapeHtml(prof)) : ''}
-  ${row('Dove', escapeHtml(studio.indirizzo))}
-  ${row('Codice richiesta', `<span style="font-family:'SFMono-Regular',Menlo,Consolas,monospace;letter-spacing:.04em">${escapeHtml(r.booking_id)}</span>`, { mono: true })}
-  ${note ? row('Nota dello studio', nl2br(note)) : ''}
+  ${row(T.rows.treatment, escapeHtml(r.tipo_visita))}
+  ${prof ? row(T.rows.professional, escapeHtml(prof)) : ''}
+  ${row(T.rows.where, escapeHtml(studio.indirizzo))}
+  ${row(T.rows.code, `<span style="font-family:'SFMono-Regular',Menlo,Consolas,monospace;letter-spacing:.04em">${escapeHtml(r.booking_id)}</span>`, { mono: true })}
+  ${note ? row(T.rows.studioNote, nl2br(note)) : ''}
 </table>
 
-<p style="margin:26px 0 10px;font:500 11px/1 Helvetica,Arial,sans-serif;letter-spacing:.18em;text-transform:uppercase;color:${MUTED}">Prima di venire</p>
+<p style="margin:26px 0 10px;font:500 11px/1 Helvetica,Arial,sans-serif;letter-spacing:.18em;text-transform:uppercase;color:${MUTED}">${escapeHtml(T.beforeLabel)}</p>
 <p style="margin:0 0 20px;font:400 15px/1.7 Helvetica,Arial,sans-serif;color:${INK}">
-  Porta un documento d&#39;identit&agrave;, la tessera sanitaria, eventuali radiografie precedenti
-  e l&#39;elenco dei farmaci che assumi. Arriva cinque minuti prima: servono per l&#39;accettazione.
+  ${T.before}
 </p>
 
 <p style="margin:0 0 14px;font:400 15px/1.7 Helvetica,Arial,sans-serif;color:${INK}">
-  A questa email &egrave; allegato l&#39;invito per il calendario: aprilo e l&#39;appuntamento
-  entra in agenda con i promemoria il giorno prima e due ore prima.
+  ${T.invite}
 </p>
-${button(calendario, 'Aggiungi a Google Calendar')}
-${button(mappa, 'Indicazioni stradali', { light: true })}
+${button(calendario, T.calendarCta)}
+${button(mappa, T.directionsCta, { light: true })}
 
 <p style="margin:20px 0 0;font:400 13px/1.7 Helvetica,Arial,sans-serif;color:${MUTED}">
-  Se non puoi presentarti, avvisaci con almeno 24 ore di anticipo chiamando
-  ${studio.telefono ? `<a href="tel:${escapeHtml(studio.telefonoHref)}" style="color:${NAVY}">${escapeHtml(studio.telefono)}</a>` : 'lo studio'}:
-  quel posto viene offerto a un altro paziente.
+  ${T.cancelNote(
+    studio.telefono
+      ? `<a href="tel:${escapeHtml(studio.telefonoHref)}" style="color:${NAVY}">${escapeHtml(studio.telefono)}</a>`
+      : studio.nome
+  )}
 </p>`,
-    { preheader: `Appuntamento confermato per ${dateIt(r.data_richiesta)} alle ${r.ora_richiesta}.` }
+    { preheader: T.preheaderConfirmed(dataLoc(r, r.data_richiesta), r.ora_richiesta) }
   );
 
   const text = [
-    `Ti aspettiamo, ${r.nome}.`,
+    T.confirmTitle(r.nome),
     '',
-    'Abbiamo verificato la disponibilita e il tuo appuntamento e confermato.',
+    T.confirmIntro,
     '',
-    'Quando: ' + dateIt(r.data_richiesta) + ' alle ' + r.ora_richiesta,
-    'Trattamento: ' + r.tipo_visita,
-    prof ? 'Professionista: ' + prof : '',
-    'Dove: ' + studio.indirizzo,
-    'Codice richiesta: ' + r.booking_id,
-    note ? 'Nota dello studio: ' + note : '',
+    T.when + ': ' + dataLoc(r, r.data_richiesta) + ' ' + T.at + ' ' + r.ora_richiesta,
+    T.rows.treatment + ': ' + r.tipo_visita,
+    prof ? T.rows.professional + ': ' + prof : '',
+    T.rows.where + ': ' + studio.indirizzo,
+    T.rows.code + ': ' + r.booking_id,
+    note ? T.rows.studioNote + ': ' + note : '',
     '',
-    "In allegato trovi l'invito per il calendario: aprendolo l'appuntamento entra",
-    'in agenda con i promemoria il giorno prima e due ore prima.',
+    T.invite.replace(/&#39;/g, "'"),
     '',
-    "Porta un documento d'identita, la tessera sanitaria, eventuali radiografie",
-    "precedenti e l'elenco dei farmaci che assumi. Arriva cinque minuti prima.",
+    T.before.replace(/&#39;/g, "'").replace(/&agrave;/g, 'a'),
     '',
-    'Se non puoi presentarti avvisaci con almeno 24 ore di anticipo: ' + studio.telefono,
+    T.cancelNote(studio.telefono).replace(/<[^>]+>/g, ''),
     '',
     studio.nome,
     studio.indirizzo,
@@ -366,7 +467,7 @@ ${button(mappa, 'Indicazioni stradali', { light: true })}
     .join('\n');
 
   return {
-    subject: `Appuntamento confermato — ${dateIt(r.data_richiesta)} alle ${r.ora_richiesta} — ${studio.nome}`,
+    subject: T.subjConfirmed(dataLoc(r, r.data_richiesta), r.ora_richiesta, studio.nome),
     html,
     text
   };

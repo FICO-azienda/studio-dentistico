@@ -1,0 +1,93 @@
+{
+  "denti-e-gengive-sani": {
+    "title": "How to keep teeth and gums healthy",
+    "excerpt": "Five habits that make far more difference than any treatment. None of them takes more than three minutes a day.",
+    "category": "Prevention",
+    "body": [
+      { "t": "p", "v": "Oral health depends far less on what we do at the practice than people think, and far more on what happens during the 364 days we do not see you. The good news is that the variables that really matter are few." },
+      { "t": "h2", "v": "1. The space between the teeth is where problems start" },
+      { "t": "p", "v": "A toothbrush, however good, reaches three of the five surfaces of every tooth. The two interproximal ones — those in contact with the neighbouring teeth — stay uncovered, and that is exactly where most decay and gum inflammation begins. Floss or an interdental brush, once a day, is worth more than any toothpaste." },
+      { "t": "h2", "v": "2. Technique matters more than force" },
+      { "t": "p", "v": "Brushing hard does not clean better: it wears away enamel at the necks of the teeth and makes gums recede. The correct direction is from gum towards tooth, with short movements and soft bristles. If you use an electric brush, rest it in place and let it work without scrubbing." },
+      { "t": "h2", "v": "3. The right moment to brush" },
+      { "t": "p", "v": "After something acidic — citrus, vinegar, fizzy drinks, white wine — enamel is temporarily softened. Brushing straight away abrades it. Better to rinse with water and wait twenty or thirty minutes." },
+      { "t": "h2", "v": "4. Bleeding is not normal" },
+      { "t": "p", "v": "A healthy gum does not bleed, not even when you floss. If it bleeds, there is inflammation. The most common mistake is to stop cleaning that area because it bleeds: the result is the exact opposite of what is needed. In most cases, careful cleaning resolves the bleeding within a week." },
+      { "t": "h2", "v": "5. Recall is not a commercial ritual" },
+      { "t": "p", "v": "Interproximal decay and early periodontitis give no symptoms. By the time they do, the treatment needed is an order of magnitude more complex. Regular recall exists to catch them while they are still small, and the interval should be calibrated to individual risk: not everyone needs the same frequency." },
+      { "t": "quote", "v": "The best treatment is the one that never had to happen." },
+      { "t": "p", "v": "If it has been more than twelve months since your last check-up, it is time to book one. Not because there is certainly something wrong, but because that is the only way to know." }
+    ]
+  },
+
+  "quando-scegliere-gli-allineatori": {
+    "title": "When to choose clear aligners",
+    "excerpt": "They are not the answer to everything, but for a substantial share of adult cases they are the sensible choice. How to tell whether you are one of them.",
+    "category": "Orthodontics",
+    "body": [
+      { "t": "p", "v": "Clear aligners changed adult orthodontics, not so much for the aesthetics as for a more practical reason: they made treatment compatible with the life of someone who works, speaks in public, and does not want to change their habits for two years." },
+      { "t": "h2", "v": "What they do well" },
+      { "t": "p", "v": "They are very efficient at tipping movements and closing spaces, and therefore at mild to moderate crowding, diastemas and post-orthodontic relapse. They are also excellent preparation for aesthetic treatment: aligning before placing veneers often means placing fewer of them, and removing less enamel." },
+      { "t": "h2", "v": "Where they struggle" },
+      { "t": "p", "v": "Significant root movement, extrusion, rotation of canines and premolars, and correcting skeletal discrepancies remain the territory of fixed appliances. They can be attempted with aligners, but with more stages, more refinements and a wider margin of unpredictability. In those cases, telling you the truth at the diagnosis stage is part of the job." },
+      { "t": "h2", "v": "The variable that really decides: you" },
+      { "t": "p", "v": "An aligner works if it is in the mouth. Twenty-two hours a day is not a suggestion, it is the premise of the digital plan: each tray is calculated on a given duration of force. Someone who removes them often does not simply slow down, they leave the plan — and the following trays no longer fit." },
+      { "t": "h2", "v": "How the decision is made" },
+      { "t": "p", "v": "At the first visit we take a scan and build a simulation of your specific case. Seeing the movement plan, the estimated duration and the expected result before committing turns a decision made from a brochure into an informed one." },
+      { "t": "p", "v": "And if the simulation shows that fixed appliances are more appropriate, we say so. Invisible treatment that does not reach the result is a bad deal for both of us." }
+    ]
+  },
+
+  "implantologia-cosa-sapere": {
+    "title": "Dental implants: what to know beforehand",
+    "excerpt": "The questions patients rarely ask, and which they should always ask, before having an implant placed.",
+    "category": "Implants",
+    "body": [
+      { "t": "p", "v": "The dental implant is a reliable procedure, with success rates the literature places above 95% at ten years. Precisely because it has become routine, it is worth understanding what that 95% depends on." },
+      { "t": "h2", "v": "It is not the screw, it is the plan" },
+      { "t": "p", "v": "The position of the implant must be determined by the restoration it will support, not by the bone that happens to be there. This is what separates an implant that lasts decades from one that causes problems: an implant placed where it was convenient, rather than where it was needed, produces a restoration that is hard to clean — and what cannot be cleaned becomes inflamed." },
+      { "t": "h2", "v": "The CT scan is not optional" },
+      { "t": "p", "v": "A panoramic radiograph is two-dimensional and distorted. Cone beam tomography shows the real thickness of the bone, the position of the inferior alveolar nerve and of the maxillary sinus. Planning on a panoramic means discovering in theatre information that could have been had beforehand." },
+      { "t": "h2", "v": "Peri-implantitis exists, and is preventable" },
+      { "t": "p", "v": "It is the equivalent of periodontitis around the implant: inflammation and progressive bone loss. It does not hurt and often shows itself late. The main risk factors are untreated periodontitis, smoking, a restoration that cannot be cleaned, and skipped recall appointments. Three of those four depend on decisions made before surgery." },
+      { "t": "h2", "v": "The right questions to ask" },
+      { "t": "ul", "v": ["Is planning carried out on a CT scan and with a surgical guide?", "Who makes the restoration, and with what workflow?", "What is the maintenance plan after fitting, and how often?", "What happens, in practical terms, if the implant does not integrate?"] },
+      { "t": "p", "v": "A practice with precise answers to those four questions very probably has a protocol. And it is the protocol, more than the brand of implant, that determines the result at ten years." },
+      { "t": "quote", "v": "An implant does not end when the crown is fitted: that is where it begins." }
+    ]
+  },
+
+  "sbiancamento-come-funziona": {
+    "title": "Teeth whitening: how it actually works",
+    "excerpt": "What happens to enamel during professional whitening, why home remedies disappoint, and how long the result lasts.",
+    "category": "Cosmetic",
+    "body": [
+      { "t": "p", "v": "Whitening is probably the dental treatment surrounded by the most misinformation. It is worth being clear about the mechanism, because everything else follows from it." },
+      { "t": "h2", "v": "Nothing is removed" },
+      { "t": "p", "v": "Peroxide passes through the enamel and reaches the pigmented molecules deposited over time in the dentine beneath, breaking them into smaller, colourless ones. There is no abrasion, no removal of tissue: the tooth does not become thinner or weaker." },
+      { "t": "h2", "v": "Why bicarbonate does not work" },
+      { "t": "p", "v": "Bicarbonate, activated charcoal and \"whitening\" toothpastes work by abrasion: they remove surface stains and do not touch the internal colour of the tooth. The result is modest and, with prolonged use, paid for in worn enamel." },
+      { "t": "h2", "v": "The biological limit" },
+      { "t": "p", "v": "Every tooth has a base colour determined by the dentine, and whitening works within that limit. Two people having the same treatment get different results. Yellow-brown discolouration responds well; greyish shades, often from medication, much less so." },
+      { "t": "h2", "v": "How long it lasts" },
+      { "t": "p", "v": "From one to three years, with wide variation linked to coffee, tea, red wine and smoking. A home top-up of two or three nights once a year maintains the result without repeating the full cycle." },
+      { "t": "p", "v": "One practical note: if you have fillings or crowns among the visible teeth, remember that they do not whiten. After treatment they may look darker and need replacing, which should be accounted for from the start." }
+    ]
+  },
+
+  "prevenzione-controlli-periodici": {
+    "title": "Prevention: why regular check-ups matter",
+    "excerpt": "The two most common diseases of the mouth do not hurt until it is late. That is the whole point of recall.",
+    "category": "Prevention",
+    "body": [
+      { "t": "p", "v": "Decay and periodontitis share a characteristic that makes them insidious: in the phase when they are easily treated, they give no symptoms at all. Pain arrives when decay has reached the pulp, mobility when the bone already lost is considerable." },
+      { "t": "h2", "v": "What we look for at a check-up" },
+      { "t": "p", "v": "Not only decay. Periodontal probing measures pocket depth and bleeding; examination of the soft tissues looks for mucosal lesions; checking the bite identifies signs of bruxism before the teeth wear down. Bitewing radiographs, every twelve to twenty-four months, show the interproximal decay the eye cannot see." },
+      { "t": "h2", "v": "The right interval is not the same for everyone" },
+      { "t": "p", "v": "Six months is an average, not a rule. Anyone who has had periodontitis, who has implants, whose saliva is less protective or whose diet is acidic needs closer recall. Someone whose mouth has been stable for years can afford longer intervals. Personalising the interval is, in fact, the clinical part of recall." },
+      { "t": "h2", "v": "A question of orders of magnitude" },
+      { "t": "p", "v": "Decay caught early is treated with an adhesive restoration in a single appointment. The same decay, two years later, may require root canal treatment and a crown: five times the chair time, a different financial commitment, and a tooth that is structurally weaker for good." },
+      { "t": "p", "v": "Prevention is not an add-on service. It is the main work, and everything else is what we do when prevention arrived too late." }
+    ]
+  }
+}

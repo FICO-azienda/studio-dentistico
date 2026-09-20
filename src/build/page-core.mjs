@@ -1,5 +1,5 @@
 import { site, team, technologies, faqs, treatments, esc, attr, arrow, imgTag, figure, lines, personName, byTreatment, byPerson, metaTitle, treatmentPath, PATH, teamPath } from './utils.mjs';
-import { t } from './i18n.mjs';
+import { t, getLang } from './i18n.mjs';
 import { clientConfig } from '../../api/_lib/flows.mjs';
 import { layout, dentistLd } from './layout.mjs';
 import { sectionHead, stats, personCard, bookingBand, faqList, faqLd, pageHero, testimonials } from './components.mjs';
@@ -598,7 +598,7 @@ ${pageHero({
   </div>
 </section>
 
-<script type="application/json" data-flows>${JSON.stringify(clientConfig()).replace(/</g, '\\u003c')}</script>
+<script type="application/json" data-flows>${JSON.stringify(clientConfig(getLang())).replace(/</g, '\\u003c')}</script>
 <script type="application/json" data-slots>${JSON.stringify({ orari, dottori: ['Nessuna preferenza', ...docs.map((p) => personName(p))] })}</script>`;
 
   return layout({

@@ -335,6 +335,36 @@ test('la conferma non espone priorita\' o tag interni', () => {
   assert.ok(!/SERVICE_|priorit|URGENTE/i.test(c.text));
 });
 
+/* -- lingua del paziente ---------------------------------------------------- */
+test('le email al paziente seguono la lingua del sito che ha usato', () => {
+  const v = validateBooking({ ...base(), lang: 'en' });
+  assert.equal(v.ok, true);
+  assert.equal(v.data.lang, 'en');
+  const rec = buildRecord(v.data, { bookingId: 'APT-2026-000020' });
+  assert.equal(rec.lingua, 'en');
+
+  const p = emailPaziente(rec);
+  assert.match(p.subject, /^Appointment request received/);
+  assert.ok(/Hello Mario/.test(p.text));
+  assert.ok(!/Ciao|riepilogo/.test(p.text), 'nessun residuo italiano');
+
+  const c = emailConferma(rec);
+  assert.match(c.subject, /^Appointment confirmed/);
+
+  // la notifica interna resta in italiano: la legge la segreteria
+  assert.match(emailStudio(rec).subject, /^Nuova richiesta/);
+});
+
+test('il riepilogo del servizio e\' tradotto per il paziente inglese', () => {
+  const v = validateBooking({ ...base(), lang: 'en' });
+  assert.equal(v.data.riepilogoServizio[0].label, 'Is this your first time at our practice?');
+});
+
+test('lingua non riconosciuta: si resta in italiano', () => {
+  const v = validateBooking({ ...base(), lang: 'de' });
+  assert.equal(v.data.lang, 'it');
+});
+
 /* -- invito calendario ------------------------------------------------------ */
 test('l\'invito .ics converte l\'ora locale tenendo conto dell\'ora legale', () => {
   // 24 novembre: ora solare, Roma e' UTC+1

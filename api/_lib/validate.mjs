@@ -98,7 +98,7 @@ export function validateBooking(body = {}, opts = {}) {
       for (const [k, v] of Object.entries(ris.errors)) errors['risposte.' + k] = v;
     } else {
       d.risposte = ris.answers;
-      d.riepilogoServizio = buildSummary(servizio, ris.answers);
+      d.riepilogoServizio = buildSummary(servizio, ris.answers, ['it', 'en'].includes(body.lang) ? body.lang : 'it');
       d.priorita = computePriority(servizio, ris.answers);
       d.tags = computeTags(servizio, ris.answers);
     }
@@ -144,6 +144,9 @@ export function validateBooking(body = {}, opts = {}) {
   if (!d.privacy) errors.privacy = "Per proseguire devi accettare l'informativa privacy.";
 
   d.comunicazioni = body.comunicazioni === true || body.comunicazioni === 'on' || body.comunicazioni === 'true';
+
+  // lingua del paziente: le email che riceve seguono quella del sito che ha usato
+  d.lang = ['it', 'en'].includes(clean(body.lang, 5)) ? clean(body.lang, 5) : 'it';
 
   return Object.keys(errors).length ? { ok: false, errors } : { ok: true, data: d };
 }

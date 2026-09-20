@@ -28,7 +28,12 @@ async function viaResend(msg, env) {
       reply_to: msg.replyTo || undefined,
       subject: msg.subject,
       html: msg.html,
-      text: msg.text
+      text: msg.text,
+      attachments: (msg.attachments || []).map((a) => ({
+        filename: a.filename,
+        content: Buffer.from(a.content).toString('base64'),
+        content_type: a.contentType
+      }))
     })
   });
   if (!res.ok) throw new Error('Resend ' + res.status + ' ' + (await res.text()).slice(0, 200));
@@ -50,7 +55,13 @@ async function viaSendgrid(msg, env) {
       content: [
         { type: 'text/plain', value: msg.text },
         { type: 'text/html', value: msg.html }
-      ]
+      ],
+      attachments: (msg.attachments || []).map((a) => ({
+        filename: a.filename,
+        type: a.contentType,
+        disposition: 'attachment',
+        content: Buffer.from(a.content).toString('base64')
+      }))
     })
   });
   if (!res.ok) throw new Error('SendGrid ' + res.status + ' ' + (await res.text()).slice(0, 200));
@@ -70,7 +81,12 @@ async function viaPostmark(msg, env) {
       Subject: msg.subject,
       HtmlBody: msg.html,
       TextBody: msg.text,
-      MessageStream: env.POSTMARK_STREAM || 'outbound'
+      MessageStream: env.POSTMARK_STREAM || 'outbound',
+      Attachments: (msg.attachments || []).map((a) => ({
+        Name: a.filename,
+        ContentType: a.contentType,
+        Content: Buffer.from(a.content).toString('base64')
+      }))
     })
   });
   if (!res.ok) throw new Error('Postmark ' + res.status + ' ' + (await res.text()).slice(0, 200));
@@ -79,7 +95,15 @@ async function viaPostmark(msg, env) {
 }
 
 function viaConsole(msg) {
-  console.log('MAIL (console) ' + JSON.stringify({ to: msg.to, subject: msg.subject, bytes: msg.html.length }));
+  console.log(
+    'MAIL (console) ' +
+      JSON.stringify({
+        to: msg.to,
+        subject: msg.subject,
+        bytes: msg.html.length,
+        allegati: (msg.attachments || []).map((a) => a.filename)
+      })
+  );
   return { id: 'console-' + Date.now() };
 }
 

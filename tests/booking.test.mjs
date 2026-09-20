@@ -12,6 +12,8 @@ import { handleBooking } from '../api/_lib/handler.mjs';
 import { validateBooking, looksLikeSpam, checkDate } from '../api/_lib/validate.mjs';
 import { buildBookingId, buildRecord } from '../api/_lib/store.mjs';
 import { emailPaziente, emailStudio, emailConferma } from '../api/_lib/templates.mjs';
+import { buildIcs, localeToUtc } from '../api/_lib/ics.mjs';
+import { studio } from '../api/_lib/studio.mjs';
 import { rateLimit, _reset } from '../api/_lib/ratelimit.mjs';
 import { byService, visibleQuestions, computePriority, computeTags, buildSummary, validateAnswers } from '../api/_lib/flows.mjs';
 
@@ -331,6 +333,48 @@ test('la conferma non espone priorita\' o tag interni', () => {
   const rec = buildRecord(v.data, { bookingId: 'APT-2026-000010' });
   const c = emailConferma(rec);
   assert.ok(!/SERVICE_|priorit|URGENTE/i.test(c.text));
+});
+
+/* -- invito calendario ------------------------------------------------------ */
+test('l\'invito .ics converte l\'ora locale tenendo conto dell\'ora legale', () => {
+  // 24 novembre: ora solare, Roma e' UTC+1
+  assert.equal(localeToUtc('2026-11-24', '15:30').toISOString(), '2026-11-24T14:30:00.000Z');
+  // 24 giugno: ora legale, Roma e' UTC+2
+  assert.equal(localeToUtc('2026-06-24', '15:30').toISOString(), '2026-06-24T13:30:00.000Z');
+});
+
+test('l\'invito .ics e\' valido e contiene l\'appuntamento', () => {
+  const v = validateBooking(base());
+  const rec = buildRecord(v.data, { bookingId: 'APT-2026-000011' });
+  const ics = buildIcs(rec, studio, { professionista: 'Dr. Andrea Vitali' });
+  // le righe lunghe sono spezzate come prescrive lo standard: si ricompongono
+  const piatto = ics.replace(/\r\n /g, '');
+
+  assert.ok(ics.startsWith('BEGIN:VCALENDAR'));
+  assert.ok(ics.trimEnd().endsWith('END:VCALENDAR'));
+  assert.ok(ics.includes('METHOD:REQUEST'), 'e\' un invito, non un semplice evento');
+  assert.ok(piatto.includes('UID:APT-2026-000011@'), 'UID legato al codice richiesta');
+  assert.ok(ics.includes('STATUS:CONFIRMED'));
+  assert.ok(ics.includes('TRIGGER:-P1D') && ics.includes('TRIGGER:-PT2H'), 'due promemoria');
+  assert.ok(piatto.includes('mailto:' + rec.email), 'il paziente e\' invitato');
+  assert.ok(/DTSTART:\d{8}T\d{6}Z/.test(ics) && /DTEND:\d{8}T\d{6}Z/.test(ics));
+  // le righe iCalendar non superano i 75 ottetti
+  for (const riga of ics.split('\r\n')) {
+    assert.ok(Buffer.byteLength(riga, 'utf8') <= 75, 'riga troppo lunga: ' + riga.slice(0, 40));
+  }
+  // terminatori di riga CRLF come prescrive lo standard
+  assert.ok(!/[^\r]\n/.test(ics), 'tutte le righe finiscono con CRLF');
+});
+
+test('reinviando l\'invito con SEQUENCE piu\' alta si aggiorna l\'evento', () => {
+  const v = validateBooking(base());
+  const rec = buildRecord(v.data, { bookingId: 'APT-2026-000012' });
+  const primo = buildIcs(rec, studio, { sequence: 0 });
+  const secondo = buildIcs({ ...rec, ora_richiesta: '16:30' }, studio, { sequence: 1 });
+  assert.ok(primo.includes('SEQUENCE:0'));
+  assert.ok(secondo.includes('SEQUENCE:1'));
+  const uid = (t) => t.match(/UID:(.+)/)[1];
+  assert.equal(uid(primo), uid(secondo), 'stesso UID: il calendario aggiorna invece di duplicare');
 });
 
 /* -- versione testuale ------------------------------------------------------ */

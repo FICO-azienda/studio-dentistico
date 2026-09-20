@@ -17,6 +17,7 @@ import fs from 'node:fs';
 import { emailConferma } from '../api/_lib/templates.mjs';
 import { sendMail } from '../api/_lib/mail.mjs';
 import { mittente, studio } from '../api/_lib/studio.mjs';
+import { icsAttachment } from '../api/_lib/ics.mjs';
 
 const argv = process.argv.slice(2);
 const file = argv.find((a) => !a.startsWith('--'));
@@ -43,16 +44,23 @@ const mail = emailConferma(record, {
   note: opt('nota')
 });
 
+const invito = icsAttachment(record, studio, {
+  professionista: opt('professionista'),
+  durataMin: Number(opt('durata', '60')),
+  sequence: Number(opt('revisione', '0'))
+});
+
 const anteprima = opt('anteprima');
 if (anteprima) {
   fs.writeFileSync(anteprima, mail.html);
   fs.writeFileSync(anteprima.replace(/\.html?$/, '') + '.txt', mail.text);
-  console.log('anteprima scritta:', anteprima);
+  fs.writeFileSync(anteprima.replace(/\.html?$/, '') + '.ics', invito.content);
+  console.log('anteprima scritta:', anteprima, '+ invito .ics');
   process.exit(0);
 }
 
 const esito = await sendMail(
-  { from: mittente, to: record.email, replyTo: studio.email || undefined, ...mail },
+  { from: mittente, to: record.email, replyTo: studio.email || undefined, ...mail, attachments: [invito] },
   process.env
 );
 

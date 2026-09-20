@@ -323,7 +323,11 @@ export function emailConferma(r, { professionista = '', note = '' } = {}) {
   e l&#39;elenco dei farmaci che assumi. Arriva cinque minuti prima: servono per l&#39;accettazione.
 </p>
 
-${button(calendario, 'Aggiungi al calendario')}
+<p style="margin:0 0 14px;font:400 15px/1.7 Helvetica,Arial,sans-serif;color:${INK}">
+  A questa email &egrave; allegato l&#39;invito per il calendario: aprilo e l&#39;appuntamento
+  entra in agenda con i promemoria il giorno prima e due ore prima.
+</p>
+${button(calendario, 'Aggiungi a Google Calendar')}
 ${button(mappa, 'Indicazioni stradali', { light: true })}
 
 <p style="margin:20px 0 0;font:400 13px/1.7 Helvetica,Arial,sans-serif;color:${MUTED}">
@@ -345,6 +349,9 @@ ${button(mappa, 'Indicazioni stradali', { light: true })}
     'Dove: ' + studio.indirizzo,
     'Codice richiesta: ' + r.booking_id,
     note ? 'Nota dello studio: ' + note : '',
+    '',
+    "In allegato trovi l'invito per il calendario: aprendolo l'appuntamento entra",
+    'in agenda con i promemoria il giorno prima e due ore prima.',
     '',
     "Porta un documento d'identita, la tessera sanitaria, eventuali radiografie",
     "precedenti e l'elenco dei farmaci che assumi. Arriva cinque minuti prima.",

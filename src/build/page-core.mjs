@@ -1,4 +1,5 @@
-import { site, team, technologies, faqs, treatments, esc, attr, arrow, imgTag, figure, lines, personName, byTreatment, byPerson, metaTitle, treatmentPath } from './utils.mjs';
+import { site, team, technologies, faqs, treatments, esc, attr, arrow, imgTag, figure, lines, personName, byTreatment, byPerson, metaTitle, treatmentPath, PATH, teamPath } from './utils.mjs';
+import { t } from './i18n.mjs';
 import { clientConfig } from '../../api/_lib/flows.mjs';
 import { layout, dentistLd } from './layout.mjs';
 import { sectionHead, stats, personCard, bookingBand, faqList, faqLd, pageHero, testimonials } from './components.mjs';
@@ -8,11 +9,11 @@ export const studioPage = () => {
   const base = '../';
   const main = `
 ${pageHero({
-    label: '02 — Lo Studio',
-    title: lines(['Competenza clinica.', '<em class="serif-italic">Attenzione umana.</em>']),
-    lead: 'Trecentoquaranta metri quadrati in zona Fiera, dodici professionisti e un modo di lavorare che mette la diagnosi prima del preventivo.',
+    label: t('studio.label'),
+    title: lines([t('home.studio.t1'), `<em class="serif-italic">${t('home.studio.t2')}</em>`]),
+    lead: t('studio.lead'),
     aside: 'Via Antonio Canova 14<br>Milano',
-    crumbs: [{ label: 'Home', path: '' }, { label: 'Lo studio' }],
+    crumbs: [{ label: t('nav.home'), path: '' }, { label: t('home.studio.label') }],
     base,
     media: 'studio-interno',
     mediaAr: '21/9'
@@ -22,8 +23,8 @@ ${pageHero({
   <div class="wrap">
     <div class="grid">
       <div class="col-5">
-        <span class="label reveal">La filosofia</span>
-        <h2 class="h2 mt-2 reveal">${lines(['Il tempo', '<em class="serif-italic">è parte della cura.</em>'])}</h2>
+        <span class="label reveal">${esc(t('studio.philosophy'))}</span>
+        <h2 class="h2 mt-2 reveal">${lines([t('studio.phT1'), `<em class="serif-italic">${t('studio.phT2')}</em>`])}</h2>
       </div>
       <div class="col-6 start-7 prose reveal">
         <p>Lo studio nasce nel 2004 dall'idea che l'odontoiatria di qualità non dipenda dai materiali ma dal metodo: una diagnosi completa, un progetto discusso e un'esecuzione verificata passaggio per passaggio.</p>
@@ -43,8 +44,8 @@ ${pageHero({
   <div class="wrap">
     <div class="compose">
       <div class="compose__lead">
-        <span class="label reveal">I valori</span>
-        <h2 class="h2 mt-2 reveal">${lines(['Quattro principi', '<em class="serif-italic">non negoziabili.</em>'])}</h2>
+        <span class="label reveal">${esc(t('studio.values'))}</span>
+        <h2 class="h2 mt-2 reveal">${lines([t('studio.valT1'), `<em class="serif-italic">${t('studio.valT2')}</em>`])}</h2>
       </div>
       <div class="compose__stack">
         <div>
@@ -67,10 +68,10 @@ ${pageHero({
 <section class="section dark">
   <div class="wrap">
     ${sectionHead({
-      label: 'Gli spazi',
-      title: lines(['Cinque sale operative,', '<em class="serif-italic">una sala chirurgica.</em>']),
-      aside: 'Radiologia e laboratorio odontotecnico interni: meno passaggi esterni, tempi di consegna più brevi.',
-      link: { href: 'tecnologie/', label: 'Le tecnologie' },
+      label: t('studio.spaces'),
+      title: lines([t('studio.spT1'), `<em class="serif-italic">${t('studio.spT2')}</em>`]),
+      aside: t('studio.spAside'),
+      link: { href: PATH.technologies, label: t('common.allTechnologies') },
       base
     })}
     <div class="grid">
@@ -94,9 +95,9 @@ ${pageHero({
   <div class="wrap">
     ${sectionHead({
       num: '04',
-      label: 'Il team',
-      title: lines(['Chi troverai', '<em class="serif-italic">in studio.</em>']),
-      link: { href: 'team/', label: 'Tutto il team' },
+      label: t('home.team.label'),
+      title: lines([t('studio.whoT1'), `<em class="serif-italic">${t('studio.whoT2')}</em>`]),
+      link: { href: PATH.team, label: t('common.allTeam') },
       base
     })}
     <div class="team-grid">${team.filter((p) => p.featured).map((p) => personCard(p, base)).join('')}</div>
@@ -106,13 +107,13 @@ ${pageHero({
 ${bookingBand(base)}`;
 
   return layout({
-    title: 'Lo studio — Studio Liddi, dentista a Milano',
-    description: 'Studio odontoiatrico a Milano zona Fiera: 340 mq, cinque sale operative, radiologia e laboratorio interni. Dodici professionisti e un protocollo condiviso.',
-    path: 'studio/',
+    title: t('meta.studio.title'),
+    description: t('meta.studio.desc'),
+    path: PATH.studio,
     depth: 1,
-    current: 'studio/',
+    current: PATH.studio,
     preload: ['studio-interno'],
-    crumbs: [{ label: 'Home', path: '' }, { label: 'Lo studio', path: 'studio/' }],
+    crumbs: [{ label: t('nav.home'), path: '' }, { label: t('home.studio.label'), path: PATH.studio }],
     main
   });
 };
@@ -122,28 +123,28 @@ export const teamPage = () => {
   const base = '../';
   const main = `
 ${pageHero({
-    label: '04 — Il Team',
-    title: lines(['Persone, prima ancora', '<em class="serif-italic">che professionisti.</em>']),
-    lead: 'Dodici professionisti che condividono protocolli, riunioni cliniche settimanali e un criterio: la soluzione più conservativa fra quelle efficaci.',
-    aside: 'Riunione clinica<br>ogni martedì',
-    crumbs: [{ label: 'Home', path: '' }, { label: 'Team' }],
+    label: t('team.label'),
+    title: lines([t('home.team.t1'), `<em class="serif-italic">${t('home.team.t2')}</em>`]),
+    lead: t('team.lead'),
+    aside: t('team.aside'),
+    crumbs: [{ label: t('nav.home'), path: '' }, { label: t('nav.team') }],
     base
   })}
 <section class="section section--flush-top">
   <div class="wrap">
     <div class="team-grid">${team.map((p) => personCard(p, base)).join('')}</div>
-    <p class="disclaimer mt-5 reveal">Lo studio collabora inoltre con igienisti dentali, assistenti di poltrona e odontotecnici del laboratorio interno.</p>
+    <p class="disclaimer mt-5 reveal">${esc(t('team.note'))}</p>
   </div>
 </section>
 ${bookingBand(base)}`;
 
   return layout({
-    title: 'Il team — Studio Liddi, dentista a Milano',
-    description: 'I professionisti dello Studio Liddi a Milano: implantologia, ortodonzia, endodonzia, estetica dentale, parodontologia e odontoiatria pediatrica.',
-    path: 'team/',
+    title: t('meta.team.title'),
+    description: t('meta.team.desc'),
+    path: PATH.team,
     depth: 1,
-    current: 'team/',
-    crumbs: [{ label: 'Home', path: '' }, { label: 'Team', path: 'team/' }],
+    current: PATH.team,
+    crumbs: [{ label: t('nav.home'), path: '' }, { label: t('nav.team'), path: PATH.team }],
     main
   });
 };
@@ -155,9 +156,9 @@ export const personPage = (p) => {
   const main = `
 <section class="page-hero" data-header-over>
   <div class="wrap">
-    <nav class="breadcrumb" aria-label="Percorso">
+    <nav class="breadcrumb" aria-label="${attr(t('nav.breadcrumb'))}">
       <a href="${base}">Home</a><span aria-hidden="true">/</span>
-      <a href="${base}team/">Team</a><span aria-hidden="true">/</span>
+      <a href="${base}${PATH.team}">Team</a><span aria-hidden="true">/</span>
       <span aria-current="page">${esc(p.name)}</span>
     </nav>
     <div class="grid">
@@ -170,7 +171,7 @@ export const personPage = (p) => {
         <p class="lead mt-3 reveal" data-delay="1">${esc(p.short)}</p>
         <blockquote class="mt-4 reveal" data-delay="2" style="font-family:var(--font-display);font-size:1.4rem;line-height:1.35;border-left:1px solid var(--sage);padding-left:1.4rem">&ldquo;${esc(p.quote)}&rdquo;</blockquote>
         <div class="row mt-4 reveal" data-delay="3">
-          <a class="btn" href="${base}prenota/">Prenota con ${esc(p.title || '')} ${esc(p.name.split(' ')[0])}</a>
+          <a class="btn" href="${base}${PATH.book}">${esc(t('team.bookWith'))} ${esc(p.title || '')} ${esc(p.name.split(' ')[0])}</a>
         </div>
       </div>
     </div>
@@ -181,23 +182,23 @@ export const personPage = (p) => {
   <div class="wrap">
     <div class="grid">
       <div class="col-7 prose reveal">
-        <h2>Profilo</h2>
+        <h2>${esc(t('team.profile'))}</h2>
         <p>${esc(p.bio)}</p>
-        ${p.education.length ? `<h2>Formazione</h2><ul>${p.education.map((e) => `<li>${esc(e)}</li>`).join('')}</ul>` : ''}
-        ${p.member ? `<h2>Associazioni</h2><p>${esc(p.member)}</p>` : ''}
+        ${p.education.length ? `<h2>${esc(t('team.education'))}</h2><ul>${p.education.map((e) => `<li>${esc(e)}</li>`).join('')}</ul>` : ''}
+        ${p.member ? `<h2>${esc(t('team.associations'))}</h2><p>${esc(p.member)}</p>` : ''}
       </div>
       <aside class="col-4 start-8">
         <div class="sticky">
           <div class="sidebar-card reveal">
-            <span class="label">Aree di interesse</span>
+            <span class="label">${esc(t('team.interests'))}</span>
             <ul class="mt-2 flow flow-sm">${p.focus.map((f) => `<li class="body">${esc(f)}</li>`).join('')}</ul>
           </div>
           ${
             trats.length
               ? `<div class="sidebar-card reveal">
-            <span class="label">Trattamenti</span>
+            <span class="label">${esc(t('nav.treatments'))}</span>
             <ul class="treatment-row__list" style="margin-top:1rem">
-              ${trats.map((t) => `<li><a href="${base}${treatmentPath(t)}"><span>${esc(t.title)}</span> ${arrow}</a></li>`).join('')}
+              ${trats.map((tr) => `<li><a href="${base}${treatmentPath(tr)}"><span>${esc(tr.title)}</span> ${arrow}</a></li>`).join('')}
             </ul>
           </div>`
               : ''
@@ -210,7 +211,7 @@ export const personPage = (p) => {
 
 <section class="section section--sm">
   <div class="wrap">
-    ${sectionHead({ label: 'Team', title: lines(['Gli altri professionisti']), link: { href: 'team/', label: 'Tutto il team' }, base })}
+    ${sectionHead({ label: t('nav.team'), title: lines([t('team.othersT')]), link: { href: PATH.team, label: t('common.allTeam') }, base })}
     <div class="team-grid">${others.map((x) => personCard(x, base)).join('')}</div>
   </div>
 </section>
@@ -221,9 +222,9 @@ ${bookingBand(base)}`;
     description: `${personName(p)}, ${p.role} allo Studio Liddi di Milano. ${p.short}`,
     path: `team/${p.slug}/`,
     depth: 2,
-    current: 'team/',
+    current: PATH.team,
     preload: [p.image],
-    crumbs: [{ label: 'Home', path: '' }, { label: 'Team', path: 'team/' }, { label: p.name, path: `team/${p.slug}/` }],
+    crumbs: [{ label: t('nav.home'), path: '' }, { label: t('nav.team'), path: PATH.team }, { label: p.name, path: `team/${p.slug}/` }],
     jsonLd: [
       {
         '@type': 'Person',
@@ -244,11 +245,11 @@ export const techPage = () => {
   const base = '../';
   const main = `
 ${pageHero({
-    label: '03 — Tecnologie',
-    title: lines(['La tecnologia al servizio', '<em class="serif-italic">della precisione.</em>']),
-    lead: 'Ogni strumento in studio risponde a una domanda clinica precisa. Quelli che non riducono invasività, tempi o margine di errore, non li compriamo.',
-    aside: 'Radiologia e laboratorio<br>interni allo studio',
-    crumbs: [{ label: 'Home', path: '' }, { label: 'Tecnologie' }],
+    label: t('tech.label'),
+    title: lines([t('home.tech.t1'), `<em class="serif-italic">${t('home.tech.t2')}</em>`]),
+    lead: t('tech.lead'),
+    aside: t('tech.aside'),
+    crumbs: [{ label: t('nav.home'), path: '' }, { label: t('nav.technologies') }],
     base
   })}
 <section class="section section--flush-top">
@@ -279,12 +280,12 @@ ${pageHero({
 ${bookingBand(base)}`;
 
   return layout({
-    title: 'Tecnologie — Studio Liddi, dentista a Milano',
-    description: 'Scanner intraorale, radiologia digitale a bassa dose, implantologia guidata, microscopia, Digital Smile Design e stampa 3D. Studio Liddi, Milano.',
-    path: 'tecnologie/',
+    title: t('meta.tech.title'),
+    description: t('meta.tech.desc'),
+    path: PATH.technologies,
     depth: 1,
-    current: 'tecnologie/',
-    crumbs: [{ label: 'Home', path: '' }, { label: 'Tecnologie', path: 'tecnologie/' }],
+    current: PATH.technologies,
+    crumbs: [{ label: t('nav.home'), path: '' }, { label: t('nav.technologies'), path: PATH.technologies }],
     main
   });
 };
@@ -316,11 +317,11 @@ export const firstVisitPage = () => {
   ];
   const main = `
 ${pageHero({
-    label: '05 — Prima visita',
-    title: lines(['La prima visita.']),
-    lead: 'Quarantacinque minuti strutturati in quattro passaggi. Al termine sai qual è la situazione, quali sono le opzioni e quanto costa ciascuna.',
-    aside: 'Durata 45 minuti<br>Costo 80 €',
-    crumbs: [{ label: 'Home', path: '' }, { label: 'Prima visita' }],
+    label: t('fv.label'),
+    title: lines([t('home.firstVisit.t1')]),
+    lead: t('fv.lead'),
+    aside: t('fv.aside'),
+    crumbs: [{ label: t('nav.home'), path: '' }, { label: t('nav.firstVisit') }],
     base,
     media: 'trattamento-visita',
     mediaAr: '21/9'
@@ -344,8 +345,8 @@ ${pageHero({
   <div class="wrap">
     <div class="grid">
       <div class="col-5">
-        <span class="label reveal">Cosa portare</span>
-        <h2 class="h2 mt-2 reveal">${lines(['Per non', '<em class="serif-italic">perdere tempo.</em>'])}</h2>
+        <span class="label reveal">${esc(t('fv.bring'))}</span>
+        <h2 class="h2 mt-2 reveal">${lines([t('fv.bringT1'), `<em class="serif-italic">${t('fv.bringT2')}</em>`])}</h2>
         ${figure('strumenti-set', { base, ar: '4/3', className: 'mt-4 media__zoom', sizes: '40vw' })}
       </div>
       <div class="col-6 start-7 prose reveal">
@@ -356,7 +357,7 @@ ${pageHero({
           <li>Eventuali referti medici rilevanti (cardiologici, terapie anticoagulanti, bifosfonati)</li>
           <li>Il nome del tuo medico curante, se stai seguendo terapie in corso</li>
         </ul>
-        <h2>Dopo la visita</h2>
+        <h2>${esc(t('fv.after'))}</h2>
         <p>Il piano di trattamento ti viene consegnato per iscritto, con le alternative e un preventivo dettagliato. Non c'è alcuna richiesta di decidere in giornata: se vuoi confrontarti con un altro professionista, ti consegniamo anche la documentazione radiografica.</p>
         <p>Se il percorso prevede più fasi, ti indichiamo l'ordine di priorità clinica: cosa è urgente, cosa può attendere e cosa è facoltativo.</p>
       </div>
@@ -367,25 +368,25 @@ ${pageHero({
 <section class="section bg-sand">
   <div class="wrap">
     <div class="grid">
-      <div class="col-4"><span class="label reveal">Domande</span><h2 class="h2 mt-2 reveal">${lines(['Prima di', '<em class="serif-italic">prenotare.</em>'])}</h2></div>
+      <div class="col-4"><span class="label reveal">${esc(t('fv.questions'))}</span><h2 class="h2 mt-2 reveal">${lines([t('fv.beforeT1'), `<em class="serif-italic">${t('fv.beforeT2')}</em>`])}</h2></div>
       <div class="col-7 start-7">${faqList(localFaq, 'pv')}</div>
     </div>
     <div class="row mt-5 reveal">
-      <a class="btn" href="${base}prenota/">Prenota la tua prima visita</a>
-      <a class="link-u" href="tel:${attr(site.phoneHref)}">Oppure chiama ${esc(site.phone)} ${arrow}</a>
+      <a class="btn" href="${base}${PATH.book}">${esc(t('home.firstVisit.cta'))}</a>
+      <a class="link-u" href="tel:${attr(site.phoneHref)}">${esc(t('fv.orCall'))} ${esc(site.phone)} ${arrow}</a>
     </div>
   </div>
 </section>
 ${bookingBand(base)}`;
 
   return layout({
-    title: 'La prima visita — Studio Liddi, dentista a Milano',
-    description: 'Come funziona la prima visita allo Studio Liddi di Milano: 45 minuti tra ascolto, diagnosi, piano di trattamento e preventivo scritto.',
-    path: 'prima-visita/',
+    title: t('meta.firstVisit.title'),
+    description: t('meta.firstVisit.desc'),
+    path: PATH.firstVisit,
     depth: 1,
-    current: 'prima-visita/',
+    current: PATH.firstVisit,
     preload: ['trattamento-visita'],
-    crumbs: [{ label: 'Home', path: '' }, { label: 'Prima visita', path: 'prima-visita/' }],
+    crumbs: [{ label: t('nav.home'), path: '' }, { label: t('nav.firstVisit'), path: PATH.firstVisit }],
     jsonLd: [dentistLd(), faqLd(localFaq)],
     main
   });
@@ -396,11 +397,11 @@ export const contactPage = () => {
   const base = '../';
   const main = `
 ${pageHero({
-    label: 'Contatti',
-    title: lines(['Vieni a trovarci.']),
+    label: t('nav.contact'),
+    title: lines([t('home.contact.t1')]),
     lead: 'Zona Fiera, a sei minuti a piedi dalla metropolitana. Rispondiamo al telefono negli orari di apertura e via email entro un giorno lavorativo.',
     aside: `${esc(site.address.street)}<br>${esc(site.address.zip)} ${esc(site.address.city)}`,
-    crumbs: [{ label: 'Home', path: '' }, { label: 'Contatti' }],
+    crumbs: [{ label: t('nav.home'), path: '' }, { label: t('nav.contact') }],
     base
   })}
 
@@ -409,10 +410,10 @@ ${pageHero({
     <div class="grid">
       <div class="col-5">
         <div class="info-list">
-          <div class="info-list__row"><span class="label">Telefono</span><span><a class="link-inline" href="tel:${attr(site.phoneHref)}">${esc(site.phone)}</a></span></div>
-          <div class="info-list__row"><span class="label">WhatsApp</span><span><a class="link-inline" href="https://wa.me/${attr(site.whatsappHref)}" target="_blank" rel="noopener">${esc(site.whatsapp)}</a></span></div>
-          <div class="info-list__row"><span class="label">Email</span><span><a class="link-inline" href="mailto:${attr(site.email)}">${esc(site.email)}</a></span></div>
-          <div class="info-list__row"><span class="label">Indirizzo</span><span>${esc(site.address.street)}<br>${esc(site.address.zip)} ${esc(site.address.city)}</span></div>
+          <div class="info-list__row"><span class="label">${esc(t('common.phone'))}</span><span><a class="link-inline" href="tel:${attr(site.phoneHref)}">${esc(site.phone)}</a></span></div>
+          <div class="info-list__row"><span class="label">${esc(t('common.whatsapp'))}</span><span><a class="link-inline" href="https://wa.me/${attr(site.whatsappHref)}" target="_blank" rel="noopener">${esc(site.whatsapp)}</a></span></div>
+          <div class="info-list__row"><span class="label">${esc(t('common.email'))}</span><span><a class="link-inline" href="mailto:${attr(site.email)}">${esc(site.email)}</a></span></div>
+          <div class="info-list__row"><span class="label">${esc(t('common.address'))}</span><span>${esc(site.address.street)}<br>${esc(site.address.zip)} ${esc(site.address.city)}</span></div>
           ${site.hours.map((h) => `<div class="info-list__row"><span class="label">${esc(h.d)}</span><span>${esc(h.h)}</span></div>`).join('')}
         </div>
         <div class="info-list mt-4">
@@ -426,27 +427,27 @@ ${pageHero({
           <iframe title="Mappa dello studio" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
             src="https://www.openstreetmap.org/export/embed.html?bbox=9.158%2C45.474%2C9.179%2C45.484&amp;layer=mapnik&amp;marker=${site.address.lat}%2C${site.address.lng}"></iframe>
         </div>
-        <h2 class="h3 mt-5 reveal">Richiedi informazioni</h2>
+        <h2 class="h3 mt-5 reveal">${esc(t('contact.request'))}</h2>
         <form class="mt-3" data-validate data-success="#contact-done" novalidate>
           <div class="form-grid">
-            <label class="field"><span class="field__label label">Nome *</span><input type="text" name="nome" required autocomplete="given-name"><span class="field__error">Campo obbligatorio</span></label>
-            <label class="field"><span class="field__label label">Cognome *</span><input type="text" name="cognome" required autocomplete="family-name"><span class="field__error">Campo obbligatorio</span></label>
-            <label class="field"><span class="field__label label">Email *</span><input type="email" name="email" required autocomplete="email"><span class="field__error">Inserisci un indirizzo email valido</span></label>
-            <label class="field"><span class="field__label label">Telefono *</span><input type="tel" name="telefono" required autocomplete="tel" pattern="[0-9 +\\(\\)\\.\\-]{6,}"><span class="field__error">Inserisci un numero valido</span></label>
+            <label class="field"><span class="field__label label">${esc(t('form.name'))} *</span><input type="text" name="nome" required autocomplete="given-name"><span class="field__error">${esc(t('form.required'))}</span></label>
+            <label class="field"><span class="field__label label">${esc(t('form.surname'))} *</span><input type="text" name="cognome" required autocomplete="family-name"><span class="field__error">${esc(t('form.required'))}</span></label>
+            <label class="field"><span class="field__label label">${esc(t('form.email'))} *</span><input type="email" name="email" required autocomplete="email"><span class="field__error">${esc(t('form.invalidEmail'))}</span></label>
+            <label class="field"><span class="field__label label">${esc(t('form.phone'))} *</span><input type="tel" name="telefono" required autocomplete="tel" pattern="[0-9 +\\(\\)\\.\\-]{6,}"><span class="field__error">${esc(t('form.invalidPhone'))}</span></label>
           </div>
           <label class="field mt-3"><span class="field__label label">Come possiamo aiutarti?</span><textarea name="messaggio" rows="4" placeholder="Descrivi brevemente la tua richiesta"></textarea></label>
           <label class="check mt-3">
             <input type="checkbox" name="privacy" required>
             <span class="check__box" aria-hidden="true"></span>
-            <span>Ho letto l'<a class="link-inline" href="${base}privacy/">informativa privacy</a> e acconsento al trattamento dei miei dati per essere ricontattato. *</span>
+            <span>Ho letto l'<a class="link-inline" href="${base}${PATH.privacy}">informativa privacy</a> e acconsento al trattamento dei miei dati per essere ricontattato. *</span>
           </label>
-          <div class="row mt-4"><button class="btn" type="submit">Invia richiesta</button></div>
+          <div class="row mt-4"><button class="btn" type="submit">${esc(t('form.send'))}</button></div>
           <p class="small mt-2" style="color:var(--stone-light)">* Campi obbligatori. Non inserire dati relativi alla salute in questo modulo.</p>
         </form>
         <div class="form-success" id="contact-done" hidden>
           <h2 class="h2">Grazie.</h2>
           <p class="lead mt-2">Abbiamo ricevuto la tua richiesta: ti ricontattiamo entro un giorno lavorativo.</p>
-          <p class="mt-3"><a class="btn btn--ghost" href="${base}">Torna alla home</a></p>
+          <p class="mt-3"><a class="btn btn--ghost" href="${base}">${esc(t('common.backHome'))}</a></p>
         </div>
       </div>
     </div>
@@ -455,12 +456,12 @@ ${pageHero({
 ${bookingBand(base)}`;
 
   return layout({
-    title: 'Contatti — Studio Liddi, dentista a Milano zona Fiera',
+    title: t('meta.contact.title'),
     description: 'Studio Liddi, Via Antonio Canova 14, Milano. Telefono, WhatsApp, email, orari di apertura e indicazioni per raggiungerci.',
-    path: 'contatti/',
+    path: PATH.contact,
     depth: 1,
-    current: 'contatti/',
-    crumbs: [{ label: 'Home', path: '' }, { label: 'Contatti', path: 'contatti/' }],
+    current: PATH.contact,
+    crumbs: [{ label: t('nav.home'), path: '' }, { label: t('nav.contact'), path: PATH.contact }],
     main
   });
 };
@@ -486,10 +487,10 @@ export const bookingPage = () => {
   const main = `
 ${pageHero({
     label: 'Prenota',
-    title: lines(['Prenota', '<em class="serif-italic">una visita.</em>']),
-    lead: 'Scegli il servizio: le domande cambiano di conseguenza e sono al massimo cinque. Puoi prenotare un appuntamento oppure chiedere di essere ricontattato.',
-    aside: `Preferisci parlare?<br><a class="link-inline" href="tel:${attr(site.phoneHref)}">${esc(site.phone)}</a>`,
-    crumbs: [{ label: 'Home', path: '' }, { label: 'Prenota' }],
+    title: lines([t('book.title1'), `<em class="serif-italic">${t('book.title2')}</em>`]),
+    lead: t('book.lead'),
+    aside: `${t('book.preferPhone')}<br><a class="link-inline" href="tel:${attr(site.phoneHref)}">${esc(site.phone)}</a>`,
+    crumbs: [{ label: t('nav.home'), path: '' }, { label: t('nav.bookShort') }],
     base
   })}
 
@@ -500,7 +501,7 @@ ${pageHero({
         <div data-wizard data-endpoint="${attr(site.booking?.endpoint || '')}" data-mode="${attr(site.booking?.mode || 'demo')}">
           <div class="wizard__progress">
             <div class="row row--between">
-              <span class="label" data-progress-label>Passo 1</span>
+              <span class="label" data-progress-label>${esc(t('book.chooseService'))}</span>
               <span class="label" data-progress-service></span>
             </div>
             <div class="wizard__bar"><i data-progress-bar style="width:0%"></i></div>
@@ -510,34 +511,34 @@ ${pageHero({
           <div class="wizard__stage" data-stage aria-live="polite"></div>
 
           <div class="row mt-4" data-nav>
-            <button class="btn btn--ghost" type="button" data-back hidden>Indietro</button>
-            <button class="btn" type="button" data-next disabled>Continua</button>
+            <button class="btn btn--ghost" type="button" data-back hidden>${esc(t('form.back'))}</button>
+            <button class="btn" type="button" data-next disabled>${esc(t('form.continue'))}</button>
           </div>
 
           <!-- ultimo passo: dati personali e riepilogo -->
           <section class="wizard__panel" data-final hidden>
-            <h2 class="h3">I tuoi dati</h2>
+            <h2 class="h3">${esc(t('form.yourDetails'))}</h2>
             <form class="mt-3" data-booking data-validate data-success="#booking-done" novalidate>
               <div class="form-grid">
-                <label class="field"><span class="field__label label">Nome *</span><input type="text" name="nome" required autocomplete="given-name"><span class="field__error">Campo obbligatorio</span></label>
-                <label class="field"><span class="field__label label">Cognome *</span><input type="text" name="cognome" required autocomplete="family-name"><span class="field__error">Campo obbligatorio</span></label>
-                <label class="field"><span class="field__label label">Email *</span><input type="email" name="email" required autocomplete="email"><span class="field__error">Inserisci un indirizzo email valido</span></label>
-                <label class="field"><span class="field__label label">Telefono *</span><input type="tel" name="telefono" required autocomplete="tel" pattern="[0-9 +\\(\\)\\.\\-]{6,}"><span class="field__error">Inserisci un numero valido</span></label>
+                <label class="field"><span class="field__label label">${esc(t('form.name'))} *</span><input type="text" name="nome" required autocomplete="given-name"><span class="field__error">${esc(t('form.required'))}</span></label>
+                <label class="field"><span class="field__label label">${esc(t('form.surname'))} *</span><input type="text" name="cognome" required autocomplete="family-name"><span class="field__error">${esc(t('form.required'))}</span></label>
+                <label class="field"><span class="field__label label">${esc(t('form.email'))} *</span><input type="email" name="email" required autocomplete="email"><span class="field__error">${esc(t('form.invalidEmail'))}</span></label>
+                <label class="field"><span class="field__label label">${esc(t('form.phone'))} *</span><input type="tel" name="telefono" required autocomplete="tel" pattern="[0-9 +\\(\\)\\.\\-]{6,}"><span class="field__error">${esc(t('form.invalidPhone'))}</span></label>
               </div>
-              <label class="field mt-3"><span class="field__label label">Note</span><textarea name="messaggio" rows="3" placeholder="Qualcosa che è utile sapere prima dell'appuntamento"></textarea></label>
+              <label class="field mt-3"><span class="field__label label">${esc(t('form.notes'))}</span><textarea name="messaggio" rows="3" placeholder="${attr(t('form.notesPlaceholder'))}"></textarea></label>
 
               <!-- esca anti-spam: invisibile alle persone, compilata dai bot -->
               <div aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden">
-                <label>Azienda<input type="text" name="azienda" tabindex="-1" autocomplete="off"></label>
+                <label>${esc(t('form.company'))}<input type="text" name="azienda" tabindex="-1" autocomplete="off"></label>
               </div>
 
-              <p class="label mt-4">Riepilogo della richiesta</p>
+              <p class="label mt-4">${esc(t('form.summary'))}</p>
               <dl class="summary-list mt-2" data-summary-list></dl>
 
               <label class="check mt-4">
                 <input type="checkbox" name="privacy" required>
                 <span class="check__box" aria-hidden="true"></span>
-                <span>Ho letto l'<a class="link-inline" href="${base}privacy/">informativa privacy</a> e acconsento al trattamento dei miei dati per la gestione dell'appuntamento. *</span>
+                <span>Ho letto l'<a class="link-inline" href="${base}${PATH.privacy}">informativa privacy</a> e acconsento al trattamento dei miei dati per la gestione dell'appuntamento. *</span>
               </label>
               <label class="check mt-3">
                 <input type="checkbox" name="comunicazioni">
@@ -547,34 +548,33 @@ ${pageHero({
 
               <p class="form-error mt-3" data-form-error hidden role="alert"></p>
               <div class="row mt-4">
-                <button class="btn btn--ghost" type="button" data-back-final>Indietro</button>
-                <button class="btn" type="submit" data-submit>Invia richiesta</button>
+                <button class="btn btn--ghost" type="button" data-back-final>${esc(t('form.back'))}</button>
+                <button class="btn" type="submit" data-submit>${esc(t('form.send'))}</button>
               </div>
               <p class="small mt-2" style="color:var(--stone-light)">
-                Le informazioni raccolte servono alla segreteria per capire la richiesta: non sono una diagnosi.
-                La richiesta non è una conferma, ti ricontattiamo noi.
+                ${esc(t('form.noDiagnosis'))}
               </p>
             </form>
 
             <div class="form-success" id="booking-done" hidden tabindex="-1">
-              <h2 class="h2">Richiesta ricevuta.</h2>
+              <h2 class="h2">${esc(t('book.received'))}</h2>
               <p class="lead mt-2 measure-sm" style="margin-inline:auto" data-done-lead></p>
               <p class="body mt-2 measure-sm" style="margin-inline:auto" data-done-note></p>
-              <p class="mt-4"><span class="label">Codice richiesta</span><br>
+              <p class="mt-4"><span class="label">${esc(t('book.code'))}</span><br>
                 <span class="h3" style="font-family:var(--font-sans);letter-spacing:.04em" data-done-code></span>
               </p>
               <div class="row mt-4" style="justify-content:center">
-                <a class="btn btn--ghost" href="${base}">Torna alla home</a>
-                <a class="btn" href="tel:${attr(site.phoneHref)}">Contatta lo studio</a>
+                <a class="btn btn--ghost" href="${base}">${esc(t('common.backHome'))}</a>
+                <a class="btn" href="tel:${attr(site.phoneHref)}">${esc(t('common.contactStudio'))}</a>
               </div>
             </div>
           </section>
 
           <noscript>
             <p class="form-note mt-4">
-              Per prenotare online serve JavaScript attivo. In alternativa chiamaci allo
+              ${esc(t('form.noscript'))}
               <a class="link-inline" href="tel:${attr(site.phoneHref)}">${esc(site.phone)}</a>
-              o scrivici a <a class="link-inline" href="mailto:${attr(site.email)}">${esc(site.email)}</a>.
+              ${esc(t('form.orWrite'))} <a class="link-inline" href="mailto:${attr(site.email)}">${esc(site.email)}</a>.
             </p>
           </noscript>
         </div>
@@ -583,14 +583,14 @@ ${pageHero({
       <aside class="col-3" style="grid-column:10 / span 3">
         <div class="sticky">
           <div class="sidebar-card">
-            <span class="label">Preferisci il telefono?</span>
+            <span class="label">${esc(t('book.preferPhone'))}</span>
             <p class="h4 mt-2"><a class="link-inline" href="tel:${attr(site.phoneHref)}">${esc(site.phone)}</a></p>
             <p class="small mt-2" style="color:var(--stone)">Lun — Ven 08:30 — 19:30<br>Sab 09:00 — 13:00</p>
-            <p class="mt-3"><a class="link-u" href="https://wa.me/${attr(site.whatsappHref)}" target="_blank" rel="noopener">Scrivici su WhatsApp ${arrow}</a></p>
+            <p class="mt-3"><a class="link-u" href="https://wa.me/${attr(site.whatsappHref)}" target="_blank" rel="noopener">${esc(t('common.whatsapp'))} ${arrow}</a></p>
           </div>
           <div class="sidebar-card">
-            <span class="label">Urgenze</span>
-            <p class="small mt-2" style="color:var(--stone)">In caso di dolore acuto o trauma, chiama direttamente lo studio: riserviamo ogni giorno spazi per le urgenze.</p>
+            <span class="label">${esc(t('book.urgent'))}</span>
+            <p class="small mt-2" style="color:var(--stone)">${esc(t('book.urgentText'))}</p>
           </div>
         </div>
       </aside>
@@ -602,13 +602,13 @@ ${pageHero({
 <script type="application/json" data-slots>${JSON.stringify({ orari, dottori: ['Nessuna preferenza', ...docs.map((p) => personName(p))] })}</script>`;
 
   return layout({
-    title: 'Prenota una visita — Studio Liddi, dentista a Milano',
+    title: t('meta.book.title'),
     description:
       'Prenota online la tua visita allo Studio Liddi di Milano: scegli il servizio, rispondi a poche domande e indica quando preferisci.',
-    path: 'prenota/',
+    path: PATH.book,
     depth: 1,
-    current: 'prenota/',
-    crumbs: [{ label: 'Home', path: '' }, { label: 'Prenota', path: 'prenota/' }],
+    current: PATH.book,
+    crumbs: [{ label: t('nav.home'), path: '' }, { label: t('nav.bookShort'), path: PATH.book }],
     main
   });
 };

@@ -1,15 +1,16 @@
-import { site, treatments, technologies, team, cases, esc, attr, arrow, imgTag, figure, lines, catPath, treatmentPath } from './utils.mjs';
+import { site, treatments, technologies, team, cases, esc, attr, arrow, imgTag, figure, lines, catPath, treatmentPath, PATH } from './utils.mjs';
+import { t } from './i18n.mjs';
 import { layout, dentistLd } from './layout.mjs';
 import { sectionHead, personCard, bookingBand, testimonials, journalPreview } from './components.mjs';
 
 const base = '';
 
-const QUICK = [
-  { label: 'Trattamenti', href: 'trattamenti/', meta: '16 trattamenti' },
-  { label: 'Lo studio', href: 'studio/', meta: 'Milano, zona Fiera' },
-  { label: 'Il team', href: 'team/', meta: '12 professionisti' },
-  { label: 'Casi clinici', href: 'casi-clinici/', meta: 'Risultati' },
-  { label: 'Prenota', href: 'prenota/', meta: 'Online, 2 minuti' }
+const quickItems = () => [
+  { label: t('nav.treatments'), href: PATH.treatments, meta: t('home.quick.treatments') },
+  { label: t('home.studio.label'), href: PATH.studio, meta: t('home.quick.studio') },
+  { label: t('home.team.label'), href: PATH.team, meta: t('home.quick.team') },
+  { label: t('nav.cases'), href: PATH.cases, meta: t('common.results') },
+  { label: t('nav.bookShort'), href: PATH.book, meta: t('home.quick.book') }
 ];
 
 const hero = () => `
@@ -17,34 +18,34 @@ const hero = () => `
   <div class="wrap">
     <div class="hero__grid">
       <div class="hero__title">
-        <h1 class="display">${lines(['Odontoiatria', 'contemporanea.', '<em class="serif-italic">Cura, precisione,</em>', '<em class="serif-italic">persone.</em>'])}</h1>
+        <h1 class="display">${lines([t('home.hero.l1'), t('home.hero.l2'), `<em class="serif-italic">${t('home.hero.l3')}</em>`, `<em class="serif-italic">${t('home.hero.l4')}</em>`])}</h1>
       </div>
       <div class="hero__meta reveal" data-delay="3">
         <div class="hero__meta-item">
-          <span class="label">Studio</span>
+          <span class="label">${esc(t('common.studio'))}</span>
           <span>${esc(site.address.city)}, Italia</span>
         </div>
         <div class="hero__meta-item">
-          <span class="label">Orari</span>
-          <span>Lun — Ven<br>08:30 — 19:30</span>
+          <span class="label">${esc(t('common.hours'))}</span>
+          <span>${t('home.hero.hours')}</span>
         </div>
         <div class="hero__meta-item">
-          <span class="label">Telefono</span>
+          <span class="label">${esc(t('common.phone'))}</span>
           <span><a class="link-inline" href="tel:${attr(site.phoneHref)}">${esc(site.phone)}</a></span>
         </div>
       </div>
       <div class="hero__body reveal" data-delay="2">
-        <p class="lead">Tecnologia avanzata, esperienza clinica e attenzione alla persona in ogni fase del trattamento.</p>
+        <p class="lead">${esc(t('home.hero.lead'))}</p>
         <div class="hero__cta">
-          <a class="btn" href="prenota/">Prenota una visita</a>
-          <a class="btn btn--ghost" href="studio/">Scopri lo studio</a>
+          <a class="btn" href="${PATH.book}">${esc(t('nav.book'))}</a>
+          <a class="btn btn--ghost" href="${PATH.studio}">${esc(t('common.discoverStudio'))}</a>
         </div>
       </div>
       <div class="hero__media img-mask">
         ${imgTag('hero-studio', { base, sizes: '(max-width: 1080px) 100vw, 58vw', eager: true, className: 'parallax', })}
         <div class="hero__badge">
           <span class="hero__dot"></span>
-          <span class="small">Prima visita disponibile<br>questa settimana</span>
+          <span class="small">${t('home.hero.badge')}</span>
         </div>
       </div>
     </div>
@@ -54,8 +55,8 @@ const hero = () => `
 const quicknav = () => `
 <section class="section section--sm">
   <div class="wrap">
-    <nav class="quicknav" aria-label="Navigazione rapida">
-      ${QUICK.map(
+    <nav class="quicknav" aria-label="${attr(t('nav.quick'))}">
+      ${quickItems().map(
         (q, i) => `<a class="quicknav__item" href="${q.href}">
         <span class="num" style="color:var(--stone-light)">0${i + 1}</span>
         <span class="h3">${esc(q.label)}</span>
@@ -71,10 +72,10 @@ const treatmentsSection = () => `
   <div class="wrap">
     ${sectionHead({
       num: '01',
-      label: 'Trattamenti',
-      title: lines(['Soluzioni personalizzate', '<em class="serif-italic">per ogni sorriso.</em>']),
-      aside: 'Quattro aree cliniche, sedici trattamenti. Ogni area ha la sua pagina, con fasi, tempi e specialisti.',
-      link: { href: 'trattamenti/', label: 'Tutte le aree' },
+      label: t('home.treatments.label'),
+      title: lines([t('home.treatments.t1'), `<em class="serif-italic">${t('home.treatments.t2')}</em>`]),
+      aside: t('home.treatments.aside'),
+      link: { href: PATH.treatments, label: t('common.allTreatments') },
       base
     })}
     <div class="team-grid team-grid--2">
@@ -90,7 +91,7 @@ const treatmentsSection = () => `
             <span class="num" style="color:var(--stone-light)">${esc(c.num)}</span>
           </div>
           <p class="body mt-1 measure-sm">${esc(c.lead)}</p>
-          <p class="mt-3"><span class="link-u">Scopri ${arrow}</span></p>
+          <p class="mt-3"><span class="link-u">${esc(t('common.discover'))} ${arrow}</span></p>
         </div>
       </a>`
         )
@@ -104,10 +105,10 @@ const studioSection = () => `
   <div class="wrap">
     ${sectionHead({
       num: '02',
-      label: 'Lo Studio',
-      title: lines(['Competenza clinica.', '<em class="serif-italic">Attenzione umana.</em>']),
-      aside: 'Trecentoquaranta metri quadrati in zona Fiera, dodici professionisti e un modo di lavorare che mette la diagnosi prima del preventivo.',
-      link: { href: 'studio/', label: 'Scopri lo studio' },
+      label: t('home.studio.label'),
+      title: lines([t('home.studio.t1'), `<em class="serif-italic">${t('home.studio.t2')}</em>`]),
+      aside: t('home.studio.aside'),
+      link: { href: PATH.studio, label: t('common.discoverStudio') },
       base
     })}
     <div class="grid">
@@ -115,8 +116,8 @@ const studioSection = () => `
         ${figure('studio-interno', { base, ar: '16/10', className: 'media__zoom', sizes: '(max-width: 1000px) 100vw, 58vw' })}
       </div>
       <div class="col-4 start-9" style="grid-column:9 / span 4">
-        <p class="lead reveal">Crediamo che la qualità di una cura si misuri su un arco di anni, non di sedute. Per questo investiamo tempo nella diagnosi, spieghiamo le alternative e costruiamo percorsi che possano durare.</p>
-        <p class="mt-4 reveal" data-delay="1"><a class="btn btn--ghost" href="studio/">Scopri lo studio</a></p>
+        <p class="lead reveal">${esc(t('home.studio.lead'))}</p>
+        <p class="mt-4 reveal" data-delay="1"><a class="btn btn--ghost" href="${PATH.studio}">${esc(t('common.discoverStudio'))}</a></p>
       </div>
     </div>
   </div>
@@ -127,36 +128,36 @@ const techSection = () => `
   <div class="wrap">
     ${sectionHead({
       num: '03',
-      label: 'Tecnologia',
-      title: lines(['La tecnologia al servizio', '<em class="serif-italic">della precisione.</em>']),
-      aside: 'Strumenti scelti per ridurre invasività, tempi e numero di sedute. Non per fare scena.',
-      link: { href: 'tecnologie/', label: 'Scopri le tecnologie' },
+      label: t('home.tech.label'),
+      title: lines([t('home.tech.t1'), `<em class="serif-italic">${t('home.tech.t2')}</em>`]),
+      aside: t('home.tech.aside'),
+      link: { href: PATH.technologies, label: t('common.discoverTech') },
       base
     })}
     <div class="team-grid team-grid--3">
       ${technologies
         .slice(0, 3)
         .map(
-          (t) => `<a class="person reveal" href="tecnologie/#${t.slug}">
+          (tec) => `<a class="person reveal" href="${PATH.technologies}#${tec.slug}">
         <div class="media media--ar media--duo media__zoom" style="--ar:3/4">
-          ${imgTag(t.image, { base, sizes: '(max-width: 560px) 100vw, (max-width: 1000px) 50vw, 33vw' })}
+          ${imgTag(tec.image, { base, sizes: '(max-width: 560px) 100vw, (max-width: 1000px) 50vw, 33vw' })}
           <div class="person__overlay">
-            <p>${esc(t.text)}</p>
-            <span class="link-u">Scopri la tecnologia ${arrow}</span>
+            <p>${esc(tec.text)}</p>
+            <span class="link-u">${esc(t('common.discoverTechnology'))} ${arrow}</span>
           </div>
         </div>
         <div class="person__info">
           <div class="row row--between" style="gap:1rem">
-            <h3 class="h4">${esc(t.title)}</h3>
-            <span class="num" style="color:var(--navy-soft)">${esc(t.num)}</span>
+            <h3 class="h4">${esc(tec.title)}</h3>
+            <span class="num" style="color:var(--navy-soft)">${esc(tec.num)}</span>
           </div>
-          <p class="person__role">${esc(t.kicker)}</p>
+          <p class="person__role">${esc(tec.kicker)}</p>
         </div>
       </a>`
         )
         .join('')}
     </div>
-    <p class="mt-4 reveal"><a class="btn btn--outline-light" href="tecnologie/">Scopri le tecnologie</a></p>
+    <p class="mt-4 reveal"><a class="btn btn--outline-light" href="${PATH.technologies}">${esc(t('common.discoverTech'))}</a></p>
   </div>
 </section>`;
 
@@ -165,10 +166,10 @@ const teamSection = () => `
   <div class="wrap">
     ${sectionHead({
       num: '04',
-      label: 'Il Team',
-      title: lines(['Persone, prima ancora', '<em class="serif-italic">che professionisti.</em>']),
-      aside: 'Dodici professionisti, un unico protocollo condiviso e riunioni cliniche settimanali sui casi complessi.',
-      link: { href: 'team/', label: 'Conosci tutto il team' },
+      label: t('home.team.label'),
+      title: lines([t('home.team.t1'), `<em class="serif-italic">${t('home.team.t2')}</em>`]),
+      aside: t('home.team.aside'),
+      link: { href: PATH.team, label: t('common.meetTeam') },
       base
     })}
     <div class="team-grid">
@@ -177,11 +178,12 @@ const teamSection = () => `
   </div>
 </section>`;
 
-const STEPS = [
-  { t: 'Ascolto', d: 'Venti minuti di colloquio prima di qualsiasi strumento. Cosa ti preoccupa, cosa hai già provato, cosa ti aspetti.' },
-  { t: 'Diagnosi', d: 'Esame clinico completo, fotografie, radiografie digitali e scansione intraorale quando serve.' },
-  { t: 'Piano di trattamento', d: 'Le alternative possibili, con vantaggi e limiti di ciascuna, e un preventivo scritto voce per voce.' },
-  { t: 'Percorso personalizzato', d: 'Tempi, sedute e modalità di pagamento concordati insieme. Nessun passaggio parte senza la tua approvazione.' }
+// valutati a ogni pagina: il dizionario dipende dalla lingua corrente
+const steps = () => [
+  { t: t('steps.1.t'), d: t('steps.1.d') },
+  { t: t('steps.2.t'), d: t('steps.2.d') },
+  { t: t('steps.3.t'), d: t('steps.3.d') },
+  { t: t('steps.4.t'), d: t('steps.4.d') }
 ];
 
 const firstVisit = () => `
@@ -189,14 +191,14 @@ const firstVisit = () => `
   <div class="wrap">
     ${sectionHead({
       num: '05',
-      label: 'Prima visita',
-      title: lines(['La prima visita.']),
-      aside: '45 minuti, un percorso in quattro passaggi. Al termine sai qual è la situazione, quali sono le opzioni e quanto costa ciascuna.',
-      link: { href: 'prima-visita/', label: 'Come funziona' },
+      label: t('home.firstVisit.label'),
+      title: lines([t('home.firstVisit.t1')]),
+      aside: t('home.firstVisit.aside'),
+      link: { href: PATH.firstVisit, label: t('common.howItWorks') },
       base
     })}
     <div class="steps">
-      ${STEPS.map(
+      ${steps().map(
         (s, i) => `<article class="step">
         <span class="step__num">0${i + 1}</span>
         <h3 class="h4">${esc(s.t)}</h3>
@@ -204,8 +206,8 @@ const firstVisit = () => `
       ).join('')}
     </div>
     <div class="row mt-5 reveal">
-      <a class="btn" href="prenota/">Prenota la tua prima visita</a>
-      <a class="link-u" href="prima-visita/">Cosa portare con te ${arrow}</a>
+      <a class="btn" href="${PATH.book}">${esc(t('home.firstVisit.cta'))}</a>
+      <a class="link-u" href="${PATH.firstVisit}">${esc(t('home.firstVisit.what'))} ${arrow}</a>
     </div>
   </div>
 </section>`;
@@ -214,10 +216,10 @@ const casesPreview = () => `
 <section class="section" id="casi">
   <div class="wrap">
     ${sectionHead({
-      label: 'Risultati',
-      title: lines(['Casi clinici.']),
-      aside: 'Una selezione di percorsi completati in studio, con tempi e responsabile clinico.',
-      link: { href: 'casi-clinici/', label: 'Tutti i casi' },
+      label: t('home.cases.label'),
+      title: lines([t('home.cases.t1')]),
+      aside: t('home.cases.aside'),
+      link: { href: PATH.cases, label: t('common.allCases') },
       base
     })}
     <div class="case-grid">
@@ -250,27 +252,27 @@ const contactSection = () => `
 <section class="section" id="contatti">
   <div class="wrap">
     ${sectionHead({
-      label: 'Contatti',
-      title: lines(['Vieni a trovarci.']),
-      aside: 'Zona Fiera, a sei minuti dalla metropolitana. Parcheggio riservato ai pazienti nel cortile interno.',
-      link: { href: 'contatti/', label: 'Mappa e indicazioni' },
+      label: t('home.contact.label'),
+      title: lines([t('home.contact.t1')]),
+      aside: t('home.contact.aside'),
+      link: { href: PATH.contact, label: t('home.contact.link') },
       base
     })}
     <div class="grid">
       <div class="col-6">
         <div class="info-list">
-          <div class="info-list__row"><span class="label">Indirizzo</span><span>${esc(site.address.street)}, ${esc(site.address.zip)} ${esc(site.address.city)}</span></div>
-          <div class="info-list__row"><span class="label">Telefono</span><span><a class="link-inline" href="tel:${attr(site.phoneHref)}">${esc(site.phone)}</a></span></div>
-          <div class="info-list__row"><span class="label">WhatsApp</span><span><a class="link-inline" href="https://wa.me/${attr(site.whatsappHref)}" target="_blank" rel="noopener">${esc(site.whatsapp)}</a></span></div>
-          <div class="info-list__row"><span class="label">Email</span><span><a class="link-inline" href="mailto:${attr(site.email)}">${esc(site.email)}</a></span></div>
-          <div class="info-list__row"><span class="label">Orari</span><span>${site.hours.map((h) => `${esc(h.d)} · ${esc(h.h)}`).join('<br>')}</span></div>
+          <div class="info-list__row"><span class="label">${esc(t('common.address'))}</span><span>${esc(site.address.street)}, ${esc(site.address.zip)} ${esc(site.address.city)}</span></div>
+          <div class="info-list__row"><span class="label">${esc(t('common.phone'))}</span><span><a class="link-inline" href="tel:${attr(site.phoneHref)}">${esc(site.phone)}</a></span></div>
+          <div class="info-list__row"><span class="label">${esc(t('common.whatsapp'))}</span><span><a class="link-inline" href="https://wa.me/${attr(site.whatsappHref)}" target="_blank" rel="noopener">${esc(site.whatsapp)}</a></span></div>
+          <div class="info-list__row"><span class="label">${esc(t('common.email'))}</span><span><a class="link-inline" href="mailto:${attr(site.email)}">${esc(site.email)}</a></span></div>
+          <div class="info-list__row"><span class="label">${esc(t('common.hours'))}</span><span>${site.hours.map((h) => `${esc(h.d)} · ${esc(h.h)}`).join('<br>')}</span></div>
         </div>
       </div>
       <div class="col-5 start-8" style="grid-column:8 / span 5">
         ${figure('studio-reception', { base, ar: '4/3', className: 'media__zoom', sizes: '(max-width: 1000px) 100vw, 40vw' })}
         <div class="row mt-4">
-          <a class="btn" href="prenota/">Prenota una visita</a>
-          <a class="btn btn--ghost" href="contatti/">Tutti i contatti</a>
+          <a class="btn" href="${PATH.book}">${esc(t('nav.book'))}</a>
+          <a class="btn btn--ghost" href="${PATH.contact}">${esc(t('home.contact.all'))}</a>
         </div>
       </div>
     </div>
@@ -279,9 +281,9 @@ const contactSection = () => `
 
 export const homePage = () =>
   layout({
-    title: 'Studio Liddi — Dentista a Milano | Odontoiatria contemporanea',
+    title: t('meta.home.title'),
     description:
-      'Studio dentistico a Milano zona Fiera: implantologia, ortodonzia invisibile, estetica dentale e prevenzione. Prima visita con piano di trattamento e preventivo scritto.',
+      t('meta.home.desc'),
     path: '',
     depth: 0,
     current: '',

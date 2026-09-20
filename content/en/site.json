@@ -1,0 +1,30 @@
+{
+  "tagline": "Contemporary dentistry",
+  "claim": "Your smile.\nOur commitment.",
+  "lang": "en-GB",
+  "city": "Milan",
+  "address": { "city": "Milan" },
+  "director": "Dr Andrea Vitali — Clinical Director, Milan Dental Register no. 7412",
+  "hours": [
+    { "d": "Monday — Friday", "h": "08:30 — 19:30" },
+    { "d": "Saturday", "h": "09:00 — 13:00 (by appointment)" },
+    { "d": "Sunday", "h": "Closed" }
+  ],
+  "directions": [
+    { "label": "Underground", "value": "M5 Domodossola · M1 Amendola Fiera — 6 minutes on foot" },
+    { "label": "Parking", "value": "Reserved patient spaces in the inner courtyard" },
+    { "label": "Surface", "value": "Trams 1 and 19 · Bus 57, Canova stop" }
+  ],
+  "stats": [
+    { "value": 20, "suffix": "+", "label": "years of clinical experience" },
+    { "value": 8000, "suffix": "+", "label": "patients cared for" },
+    { "value": 12, "suffix": "", "label": "professionals in the practice" },
+    { "value": 4.9, "suffix": "/5", "label": "patient rating", "decimals": 1 }
+  ],
+  "values": [
+    { "title": "Precision", "text": "Every stage is measured, planned and verified. Digital technology lets us work to minimal margins of error." },
+    { "title": "Listening", "text": "Diagnosis begins with a conversation. Before looking at the teeth, we look at the person they belong to." },
+    { "title": "Technology", "text": "Instruments chosen to reduce invasiveness, time and the number of appointments needed." },
+    { "title": "Prevention", "text": "The best treatment is the one you never need. We build maintenance plans around each patient." }
+  ]
+}

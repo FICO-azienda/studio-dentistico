@@ -1,4 +1,5 @@
-import { site, esc, attr, arrow, imgTag, figure, lines, dateIt, personName, byPerson, journal, faqs, reviews } from './utils.mjs';
+import { site, esc, attr, arrow, imgTag, figure, lines, dateIt, personName, byPerson, journal, faqs, reviews, PATH, articlePath, teamPath } from './utils.mjs';
+import { t } from './i18n.mjs';
 
 /* -- intestazione di sezione ---------------------------------------------- */
 export const sectionHead = ({ num, label, title, aside = '', link = null, base = '' }) => `
@@ -28,12 +29,12 @@ export const stats = () => `
 
 /* -- persona -------------------------------------------------------------- */
 export const personCard = (p, base) => `
-<a class="person reveal" href="${base}team/${p.slug}/">
+<a class="person reveal" href="${base}${teamPath(p)}">
   <div class="media media--ar media--duo media__zoom" style="--ar:3/4">
     ${imgTag(p.image, { base, sizes: '(max-width: 560px) 100vw, (max-width: 1000px) 50vw, 25vw' })}
     <div class="person__overlay">
       <p>${esc(p.short)}</p>
-      <span class="link-u">Scopri il profilo ${arrow}</span>
+      <span class="link-u">${esc(t('common.discoverProfile'))} ${arrow}</span>
     </div>
   </div>
   <div class="person__info">
@@ -44,7 +45,7 @@ export const personCard = (p, base) => `
 
 /* -- articolo ------------------------------------------------------------- */
 export const articleCard = (a, base) => `
-<a class="article-card reveal" href="${base}journal/${a.slug}/">
+<a class="article-card reveal" href="${base}${articlePath(a)}">
   <div class="media media--ar media__zoom" style="--ar:4/3">
     ${imgTag(a.image, { base, sizes: '(max-width: 560px) 100vw, (max-width: 900px) 50vw, 33vw' })}
   </div>
@@ -65,32 +66,32 @@ export const bookingBand = (base) => `
       <div class="grid">
         <div class="col-7">
           <span class="label reveal" style="color:rgba(238,236,229,.6)">Prenota</span>
-          <h2 class="h1 mt-2 reveal" data-delay="1">${lines(['Prenditi cura', '<em class="serif-italic">del tuo sorriso.</em>'])}</h2>
+          <h2 class="h1 mt-2 reveal" data-delay="1">${lines([t('band.t1'), `<em class="serif-italic">${t('band.t2')}</em>`])}</h2>
           <p class="lead mt-3 measure-sm reveal" data-delay="2" style="color:rgba(238,236,229,.8)">
-            Prenota una prima visita con il nostro team: 45 minuti per capire la situazione, vedere le opzioni e ricevere un preventivo chiaro.
+            ${esc(t('band.lead'))}
           </p>
           <div class="row mt-4 reveal" data-delay="3">
-            <a class="btn btn--light" href="${base}prenota/">Prenota ora</a>
-            <a class="btn btn--outline-light" href="${base}contatti/">Contattaci</a>
+            <a class="btn btn--light" href="${base}${PATH.book}">${esc(t('common.bookNow'))}</a>
+            <a class="btn btn--outline-light" href="${base}${PATH.contact}">${esc(t('common.contactUs'))}</a>
           </div>
         </div>
       </div>
       <div class="band__contacts reveal">
         <div class="band__contact">
-          <span class="label">Telefono</span>
+          <span class="label">${esc(t('common.phone'))}</span>
           <a href="tel:${attr(site.phoneHref)}">${esc(site.phone)}</a>
         </div>
         <div class="band__contact">
-          <span class="label">WhatsApp</span>
+          <span class="label">${esc(t('common.whatsapp'))}</span>
           <a href="https://wa.me/${attr(site.whatsappHref)}" target="_blank" rel="noopener">${esc(site.whatsapp)}</a>
         </div>
         <div class="band__contact">
-          <span class="label">Email</span>
+          <span class="label">${esc(t('common.email'))}</span>
           <a href="mailto:${attr(site.email)}">${esc(site.email)}</a>
         </div>
         <div class="band__contact">
-          <span class="label">Studio</span>
-          <a href="${base}contatti/">${esc(site.address.street)}, ${esc(site.address.city)}</a>
+          <span class="label">${esc(t('common.studio'))}</span>
+          <a href="${base}${PATH.contact}">${esc(site.address.street)}, ${esc(site.address.city)}</a>
         </div>
       </div>
     </div>
@@ -129,9 +130,9 @@ export const testimonials = (base) => `
 <section class="section">
   <div class="wrap">
     ${sectionHead({
-      label: 'Testimonianze',
-      title: lines(['Le parole', '<em class="serif-italic">dei nostri pazienti.</em>']),
-      aside: 'Recensioni raccolte tra i pazienti dello studio.'
+      label: t('reviews.label'),
+      title: lines([t('reviews.t1'), `<em class="serif-italic">${t('reviews.t2')}</em>`]),
+      aside: t('reviews.aside')
     })}
   </div>
   <div class="rail">
@@ -147,10 +148,10 @@ export const testimonials = (base) => `
     </div>
     <div class="wrap">
       <div class="row row--between mt-3">
-        <p class="small" style="color:var(--stone-light)">Trascina per scorrere</p>
+        <p class="small" style="color:var(--stone-light)">${esc(t('common.dragToScroll'))}</p>
         <div class="rail__nav">
-          <button class="rail__btn" type="button" data-rail="prev" aria-label="Recensione precedente">&#8592;</button>
-          <button class="rail__btn" type="button" data-rail="next" aria-label="Recensione successiva">&#8594;</button>
+          <button class="rail__btn" type="button" data-rail="prev" aria-label="${attr(t('common.previous'))}">&#8592;</button>
+          <button class="rail__btn" type="button" data-rail="next" aria-label="${attr(t('common.next'))}">&#8594;</button>
         </div>
       </div>
     </div>
@@ -166,16 +167,16 @@ export const journalPreview = (base, compact = false) => {
   <div class="wrap">
     ${sectionHead({
       num: '06',
-      label: 'Journal',
+      label: t('journal.label'),
       title: lines(['Journal']),
-      aside: 'Approfondimenti clinici scritti dal nostro team, senza gergo inutile.',
-      link: { href: 'journal/', label: 'Vai al Journal' },
+      aside: t('journal.aside'),
+      link: { href: PATH.journal, label: t('common.goToJournal') },
       base
     })}
     <div class="article-list">
       ${journal.slice(0, 3).map((x) => articleCard(x, base)).join('')}
     </div>
-    <p class="mt-4 reveal"><a class="btn btn--ghost" href="${base}journal/">Vai al Journal</a></p>
+    <p class="mt-4 reveal"><a class="btn btn--ghost" href="${base}${PATH.journal}">${esc(t('common.goToJournal'))}</a></p>
   </div>
 </section>`;
   }
@@ -187,13 +188,13 @@ export const journalPreview = (base, compact = false) => {
   <div class="wrap">
     ${sectionHead({
       num: '06',
-      label: 'Journal',
+      label: t('journal.label'),
       title: lines(['Journal']),
-      aside: 'Approfondimenti clinici scritti dal nostro team, senza gergo inutile.',
-      link: { href: 'journal/', label: 'Tutti gli articoli' },
+      aside: t('journal.aside'),
+      link: { href: PATH.journal, label: t('common.allArticles') },
       base
     })}
-    <a class="article-feature" href="${base}journal/${featured.slug}/">
+    <a class="article-feature" href="${base}${articlePath(featured)}">
       <div class="article-feature__media">
         ${figure(featured.image, { base, ar: '16/10', className: 'media__zoom', sizes: '(max-width: 1000px) 100vw, 58vw' })}
       </div>
@@ -204,8 +205,8 @@ export const journalPreview = (base, compact = false) => {
         </div>
         <h3 class="h2 mt-2 reveal">${esc(featured.title)}</h3>
         <p class="body mt-2 measure-sm">${esc(featured.excerpt)}</p>
-        <p class="small mt-2" style="color:var(--stone-light)">${esc(personName(a))} · ${featured.reading} min di lettura</p>
-        <p class="mt-3"><span class="link-u">Leggi l'articolo ${arrow}</span></p>
+        <p class="small mt-2" style="color:var(--stone-light)">${esc(personName(a))} · ${featured.reading} ${esc(t('common.minRead'))}</p>
+        <p class="mt-3"><span class="link-u">${esc(t('common.readMore'))} ${arrow}</span></p>
       </div>
     </a>
     <div class="article-list mt-5">
@@ -221,10 +222,10 @@ export const faqSection = (base, items = faqs.slice(0, 6)) => `
   <div class="wrap">
     <div class="grid">
       <div class="col-4">
-        <span class="label reveal">Domande frequenti</span>
-        <h2 class="h2 mt-2 reveal">${lines(['Le risposte', '<em class="serif-italic">più richieste.</em>'])}</h2>
-        <p class="body mt-3 measure-sm reveal">Se non trovi quello che cerchi, scrivici: rispondiamo entro un giorno lavorativo.</p>
-        <p class="mt-3 reveal"><a class="link-u" href="${base}contatti/">Fai una domanda ${arrow}</a></p>
+        <span class="label reveal">${esc(t('common.faqTitle'))}</span>
+        <h2 class="h2 mt-2 reveal">${lines([t('page.faqT1'), `<em class="serif-italic">${t('page.faqT2')}</em>`])}</h2>
+        <p class="body mt-3 measure-sm reveal">${esc(t('page.faqHomeAside'))}</p>
+        <p class="mt-3 reveal"><a class="link-u" href="${base}${PATH.contact}">${esc(t('common.askQuestion'))} ${arrow}</a></p>
       </div>
       <div class="col-7 start-7">
         ${faqList(items)}
@@ -237,7 +238,7 @@ export const faqSection = (base, items = faqs.slice(0, 6)) => `
 export const pageHero = ({ label, title, lead = '', aside = '', crumbs = [], base = '', media = null, mediaAr = '21/9' }) => `
 <section class="page-hero" data-header-over>
   <div class="wrap">
-    <nav class="breadcrumb" aria-label="Percorso">
+    <nav class="breadcrumb" aria-label="${attr(t('nav.breadcrumb'))}">
       ${crumbs
         .map((c, i) =>
           c.path !== undefined && i < crumbs.length - 1

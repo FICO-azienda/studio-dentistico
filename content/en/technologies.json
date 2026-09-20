@@ -1,0 +1,32 @@
+{
+  "scanner-intraorale": {
+    "title": "Intraoral scanner",
+    "kicker": "Digital diagnostics",
+    "text": "Digital impressions in minutes, with no paste and no gagging. The three-dimensional model of the mouth is available immediately and shared with the laboratory."
+  },
+  "radiologia-digitale": {
+    "title": "Digital radiology",
+    "kicker": "Low-dose imaging",
+    "text": "Intraoral, panoramic and cone beam CT imaging at low dose. Up to 80% less radiation than conventional radiology."
+  },
+  "implantologia-guidata": {
+    "title": "Guided implant surgery",
+    "kicker": "Planned surgery",
+    "text": "The procedure is simulated on the patient's CT scan. In theatre, a surgical guide transfers that plan to the millimetre."
+  },
+  "microscopia": {
+    "title": "Dental microscopy",
+    "kicker": "Microscopic precision",
+    "text": "Magnification up to 25×: root canals, margins and fractures become visible. It is what separates treatment that lasts from treatment that has to be redone."
+  },
+  "digital-smile-design": {
+    "title": "Digital Smile Design",
+    "kicker": "Aesthetic planning",
+    "text": "The smile is designed on the face before a single tooth is touched. The patient sees, discusses and approves the result in advance."
+  },
+  "stampa-3d": {
+    "title": "3D printing",
+    "kicker": "In-house production",
+    "text": "Models, surgical guides, temporaries and aligners produced in house. Fewer external steps, shorter turnaround."
+  }
+}

@@ -1,0 +1,120 @@
+{
+  "andrea-vitali": {
+    "title": "Dr",
+    "role": "Clinical Director · Implantology and Oral Surgery",
+    "short": "Clinical lead since 2007. Focused on complex rehabilitations and guided implant surgery.",
+    "bio": "A graduate in Dentistry from the University of Milan, he specialised in oral surgery and implantology, training in both Italy and Sweden. Since 2007 he has led the practice as clinical director, working in particular on complex implant-supported rehabilitations and guided surgery. He introduced the fully digital workflow, from diagnosis through to the final restoration.",
+    "focus": ["Guided implant surgery", "Bone regeneration", "Full-arch rehabilitation", "Oral surgery"],
+    "education": [
+      "Degree in Dentistry — University of Milan",
+      "Specialisation in Oral Surgery — University of Turin",
+      "Continuing education in implantology — Gothenburg, Sweden"
+    ],
+    "member": "Active member of SIO — Italian Society of Osseointegrated Implantology",
+    "quote": "An implant is not a procedure: it is the beginning of a twenty-year relationship."
+  },
+  "chiara-bonetti": {
+    "title": "Dr",
+    "role": "Orthodontics and Gnathology",
+    "short": "Invisible orthodontics, aligners and interceptive treatment in children.",
+    "bio": "A specialist in orthodontics, she treats both adults and growing patients. She works mainly with clear aligners and discreet techniques, integrating gnathological assessment into the planning of every case. She lectures on digital orthodontics.",
+    "focus": ["Clear aligners", "Lingual orthodontics", "Interceptive orthodontics", "Gnathology"],
+    "education": [
+      "Degree in Dentistry — University of Bologna",
+      "Specialisation in Orthodontics — University of Ferrara",
+      "Advanced certification in aligner therapy"
+    ],
+    "member": "Member of SIDO — Italian Society of Orthodontics",
+    "quote": "Moving a tooth is simple. Knowing where it should end up, much less so."
+  },
+  "marco-ferretti": {
+    "title": "Dr",
+    "role": "Restorative Dentistry and Microscopic Endodontics",
+    "short": "Works under the operating microscope on retreatment and adhesive restorations.",
+    "bio": "His clinical work is devoted entirely to endodontics and restorative dentistry, always under high-magnification microscopy. He focuses in particular on retreating complex cases, fractured teeth, and adhesive restorations that avoid the need for a crown.",
+    "focus": ["Microscopic endodontics", "Retreatment", "Adhesive restorations", "Dental trauma"],
+    "education": [
+      "Degree in Dentistry — University of Pavia",
+      "Master's in Clinical and Microscopic Endodontics",
+      "Postgraduate training in adhesive dentistry"
+    ],
+    "member": "Member of SIE — Italian Society of Endodontics",
+    "quote": "A natural tooth, even a compromised one, is almost always worth more than any substitute."
+  },
+  "sofia-ranieri": {
+    "title": "Dr",
+    "role": "Cosmetic Dentistry and Prosthodontics",
+    "short": "Designs the smile with Digital Smile Design, from veneers to full aesthetic rehabilitation.",
+    "bio": "She works in cosmetic dentistry and fixed prosthodontics, with particular attention to minimal-thickness ceramics. She uses Digital Smile Design to plan the result on the patient's face before any preparation, and works closely with the in-house dental laboratory.",
+    "focus": ["Ceramic veneers", "Digital Smile Design", "Fixed prosthodontics", "Professional whitening"],
+    "education": [
+      "Degree in Dentistry — Vita-Salute San Raffaele University",
+      "Master's in Cosmetic Dentistry and Adhesive Prosthodontics",
+      "Training in clinical dental photography"
+    ],
+    "member": "Member of SIDOC — Italian Society of Restorative Dentistry",
+    "quote": "A successful smile is one nobody notices."
+  },
+  "elena-moretti": {
+    "title": "Dr",
+    "role": "Periodontology and Hygiene",
+    "short": "Leads the prevention programme and non-surgical periodontal therapy.",
+    "bio": "A specialist in periodontology, she leads the practice's hygiene and prevention department. She follows patients with periodontitis from initial therapy through to maintenance, and designs the personalised recall intervals that keep results stable over time.",
+    "focus": ["Periodontal therapy", "Maintenance", "Peri-implantitis", "Prevention"],
+    "education": [
+      "Degree in Dentistry — University of Milan-Bicocca",
+      "Master's in Clinical Periodontology"
+    ],
+    "member": "Member of SIdP — Italian Society of Periodontology and Implantology",
+    "quote": "Periodontitis does not hurt until it is too late. That is why we check."
+  },
+  "luca-sartori": {
+    "title": "Dr",
+    "role": "Oral Surgery and Sedation",
+    "short": "Third molar surgery, regenerative procedures and care of anxious patients.",
+    "bio": "He works in outpatient oral surgery, complex extractions, regenerative surgery and sinus lifts. He is the reference point for conscious sedation, which makes treatment possible for patients with severe anxiety or a strong gag reflex.",
+    "focus": ["Impacted third molars", "Regenerative surgery", "Sinus lift", "Conscious sedation"],
+    "education": [
+      "Degree in Dentistry — University of Padua",
+      "Specialisation in Oral Surgery"
+    ],
+    "member": "Member of SIdP and SICOI",
+    "quote": "Half the work is technique. The other half is making someone feel safe."
+  },
+  "giulia-pace": {
+    "title": "Dr",
+    "role": "Paediatric Dentistry",
+    "short": "First visits, prevention and interceptive orthodontics for children and teenagers.",
+    "bio": "Her work is dedicated to growing patients, from the first visit at around four years old through to adolescence. She focuses on desensitisation, prevention and the early interception of growth problems, with short appointments and language designed for children.",
+    "focus": ["First paediatric visit", "Fissure sealants", "Interceptive orthodontics", "Dental trauma"],
+    "education": [
+      "Degree in Dentistry — University of Florence",
+      "Master's in Paediatric Dentistry"
+    ],
+    "member": "Member of SIOI — Italian Society of Paediatric Dentistry",
+    "quote": "A child who is not afraid of the dentist becomes an adult who gets their teeth checked."
+  },
+  "marta-colombo": {
+    "title": "Dr",
+    "role": "Prosthodontics and Rehabilitation",
+    "short": "Fixed and removable prosthodontics, full rehabilitation and digital workflows.",
+    "bio": "She works in fixed and removable prosthodontics and full rehabilitation on natural teeth and implants. She manages the practice's digital workflow, from intraoral scanning to CAD design, in collaboration with the in-house laboratory.",
+    "focus": ["Full-arch rehabilitation", "Implant-supported prosthetics", "Digital workflow", "Splints and gnathology"],
+    "education": [
+      "Degree in Dentistry — University of Genoa",
+      "Master's in Digital Dental Prosthodontics"
+    ],
+    "member": "Member of AIOP — Italian Academy of Prosthetic Dentistry",
+    "quote": "A well-made restoration is not noticed: it is forgotten."
+  },
+  "silvia-ferrari": {
+    "title": "",
+    "role": "Clinical Coordination and Front Desk",
+    "short": "Manages the diary, estimates, insurance paperwork and patient welcome.",
+    "bio": "She is the first person you meet when you walk in, and the point of reference for everything around treatment: appointments, estimates, payment plans, insurance and health fund paperwork, and coordination between departments.",
+    "focus": ["Clinical diary", "Estimates", "Funds and insurance", "Patient welcome"],
+    "education": [],
+    "member": "",
+    "quote": "Treatment begins long before the chair."
+  }
+}

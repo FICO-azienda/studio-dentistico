@@ -1,0 +1,20 @@
+{
+  "note": "The case images are illustrative and do not represent patients of the practice. They must be replaced with genuine clinical documentation, with the patient's written informed consent.",
+  "categories": {
+    "all": "All",
+    "estetica": "Cosmetic",
+    "implantologia": "Implants",
+    "ortodonzia": "Orthodontics",
+    "riabilitazione": "Rehabilitation"
+  },
+  "items": {
+    "c1": { "title": "Closing a diastema with veneers", "summary": "A central diastema and peg-shaped lateral incisors, resolved with four ceramic veneers after preliminary whitening.", "duration": "5 weeks" },
+    "c2": { "title": "Single implant in the aesthetic zone", "summary": "An unrestorable lateral incisor replaced with a delayed-loading implant and an all-ceramic crown.", "duration": "5 months" },
+    "c3": { "title": "Moderate crowding with aligners", "summary": "Crowding of the lower arch corrected in eleven months with clear aligners and a fixed retainer.", "duration": "11 months" },
+    "c4": { "title": "Full-arch implant rehabilitation", "summary": "An upper arch compromised by advanced periodontitis, rehabilitated with a fixed restoration on six implants.", "duration": "7 months" },
+    "c5": { "title": "Rebuilding wear from bruxism", "summary": "Generalised wear of the anterior teeth rebuilt with adhesive restorations and a night guard.", "duration": "8 weeks" },
+    "c6": { "title": "Deep bite in adolescence", "summary": "Corrected with fixed appliances and intermaxillary elastics, followed by night-time retention.", "duration": "19 months" },
+    "c7": { "title": "Sinus lift and two implants", "summary": "Posterior upper region with insufficient bone, treated with a sinus lift and fixed rehabilitation.", "duration": "9 months" },
+    "c8": { "title": "Endodontic retreatment and inlay", "summary": "A molar with an apical lesion retreated under the microscope and rebuilt with a ceramic inlay.", "duration": "6 weeks" }
+  }
+}

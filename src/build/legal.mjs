@@ -3,6 +3,7 @@ import { site } from './utils.mjs';
 export const LEGAL = [
   {
     slug: 'privacy',
+    routeKey: 'privacy',
     title: 'Privacy Policy',
     description: 'Informativa sul trattamento dei dati personali dello Studio Liddi, ai sensi del Regolamento UE 2016/679.',
     intro: 'Informativa resa ai sensi degli articoli 13 e 14 del Regolamento UE 2016/679 (GDPR) agli utenti del sito e ai pazienti dello studio.',
@@ -32,6 +33,7 @@ export const LEGAL = [
   },
   {
     slug: 'cookie-policy',
+    routeKey: 'cookie',
     title: 'Cookie Policy',
     description: 'Informativa sui cookie utilizzati dal sito dello Studio Liddi.',
     intro: 'Questo sito utilizza esclusivamente cookie tecnici necessari al funzionamento. Non impiega cookie di profilazione né strumenti di tracciamento pubblicitario.',
@@ -46,6 +48,7 @@ export const LEGAL = [
   },
   {
     slug: 'termini',
+    routeKey: 'terms',
     title: 'Termini e condizioni',
     description: 'Termini di utilizzo del sito e informazioni sulle prestazioni sanitarie dello Studio Liddi.',
     intro: 'Condizioni di utilizzo del sito e informazioni previste dalla normativa in materia di comunicazione sanitaria.',

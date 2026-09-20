@@ -1,0 +1,1162 @@
+{
+  "categories": {
+    "odontoiatria-generale": {
+      "title": "General dentistry",
+      "lead": "The foundation of everything: accurate diagnosis, conservative treatment, and a prevention programme that keeps the result stable over the years.",
+      "intro": [
+        "General dentistry is the part of the work that is least visible and matters most: accurate diagnosis, treating decay with the least possible loss of tissue, gum health, and the recall programme that keeps the result stable over the years.",
+        "It is also where almost everything else is decided. A problem caught here is resolved in a single appointment; the same problem two years later may need root canal treatment, a crown or an implant. That is why we give the first visit and routine check-ups more time than is customary."
+      ],
+      "seo": {
+        "title": "General dentistry in Milan — hygiene, decay, gums",
+        "description": "Hygiene and prevention, restorative dentistry, microscopic endodontics and periodontology. Studio Liddi, Milan, Fiera district."
+      }
+    },
+    "estetica-dentale": {
+      "title": "Cosmetic dentistry",
+      "lead": "Targeted, minimally invasive treatment, designed on the face before the teeth. The aim is not a perfect smile: it is a believable one.",
+      "intro": [
+        "Contemporary cosmetic dentistry works by subtraction: touch as little as possible, plan a great deal. Before preparing a tooth we build the design on the face using Digital Smile Design and try it physically in the mouth as a mock-up, which the patient approves before anything irreversible happens.",
+        "The aim is not a perfect smile but a believable one, in keeping with the person's age, features and way of speaking. A successful result is one nobody notices."
+      ],
+      "seo": {
+        "title": "Cosmetic dentistry in Milan — veneers and whitening",
+        "description": "Professional whitening, ceramic veneers, Digital Smile Design and aesthetic restorations. Studio Liddi, Milan."
+      }
+    },
+    "implantologia": {
+      "title": "Implantology",
+      "lead": "Replacing a missing tooth with a fixed solution, planned on screen and verified at every surgical and prosthetic stage.",
+      "intro": [
+        "Replacing a lost tooth with an implant is now a reliable procedure, with survival rates above 95% at ten years. That 95% does not depend on the titanium screw, though: it depends on how the position is planned, on how cleanable the final restoration will be, and on the consistency of follow-up care.",
+        "That is why every case starts with a cone beam CT scan and digital planning, in which the implant position is decided from the restoration it will have to support, not from whatever bone happens to be there. In theatre, a surgical guide transfers that plan to the millimetre."
+      ],
+      "seo": {
+        "title": "Dental implants in Milan — guided implant surgery",
+        "description": "Dental implants planned digitally and placed with a surgical guide, oral surgery and full rehabilitation. Studio Liddi, Milan."
+      }
+    },
+    "ortodonzia": {
+      "title": "Orthodontics",
+      "lead": "Straightening teeth in adulthood or guiding growth in children, with appliances that show as little as possible.",
+      "intro": [
+        "Orthodontics is not only about appearance: straight teeth are easier to clean, wear more evenly, and distribute the load of chewing as they should. In adults we work mainly with discreet appliances; in children, with growth.",
+        "Every course of treatment starts with a digital simulation showing the planned movement and the expected result before we begin. If the simulation shows that a different technique gets further, we say so at the diagnosis stage."
+      ],
+      "seo": {
+        "title": "Orthodontics in Milan — aligners and braces",
+        "description": "Invisible orthodontics, clear aligners, fixed appliances and paediatric orthodontics. Studio Liddi, Milan."
+      }
+    }
+  },
+  "items": {
+    "igiene-e-prevenzione": {
+      "title": "Hygiene and prevention",
+      "short": "Professional hygiene appointments and personalised recall.",
+      "lead": "A hygiene appointment is not a clean: it is the regular check that catches problems while they are still cheap, in time and in money.",
+      "intro": [
+        "Professional hygiene removes plaque and calculus where a toothbrush cannot reach — below the gum margin and between the teeth — and returns the mouth to a condition you can maintain at home.",
+        "Every appointment includes a full check. Finding early decay, a bleeding gum or an old filling starting to leak takes ten minutes today, and often avoids complex treatment tomorrow."
+      ],
+      "indicated": [
+        "All patients, at personalised intervals",
+        "Gums that bleed when brushing",
+        "Persistent bad breath or rapid calculus build-up",
+        "Patients with implants, restorations or orthodontic appliances"
+      ],
+      "how": [
+        "We use ultrasonic instruments for calculus, curettes for refinement below the gum, and air-polishing with low-abrasion powders for staining from coffee, tea and smoking.",
+        "The appointment ends with polishing — a smooth tooth holds less plaque — and with home care instructions calibrated to your actual difficulties, not to a standard model."
+      ],
+      "phases": [
+        {
+          "title": "Assessment",
+          "text": "Plaque and bleeding scores, periodontal probing, review of existing fillings and restorations."
+        },
+        {
+          "title": "Scaling",
+          "text": "Removal of calculus above and below the gum with ultrasonic and hand instruments."
+        },
+        {
+          "title": "Air-polishing",
+          "text": "Stain removal with low-abrasion powders, safe on implants and ceramics."
+        },
+        {
+          "title": "Maintenance",
+          "text": "Personalised instructions and the next recall interval, from three to twelve months."
+        }
+      ],
+      "specs": [
+        {
+          "label": "Appointment time",
+          "value": "45 — 60 min"
+        },
+        {
+          "label": "Typical recall",
+          "value": "6 months"
+        },
+        {
+          "label": "Anaesthetic",
+          "value": "Not required"
+        }
+      ],
+      "faq": [
+        {
+          "q": "Does hygiene damage enamel?",
+          "a": "No. Ultrasonic instruments act on calculus, not enamel, and the powders used for staining are minimally abrasive. What does damage enamel, if anything, is brushing too hard at home."
+        },
+        {
+          "q": "Why are my teeth more sensitive afterwards?",
+          "a": "Removing calculus exposes root surfaces that were covered. The sensitivity is temporary and settles within a few days; if it persists we apply a desensitising agent."
+        },
+        {
+          "q": "How often should I come back?",
+          "a": "It depends on your biological response. Six months is the average, but with periodontitis or implants recall may be every three months."
+        }
+      ],
+      "seo": {
+        "title": "Dental hygiene and prevention in Milan",
+        "description": "Professional hygiene appointments, scaling and air-polishing with personalised recall. Studio Liddi, Milan, Fiera district."
+      }
+    },
+    "conservativa": {
+      "title": "Restorative dentistry",
+      "short": "Treating decay with adhesive techniques and minimal tissue removal.",
+      "lead": "Treating decay means removing as little as possible and rebuilding the rest with materials that bond to the tooth rather than replace it.",
+      "intro": [
+        "Restorative dentistry treats decay while preserving as much healthy tissue as possible. Contemporary adhesive techniques allow us to remove only the infected part and seal the rest with composites that bond chemically to enamel and dentine.",
+        "The choice of material and the layering determine how long the restoration lasts and how visible it is. We work with composites of different opacities, layered to reproduce the translucency of a natural tooth."
+      ],
+      "indicated": [
+        "Early and deep decay",
+        "Replacing old amalgam fillings",
+        "Small fractures and enamel wear",
+        "Sensitive necks and abrasion from brushing"
+      ],
+      "how": [
+        "Decay is identified through clinical examination, bitewing radiographs and, where needed, transillumination. Isolation with a rubber dam keeps the field dry: without it, adhesion is not reliable.",
+        "After removing the infected tissue we rebuild the tooth in successive layers, each cured with a dedicated light, to control shrinkage and final shape."
+      ],
+      "phases": [
+        {
+          "title": "Diagnosis",
+          "text": "Clinical examination, targeted radiographs and assessment of how deep the lesion goes."
+        },
+        {
+          "title": "Isolation",
+          "text": "Rubber dam in place: a dry field, predictable adhesion, no contact with saliva."
+        },
+        {
+          "title": "Selective removal",
+          "text": "Only infected tissue is removed, preserving dentine that can repair itself."
+        },
+        {
+          "title": "Restoration",
+          "text": "Composite layering, anatomical shaping, finishing and occlusal check."
+        }
+      ],
+      "specs": [
+        {
+          "label": "Appointment time",
+          "value": "40 — 75 min"
+        },
+        {
+          "label": "Appointments",
+          "value": "1 per tooth"
+        },
+        {
+          "label": "Anaesthetic",
+          "value": "Local, if needed"
+        }
+      ],
+      "faq": [
+        {
+          "q": "Do white fillings last less than amalgam?",
+          "a": "With correct adhesive technique and rubber dam isolation, longevity is comparable. The difference is made by the protocol, not by the material itself."
+        },
+        {
+          "q": "Is anaesthetic always necessary?",
+          "a": "For superficial decay, often not. For deep lesions we recommend it: working on a relaxed patient allows higher quality work."
+        },
+        {
+          "q": "When is a crown needed instead?",
+          "a": "When the remaining structure cannot withstand chewing forces. In many intermediate cases an inlay is the more conservative answer."
+        }
+      ],
+      "seo": {
+        "title": "Restorative dentistry and fillings in Milan",
+        "description": "Tooth-coloured composite fillings with rubber dam isolation and adhesive technique. Studio Liddi, Milan."
+      }
+    },
+    "endodonzia": {
+      "title": "Endodontics",
+      "short": "Root canal treatment and retreatment under the operating microscope.",
+      "lead": "Root canal treatment saves a tooth that would otherwise be extracted. Done properly, under the microscope, it succeeds in over 90% of cases.",
+      "intro": [
+        "When infection reaches the pulp, the tooth must be treated from the inside: the inflamed tissue is removed, the root canals are cleaned and shaped, and then sealed so that bacteria cannot recolonise them.",
+        "It is a procedure of millimetric precision. We always work under high magnification, with nickel-titanium instruments and an apex locator: the internal anatomy of a molar is more complex than a two-dimensional radiograph can show."
+      ],
+      "indicated": [
+        "Pulpitis: spontaneous pain, pain at night or with heat",
+        "Abscess and apical granuloma",
+        "A tooth that has died following trauma",
+        "Retreatment of failed root canal therapy"
+      ],
+      "how": [
+        "After anaesthetic and rubber dam isolation, the pulp chamber is accessed, all canals are located — there is often one more than expected — and the working length is measured with an electronic apex locator.",
+        "Cleaning with activated irrigants is what determines success: shaping exists mainly to let the irrigants reach every ramification. The canals are then sealed with gutta-percha and cement, and the tooth is rebuilt in the same or the following appointment."
+      ],
+      "phases": [
+        {
+          "title": "Diagnosis",
+          "text": "Vitality testing, intraoral radiographs and, in complex cases, small-field cone beam CT."
+        },
+        {
+          "title": "Access and cleaning",
+          "text": "Isolation, access, location of the canals and activated irrigation."
+        },
+        {
+          "title": "Canal filling",
+          "text": "Three-dimensional seal with thermoplastic gutta-percha."
+        },
+        {
+          "title": "Restoration",
+          "text": "Adhesive restoration or inlay; on a back tooth, cuspal coverage prevents fracture."
+        }
+      ],
+      "specs": [
+        {
+          "label": "Appointment time",
+          "value": "60 — 120 min"
+        },
+        {
+          "label": "Appointments",
+          "value": "1 — 2"
+        },
+        {
+          "label": "Anaesthetic",
+          "value": "Local"
+        }
+      ],
+      "faq": [
+        {
+          "q": "Is root canal treatment painful?",
+          "a": "Not during the appointment: it is carried out under anaesthetic. For two or three days afterwards there may be discomfort on biting, controlled with a common anti-inflammatory."
+        },
+        {
+          "q": "Does a root-treated tooth last less?",
+          "a": "It becomes more brittle, because it loses structure and hydration. That is why, on back teeth, a restoration covering the cusps is part of the treatment, not an extra."
+        },
+        {
+          "q": "Can a failed root canal be redone?",
+          "a": "Yes. Retreatment is often possible and is the first option to consider before thinking about extraction and an implant."
+        }
+      ],
+      "seo": {
+        "title": "Microscopic endodontics and root canals in Milan",
+        "description": "Root canal treatment and retreatment under the operating microscope. Studio Liddi, Milan."
+      }
+    },
+    "parodontologia": {
+      "title": "Periodontology",
+      "short": "Diagnosis and treatment of gum disease, from initial therapy to maintenance.",
+      "lead": "Periodontitis is the leading cause of tooth loss in adults. It does not hurt, which is why it has to be looked for before it makes itself known.",
+      "intro": [
+        "Periodontitis is a chronic infection that progressively destroys the bone around the teeth. It advances silently for years: by the time teeth become mobile or start to drift, bone loss is already substantial.",
+        "Non-surgical therapy, carried out systematically and followed by regular maintenance, halts the disease in the great majority of cases. Surgery is reserved for sites that do not respond."
+      ],
+      "indicated": [
+        "Gums that bleed or recede",
+        "Bad breath and a feeling that teeth are lengthening",
+        "Loose teeth or gaps opening between them",
+        "Smokers and patients with diabetes, who are at increased risk"
+      ],
+      "how": [
+        "We start with a full periodontal chart: six measurements per tooth, bleeding and plaque scores, intraoral radiographs. It is the map that makes the result of treatment measurable.",
+        "Initial therapy consists of subgingival instrumentation of all pockets, in one or two close appointments. After six to eight weeks we reassess: healed sites move to maintenance, residual sites are retreated or assessed for surgery."
+      ],
+      "phases": [
+        {
+          "title": "Periodontal charting",
+          "text": "Full probing, clinical indices and the radiographic state of the bone."
+        },
+        {
+          "title": "Initial therapy",
+          "text": "Subgingival instrumentation of all pockets, with biofilm control."
+        },
+        {
+          "title": "Reassessment",
+          "text": "At six to eight weeks: we measure the response site by site."
+        },
+        {
+          "title": "Maintenance",
+          "text": "Recall calibrated to individual risk, from three to six months."
+        }
+      ],
+      "specs": [
+        {
+          "label": "Initial therapy",
+          "value": "2 appointments"
+        },
+        {
+          "label": "Reassessment",
+          "value": "6 — 8 weeks"
+        },
+        {
+          "label": "Maintenance",
+          "value": "3 — 6 months"
+        }
+      ],
+      "faq": [
+        {
+          "q": "Can periodontitis be cured?",
+          "a": "It can be halted and controlled. Lost bone does not come back on its own, but progression stops and the teeth stay functional for decades, provided recall appointments are kept."
+        },
+        {
+          "q": "Are antibiotics needed?",
+          "a": "In most cases, no. They are reserved for aggressive forms or patients with particular systemic conditions, and always alongside mechanical instrumentation."
+        },
+        {
+          "q": "Can I have implants if I have periodontitis?",
+          "a": "Only once the disease is stabilised. An implant placed in a mouth with active infection carries a high risk of peri-implantitis."
+        }
+      ],
+      "seo": {
+        "title": "Periodontology and gum disease treatment in Milan",
+        "description": "Periodontal diagnosis, initial therapy and personalised maintenance. Studio Liddi, Milan."
+      }
+    },
+    "sbiancamento": {
+      "title": "Teeth whitening",
+      "short": "Professional whitening in the practice and supervised home whitening.",
+      "lead": "The least invasive aesthetic treatment there is: it does not touch the enamel, it acts on the pigments that have settled inside it.",
+      "intro": [
+        "Professional whitening uses hydrogen or carbamide peroxide, which penetrates the enamel and breaks down the molecules responsible for colour. No tissue is removed and the tooth does not become thinner.",
+        "Before any whitening, the mouth must be healthy: decay, leaking fillings and inflamed gums have to be treated first, otherwise the result is uneven and sensitivity increases."
+      ],
+      "indicated": [
+        "Discolouration from coffee, tea, red wine and smoking",
+        "Natural yellowing with age",
+        "Before veneers or aesthetic restorations, to set the base shade",
+        "A single tooth darkened after root canal treatment (internal whitening)"
+      ],
+      "how": [
+        "In the practice we apply a high-concentration gel protected by a gingival barrier, in two or three applications in the same appointment. The result is immediate and visible.",
+        "The home protocol uses custom trays and a low-concentration gel, worn for a few hours a day over two weeks. We often combine the two: an in-practice appointment for the initial effect, trays to stabilise it."
+      ],
+      "phases": [
+        {
+          "title": "Assessment",
+          "text": "Check of decay, restorations and gums; shade recorded with a guide and photography."
+        },
+        {
+          "title": "Preliminary hygiene",
+          "text": "A hygiene appointment removes surface staining and evens out the starting point."
+        },
+        {
+          "title": "Whitening",
+          "text": "In-practice appointment and/or custom home trays."
+        },
+        {
+          "title": "Review",
+          "text": "Result checked after an interval, with guidance on maintaining it over time."
+        }
+      ],
+      "specs": [
+        {
+          "label": "In-practice session",
+          "value": "60 — 90 min"
+        },
+        {
+          "label": "Home whitening",
+          "value": "10 — 14 days"
+        },
+        {
+          "label": "Result lasts",
+          "value": "1 — 3 years"
+        }
+      ],
+      "faq": [
+        {
+          "q": "Does it cause sensitivity?",
+          "a": "It can cause temporary cold sensitivity in the following 24-48 hours. This is prevented with desensitising gels before and after, and resolves on its own."
+        },
+        {
+          "q": "Does it whiten fillings and crowns?",
+          "a": "No. Restorative materials do not change colour: after whitening they may look darker and need replacing, which we plan together."
+        },
+        {
+          "q": "Do supermarket kits work?",
+          "a": "They contain very low concentrations and standard trays that let the gel run onto the gums. The result is modest and the risk of irritation higher."
+        }
+      ],
+      "seo": {
+        "title": "Professional teeth whitening in Milan",
+        "description": "In-practice and supervised home whitening with custom trays. Studio Liddi, Milan."
+      }
+    },
+    "faccette": {
+      "title": "Dental veneers",
+      "short": "Thin ceramic laminates for shape, colour and proportion.",
+      "lead": "Very thin ceramic laminates bonded to the visible surface of the tooth. They change shape, colour and proportion with minimal preparation, sometimes none at all.",
+      "intro": [
+        "Veneers resolve in a few appointments what would otherwise take years of orthodontics or repeated restorations: chipped teeth, gaps, discolouration that does not respond to whitening, irregular shapes.",
+        "The critical part is not the ceramic but the design. The smile is drawn on the face, tried in the mouth as a resin mock-up, and approved by the patient before a single tooth is touched."
+      ],
+      "indicated": [
+        "Diastemas and gaps between the incisors",
+        "Chipped, worn or irregularly shaped teeth",
+        "Discolouration that resists whitening",
+        "Minor misalignment in patients who do not want orthodontics"
+      ],
+      "how": [
+        "We start with photographs, video of the smile and a digital scan. The design is produced with Digital Smile Design and transferred to the mouth as a mock-up: you look in the mirror, speak, smile, and decide.",
+        "Only after approval do we proceed with preparation, guided by the mock-up itself and therefore kept to the minimum needed. The final veneers are adhesively bonded in a single appointment."
+      ],
+      "phases": [
+        {
+          "title": "Design",
+          "text": "Clinical photography, scanning and Digital Smile Design on the face."
+        },
+        {
+          "title": "Mock-up",
+          "text": "An aesthetic trial in resin directly in the mouth, adjustable until approved."
+        },
+        {
+          "title": "Preparation and temporaries",
+          "text": "Guided preparation, digital impression and temporaries reproducing the design."
+        },
+        {
+          "title": "Bonding",
+          "text": "Try-in of the ceramics, shade check and final adhesive bonding."
+        }
+      ],
+      "specs": [
+        {
+          "label": "Overall duration",
+          "value": "3 — 5 weeks"
+        },
+        {
+          "label": "Appointments",
+          "value": "4 — 5"
+        },
+        {
+          "label": "Typical thickness",
+          "value": "0.3 — 0.7 mm"
+        }
+      ],
+      "faq": [
+        {
+          "q": "Do the teeth have to be filed down?",
+          "a": "Preparation is minimal and in selected cases absent. The mock-up tells us exactly how much space is needed: we prepare only where necessary, not across the whole surface out of habit."
+        },
+        {
+          "q": "How long do they last?",
+          "a": "The literature reports over 90% survival at ten years. Much depends on the bite: where there is bruxism we prescribe a night guard."
+        },
+        {
+          "q": "Will they look fake?",
+          "a": "That depends entirely on the design and the ceramist. We work with proportions and translucency calibrated to the face, not to a template."
+        }
+      ],
+      "seo": {
+        "title": "Ceramic dental veneers in Milan",
+        "description": "Ceramic veneers designed with Digital Smile Design and a trial mock-up. Studio Liddi, Milan."
+      }
+    },
+    "estetica-del-sorriso": {
+      "title": "Smile design",
+      "short": "Planning the smile as a whole with Digital Smile Design.",
+      "lead": "Not a single treatment, but the plan that coordinates them: proportions, smile line, and the relationship with lips and face.",
+      "intro": [
+        "A harmonious smile depends on a few rules that concern the whole: the incisal line following the lower lip, symmetry with the midline of the face, the proportion between width and height of the incisors, how much gum shows.",
+        "Smile design starts with an analysis of the face and establishes which combination of treatments — whitening, orthodontics, veneers, gum surgery — is genuinely needed to reach the result with the least sacrifice of tissue."
+      ],
+      "indicated": [
+        "An asymmetric smile or irregular incisal line",
+        "A gummy smile",
+        "Teeth worn by bruxism or age",
+        "Complex aesthetic rehabilitation across several teeth"
+      ],
+      "how": [
+        "We collect standardised photographs, video of the smile in movement, and an intraoral scan. On this data we build the digital design, which shows the result on your face rather than on a generic rendering.",
+        "The design is then tried physically as a mock-up. This is the moment for discussion and adjustment: only what has been approved is carried out."
+      ],
+      "phases": [
+        {
+          "title": "Facial analysis",
+          "text": "Clinical photography, smile video, scanning and analysis of proportions."
+        },
+        {
+          "title": "Digital design",
+          "text": "Simulation of the result on the face and definition of the treatments needed."
+        },
+        {
+          "title": "Aesthetic trial",
+          "text": "Mock-up in the mouth: assessed while speaking and smiling, not only in the mirror."
+        },
+        {
+          "title": "Delivery",
+          "text": "Coordinated execution of the approved treatments, with checks at every stage."
+        }
+      ],
+      "specs": [
+        {
+          "label": "Design phase",
+          "value": "2 appointments"
+        },
+        {
+          "label": "Full journey",
+          "value": "1 — 9 months"
+        },
+        {
+          "label": "Approval",
+          "value": "Before any preparation"
+        }
+      ],
+      "faq": [
+        {
+          "q": "Can I see the result before deciding?",
+          "a": "Yes: that is precisely what the mock-up is for. You wear it, photograph it, show it to whoever you like. Nothing irreversible happens before your approval."
+        },
+        {
+          "q": "Do I always need veneers?",
+          "a": "No. In many cases light orthodontics combined with whitening reaches the goal without touching enamel. We assess that during the design phase."
+        },
+        {
+          "q": "What does it cost?",
+          "a": "It varies with the number of teeth and treatments involved. A detailed, itemised estimate is provided at the end of the design phase."
+        }
+      ],
+      "seo": {
+        "title": "Smile design and Digital Smile Design in Milan",
+        "description": "Digital smile design with an aesthetic trial before treatment begins. Studio Liddi, Milan."
+      }
+    },
+    "ricostruzioni-estetiche": {
+      "title": "Aesthetic restorations",
+      "short": "Composite restorations and inlays for fractured or worn teeth.",
+      "lead": "Rebuilding a compromised tooth without resorting to a crown, with materials that bond to the remaining tissue and restore its shape.",
+      "intro": [
+        "Between a simple filling and a crown there is a very wide middle ground, where direct adhesive restorations and inlays allow us to conserve the structure of the tooth rather than remove it.",
+        "This is the approach we use for fractured teeth, wear from bruxism, and the replacement of large old amalgams, with a clear gain in the longevity of the natural tooth."
+      ],
+      "indicated": [
+        "Fractured teeth or teeth missing a cusp",
+        "Wear from bruxism or acid erosion",
+        "Replacement of large amalgam fillings",
+        "Rebuilding teeth after root canal treatment"
+      ],
+      "how": [
+        "Direct restorations are completed in a single appointment, layering composite under isolation. Inlays — in ceramic or composite — are made in the laboratory or in house from a digital design and bonded adhesively.",
+        "Where wear is generalised, the restoration is planned across both arches, re-establishing the correct vertical dimension before working on individual teeth."
+      ],
+      "phases": [
+        {
+          "title": "Occlusal analysis",
+          "text": "Assessment of contacts, wear patterns and any bruxism."
+        },
+        {
+          "title": "Design",
+          "text": "Digital wax-up of the shape to be rebuilt, tried in the mouth."
+        },
+        {
+          "title": "Delivery",
+          "text": "Layered direct restoration or adhesively bonded inlay."
+        },
+        {
+          "title": "Protection",
+          "text": "Custom night guard where the cause of wear is parafunctional."
+        }
+      ],
+      "specs": [
+        {
+          "label": "Direct restoration",
+          "value": "1 appointment"
+        },
+        {
+          "label": "Inlay",
+          "value": "2 appointments"
+        },
+        {
+          "label": "Full wear rehabilitation",
+          "value": "4 — 8 appointments"
+        }
+      ],
+      "faq": [
+        {
+          "q": "Inlay or crown?",
+          "a": "An inlay whenever the remaining structure allows it: preparation is far more conservative. A crown remains indicated when the walls of the tooth are too compromised."
+        },
+        {
+          "q": "Do composites stain?",
+          "a": "Over time they can absorb pigment, particularly at the margins. Polishing at a hygiene appointment restores the surface; replacement is rarely needed for many years."
+        },
+        {
+          "q": "Is a night guard really necessary?",
+          "a": "If you grind, yes. Rebuilding without protecting means exposing the new restoration to the same forces that wore down the original tooth."
+        }
+      ],
+      "seo": {
+        "title": "Aesthetic restorations and dental inlays in Milan",
+        "description": "Adhesive restorations and inlays for fractured or worn teeth. Studio Liddi, Milan."
+      }
+    },
+    "impianti-dentali": {
+      "title": "Dental implants",
+      "short": "Replacing missing teeth with digitally planned implants.",
+      "lead": "An artificial titanium root that replaces the one you lost and supports a fixed tooth, without involving the neighbouring teeth.",
+      "intro": [
+        "An implant is a titanium screw placed in the jawbone, which after a few months integrates stably with the bone. The crown is then screwed onto it.",
+        "It is the solution that best preserves the rest of the mouth: unlike a conventional bridge it does not require the adjacent teeth to be cut down, and it keeps the bone stimulated where it would otherwise resorb."
+      ],
+      "indicated": [
+        "Loss of one or more teeth",
+        "Unstable dentures that need stabilising",
+        "Replacement of teeth that cannot be saved",
+        "Full-arch rehabilitation"
+      ],
+      "how": [
+        "Planning is carried out on a cone beam CT scan overlaid with the intraoral scan: we decide on screen the position, angulation and length of the implant according to the restoration it will support, not the other way round.",
+        "In theatre, a 3D-printed surgical guide transfers the plan to the mouth. The procedure is carried out under local anaesthetic and takes around forty-five minutes for a single implant."
+      ],
+      "phases": [
+        {
+          "title": "Diagnosis and planning",
+          "text": "Cone beam CT, scanning, digital planning and assessment of available bone volume."
+        },
+        {
+          "title": "Surgery",
+          "text": "Guided implant placement under local anaesthetic, with a custom surgical guide."
+        },
+        {
+          "title": "Osseointegration",
+          "text": "From 8 to 16 weeks of healing, with a temporary where aesthetically necessary."
+        },
+        {
+          "title": "Final restoration",
+          "text": "Digital impression, try-in and fitting of the all-ceramic crown."
+        }
+      ],
+      "specs": [
+        {
+          "label": "Surgery",
+          "value": "45 — 90 min"
+        },
+        {
+          "label": "Healing",
+          "value": "8 — 16 weeks"
+        },
+        {
+          "label": "Anaesthetic",
+          "value": "Local, sedation on request"
+        }
+      ],
+      "faq": [
+        {
+          "q": "How long does an implant last?",
+          "a": "Long-term studies report survival above 95% at ten years. The main variable is not the implant but hygiene and regular check-ups: peri-implantitis is preventable, but not easily treated."
+        },
+        {
+          "q": "Is a bone graft always needed?",
+          "a": "No. It is needed when the remaining bone volume is insufficient, something we assess on the CT scan before planning any surgery."
+        },
+        {
+          "q": "Can I have the tooth straight away?",
+          "a": "In selected cases, with good bone quality and adequate primary stability, immediate loading is possible. It is not a general rule: it depends on measurements taken during surgery."
+        },
+        {
+          "q": "Can I have implants if I smoke?",
+          "a": "Smoking increases the risk of failure and peri-implantitis. It is not an absolute contraindication, but we discuss it openly before proceeding."
+        }
+      ],
+      "seo": {
+        "title": "Dental implants in Milan — guided surgery",
+        "description": "Dental implants planned digitally and placed with a surgical guide. Studio Liddi, Milan, Fiera district."
+      }
+    },
+    "chirurgia-orale": {
+      "title": "Oral surgery",
+      "short": "Complex extractions, wisdom teeth and regenerative surgery.",
+      "lead": "Outpatient procedures under local anaesthetic, with protocols that reduce swelling and recovery time.",
+      "intro": [
+        "Oral surgery covers complex extractions, impacted wisdom teeth, apicectomies, regenerative surgery and the preparation of implant sites.",
+        "All procedures take place at the practice, under local anaesthetic. For patients with severe anxiety or a strong gag reflex, conscious sedation with anaesthetic monitoring is available."
+      ],
+      "indicated": [
+        "Impacted or partially erupted wisdom teeth",
+        "Extraction of roots and fractured teeth",
+        "Bone regeneration and sinus lift",
+        "Frenulum and minor soft tissue lesions"
+      ],
+      "how": [
+        "Every procedure starts with a cone beam CT scan, which shows the relationship with the inferior alveolar nerve and the maxillary sinus. Knowing in advance where you are working reduces both time and complications.",
+        "We use protocols that favour tissue preservation: socket preservation where an implant is planned, careful suturing, written post-operative instructions and telephone availability for the following 48 hours."
+      ],
+      "phases": [
+        {
+          "title": "Assessment",
+          "text": "Cone beam CT, medical and drug history, risk assessment."
+        },
+        {
+          "title": "Surgery",
+          "text": "Local anaesthetic, the procedure itself, any graft and suturing."
+        },
+        {
+          "title": "Aftercare",
+          "text": "Written instructions, pain relief and direct contact for the first 48 hours."
+        },
+        {
+          "title": "Review",
+          "text": "Suture removal at 7-10 days and healing check."
+        }
+      ],
+      "specs": [
+        {
+          "label": "Procedure",
+          "value": "30 — 90 min"
+        },
+        {
+          "label": "Recovery",
+          "value": "2 — 5 days"
+        },
+        {
+          "label": "Sedation",
+          "value": "Available on request"
+        }
+      ],
+      "faq": [
+        {
+          "q": "How much swelling should I expect?",
+          "a": "It depends on the procedure. For an impacted wisdom tooth the peak is on the second day and settles within four or five; ice in the first hours reduces swelling appreciably."
+        },
+        {
+          "q": "Can I go back to work the next day?",
+          "a": "For simple extractions, yes. For more extensive surgery we suggest scheduling towards the end of the week."
+        },
+        {
+          "q": "I take anticoagulants: can I have surgery?",
+          "a": "In most cases yes, without stopping your medication, using local haemostatic protocols. We always assess this together with your doctor."
+        }
+      ],
+      "seo": {
+        "title": "Oral surgery and wisdom teeth in Milan",
+        "description": "Complex extractions, regenerative surgery and conscious sedation. Studio Liddi, Milan."
+      }
+    },
+    "riabilitazione-completa": {
+      "title": "Full-arch rehabilitation",
+      "short": "Rebuilding a whole arch on implants, fixed and functional.",
+      "lead": "When the teeth in an arch can no longer be saved, a fixed implant-supported rehabilitation restores function and appearance to a defined timescale.",
+      "intro": [
+        "Full rehabilitation replaces all the teeth in an arch with a fixed restoration supported by four to six implants, using the areas where bone is still available.",
+        "It is a course of treatment planned in full before it begins: the final prosthetic result is established first, and the surgery is built around it, not the other way round."
+      ],
+      "indicated": [
+        "Arches severely compromised by periodontitis",
+        "Unstable full dentures",
+        "Complete or near-complete tooth loss",
+        "Failed rehabilitations that need redoing"
+      ],
+      "how": [
+        "Planning combines CT imaging, facial scanning and digital prosthetic design. In many cases a fixed temporary restoration can be delivered within 24 to 48 hours of surgery.",
+        "After osseointegration the final restoration is made, in ceramic or high-strength composite materials, screw-retained and therefore removable by the clinician for periodic maintenance."
+      ],
+      "phases": [
+        {
+          "title": "Overall plan",
+          "text": "Facial analysis, CT, scanning and simulation of the final prosthetic result."
+        },
+        {
+          "title": "Surgery",
+          "text": "Guided implant placement, with any extractions at the same appointment."
+        },
+        {
+          "title": "Fixed temporary",
+          "text": "A functional, aesthetic fixed temporary delivered within 24-48 hours."
+        },
+        {
+          "title": "Final restoration",
+          "text": "After healing, the definitive restoration is made and fitted."
+        }
+      ],
+      "specs": [
+        {
+          "label": "Fixed temporary",
+          "value": "24 — 48 hours"
+        },
+        {
+          "label": "Full journey",
+          "value": "4 — 8 months"
+        },
+        {
+          "label": "Maintenance",
+          "value": "Every 4 — 6 months"
+        }
+      ],
+      "faq": [
+        {
+          "q": "Will I be without teeth at any point?",
+          "a": "No. The fixed temporary is delivered within hours of surgery, precisely to avoid any period without teeth."
+        },
+        {
+          "q": "Does it feel like natural teeth?",
+          "a": "Chewing function is very close to natural and clearly better than a removable denture. What changes is tactile perception, because the periodontal ligament is absent."
+        },
+        {
+          "q": "How much maintenance does it need?",
+          "a": "Careful home care with interdental brushes and a water flosser, plus professional recall every four to six months, when the restoration is unscrewed and cleaned."
+        }
+      ],
+      "seo": {
+        "title": "Full-arch implant rehabilitation in Milan",
+        "description": "Fixed implant-supported restorations for complete arches, with a temporary in 24-48 hours. Studio Liddi, Milan."
+      }
+    },
+    "protesi": {
+      "title": "Prosthodontics",
+      "short": "Crowns, bridges and implant restorations with a fully digital workflow.",
+      "lead": "Replacing what is missing and protecting what remains, with restorations designed digitally and made in our in-house laboratory.",
+      "intro": [
+        "Prosthodontics covers single crowns, bridges, implant-supported and removable restorations. The criterion for choosing is always the same: the solution that solves the problem while preserving the most healthy tissue.",
+        "The digital workflow — intraoral scanning, CAD design, milling or printing — removes the conventional impression and reduces transfer errors between practice and laboratory."
+      ],
+      "indicated": [
+        "Heavily compromised or root-treated teeth",
+        "Replacement of missing teeth",
+        "Old crowns and bridges that need redoing",
+        "Removable dentures to be stabilised on implants"
+      ],
+      "how": [
+        "After preparation, an intraoral scan replaces the silicone impression. The CAD design is shared and checked, then the restoration is produced in full ceramic or zirconia.",
+        "The try-in checks marginal fit, contacts and shade in natural light. Only then is it cemented or screwed into place."
+      ],
+      "phases": [
+        {
+          "title": "Preparation",
+          "text": "Conservative preparation of the tooth and digital scanning."
+        },
+        {
+          "title": "CAD design",
+          "text": "Design of the restoration with control of shape, contacts and thickness."
+        },
+        {
+          "title": "Try-in",
+          "text": "Check of fit, occlusion and shade in natural light."
+        },
+        {
+          "title": "Delivery",
+          "text": "Final cementation or screw retention, with maintenance instructions."
+        }
+      ],
+      "specs": [
+        {
+          "label": "Single crown",
+          "value": "2 — 3 appointments"
+        },
+        {
+          "label": "Laboratory time",
+          "value": "7 — 12 days"
+        },
+        {
+          "label": "Materials",
+          "value": "Full ceramic, zirconia"
+        }
+      ],
+      "faq": [
+        {
+          "q": "Zirconia or full ceramic?",
+          "a": "Full ceramic gives a better aesthetic result in the front of the mouth; zirconia offers more strength at the back. The choice depends on position and load."
+        },
+        {
+          "q": "Can the crown darken at the edge?",
+          "a": "That happens with old metal-based crowns, when the gum recedes. With today's all-ceramic restorations the problem does not arise."
+        },
+        {
+          "q": "How long does a crown last?",
+          "a": "Ten to fifteen years is the norm, often more. What determines longevity is above all the health of the tooth underneath, so hygiene and check-ups."
+        }
+      ],
+      "seo": {
+        "title": "Digital prosthodontics in Milan — crowns and bridges",
+        "description": "Crowns, bridges and implant restorations with a digital workflow and in-house laboratory. Studio Liddi, Milan."
+      }
+    },
+    "ortodonzia-invisibile": {
+      "title": "Invisible orthodontics",
+      "short": "Straightening teeth without the appliance showing.",
+      "lead": "Clear aligners or lingual brackets: two different routes to the same result, without showing the appliance.",
+      "intro": [
+        "Invisible orthodontics brings together the techniques that make treatment imperceptible: clear aligners, removable and virtually invisible, and lingual orthodontics, with brackets bonded to the inner surface of the teeth.",
+        "The choice between them depends on the movements required and on your way of life. At the first visit we simulate the case digitally and show which technique reaches the result most predictably."
+      ],
+      "indicated": [
+        "Mild to moderate crowding",
+        "Gaps to be closed",
+        "Relapse after previous orthodontic treatment",
+        "Adults who do not want a visible appliance"
+      ],
+      "how": [
+        "Treatment starts with an intraoral scan, photographs and radiographs. On this data we build the tooth-by-tooth movement plan and a simulation of the final result.",
+        "With aligners, each tray produces a movement of a few tenths of a millimetre and is changed every seven to ten days. With the lingual technique the brackets are customised and adjustments are made at the practice every four to six weeks."
+      ],
+      "phases": [
+        {
+          "title": "Diagnosis",
+          "text": "Scanning, photographs, radiographs and cephalometric analysis."
+        },
+        {
+          "title": "Simulation",
+          "text": "Digital movement plan with a view of the expected result."
+        },
+        {
+          "title": "Active treatment",
+          "text": "A series of aligners or lingual brackets, with regular reviews."
+        },
+        {
+          "title": "Retention",
+          "text": "Fixed lingual retainer and/or night-time retainer to stabilise the result."
+        }
+      ],
+      "specs": [
+        {
+          "label": "Average duration",
+          "value": "6 — 18 months"
+        },
+        {
+          "label": "Reviews",
+          "value": "Every 6 — 8 weeks"
+        },
+        {
+          "label": "Retention",
+          "value": "Necessary, long term"
+        }
+      ],
+      "faq": [
+        {
+          "q": "Does it work like conventional fixed braces?",
+          "a": "For most cases, yes. In some skeletal malocclusions or complex root movements, fixed appliances remain more efficient: we tell you at the diagnosis stage."
+        },
+        {
+          "q": "Can people see it when I talk?",
+          "a": "Aligners are virtually imperceptible at conversational distance. Lingual brackets are not visible at all, but the tongue needs a few weeks to adapt."
+        },
+        {
+          "q": "Will my teeth go crooked again afterwards?",
+          "a": "Without retention, quite probably. Retention is part of the treatment and must be maintained and checked over the years."
+        }
+      ],
+      "seo": {
+        "title": "Invisible orthodontics in Milan — aligners and lingual braces",
+        "description": "Invisible orthodontics with clear aligners or lingual technique. Studio Liddi, Milan."
+      }
+    },
+    "allineatori-trasparenti": {
+      "title": "Clear aligners",
+      "short": "Custom removable trays, changed every 7-10 days.",
+      "lead": "A series of clear trays made for your mouth, moving the teeth gradually and removed for eating and brushing.",
+      "intro": [
+        "Each aligner is designed to produce a small, controlled movement. Worn at least twenty-two hours a day and changed to schedule, the teeth follow the path planned on screen.",
+        "The main advantage is not only aesthetic: because the trays can be removed, home care stays exactly as it was before treatment, with a much lower risk of decay and gum inflammation than with fixed appliances."
+      ],
+      "indicated": [
+        "Mild and moderate crowding",
+        "Gaps between teeth to be closed",
+        "Minor misalignment and relapse",
+        "Aesthetic pre-treatment before veneers or restorations"
+      ],
+      "how": [
+        "The intraoral scan produces the digital plan: every stage of movement is visible and open to discussion before starting. The trays are then produced as a series and delivered in batches.",
+        "Small tooth-coloured composite attachments are placed on some teeth, giving the aligner the grip it needs for more complex movements. They are removed at the end of treatment without leaving a trace."
+      ],
+      "phases": [
+        {
+          "title": "Scan and plan",
+          "text": "Digital impression and movement plan, with a simulation of the result."
+        },
+        {
+          "title": "Delivery",
+          "text": "Attachments placed and the first trays delivered with instructions."
+        },
+        {
+          "title": "Active treatment",
+          "text": "Change every 7-10 days, with reviews every 6-8 weeks."
+        },
+        {
+          "title": "Refinement and retention",
+          "text": "Any additional refinement trays, then fixed or night-time retention."
+        }
+      ],
+      "specs": [
+        {
+          "label": "Average duration",
+          "value": "4 — 18 months"
+        },
+        {
+          "label": "Hours per day",
+          "value": "22 hours"
+        },
+        {
+          "label": "Reviews",
+          "value": "Every 6 — 8 weeks"
+        }
+      ],
+      "faq": [
+        {
+          "q": "Do they hurt?",
+          "a": "For the first two days after each change there is a feeling of pressure: that is the sign the appliance is working. It is not sharp pain and it settles quickly."
+        },
+        {
+          "q": "What if I forget to wear them?",
+          "a": "Treatment slows down and the following trays no longer fit. Consistency is the real factor in success: without the twenty-two hours, the digital plan does not happen."
+        },
+        {
+          "q": "Can I drink coffee with aligners in?",
+          "a": "Water only. Hot or pigmented drinks should be taken after removing them, to avoid distortion and staining."
+        }
+      ],
+      "seo": {
+        "title": "Clear aligners in Milan — invisible orthodontics",
+        "description": "Treatment with custom clear aligners and a digital simulation of the result. Studio Liddi, Milan."
+      }
+    },
+    "ortodonzia-tradizionale": {
+      "title": "Conventional orthodontics",
+      "short": "Fixed appliances with aesthetic or metal brackets.",
+      "lead": "Fixed appliances remain the most efficient technique for complex cases. What has changed is how you wear them: smaller brackets, more efficient wires, fewer adjustments.",
+      "intro": [
+        "Fixed appliances allow three-dimensional control of movement that no other technique matches for predictability, particularly in skeletal malocclusion and cases requiring significant root movement.",
+        "Tooth-coloured ceramic brackets considerably reduce visual impact, and nickel-titanium wires apply light, continuous forces that are more comfortable than in the past."
+      ],
+      "indicated": [
+        "Severe crowding",
+        "Class II and Class III skeletal malocclusion",
+        "Impacted teeth to be brought into the arch",
+        "Pre-surgical cases"
+      ],
+      "how": [
+        "After cephalometric diagnosis and analysis of the digital models, the brackets are positioned using a transfer tray, for precise and repeatable placement.",
+        "Reviews take place every six to eight weeks, with progressive changes of wire. At the end of treatment the brackets are removed and the enamel cleaned and polished."
+      ],
+      "phases": [
+        {
+          "title": "Orthodontic diagnosis",
+          "text": "Radiographs, cephalometrics, photographs and digital models."
+        },
+        {
+          "title": "Bonding",
+          "text": "Bracket placement with a transfer tray and the first archwire."
+        },
+        {
+          "title": "Active phase",
+          "text": "A sequence of wires with reviews every 6-8 weeks."
+        },
+        {
+          "title": "Debonding and retention",
+          "text": "Bracket removal, enamel polishing and placement of retention."
+        }
+      ],
+      "specs": [
+        {
+          "label": "Average duration",
+          "value": "12 — 24 months"
+        },
+        {
+          "label": "Reviews",
+          "value": "Every 6 — 8 weeks"
+        },
+        {
+          "label": "Brackets",
+          "value": "Ceramic or metal"
+        }
+      ],
+      "faq": [
+        {
+          "q": "Do brackets damage enamel?",
+          "a": "If removal is carried out correctly, no. The real risk is demineralisation from plaque around the brackets: that is why hygiene appointments during treatment are compulsory."
+        },
+        {
+          "q": "How visible are ceramic brackets?",
+          "a": "Very little at conversational distance. The wires are the most visible part and in some phases can be coated."
+        },
+        {
+          "q": "Can I switch to aligners halfway through?",
+          "a": "In some cases yes, typically in the refinement phase. We assess it together once the most complex movement is complete."
+        }
+      ],
+      "seo": {
+        "title": "Conventional fixed braces in Milan",
+        "description": "Fixed appliances with aesthetic brackets for complex malocclusion. Studio Liddi, Milan."
+      }
+    },
+    "ortodonzia-pediatrica": {
+      "title": "Paediatric orthodontics",
+      "short": "Intercepting growth problems at the right moment.",
+      "lead": "Between six and ten years of age the growth of the jaws can be guided. It is a window that does not come back.",
+      "intro": [
+        "Interceptive orthodontics uses growth to correct at source problems that in adulthood would require extractions or surgery: a narrow palate, crossbite, open bite from habits such as thumb-sucking.",
+        "Not every child needs an appliance, and not at the same moment. The first orthodontic visit exists precisely to establish whether and when to intervene."
+      ],
+      "indicated": [
+        "Narrow palate and crossbite",
+        "Habits: thumb-sucking, atypical swallowing",
+        "Early crowding and insufficient space",
+        "Permanent teeth that fail to erupt"
+      ],
+      "how": [
+        "Assessment combines clinical examination, a panoramic radiograph and, where indicated, a lateral cephalogram. We consider skeletal age, not just age in years.",
+        "The appliances used are generally simple and well tolerated — rapid palatal expander, plates, space maintainers — worn for limited periods and followed by monitoring until the permanent dentition is complete."
+      ],
+      "phases": [
+        {
+          "title": "First visit",
+          "text": "Around five or six years old, or earlier if there are habits or trauma."
+        },
+        {
+          "title": "Monitoring",
+          "text": "Regular checks of tooth change and growth, without intervening unless needed."
+        },
+        {
+          "title": "Interceptive phase",
+          "text": "A targeted appliance for the period required, generally 6-12 months."
+        },
+        {
+          "title": "Second phase",
+          "text": "If needed, fixed appliances or aligners in adolescence."
+        }
+      ],
+      "specs": [
+        {
+          "label": "First visit",
+          "value": "5 — 6 years"
+        },
+        {
+          "label": "Interceptive phase",
+          "value": "6 — 12 months"
+        },
+        {
+          "label": "Reviews",
+          "value": "Every 4 — 6 months"
+        }
+      ],
+      "faq": [
+        {
+          "q": "Isn't six too early?",
+          "a": "A visit does not mean fitting an appliance. It is there to see whether growth is progressing correctly: in most cases it ends with a simple review in six months."
+        },
+        {
+          "q": "Should we wait until all the baby teeth have gone?",
+          "a": "For some problems yes, for others that is exactly the mistake to avoid: a narrow palate is far easier to expand at eight than at fifteen."
+        },
+        {
+          "q": "My child is frightened of the dentist.",
+          "a": "The first appointments are devoted only to getting to know each other and the practice. Nothing is forced: the time invested at the start is more than recovered later."
+        }
+      ],
+      "seo": {
+        "title": "Paediatric and interceptive orthodontics in Milan",
+        "description": "First orthodontic visit and interceptive treatment for children. Studio Liddi, Milan."
+      }
+    }
+  }
+}

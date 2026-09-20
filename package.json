@@ -11,7 +11,9 @@
     "serve": "python3 -m http.server 4173 --directory dist",
     "dev": "npm run build && npm run serve",
     "test": "node --test \"tests/*.test.mjs\"",
-    "dev:api": "node scripts/dev-api.mjs"
+    "dev:api": "node scripts/dev-api.mjs",
+    "email:preview": "node scripts/anteprima-email.mjs",
+    "email:conferma": "node scripts/invia-conferma.mjs"
   },
   "engines": {
     "node": ">=20"

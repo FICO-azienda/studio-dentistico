@@ -291,6 +291,34 @@ anche lato server.
 **Navigazione.** Indicatore di avanzamento, ritorno al passo precedente senza
 perdere le risposte gia' date, ricerca fra i 27 servizi.
 
+### Le tre email
+
+| # | A chi | Quando | Oggetto |
+|---|---|---|---|
+| 1 | Studio | subito, automatica | `[URGENTE] Nuova richiesta <servizio> — <nome> — <data>` |
+| 2 | Paziente | subito, automatica | `Richiesta di appuntamento ricevuta — <studio>` |
+| 3 | Paziente | quando lo studio accetta | `Appuntamento confermato — <data> alle <ora> — <studio>` |
+
+Le prime due partono da sole e **non confermano nulla**: dicono che la richiesta
+e' arrivata. La terza e' l'unica in cui compare la parola "confermato", perche'
+la segreteria ha verificato la disponibilita'. Contiene data e ora in evidenza,
+trattamento, professionista, indirizzo, codice richiesta, eventuale nota dello
+studio, cosa portare, un pulsante per aggiungere l'appuntamento al calendario,
+le indicazioni stradali e il promemoria della disdetta con 24 ore di anticipo.
+
+La conferma non e' automatica per scelta: si invia quando la richiesta passa da
+`PENDING` a `CONFIRMED`.
+
+```bash
+npm run email:preview                       # anteprime in dist/_email
+node scripts/invia-conferma.mjs richiesta.json \
+  --data 2026-11-24 --ora 15:30 \
+  --professionista "Dr. Andrea Vitali" --nota "Porta la TC di marzo."
+```
+
+Il file `richiesta.json` e' il record dell'archivio (una riga `BOOKING` dei log).
+Con `--anteprima conferma.html` non invia: scrive solo il file.
+
 ### Archivio delle richieste
 
 Ogni richiesta produce un record con `booking_id`, dati del paziente, tipo di

@@ -220,13 +220,13 @@ export function emailStudio(r) {
     <p style="margin:0;font:500 11px/1 Helvetica,Arial,sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#9dbada">Sito web</p>
     <p style="margin:6px 0 0;font:400 22px/1.2 Georgia,'Times New Roman',serif;color:#ffffff">${escapeHtml(r.tipo_visita || 'Nuova richiesta')}</p>
     <p style="margin:8px 0 0;font:500 11px/1.5 Helvetica,Arial,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:${r.priority === 'urgent' ? '#ffb4a8' : r.priority === 'high' ? '#ffd9a8' : '#9dbada'}">
-      Priorita&#39; interna: ${escapeHtml(PRIORITA[r.priority] || 'Normale')}${r.modalita === 'ricontatto' ? ' · richiamata' : ''}
+      Priorità interna: ${escapeHtml(PRIORITA[r.priority] || 'Normale')}${r.modalita === 'ricontatto' ? ' · richiamata' : ''}
     </p>
   </td></tr>
 </table>
 <p style="margin:0 0 18px;font:400 12px/1.6 Helvetica,Arial,sans-serif;color:${MUTED}">
-  La priorita&#39; e&#39; una classificazione interna per organizzare le richieste, ricavata dalle
-  risposte del paziente. Non e&#39; una diagnosi e non e&#39; stata mostrata al paziente.
+  La priorità è una classificazione interna per organizzare le richieste, ricavata dalle
+  risposte del paziente. Non è una diagnosi e non è stata mostrata al paziente.
 </p>
 ${riepilogo(r, { perStudio: true })}
 <p style="margin:24px 0 10px;font:500 11px/1 Helvetica,Arial,sans-serif;letter-spacing:.18em;text-transform:uppercase;color:${MUTED}">Azioni rapide</p>
@@ -236,7 +236,7 @@ ${wa ? button('https://wa.me/' + wa, 'WhatsApp', { light: true }) : ''}
 <p style="margin:20px 0 0;font:400 13px/1.7 Helvetica,Arial,sans-serif;color:${MUTED}">
   Tag: <strong style="color:${INK}">${escapeHtml((r.tags || []).join(' · ') || '—')}</strong><br>
   Stato attuale della richiesta: <strong style="color:${INK}">PENDING</strong>.
-  Va confermata contattando il paziente: l&#39;email inviata al paziente non conferma giorno e orario.
+  Va confermata contattando il paziente: l&#39;email che ha ricevuto non conferma giorno e orario.
 </p>`,
     { preheader: `${r.nome} ${r.cognome} — ${r.tipo_visita} — ${dateIt(r.data_richiesta)} ${r.ora_richiesta}` }
   );
@@ -244,7 +244,7 @@ ${wa ? button('https://wa.me/' + wa, 'WhatsApp', { light: true }) : ''}
   const text = [
     'NUOVA RICHIESTA DI APPUNTAMENTO',
     'Servizio: ' + r.tipo_visita,
-    'Priorita interna: ' + (PRIORITA[r.priority] || 'Normale') + (r.modalita === 'ricontatto' ? ' - richiamata' : ''),
+    'Priorità interna: ' + (PRIORITA[r.priority] || 'Normale') + (r.modalita === 'ricontatto' ? ' - richiamata' : ''),
     'Tag: ' + ((r.tags || []).join(' ') || '-'),
     '',
     riepilogoTesto(r, { perStudio: true }),
@@ -263,6 +263,103 @@ ${wa ? button('https://wa.me/' + wa, 'WhatsApp', { light: true }) : ''}
 
   return {
     subject: `${urgente}Nuova richiesta ${r.tipo_visita} — ${r.nome} ${r.cognome} — ${quando}`,
+    html,
+    text
+  };
+}
+
+
+/* ------------------------------------------------------------------ */
+/* Email 3 — conferma, dopo che lo studio ha accettato la richiesta    */
+/* Questa e' l'unica email in cui si puo' dire "confermato", perche'   */
+/* la segreteria ha verificato la disponibilita'.                      */
+/* ------------------------------------------------------------------ */
+export function emailConferma(r, { professionista = '', note = '' } = {}) {
+  const prof = professionista || r.professionista || '';
+  const mappa =
+    'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(studio.indirizzo);
+
+  // link al calendario: niente allegati, funziona ovunque
+  const inizio = (r.data_richiesta || '').replace(/-/g, '') + 'T' + (r.ora_richiesta || '09:00').replace(':', '') + '00';
+  const fineOra = String(Math.min(23, Number((r.ora_richiesta || '09:00').slice(0, 2)) + 1)).padStart(2, '0');
+  const fine = (r.data_richiesta || '').replace(/-/g, '') + 'T' + fineOra + (r.ora_richiesta || '09:00').slice(3) + '00';
+  const calendario =
+    'https://calendar.google.com/calendar/render?action=TEMPLATE' +
+    '&text=' + encodeURIComponent(`${r.tipo_visita} — ${studio.nome}`) +
+    '&dates=' + inizio + '/' + fine +
+    '&location=' + encodeURIComponent(studio.indirizzo) +
+    '&details=' + encodeURIComponent(`Codice richiesta ${r.booking_id}. Per modifiche: ${studio.telefono}`);
+
+  const html = shell(
+    'Appuntamento confermato',
+    `
+<p style="margin:0 0 6px;font:500 11px/1 Helvetica,Arial,sans-serif;letter-spacing:.18em;text-transform:uppercase;color:${MUTED}">Appuntamento confermato</p>
+<h1 style="margin:0 0 18px;font:400 30px/1.15 Georgia,'Times New Roman',serif;color:${NAVY}">Ti aspettiamo, ${escapeHtml(r.nome)}.</h1>
+<p style="margin:0 0 22px;font:400 16px/1.65 Helvetica,Arial,sans-serif;color:${INK}">
+  Abbiamo verificato la disponibilit&agrave; e il tuo appuntamento &egrave; confermato.
+  Ecco i dettagli.
+</p>
+
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:0 0 24px">
+  <tr><td bgcolor="#f7f7f5" style="padding:22px 24px;border-left:3px solid ${NAVY}">
+    <p style="margin:0;font:500 11px/1 Helvetica,Arial,sans-serif;letter-spacing:.18em;text-transform:uppercase;color:${MUTED}">Quando</p>
+    <p style="margin:8px 0 0;font:400 26px/1.25 Georgia,'Times New Roman',serif;color:${NAVY}">
+      ${escapeHtml(dateIt(r.data_richiesta))}<br>alle ${escapeHtml(r.ora_richiesta)}
+    </p>
+  </td></tr>
+</table>
+
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-top:1px solid ${LINE}">
+  ${row('Trattamento', escapeHtml(r.tipo_visita))}
+  ${prof ? row('Professionista', escapeHtml(prof)) : ''}
+  ${row('Dove', escapeHtml(studio.indirizzo))}
+  ${row('Codice richiesta', `<span style="font-family:'SFMono-Regular',Menlo,Consolas,monospace;letter-spacing:.04em">${escapeHtml(r.booking_id)}</span>`, { mono: true })}
+  ${note ? row('Nota dello studio', nl2br(note)) : ''}
+</table>
+
+<p style="margin:26px 0 10px;font:500 11px/1 Helvetica,Arial,sans-serif;letter-spacing:.18em;text-transform:uppercase;color:${MUTED}">Prima di venire</p>
+<p style="margin:0 0 20px;font:400 15px/1.7 Helvetica,Arial,sans-serif;color:${INK}">
+  Porta un documento d&#39;identit&agrave;, la tessera sanitaria, eventuali radiografie precedenti
+  e l&#39;elenco dei farmaci che assumi. Arriva cinque minuti prima: servono per l&#39;accettazione.
+</p>
+
+${button(calendario, 'Aggiungi al calendario')}
+${button(mappa, 'Indicazioni stradali', { light: true })}
+
+<p style="margin:20px 0 0;font:400 13px/1.7 Helvetica,Arial,sans-serif;color:${MUTED}">
+  Se non puoi presentarti, avvisaci con almeno 24 ore di anticipo chiamando
+  ${studio.telefono ? `<a href="tel:${escapeHtml(studio.telefonoHref)}" style="color:${NAVY}">${escapeHtml(studio.telefono)}</a>` : 'lo studio'}:
+  quel posto viene offerto a un altro paziente.
+</p>`,
+    { preheader: `Appuntamento confermato per ${dateIt(r.data_richiesta)} alle ${r.ora_richiesta}.` }
+  );
+
+  const text = [
+    `Ti aspettiamo, ${r.nome}.`,
+    '',
+    'Abbiamo verificato la disponibilita e il tuo appuntamento e confermato.',
+    '',
+    'Quando: ' + dateIt(r.data_richiesta) + ' alle ' + r.ora_richiesta,
+    'Trattamento: ' + r.tipo_visita,
+    prof ? 'Professionista: ' + prof : '',
+    'Dove: ' + studio.indirizzo,
+    'Codice richiesta: ' + r.booking_id,
+    note ? 'Nota dello studio: ' + note : '',
+    '',
+    "Porta un documento d'identita, la tessera sanitaria, eventuali radiografie",
+    "precedenti e l'elenco dei farmaci che assumi. Arriva cinque minuti prima.",
+    '',
+    'Se non puoi presentarti avvisaci con almeno 24 ore di anticipo: ' + studio.telefono,
+    '',
+    studio.nome,
+    studio.indirizzo,
+    [studio.telefono, studio.email].filter(Boolean).join(' - ')
+  ]
+    .filter((l) => l !== '')
+    .join('\n');
+
+  return {
+    subject: `Appuntamento confermato — ${dateIt(r.data_richiesta)} alle ${r.ora_richiesta} — ${studio.nome}`,
     html,
     text
   };

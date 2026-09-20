@@ -4,3 +4,4 @@ _preview/
 
 # output del generatore: si ricostruisce con `npm run build`
 dist/
+anteprime-email/

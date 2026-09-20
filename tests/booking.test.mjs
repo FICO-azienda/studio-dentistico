@@ -11,7 +11,7 @@ import assert from 'node:assert/strict';
 import { handleBooking } from '../api/_lib/handler.mjs';
 import { validateBooking, looksLikeSpam, checkDate } from '../api/_lib/validate.mjs';
 import { buildBookingId, buildRecord } from '../api/_lib/store.mjs';
-import { emailPaziente, emailStudio } from '../api/_lib/templates.mjs';
+import { emailPaziente, emailStudio, emailConferma } from '../api/_lib/templates.mjs';
 import { rateLimit, _reset } from '../api/_lib/ratelimit.mjs';
 import { byService, visibleQuestions, computePriority, computeTags, buildSummary, validateAnswers } from '../api/_lib/flows.mjs';
 
@@ -308,11 +308,36 @@ test('codice richiesta nel formato previsto', () => {
   assert.match(buildBookingId(null, { year: 2026 }), /^APT-2026-\d{6}$/);
 });
 
+/* -- email di conferma ------------------------------------------------------ */
+test('la conferma e\' l\'unica email che dice "confermato"', () => {
+  const v = validateBooking(base());
+  const rec = buildRecord(v.data, { bookingId: 'APT-2026-000009' });
+
+  // prima dell'accettazione: mai la parola confermato su giorno e orario
+  assert.ok(!/confermato/i.test(emailPaziente(rec).subject));
+
+  rec.status = 'CONFIRMED';
+  const c = emailConferma(rec, { professionista: 'Dr. Andrea Vitali', note: 'Porta la panoramica.' });
+  assert.match(c.subject, /^Appuntamento confermato — /);
+  assert.ok(c.text.includes('APT-2026-000009'));
+  assert.ok(c.html.includes('calendar.google.com'), 'c\'e\' il link per il calendario');
+  assert.ok(c.html.includes('google.com/maps'), 'ci sono le indicazioni stradali');
+  assert.ok(c.html.includes('Porta la panoramica.'), 'la nota dello studio compare');
+  assert.ok(/24 ore/.test(c.text), 'si ricorda la disdetta con preavviso');
+});
+
+test('la conferma non espone priorita\' o tag interni', () => {
+  const v = validateBooking({ ...base(), servizio: 'urgenza', risposte: { problema: 'dolore-forte', 'da-quanto': 'da-oggi', intensita: '9-10', gonfiore: 'si' } });
+  const rec = buildRecord(v.data, { bookingId: 'APT-2026-000010' });
+  const c = emailConferma(rec);
+  assert.ok(!/SERVICE_|priorit|URGENTE/i.test(c.text));
+});
+
 /* -- versione testuale ------------------------------------------------------ */
 test('ogni email ha anche la versione in testo semplice', () => {
   const v = validateBooking(base());
   const rec = buildRecord(v.data, { bookingId: 'APT-2026-000007' });
-  for (const mail of [emailPaziente(rec), emailStudio(rec)]) {
+  for (const mail of [emailPaziente(rec), emailStudio(rec), emailConferma(rec)]) {
     assert.ok(mail.text.length > 120);
     assert.ok(!mail.text.includes('<'), 'il testo semplice non contiene marcatura');
   }

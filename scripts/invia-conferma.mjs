@@ -1,0 +1,64 @@
+/**
+ * Invia al paziente l'email di conferma, dopo che lo studio ha accettato la
+ * richiesta e verificato la disponibilita'.
+ *
+ * E' l'unico messaggio in cui si usa la parola "confermato": le email
+ * automatiche della richiesta dicono soltanto che e' stata ricevuta.
+ *
+ *   node scripts/invia-conferma.mjs richiesta.json
+ *   node scripts/invia-conferma.mjs richiesta.json --professionista "Dr. Andrea Vitali" \
+ *        --nota "Porta la panoramica che hai fatto a marzo." --data 2026-11-24 --ora 15:30
+ *   node scripts/invia-conferma.mjs richiesta.json --anteprima conferma.html
+ *
+ * Il file JSON e' il record salvato dall'archivio (una riga BOOKING dei log).
+ * Con --anteprima non invia nulla e scrive l'HTML su file.
+ */
+import fs from 'node:fs';
+import { emailConferma } from '../api/_lib/templates.mjs';
+import { sendMail } from '../api/_lib/mail.mjs';
+import { mittente, studio } from '../api/_lib/studio.mjs';
+
+const argv = process.argv.slice(2);
+const file = argv.find((a) => !a.startsWith('--'));
+const opt = (nome, def = '') => {
+  const i = argv.indexOf('--' + nome);
+  return i >= 0 && argv[i + 1] && !argv[i + 1].startsWith('--') ? argv[i + 1] : def;
+};
+
+if (!file) {
+  console.error('Uso: node scripts/invia-conferma.mjs <richiesta.json> [--data] [--ora] [--professionista] [--nota] [--anteprima file.html]');
+  process.exit(1);
+}
+
+const raw = fs.readFileSync(file, 'utf8').replace(/^BOOKING\s+/, '');
+const record = JSON.parse(raw);
+
+// lo studio puo' confermare una data diversa da quella richiesta
+if (opt('data')) record.data_richiesta = opt('data');
+if (opt('ora')) record.ora_richiesta = opt('ora');
+record.status = 'CONFIRMED';
+
+const mail = emailConferma(record, {
+  professionista: opt('professionista'),
+  note: opt('nota')
+});
+
+const anteprima = opt('anteprima');
+if (anteprima) {
+  fs.writeFileSync(anteprima, mail.html);
+  fs.writeFileSync(anteprima.replace(/\.html?$/, '') + '.txt', mail.text);
+  console.log('anteprima scritta:', anteprima);
+  process.exit(0);
+}
+
+const esito = await sendMail(
+  { from: mittente, to: record.email, replyTo: studio.email || undefined, ...mail },
+  process.env
+);
+
+if (esito.ok) {
+  console.log(`conferma inviata a ${record.email} (${record.booking_id}) via ${esito.provider}`);
+} else {
+  console.error(`invio fallito: ${esito.error}`);
+  process.exit(2);
+}

@@ -284,10 +284,18 @@ npm run build && node -e "…"   # vedi scripts/ oppure apri dist/_email/*.html
 
 ## Box domande
 
-In basso a destra, su ogni pagina, c'e' un pannello di domande frequenti.
+In basso a destra, su ogni pagina, c'e' un pannello con **90 domande** divise in
+dieci argomenti: prima visita, prenotazione, costi, trattamenti, urgenze, lo
+studio, dopo il trattamento, igiene a casa, bambini, tecnologie.
+
 **Non contiene intelligenza artificiale**: domande e risposte sono scritte a
 mano in `content/assistant.json` e finiscono nell'HTML. La ricerca filtra per
 parole contenute nel testo, non interpreta nulla.
+
+Attenzione ai contenuti: le risposte contengono **cifre e indicazioni cliniche
+da verificare** prima di qualsiasi uso reale — costo della prima visita, prezzi
+indicativi di impianti, igiene e faccette, orari, convenzioni. Sono scritte per
+essere plausibili, non sono i dati di uno studio esistente.
 
 Ogni voce ha un argomento, una risposta, i collegamenti alle pagine pertinenti e
 le domande correlate. Per aggiungerne una basta un oggetto nel file:

@@ -5,11 +5,11 @@ import { sectionHead, personCard, bookingBand, testimonials, journalPreview } fr
 const base = '';
 
 const QUICK = [
-  { label: 'Trattamenti', href: 'trattamenti/', key: 'cat-generale', meta: '16 trattamenti' },
-  { label: 'Lo studio', href: 'studio/', key: 'studio-interno', meta: 'Milano, zona Fiera' },
-  { label: 'Il team', href: 'team/', key: 'trattamento-equipe', meta: '12 professionisti' },
-  { label: 'Casi clinici', href: 'casi-clinici/', key: 'sorriso-01', meta: 'Risultati' },
-  { label: 'Prenota', href: 'prenota/', key: 'studio-reception', meta: 'Online, 2 minuti' }
+  { label: 'Trattamenti', href: 'trattamenti/', meta: '16 trattamenti' },
+  { label: 'Lo studio', href: 'studio/', meta: 'Milano, zona Fiera' },
+  { label: 'Il team', href: 'team/', meta: '12 professionisti' },
+  { label: 'Casi clinici', href: 'casi-clinici/', meta: 'Risultati' },
+  { label: 'Prenota', href: 'prenota/', meta: 'Online, 2 minuti' }
 ];
 
 const hero = () => `
@@ -54,18 +54,15 @@ const hero = () => `
 const quicknav = () => `
 <section class="section section--sm">
   <div class="wrap">
-    <nav class="quicknav" data-quicknav aria-label="Navigazione rapida">
+    <nav class="quicknav" aria-label="Navigazione rapida">
       ${QUICK.map(
-        (q, i) => `<a class="quicknav__item" href="${q.href}" data-preview="${q.key}">
+        (q, i) => `<a class="quicknav__item" href="${q.href}">
         <span class="num" style="color:var(--stone-light)">0${i + 1}</span>
         <span class="h3">${esc(q.label)}</span>
         <span class="row"><span class="label">${esc(q.meta)}</span> ${arrow}</span>
       </a>`
       ).join('')}
     </nav>
-  </div>
-  <div class="quicknav__preview" aria-hidden="true">
-    ${QUICK.map((q) => imgTag(q.key, { base, sizes: '300px', className: '', alt: '' }).replace('<img ', `<img data-key="${q.key}" `)).join('')}
   </div>
 </section>`;
 

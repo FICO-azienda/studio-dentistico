@@ -492,16 +492,6 @@ body.header-hidden .subnav { top: 0; }
 .quicknav__item:hover .h3 { transform: translateX(14px); }
 .quicknav__item .arrow { opacity: 0; transform: translateX(-10px); transition: all 0.5s var(--ease-out); }
 .quicknav__item:hover .arrow { opacity: 1; transform: none; }
-.quicknav__preview {
-  position: fixed; width: 300px; aspect-ratio: 4 / 5; pointer-events: none; z-index: 60;
-  opacity: 0; transform: translate(-50%, -50%) scale(0.94); overflow: hidden;
-  transition: opacity 0.45s var(--ease), transform 0.6s var(--ease-out);
-  top: 0; left: 0; will-change: transform;
-}
-.quicknav__preview.is-visible { opacity: 1; }
-.quicknav__preview img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.4s var(--ease); }
-.quicknav__preview img.is-active { opacity: 1; }
-@media (hover: none), (max-width: 1080px) { .quicknav__preview { display: none; } }
 @media (max-width: 720px) {
   .quicknav__item { grid-template-columns: 2.4rem 1fr; row-gap: 0.4rem; align-items: baseline; }
   .quicknav__item > :last-child { grid-column: 2; }

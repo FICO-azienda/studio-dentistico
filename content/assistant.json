@@ -5,12 +5,46 @@
   "emptyLabel": "Nessuna domanda corrisponde. Prova con un'altra parola, oppure chiamaci.",
   "footerLabel": "Non trovi quello che cerchi?",
   "topics": [
-    { "id": "visita", "label": "Prima visita" },
-    { "id": "prenotazione", "label": "Prenotazione" },
-    { "id": "costi", "label": "Costi e pagamenti" },
-    { "id": "trattamenti", "label": "Trattamenti" },
-    { "id": "urgenze", "label": "Urgenze" },
-    { "id": "studio", "label": "Lo studio" }
+    {
+      "id": "visita",
+      "label": "Prima visita"
+    },
+    {
+      "id": "prenotazione",
+      "label": "Prenotazione"
+    },
+    {
+      "id": "costi",
+      "label": "Costi e pagamenti"
+    },
+    {
+      "id": "trattamenti",
+      "label": "Trattamenti"
+    },
+    {
+      "id": "urgenze",
+      "label": "Urgenze"
+    },
+    {
+      "id": "studio",
+      "label": "Lo studio"
+    },
+    {
+      "id": "dopo",
+      "label": "Dopo il trattamento"
+    },
+    {
+      "id": "igiene",
+      "label": "Igiene a casa"
+    },
+    {
+      "id": "bambini",
+      "label": "Bambini"
+    },
+    {
+      "id": "tecnologie",
+      "label": "Tecnologie"
+    }
   ],
   "items": [
     {
@@ -18,24 +52,48 @@
       "topic": "visita",
       "q": "Quanto dura la prima visita?",
       "a": "Circa 45 minuti. Comprende il colloquio iniziale, l'esame clinico completo, le fotografie, le radiografie necessarie e la presentazione del piano di trattamento con il preventivo scritto.",
-      "links": [{ "label": "Come funziona la prima visita", "href": "prima-visita/" }],
-      "next": ["costo-prima-visita", "cosa-portare"]
+      "links": [
+        {
+          "label": "Come funziona la prima visita",
+          "href": "prima-visita/"
+        }
+      ],
+      "next": [
+        "costo-prima-visita",
+        "cosa-portare"
+      ]
     },
     {
       "id": "costo-prima-visita",
       "topic": "costi",
       "q": "Quanto costa la prima visita?",
       "a": "80 euro, comprensivi di esame clinico, fotografie, radiografie necessarie e piano di trattamento scritto. L'importo viene scalato dal preventivo se decidi di iniziare il percorso in studio.",
-      "links": [{ "label": "Prenota la prima visita", "href": "prenota/" }],
-      "next": ["pagamento-rate", "assicurazioni"]
+      "links": [
+        {
+          "label": "Prenota la prima visita",
+          "href": "prenota/"
+        }
+      ],
+      "next": [
+        "pagamento-rate",
+        "assicurazioni"
+      ]
     },
     {
       "id": "cosa-portare",
       "topic": "visita",
       "q": "Cosa devo portare alla prima visita?",
       "a": "Documento d'identità, tessera sanitaria, eventuali radiografie o documentazione di trattamenti precedenti — anche vecchi — e l'elenco dei farmaci che assumi abitualmente. Se segui terapie particolari, porta anche i referti relativi.",
-      "links": [{ "label": "Tutti i dettagli", "href": "prima-visita/" }],
-      "next": ["durata-prima-visita", "come-prenotare"]
+      "links": [
+        {
+          "label": "Tutti i dettagli",
+          "href": "prima-visita/"
+        }
+      ],
+      "next": [
+        "durata-prima-visita",
+        "come-prenotare"
+      ]
     },
     {
       "id": "come-prenotare",
@@ -43,154 +101,1395 @@
       "q": "Come posso prenotare?",
       "a": "Online dalla pagina Prenota in due minuti, per telefono negli orari di apertura, via WhatsApp oppure per email. La richiesta online non è una conferma: la segreteria ti ricontatta per confermare giorno e orario.",
       "links": [
-        { "label": "Prenota online", "href": "prenota/" },
-        { "label": "Contatti e orari", "href": "contatti/" }
+        {
+          "label": "Prenota online",
+          "href": "prenota/"
+        },
+        {
+          "label": "Contatti e orari",
+          "href": "contatti/"
+        }
       ],
-      "next": ["disdire", "orari"]
+      "next": [
+        "disdire",
+        "orari"
+      ]
     },
     {
       "id": "disdire",
       "topic": "prenotazione",
       "q": "Come disdico o sposto un appuntamento?",
       "a": "Chiamaci o scrivici su WhatsApp con almeno 24 ore di anticipo: riusciamo a offrire quel posto a un altro paziente e a trovarti una nuova data in tempi brevi. Se hai prenotato online, indica il codice richiesta che ti è stato inviato per email.",
-      "links": [{ "label": "Contatti", "href": "contatti/" }],
-      "next": ["come-prenotare", "orari"]
+      "links": [
+        {
+          "label": "Contatti",
+          "href": "contatti/"
+        }
+      ],
+      "next": [
+        "come-prenotare",
+        "orari"
+      ]
     },
     {
       "id": "orari",
       "topic": "studio",
       "q": "Quali sono gli orari dello studio?",
       "a": "Dal lunedì al venerdì dalle 08:30 alle 19:30, il sabato dalle 09:00 alle 13:00 su appuntamento. La domenica siamo chiusi.",
-      "links": [{ "label": "Dove siamo", "href": "contatti/" }],
-      "next": ["dove-siamo", "parcheggio"]
+      "links": [
+        {
+          "label": "Dove siamo",
+          "href": "contatti/"
+        }
+      ],
+      "next": [
+        "dove-siamo",
+        "parcheggio"
+      ]
     },
     {
       "id": "dove-siamo",
       "topic": "studio",
       "q": "Dove si trova lo studio?",
       "a": "In Via Antonio Canova 14, a Milano, zona Fiera. Sei minuti a piedi dalle fermate M5 Domodossola e M1 Amendola Fiera; in superficie tram 1 e 19 e bus 57, fermata Canova.",
-      "links": [{ "label": "Mappa e indicazioni", "href": "contatti/" }],
-      "next": ["parcheggio", "orari"]
+      "links": [
+        {
+          "label": "Mappa e indicazioni",
+          "href": "contatti/"
+        }
+      ],
+      "next": [
+        "parcheggio",
+        "orari"
+      ]
     },
     {
       "id": "parcheggio",
       "topic": "studio",
       "q": "C'è parcheggio?",
       "a": "Sì, ci sono posti riservati ai pazienti nel cortile interno. Segnalalo in segreteria quando prendi l'appuntamento, così teniamo libero un posto.",
-      "links": [{ "label": "Come raggiungerci", "href": "contatti/" }],
-      "next": ["dove-siamo", "orari"]
+      "links": [
+        {
+          "label": "Come raggiungerci",
+          "href": "contatti/"
+        }
+      ],
+      "next": [
+        "dove-siamo",
+        "orari"
+      ]
     },
     {
       "id": "pagamento-rate",
       "topic": "costi",
       "q": "Si può pagare a rate?",
       "a": "Sì. Per i trattamenti complessi offriamo una dilazione interna senza interessi e, in alternativa, un finanziamento a tasso agevolato tramite istituto convenzionato, con esito in giornata.",
-      "links": [{ "label": "Parlane in prima visita", "href": "prenota/" }],
-      "next": ["assicurazioni", "costo-prima-visita"]
+      "links": [
+        {
+          "label": "Parlane in prima visita",
+          "href": "prenota/"
+        }
+      ],
+      "next": [
+        "assicurazioni",
+        "costo-prima-visita"
+      ]
     },
     {
       "id": "assicurazioni",
       "topic": "costi",
       "q": "Accettate assicurazioni e fondi sanitari?",
       "a": "Siamo convenzionati con i principali fondi sanitari integrativi e casse di assistenza. In segreteria verifichiamo la copertura prima di iniziare il trattamento e gestiamo noi la pratica.",
-      "links": [{ "label": "Chiedi alla segreteria", "href": "contatti/" }],
-      "next": ["pagamento-rate", "preventivo"]
+      "links": [
+        {
+          "label": "Chiedi alla segreteria",
+          "href": "contatti/"
+        }
+      ],
+      "next": [
+        "pagamento-rate",
+        "preventivo"
+      ]
     },
     {
       "id": "preventivo",
       "topic": "costi",
       "q": "Ricevo un preventivo prima di iniziare?",
       "a": "Sempre, e per iscritto, voce per voce. Te lo consegniamo al termine della prima visita insieme al piano di trattamento: puoi valutarlo con calma, chiedere un secondo parere e tornare quando preferisci. Nessuna fase parte senza la tua approvazione.",
-      "links": [{ "label": "La prima visita", "href": "prima-visita/" }],
-      "next": ["costo-prima-visita", "pagamento-rate"]
+      "links": [
+        {
+          "label": "La prima visita",
+          "href": "prima-visita/"
+        }
+      ],
+      "next": [
+        "costo-prima-visita",
+        "pagamento-rate"
+      ]
     },
     {
       "id": "impianti-dolore",
       "topic": "trattamenti",
       "q": "Gli impianti dentali sono dolorosi?",
       "a": "L'intervento avviene in anestesia locale e non è doloroso. Nei due o tre giorni successivi può comparire un fastidio, gestibile con un antidolorifico comune. Su richiesta è disponibile la sedazione cosciente per chi ha molta ansia.",
-      "links": [{ "label": "Implantologia", "href": "trattamenti/implantologia/" }],
-      "next": ["impianti-durata", "ansia"]
+      "links": [
+        {
+          "label": "Implantologia",
+          "href": "trattamenti/implantologia/"
+        }
+      ],
+      "next": [
+        "impianti-durata",
+        "ansia"
+      ]
     },
     {
       "id": "impianti-durata",
       "topic": "trattamenti",
       "q": "Quanto dura un percorso implantare?",
       "a": "Per un impianto singolo: intervento di 45-90 minuti, poi da 8 a 16 settimane di guarigione prima della corona definitiva. Nelle riabilitazioni complete consegniamo un provvisorio fisso entro 24-48 ore dall'intervento, così non resti mai senza denti.",
-      "links": [{ "label": "Implantologia", "href": "trattamenti/implantologia/" }],
-      "next": ["impianti-dolore", "preventivo"]
+      "links": [
+        {
+          "label": "Implantologia",
+          "href": "trattamenti/implantologia/"
+        }
+      ],
+      "next": [
+        "impianti-dolore",
+        "preventivo"
+      ]
     },
     {
       "id": "allineatori",
       "topic": "trattamenti",
       "q": "Quanto dura un trattamento con allineatori?",
       "a": "Da 4-6 mesi per allineamenti lievi fino a 18-24 mesi per malocclusioni importanti. In prima visita facciamo una scansione e ti mostriamo la simulazione del tuo caso: vedi il risultato atteso e la durata stimata prima di decidere.",
-      "links": [{ "label": "Allineatori trasparenti", "href": "trattamenti/ortodonzia/allineatori-trasparenti/" }],
-      "next": ["ortodonzia-adulti", "preventivo"]
+      "links": [
+        {
+          "label": "Allineatori trasparenti",
+          "href": "trattamenti/ortodonzia/allineatori-trasparenti/"
+        }
+      ],
+      "next": [
+        "ortodonzia-adulti",
+        "preventivo"
+      ]
     },
     {
       "id": "ortodonzia-adulti",
       "topic": "trattamenti",
       "q": "Si può fare ortodonzia da adulti?",
       "a": "Sì, e una parte consistente dei nostri pazienti ortodontici è adulta. Quello che cambia rispetto all'età evolutiva non è la possibilità di spostare i denti, ma la necessità di valutare prima lo stato delle gengive e dell'osso.",
-      "links": [{ "label": "Ortodonzia", "href": "trattamenti/ortodonzia/" }],
-      "next": ["allineatori", "igiene-frequenza"]
+      "links": [
+        {
+          "label": "Ortodonzia",
+          "href": "trattamenti/ortodonzia/"
+        }
+      ],
+      "next": [
+        "allineatori",
+        "igiene-frequenza"
+      ]
     },
     {
       "id": "igiene-frequenza",
       "topic": "trattamenti",
       "q": "Ogni quanto devo fare l'igiene dentale?",
       "a": "Per la maggior parte dei pazienti ogni sei mesi. In presenza di parodontite, impianti o predisposizione al tartaro il richiamo può essere trimestrale o quadrimestrale: l'intervallo lo stabiliamo insieme in base al tuo rischio reale.",
-      "links": [{ "label": "Igiene e prevenzione", "href": "trattamenti/odontoiatria-generale/igiene-e-prevenzione/" }],
-      "next": ["sanguinamento", "sbiancamento"]
+      "links": [
+        {
+          "label": "Igiene e prevenzione",
+          "href": "trattamenti/odontoiatria-generale/igiene-e-prevenzione/"
+        }
+      ],
+      "next": [
+        "sanguinamento",
+        "sbiancamento"
+      ]
     },
     {
       "id": "sanguinamento",
       "topic": "trattamenti",
       "q": "Le gengive mi sanguinano: è normale?",
       "a": "No. Una gengiva sana non sanguina, nemmeno passando il filo. Il sanguinamento indica un'infiammazione in corso: nella maggior parte dei casi si risolve con una pulizia accurata, ma se persiste oltre una o due settimane va valutato in studio.",
-      "links": [{ "label": "Parodontologia", "href": "trattamenti/odontoiatria-generale/parodontologia/" }],
-      "next": ["igiene-frequenza", "come-prenotare"]
+      "links": [
+        {
+          "label": "Parodontologia",
+          "href": "trattamenti/odontoiatria-generale/parodontologia/"
+        }
+      ],
+      "next": [
+        "igiene-frequenza",
+        "come-prenotare"
+      ]
     },
     {
       "id": "sbiancamento",
       "topic": "trattamenti",
       "q": "Lo sbiancamento rovina i denti?",
       "a": "No. Il perossido agisce sui pigmenti depositati nella dentina, non asporta smalto e non assottiglia il dente. Può dare una sensibilità transitoria al freddo per 24-48 ore. Attenzione però: otturazioni e capsule non sbiancano e potrebbero dover essere sostituite.",
-      "links": [{ "label": "Sbiancamento", "href": "trattamenti/estetica-dentale/sbiancamento/" }],
-      "next": ["igiene-frequenza", "preventivo"]
+      "links": [
+        {
+          "label": "Sbiancamento",
+          "href": "trattamenti/estetica-dentale/sbiancamento/"
+        }
+      ],
+      "next": [
+        "igiene-frequenza",
+        "preventivo"
+      ]
     },
     {
       "id": "dolore-ora",
       "topic": "urgenze",
       "q": "Ho un forte dolore adesso: cosa faccio?",
       "a": "Chiama direttamente lo studio: teniamo liberi ogni giorno alcuni spazi per le urgenze. Nell'attesa, un antinfiammatorio comune e impacchi freddi all'esterno della guancia aiutano; evita il calore, che peggiora il dolore di origine infettiva.",
-      "links": [{ "label": "Chiama ora", "href": "tel" }],
-      "next": ["dente-rotto", "come-prenotare"]
+      "links": [
+        {
+          "label": "Chiama ora",
+          "href": "tel"
+        }
+      ],
+      "next": [
+        "dente-rotto",
+        "come-prenotare"
+      ]
     },
     {
       "id": "dente-rotto",
       "topic": "urgenze",
       "q": "Si è rotto un dente o è saltata una capsula",
       "a": "Conserva il frammento o la capsula in un contenitore pulito e portalo con te: spesso si può ricementare. Non usare colle. Chiamaci per una valutazione in giornata, soprattutto se il dente è scheggiato con esposizione della parte interna.",
-      "links": [{ "label": "Chiama lo studio", "href": "tel" }],
-      "next": ["dolore-ora", "come-prenotare"]
+      "links": [
+        {
+          "label": "Chiama lo studio",
+          "href": "tel"
+        }
+      ],
+      "next": [
+        "dolore-ora",
+        "come-prenotare"
+      ]
     },
     {
       "id": "ansia",
       "topic": "visita",
       "q": "Ho molta paura del dentista",
       "a": "Diccelo quando prenoti: non è un dettaglio secondario. Le prime sedute possono essere dedicate solo a conoscersi, e per gli interventi più impegnativi è disponibile la sedazione cosciente con monitoraggio. Nessuna manovra viene forzata.",
-      "links": [{ "label": "Parlane in prima visita", "href": "prenota/" }],
-      "next": ["bambini", "impianti-dolore"]
+      "links": [
+        {
+          "label": "Parlane in prima visita",
+          "href": "prenota/"
+        }
+      ],
+      "next": [
+        "bambini",
+        "impianti-dolore"
+      ]
     },
     {
       "id": "bambini",
       "topic": "visita",
       "q": "Seguite anche i bambini?",
       "a": "Sì, con un'area dedicata all'odontoiatria pediatrica. La prima visita è consigliata entro i 4-5 anni, o prima in presenza di abitudini viziate o traumi. Le prime sedute servono soprattutto a prendere confidenza con lo studio.",
-      "links": [{ "label": "Ortodonzia pediatrica", "href": "trattamenti/ortodonzia/ortodonzia-pediatrica/" }],
-      "next": ["ansia", "come-prenotare"]
+      "links": [
+        {
+          "label": "Ortodonzia pediatrica",
+          "href": "trattamenti/ortodonzia/ortodonzia-pediatrica/"
+        }
+      ],
+      "next": [
+        "ansia",
+        "come-prenotare"
+      ]
+    },
+    {
+      "id": "digiuno",
+      "topic": "visita",
+      "q": "Devo essere a digiuno per la visita?",
+      "a": "No. Per una visita, per l'igiene e per la maggior parte dei trattamenti puoi mangiare normalmente, anzi è meglio non arrivare a stomaco vuoto. Il digiuno serve solo in caso di sedazione endovenosa, e in quel caso te lo diciamo esplicitamente in fase di prenotazione.",
+      "links": [
+        {
+          "label": "La prima visita",
+          "href": "prima-visita/"
+        }
+      ],
+      "next": [
+        "ansia",
+        "cosa-portare"
+      ]
+    },
+    {
+      "id": "accompagnato",
+      "topic": "visita",
+      "q": "Posso venire accompagnato?",
+      "a": "Sì, e in alcuni casi è consigliato: dopo un intervento in sedazione cosciente non puoi guidare, quindi serve qualcuno che ti riporti a casa. Per i minori la presenza di un genitore o di chi esercita la responsabilità genitoriale è necessaria per il consenso.",
+      "links": [
+        {
+          "label": "Contatti",
+          "href": "contatti/"
+        }
+      ],
+      "next": [
+        "ansia",
+        "bambini"
+      ]
+    },
+    {
+      "id": "gravidanza",
+      "topic": "visita",
+      "q": "Sono incinta: posso farmi curare?",
+      "a": "Sì, e anzi la gravidanza è un momento in cui le gengive si infiammano più facilmente: l'igiene professionale è raccomandata. Il secondo trimestre è il periodo più comodo per gli interventi programmabili. Le radiografie si eseguono solo se indispensabili e con protezione; l'anestesia locale comunemente usata è compatibile. Segnalacelo quando prenoti, insieme alla settimana di gestazione.",
+      "links": [
+        {
+          "label": "Prenota una visita",
+          "href": "prenota/"
+        }
+      ],
+      "next": [
+        "radiografie-sicure",
+        "igiene-frequenza"
+      ]
+    },
+    {
+      "id": "anticoagulanti",
+      "topic": "visita",
+      "q": "Prendo anticoagulanti: devo sospenderli?",
+      "a": "Quasi mai, e comunque non di tua iniziativa. Nella maggior parte delle estrazioni e degli interventi ambulatoriali si opera senza sospendere la terapia, usando protocolli emostatici locali. La decisione viene presa insieme al medico che ti ha prescritto il farmaco: portaci il nome del farmaco, il dosaggio e l'ultimo INR se lo misuri.",
+      "links": [
+        {
+          "label": "Chirurgia orale",
+          "href": "trattamenti/implantologia/chirurgia-orale/"
+        }
+      ],
+      "next": [
+        "farmaci",
+        "estrazione-cosa-mangiare"
+      ]
+    },
+    {
+      "id": "farmaci",
+      "topic": "visita",
+      "q": "Devo dirvi quali farmaci prendo?",
+      "a": "Sì, tutti, compresi integratori e prodotti da banco. Alcuni cambiano concretamente il piano di cura: bifosfonati e farmaci per l'osteoporosi in caso di estrazioni o impianti, immunosoppressori, cortisonici, antiaggreganti. Portare la lista scritta evita dimenticanze.",
+      "links": [
+        {
+          "label": "Cosa portare",
+          "href": "prima-visita/"
+        }
+      ],
+      "next": [
+        "anticoagulanti",
+        "diabete"
+      ]
+    },
+    {
+      "id": "diabete",
+      "topic": "visita",
+      "q": "Ho il diabete: cambia qualcosa?",
+      "a": "Cambia la pianificazione, non la possibilità di curarsi. Un diabete ben compensato non controindica né estrazioni né impianti; un diabete scompensato rallenta la guarigione e aumenta il rischio di infezione e di parodontite. Ci serve sapere l'ultima emoglobina glicata e preferiamo appuntamenti in orari compatibili con i pasti e la terapia.",
+      "links": [
+        {
+          "label": "Parodontologia",
+          "href": "trattamenti/odontoiatria-generale/parodontologia/"
+        }
+      ],
+      "next": [
+        "farmaci",
+        "sanguinamento"
+      ]
+    },
+    {
+      "id": "allergie",
+      "topic": "visita",
+      "q": "Sono allergico: lattice, anestetici, metalli",
+      "a": "Segnalacelo prima, non in poltrona. Lavoriamo senza lattice su richiesta, esistono anestetici alternativi per chi ha avuto reazioni documentate e per le protesi possiamo evitare le leghe metalliche usando ceramica integrale o zirconia. Se hai un referto allergologico, portalo.",
+      "links": [
+        {
+          "label": "Protesi",
+          "href": "trattamenti/implantologia/protesi/"
+        }
+      ],
+      "next": [
+        "farmaci",
+        "anestesia-non-fa-effetto"
+      ]
+    },
+    {
+      "id": "attesa-appuntamento",
+      "topic": "prenotazione",
+      "q": "Quanto si aspetta per un appuntamento?",
+      "a": "Per una prima visita di norma entro una settimana. Per igiene e controlli programmati l'attesa è più lunga, perché sono appuntamenti che si fissano con mesi di anticipo. Le urgenze hanno spazi riservati ogni giorno: in caso di dolore chiama, non prenotare online.",
+      "links": [
+        {
+          "label": "Prenota online",
+          "href": "prenota/"
+        }
+      ],
+      "next": [
+        "dolore-ora",
+        "come-prenotare"
+      ]
+    },
+    {
+      "id": "scegliere-professionista",
+      "topic": "prenotazione",
+      "q": "Posso scegliere il professionista?",
+      "a": "Sì, in fase di prenotazione puoi indicare un medico specifico oppure lasciare \"nessuna preferenza\": in quel caso assegniamo il professionista più adatto al motivo della visita. Se inizi un percorso, lo porta avanti sempre la stessa persona.",
+      "links": [
+        {
+          "label": "Il team",
+          "href": "team/"
+        }
+      ],
+      "next": [
+        "come-prenotare",
+        "attesa-appuntamento"
+      ]
+    },
+    {
+      "id": "promemoria",
+      "topic": "prenotazione",
+      "q": "Ricevo un promemoria dell'appuntamento?",
+      "a": "Sì, se acconsenti alle comunicazioni relative all'appuntamento: un'email di riepilogo alla prenotazione e un promemoria il giorno prima. Il consenso è facoltativo e puoi revocarlo quando vuoi.",
+      "links": [
+        {
+          "label": "Privacy",
+          "href": "privacy/"
+        }
+      ],
+      "next": [
+        "disdire",
+        "come-prenotare"
+      ]
+    },
+    {
+      "id": "ritardo",
+      "topic": "prenotazione",
+      "q": "Cosa succede se arrivo in ritardo?",
+      "a": "Avvisaci con una telefonata: se il ritardo è contenuto recuperiamo, se supera i quindici minuti spesso non c'è il tempo tecnico per eseguire bene quanto previsto e conviene spostare. Preferiamo riprogrammare piuttosto che lavorare di corsa.",
+      "links": [
+        {
+          "label": "Contatti",
+          "href": "contatti/"
+        }
+      ],
+      "next": [
+        "disdire",
+        "attesa-appuntamento"
+      ]
+    },
+    {
+      "id": "secondo-parere",
+      "topic": "prenotazione",
+      "q": "Posso chiedere un secondo parere?",
+      "a": "Certamente, ed è una richiesta legittima soprattutto davanti a piani di cura estesi. Porta la documentazione che hai: radiografie, preventivo, referti. Se ci chiedi la nostra documentazione per farla valutare altrove, te la consegniamo senza difficoltà.",
+      "links": [
+        {
+          "label": "Prenota una valutazione",
+          "href": "prenota/"
+        }
+      ],
+      "next": [
+        "preventivo",
+        "radiografie-mie"
+      ]
+    },
+    {
+      "id": "costo-impianto",
+      "topic": "costi",
+      "q": "Quanto costa un impianto dentale?",
+      "a": "Indicativamente fra 1.800 e 2.500 euro per un impianto singolo con corona definitiva, a seconda della necessità di innesto osseo e del materiale scelto per la corona. È una forbice, non un prezzo: la cifra reale compare sul preventivo scritto dopo la visita e la TC, perché dipende da quanto osso c'è.",
+      "links": [
+        {
+          "label": "Implantologia",
+          "href": "trattamenti/implantologia/"
+        }
+      ],
+      "next": [
+        "preventivo",
+        "pagamento-rate"
+      ]
+    },
+    {
+      "id": "costo-igiene",
+      "topic": "costi",
+      "q": "Quanto costa una seduta di igiene?",
+      "a": "Indicativamente 90 euro per una seduta di igiene professionale con air-polishing. In presenza di parodontite la terapia è un'altra cosa — richiede più tempo e più sedute — e viene preventivata a parte dopo il sondaggio.",
+      "links": [
+        {
+          "label": "Igiene e prevenzione",
+          "href": "trattamenti/odontoiatria-generale/igiene-e-prevenzione/"
+        }
+      ],
+      "next": [
+        "igiene-frequenza",
+        "preventivo"
+      ]
+    },
+    {
+      "id": "costo-faccette",
+      "topic": "costi",
+      "q": "Quanto costano le faccette?",
+      "a": "Indicativamente fra 800 e 1.100 euro a elemento in ceramica. Di rado però si fa una faccetta sola: il numero dipende da quanti denti si vedono quando sorridi, e lo si stabilisce nel progetto digitale prima di toccare qualsiasi cosa.",
+      "links": [
+        {
+          "label": "Faccette dentali",
+          "href": "trattamenti/estetica-dentale/faccette/"
+        }
+      ],
+      "next": [
+        "faccette-limare",
+        "preventivo"
+      ]
+    },
+    {
+      "id": "detrazione",
+      "topic": "costi",
+      "q": "Le spese dentistiche si detraggono?",
+      "a": "Sì: le prestazioni odontoiatriche rientrano fra le spese sanitarie detraibili al 19% nella dichiarazione dei redditi, sulla parte che eccede la franchigia di legge. Serve il pagamento tracciato — bancomat, carta o bonifico — e la fattura, che rilasciamo sempre e trasmettiamo al Sistema Tessera Sanitaria.",
+      "links": [
+        {
+          "label": "Chiedi in segreteria",
+          "href": "contatti/"
+        }
+      ],
+      "next": [
+        "assicurazioni",
+        "pagamento-rate"
+      ]
+    },
+    {
+      "id": "preventivo-senza-visita",
+      "topic": "costi",
+      "q": "Potete farmi un preventivo per telefono?",
+      "a": "No, e la ragione non è commerciale. Lo stesso dente può richiedere un'otturazione o una cura canalare più corona a seconda di quanto è profonda la lesione, cosa che si vede solo con esame clinico e radiografia. Un numero detto al telefono sarebbe inventato: preferiamo dirtelo di persona, per iscritto e con le alternative.",
+      "links": [
+        {
+          "label": "Prenota la prima visita",
+          "href": "prenota/"
+        }
+      ],
+      "next": [
+        "preventivo",
+        "costo-prima-visita"
+      ]
+    },
+    {
+      "id": "accessibilita",
+      "topic": "studio",
+      "q": "Lo studio è accessibile con la sedia a rotelle?",
+      "a": "Sì: ingresso a raso dal cortile interno, ascensore e servizi accessibili, e una sala operativa con spazio di manovra sufficiente per il trasferimento. Se ci avvisi quando prenoti organizziamo l'appuntamento in quella sala.",
+      "links": [
+        {
+          "label": "Come raggiungerci",
+          "href": "contatti/"
+        }
+      ],
+      "next": [
+        "parcheggio",
+        "dove-siamo"
+      ]
+    },
+    {
+      "id": "sterilizzazione",
+      "topic": "studio",
+      "q": "Come funziona la sterilizzazione?",
+      "a": "Ogni strumento segue un ciclo tracciato: decontaminazione, lavaggio in termodisinfettore o a ultrasuoni, imbustamento sigillato e autoclave di classe B. Ogni busta riporta lotto e data, e il registro dei cicli è consultabile su richiesta. Il materiale monouso è monouso davvero.",
+      "links": [
+        {
+          "label": "Lo studio",
+          "href": "studio/"
+        }
+      ],
+      "next": [
+        "tecnologie-quali",
+        "dove-siamo"
+      ]
+    },
+    {
+      "id": "radiografie-mie",
+      "topic": "studio",
+      "q": "Posso portare radiografie fatte altrove?",
+      "a": "Sì, ed è utile: risparmia una nuova esposizione e ci mostra com'era la situazione mesi o anni fa, che spesso vale più dell'immagine di oggi. Vanno bene lastre, CD o file digitali. Allo stesso modo, se ci chiedi le tue radiografie te le consegniamo.",
+      "links": [
+        {
+          "label": "Cosa portare",
+          "href": "prima-visita/"
+        }
+      ],
+      "next": [
+        "radiografie-sicure",
+        "secondo-parere"
+      ]
+    },
+    {
+      "id": "lingue",
+      "topic": "studio",
+      "q": "Parlate inglese?",
+      "a": "Sì. Il team lavora abitualmente con pazienti internazionali e la segreteria risponde in italiano e in inglese, di persona, al telefono e via email.",
+      "links": [
+        {
+          "label": "Contatti",
+          "href": "contatti/"
+        }
+      ],
+      "next": [
+        "dove-siamo",
+        "come-prenotare"
+      ]
+    },
+    {
+      "id": "radiografie-sicure",
+      "topic": "tecnologie",
+      "q": "Le radiografie dentali sono pericolose?",
+      "a": "La radiologia digitale che usiamo riduce la dose fino all'80% rispetto alla pellicola tradizionale. Una radiografia endorale espone a una frazione della radiazione naturale che si riceve comunque in pochi giorni. Detto questo, non si fanno radiografie \"per abitudine\": ognuna deve rispondere a una domanda clinica precisa.",
+      "links": [
+        {
+          "label": "Radiologia digitale",
+          "href": "tecnologie/"
+        }
+      ],
+      "next": [
+        "tac-dentale",
+        "gravidanza"
+      ]
+    },
+    {
+      "id": "tac-dentale",
+      "topic": "tecnologie",
+      "q": "Cos'è la TC cone beam e quando serve?",
+      "a": "È una tomografia tridimensionale a bassa dose delle ossa mascellari. Serve dove la radiografia bidimensionale non basta: pianificazione implantare, denti del giudizio vicini al nervo, ritrattamenti endodontici complessi, denti inclusi. Non è un esame di routine, si prescrive quando cambia concretamente la decisione clinica.",
+      "links": [
+        {
+          "label": "Tecnologie",
+          "href": "tecnologie/"
+        }
+      ],
+      "next": [
+        "radiografie-sicure",
+        "impianti-osso"
+      ]
+    },
+    {
+      "id": "scanner-cose",
+      "topic": "tecnologie",
+      "q": "Cos'è lo scanner intraorale? Niente più paste?",
+      "a": "È una piccola telecamera che ricostruisce l'arcata in tre dimensioni in pochi minuti. Sostituisce le impronte in silicone nella maggior parte dei casi: niente materiale in bocca, niente conati, e il modello resta archiviato per confrontarlo negli anni.",
+      "links": [
+        {
+          "label": "Scanner intraorale",
+          "href": "tecnologie/"
+        }
+      ],
+      "next": [
+        "vedere-prima",
+        "allineatori"
+      ]
+    },
+    {
+      "id": "vedere-prima",
+      "topic": "tecnologie",
+      "q": "Posso vedere il risultato prima di decidere?",
+      "a": "Nei trattamenti estetici sì. Il sorriso viene progettato sul tuo volto con il Digital Smile Design e provato fisicamente in bocca con un mock-up in resina: lo guardi, parli, lo fotografi e lo mostri a chi vuoi. Nessuna preparazione irreversibile avviene prima della tua approvazione.",
+      "links": [
+        {
+          "label": "Estetica del sorriso",
+          "href": "trattamenti/estetica-dentale/estetica-del-sorriso/"
+        }
+      ],
+      "next": [
+        "faccette-limare",
+        "costo-faccette"
+      ]
+    },
+    {
+      "id": "tecnologie-quali",
+      "topic": "tecnologie",
+      "q": "Che tecnologie avete in studio?",
+      "a": "Scanner intraorale, radiologia digitale con TC cone beam, implantologia guidata con dime chirurgiche, microscopio operatorio per endodonzia e conservativa, Digital Smile Design e stampa 3D interna per modelli, provvisori e dime. Radiologia e laboratorio odontotecnico sono interni: meno passaggi esterni e tempi più brevi.",
+      "links": [
+        {
+          "label": "Tutte le tecnologie",
+          "href": "tecnologie/"
+        }
+      ],
+      "next": [
+        "scanner-cose",
+        "sterilizzazione"
+      ]
+    },
+    {
+      "id": "faccette-limare",
+      "topic": "trattamenti",
+      "q": "Con le faccette bisogna limare i denti?",
+      "a": "La preparazione è minima — spesso fra tre e sette decimi di millimetro — e in casi selezionati assente. Il mock-up ci dice esattamente dove serve spazio: si prepara solo lì, non su tutta la superficie per abitudine. Se un dente è già sporgente, a volte non si tocca affatto.",
+      "links": [
+        {
+          "label": "Faccette dentali",
+          "href": "trattamenti/estetica-dentale/faccette/"
+        }
+      ],
+      "next": [
+        "costo-faccette",
+        "vedere-prima"
+      ]
+    },
+    {
+      "id": "impianti-osso",
+      "topic": "trattamenti",
+      "q": "Mi hanno detto che ho poco osso: posso fare l'impianto?",
+      "a": "Nella maggior parte dei casi sì, ma serve valutare il volume reale sulla TC, non sulla panoramica. Le strade sono tre: usare impianti di dimensioni diverse dove l'osso c'è, rigenerare con un innesto, oppure — nel settore posteriore superiore — sollevare il seno mascellare. Quale sia praticabile si decide sull'immagine tridimensionale.",
+      "links": [
+        {
+          "label": "Chirurgia orale",
+          "href": "trattamenti/implantologia/chirurgia-orale/"
+        }
+      ],
+      "next": [
+        "tac-dentale",
+        "costo-impianto"
+      ]
+    },
+    {
+      "id": "impianti-fumo",
+      "topic": "trattamenti",
+      "q": "Fumo: posso mettere impianti?",
+      "a": "Non è una controindicazione assoluta, ma è un fattore di rischio serio: il fumo riduce la vascolarizzazione, rallenta la guarigione e aumenta nettamente la probabilità di perimplantite. Ne parliamo apertamente prima di procedere, e chiediamo almeno di sospendere nelle due settimane attorno all'intervento.",
+      "links": [
+        {
+          "label": "Implantologia",
+          "href": "trattamenti/implantologia/"
+        }
+      ],
+      "next": [
+        "fumo-dopo-estrazione",
+        "impianti-durata"
+      ]
+    },
+    {
+      "id": "ponte-o-impianto",
+      "topic": "trattamenti",
+      "q": "Meglio un ponte o un impianto?",
+      "a": "A parità di condizioni l'impianto, perché non richiede di limare i denti vicini e mantiene stimolato l'osso. Il ponte resta una buona soluzione quando i denti adiacenti sono già da ricostruire — in quel caso non si sacrifica nulla di sano — o quando l'osso non è sufficiente e non si vuole affrontare un innesto.",
+      "links": [
+        {
+          "label": "Protesi",
+          "href": "trattamenti/implantologia/protesi/"
+        }
+      ],
+      "next": [
+        "costo-impianto",
+        "corona-durata"
+      ]
+    },
+    {
+      "id": "devitalizzazione-dolore",
+      "topic": "trattamenti",
+      "q": "La devitalizzazione fa male?",
+      "a": "Durante la seduta no: si lavora in anestesia. Nei due o tre giorni successivi può comparire un fastidio alla masticazione, perché il legamento attorno alla radice resta infiammato; si controlla con un antinfiammatorio comune. Il dolore forte che molti ricordano apparteneva alla fase prima della cura, non alla cura.",
+      "links": [
+        {
+          "label": "Endodonzia",
+          "href": "trattamenti/odontoiatria-generale/endodonzia/"
+        }
+      ],
+      "next": [
+        "dente-scuro",
+        "capsula-o-intarsio"
+      ]
+    },
+    {
+      "id": "capsula-o-intarsio",
+      "topic": "trattamenti",
+      "q": "Dopo la devitalizzazione serve la capsula?",
+      "a": "Sui denti posteriori serve una ricostruzione che copra le cuspidi, perché un dente devitalizzato è più fragile e tende a fratturarsi verticalmente. Non sempre però deve essere una corona: quando le pareti residue sono sufficienti, un intarsio è molto più conservativo. Sugli incisivi spesso basta un restauro adesivo.",
+      "links": [
+        {
+          "label": "Ricostruzioni estetiche",
+          "href": "trattamenti/estetica-dentale/ricostruzioni-estetiche/"
+        }
+      ],
+      "next": [
+        "devitalizzazione-dolore",
+        "corona-durata"
+      ]
+    },
+    {
+      "id": "denti-del-giudizio",
+      "topic": "trattamenti",
+      "q": "I denti del giudizio vanno sempre tolti?",
+      "a": "No. Si tolgono quando danno problemi o quando è ragionevole prevederli: pericoroniti ripetute, carie non trattabili, riassorbimento della radice del dente vicino, spazio insufficiente. Un dente del giudizio erotto, pulibile e in occlusione non ha motivo di essere estratto.",
+      "links": [
+        {
+          "label": "Chirurgia orale",
+          "href": "trattamenti/implantologia/chirurgia-orale/"
+        }
+      ],
+      "next": [
+        "tac-dentale",
+        "gonfiore"
+      ]
+    },
+    {
+      "id": "bite-bruxismo",
+      "topic": "trattamenti",
+      "q": "Digrigno i denti di notte: serve il bite?",
+      "a": "Il bite non fa smettere di digrignare — il bruxismo ha origine centrale — ma protegge denti e restauri dall'usura e spesso allevia le tensioni muscolari al risveglio. Si costruisce su misura dopo una valutazione dell'occlusione: quelli preformati da banco possono peggiorare la situazione.",
+      "links": [
+        {
+          "label": "Ricostruzioni estetiche",
+          "href": "trattamenti/estetica-dentale/ricostruzioni-estetiche/"
+        }
+      ],
+      "next": [
+        "sensibilita-freddo",
+        "corona-durata"
+      ]
+    },
+    {
+      "id": "protesi-mobile",
+      "topic": "trattamenti",
+      "q": "La mia protesi mobile balla: si può stabilizzare?",
+      "a": "Spesso sì, e non serve necessariamente una riabilitazione completa. Due o quattro impianti con attacchi permettono di agganciare la protesi esistente o una nuova, restituendo stabilità nella masticazione e nel parlare. È una soluzione intermedia, meno impegnativa del fisso su impianti.",
+      "links": [
+        {
+          "label": "Riabilitazione completa",
+          "href": "trattamenti/implantologia/riabilitazione-completa/"
+        }
+      ],
+      "next": [
+        "costo-impianto",
+        "impianti-osso"
+      ]
+    },
+    {
+      "id": "alitosi",
+      "topic": "trattamenti",
+      "q": "Ho l'alito cattivo: da cosa dipende?",
+      "a": "Nella grande maggioranza dei casi l'origine è nel cavo orale: patina sul dorso della lingua, tasche parodontali, carie, protesi non detergibili. Più raramente dipende da stomaco, vie respiratorie o farmaci che riducono la saliva. Il primo passo è una valutazione parodontale e dell'igiene: spesso il problema si risolve lì.",
+      "links": [
+        {
+          "label": "Parodontologia",
+          "href": "trattamenti/odontoiatria-generale/parodontologia/"
+        }
+      ],
+      "next": [
+        "sanguinamento",
+        "pulire-lingua"
+      ]
+    },
+    {
+      "id": "sensibilita-freddo",
+      "topic": "trattamenti",
+      "q": "I denti mi fanno male al freddo",
+      "a": "La causa più comune è l'esposizione dei colletti, per recessione gengivale o spazzolamento troppo energico; seguono l'usura da bruxismo e le lesioni cariose. La sensibilità che passa subito dopo lo stimolo si tratta con dentifrici specifici e prodotti applicati in studio. Se invece il dolore persiste per minuti o compare da solo, va valutato subito: cambia la diagnosi.",
+      "links": [
+        {
+          "label": "Igiene e prevenzione",
+          "href": "trattamenti/odontoiatria-generale/igiene-e-prevenzione/"
+        }
+      ],
+      "next": [
+        "recessioni",
+        "dolore-ora"
+      ]
+    },
+    {
+      "id": "recessioni",
+      "topic": "trattamenti",
+      "q": "Le gengive si stanno ritirando",
+      "a": "Le recessioni hanno due cause principali, opposte fra loro: un trauma meccanico — spazzolino duro, troppa forza, movimento orizzontale — oppure una malattia parodontale. La prima cosa è capire quale, perché il trattamento è diverso. In casi selezionati la copertura chirurgica della radice è possibile; in molti altri basta correggere la tecnica di spazzolamento e monitorare.",
+      "links": [
+        {
+          "label": "Parodontologia",
+          "href": "trattamenti/odontoiatria-generale/parodontologia/"
+        }
+      ],
+      "next": [
+        "sensibilita-freddo",
+        "spazzolino-elettrico"
+      ]
+    },
+    {
+      "id": "macchie-bianche",
+      "topic": "trattamenti",
+      "q": "Ho macchie bianche sui denti",
+      "a": "Possono essere demineralizzazioni iniziali — tipiche dopo un apparecchio fisso portato con igiene non perfetta — oppure fluorosi, cioè un difetto di formazione dello smalto. Le prime a volte si rimineralizzano; per le altre esistono tecniche poco invasive come l'infiltrazione resinosa, che le mimetizza senza limare.",
+      "links": [
+        {
+          "label": "Estetica dentale",
+          "href": "trattamenti/estetica-dentale/"
+        }
+      ],
+      "next": [
+        "sbiancamento",
+        "vedere-prima"
+      ]
+    },
+    {
+      "id": "dente-scuro",
+      "topic": "trattamenti",
+      "q": "Un solo dente è diventato scuro",
+      "a": "Di solito è un dente che ha subito un trauma o che è stato devitalizzato: il pigmento viene dall'interno, quindi lo sbiancamento esterno non lo risolve. Si tratta con uno sbiancamento interno, applicando il prodotto nella camera pulpare per qualche giorno. È una procedura semplice e molto conservativa.",
+      "links": [
+        {
+          "label": "Sbiancamento",
+          "href": "trattamenti/estetica-dentale/sbiancamento/"
+        }
+      ],
+      "next": [
+        "sbiancamento",
+        "devitalizzazione-dolore"
+      ]
+    },
+    {
+      "id": "apparecchio-dolore",
+      "topic": "trattamenti",
+      "q": "L'apparecchio fa male?",
+      "a": "Nei tre o quattro giorni dopo l'applicazione e dopo ogni attivazione i denti risultano indolenziti alla masticazione: è la risposta del legamento alla forza applicata, e si attenua da sola. Non è un dolore acuto. Con gli allineatori la sensazione è simile ma più breve, concentrata nelle prime 48 ore dopo ogni cambio.",
+      "links": [
+        {
+          "label": "Ortodonzia",
+          "href": "trattamenti/ortodonzia/"
+        }
+      ],
+      "next": [
+        "allineatori",
+        "ortodonzia-adulti"
+      ]
+    },
+    {
+      "id": "otturazione-durata",
+      "topic": "trattamenti",
+      "q": "Quanto dura un'otturazione?",
+      "a": "Con una tecnica adesiva corretta e l'isolamento con diga, dieci anni e oltre sono la norma. A determinarne la durata è meno il materiale e più il protocollo: senza campo asciutto l'adesione non è affidabile, e il restauro si infiltra ai margini molto prima.",
+      "links": [
+        {
+          "label": "Conservativa",
+          "href": "trattamenti/odontoiatria-generale/conservativa/"
+        }
+      ],
+      "next": [
+        "capsula-o-intarsio",
+        "igiene-frequenza"
+      ]
+    },
+    {
+      "id": "corona-durata",
+      "topic": "trattamenti",
+      "q": "Quanto dura una corona o un impianto nel tempo?",
+      "a": "Per le corone dieci-quindici anni sono la norma, spesso di più; per gli impianti la letteratura riporta sopravvivenze sopra il 95% a dieci anni. In entrambi i casi la variabile decisiva non è il manufatto ma ciò che gli sta attorno: igiene domiciliare, controlli periodici e, per gli impianti, una protesi che si possa davvero pulire.",
+      "links": [
+        {
+          "label": "Protesi",
+          "href": "trattamenti/implantologia/protesi/"
+        }
+      ],
+      "next": [
+        "igiene-frequenza",
+        "impianti-durata"
+      ]
+    },
+    {
+      "id": "sbiancamento-durata",
+      "topic": "trattamenti",
+      "q": "Quanto dura l'effetto dello sbiancamento?",
+      "a": "Da uno a tre anni, con forte variabilità legata a caffè, tè, vino rosso e fumo. Non serve ripetere il ciclo completo: due o tre notti di mantenimento con le mascherine su misura, una volta l'anno, conservano il risultato.",
+      "links": [
+        {
+          "label": "Sbiancamento",
+          "href": "trattamenti/estetica-dentale/sbiancamento/"
+        }
+      ],
+      "next": [
+        "sbiancamento",
+        "macchie-bianche"
+      ]
+    },
+    {
+      "id": "ascesso",
+      "topic": "urgenze",
+      "q": "Ho la guancia gonfia: è un ascesso?",
+      "a": "Un gonfiore che cresce va visto in giornata, non fra qualche giorno. Nell'attesa: impacchi freddi all'esterno, mai caldi, che favorirebbero la diffusione. Non iniziare antibiotici di tua iniziativa e non applicare nulla direttamente sulla gengiva. Se compaiono febbre alta, difficoltà a deglutire o ad aprire la bocca, è un'urgenza vera: chiamaci subito o vai in pronto soccorso.",
+      "links": [
+        {
+          "label": "Chiama lo studio",
+          "href": "tel"
+        }
+      ],
+      "next": [
+        "dolore-ora",
+        "dente-rotto"
+      ]
+    },
+    {
+      "id": "dente-caduto-trauma",
+      "topic": "urgenze",
+      "q": "Un dente è uscito del tutto per un colpo",
+      "a": "Conta ogni minuto. Prendi il dente dalla corona, mai dalla radice, sciacqualo con latte o soluzione fisiologica senza strofinare e — se te la senti — rimettilo nel suo alveolo mordendo un fazzoletto. Altrimenti conservalo nel latte e vieni subito. Reimpiantato entro un'ora le probabilità sono buone; dopo due ore crollano. Con i denti da latte invece non si reimpianta: si viene comunque a controllare il germe permanente.",
+      "links": [
+        {
+          "label": "Chiama ora",
+          "href": "tel"
+        }
+      ],
+      "next": [
+        "trauma-dente-latte",
+        "dente-rotto"
+      ]
+    },
+    {
+      "id": "anestesia-non-fa-effetto",
+      "topic": "urgenze",
+      "q": "Su di me l'anestesia non fa effetto",
+      "a": "Capita, soprattutto sui molari inferiori con infiammazione acuta: il tessuto infiammato è più acido e neutralizza parte dell'anestetico. Esistono tecniche alternative — anestesia intraligamentosa, intraossea, blocchi diversi — e molecole differenti. Diccelo prima: si pianifica una strategia, non si procede sperando.",
+      "links": [
+        {
+          "label": "Parlane in visita",
+          "href": "prenota/"
+        }
+      ],
+      "next": [
+        "ansia",
+        "allergie"
+      ]
+    },
+    {
+      "id": "estrazione-cosa-mangiare",
+      "topic": "dopo",
+      "q": "Cosa posso mangiare dopo un'estrazione?",
+      "a": "Nelle prime ore cibi freddi o tiepidi e morbidi, masticando dal lato opposto. Da evitare per un paio di giorni: bevande molto calde, alcolici, cibi duri o con semini che si infilano nell'alveolo. Niente cannucce nelle prime 24 ore, perché la suzione può staccare il coagulo. Dal giorno dopo si torna progressivamente alla normalità.",
+      "links": [
+        {
+          "label": "Chirurgia orale",
+          "href": "trattamenti/implantologia/chirurgia-orale/"
+        }
+      ],
+      "next": [
+        "sanguinamento-dopo",
+        "fumo-dopo-estrazione"
+      ]
+    },
+    {
+      "id": "sanguinamento-dopo",
+      "topic": "dopo",
+      "q": "Continua a sanguinare dopo l'estrazione",
+      "a": "Un lieve stillicidio nelle prime ore è normale. Mordi con decisione una garza pulita per venti minuti senza controllare di continuo, resta seduto con la testa sollevata ed evita di sciacquare, perché lo sciacquo rimuove il coagulo. Se dopo due garze consecutive il sanguinamento è ancora abbondante, chiamaci.",
+      "links": [
+        {
+          "label": "Chiama lo studio",
+          "href": "tel"
+        }
+      ],
+      "next": [
+        "estrazione-cosa-mangiare",
+        "gonfiore"
+      ]
+    },
+    {
+      "id": "gonfiore",
+      "topic": "dopo",
+      "q": "Quanto gonfiore devo aspettarmi dopo un intervento?",
+      "a": "Dipende dall'intervento. Per un dente del giudizio incluso il picco arriva in seconda giornata e si risolve in quattro o cinque giorni. Il ghiaccio all'esterno nelle prime sei ore, a intervalli di venti minuti, riduce sensibilmente l'edema. Un gonfiore che invece aumenta dal terzo giorno in poi va fatto vedere.",
+      "links": [
+        {
+          "label": "Chirurgia orale",
+          "href": "trattamenti/implantologia/chirurgia-orale/"
+        }
+      ],
+      "next": [
+        "sport-lavoro",
+        "punti-sutura"
+      ]
+    },
+    {
+      "id": "fumo-dopo-estrazione",
+      "topic": "dopo",
+      "q": "Posso fumare dopo un'estrazione?",
+      "a": "Meglio evitare per almeno 48-72 ore. La suzione e il calore possono dislocare il coagulo e portare a un'alveolite, una complicanza molto dolorosa che allunga la guarigione di una settimana. È il momento in cui la richiesta di non fumare ha una ragione concreta e immediata.",
+      "links": [
+        {
+          "label": "Chirurgia orale",
+          "href": "trattamenti/implantologia/chirurgia-orale/"
+        }
+      ],
+      "next": [
+        "estrazione-cosa-mangiare",
+        "impianti-fumo"
+      ]
+    },
+    {
+      "id": "punti-sutura",
+      "topic": "dopo",
+      "q": "Quando si tolgono i punti?",
+      "a": "In genere fra sette e dieci giorni, in una seduta breve e non dolorosa. Alcune suture sono riassorbibili e cadono da sole. Nel frattempo si può spazzolare la zona con uno spazzolino post-chirurgico a setole morbidissime, con delicatezza: lasciare la zona sporca non aiuta la guarigione.",
+      "links": [
+        {
+          "label": "Chirurgia orale",
+          "href": "trattamenti/implantologia/chirurgia-orale/"
+        }
+      ],
+      "next": [
+        "gonfiore",
+        "sport-lavoro"
+      ]
+    },
+    {
+      "id": "sport-lavoro",
+      "topic": "dopo",
+      "q": "Quando posso tornare al lavoro e allo sport?",
+      "a": "Per estrazioni semplici e otturazioni si torna al lavoro lo stesso giorno. Dopo interventi più estesi conviene programmare a fine settimana. Per lo sport: attività leggera dopo 48 ore, sforzi intensi e piscina dopo circa una settimana, perché l'aumento della pressione può riattivare il sanguinamento.",
+      "links": [
+        {
+          "label": "Chirurgia orale",
+          "href": "trattamenti/implantologia/chirurgia-orale/"
+        }
+      ],
+      "next": [
+        "gonfiore",
+        "punti-sutura"
+      ]
+    },
+    {
+      "id": "dopo-igiene",
+      "topic": "dopo",
+      "q": "Dopo l'igiene i denti sono sensibili: è normale?",
+      "a": "Sì, per qualche giorno. Rimuovendo il tartaro si scoprono superfici radicolari che erano coperte e che ora reagiscono al freddo. Passa da sola; nel frattempo un dentifricio desensibilizzante aiuta. Se la sensibilità dura più di due settimane, dillo al richiamo successivo.",
+      "links": [
+        {
+          "label": "Igiene e prevenzione",
+          "href": "trattamenti/odontoiatria-generale/igiene-e-prevenzione/"
+        }
+      ],
+      "next": [
+        "sensibilita-freddo",
+        "igiene-frequenza"
+      ]
+    },
+    {
+      "id": "spazzolino-elettrico",
+      "topic": "igiene",
+      "q": "Meglio lo spazzolino elettrico o manuale?",
+      "a": "A parità di tecnica corretta la differenza è modesta, ma nella pratica l'elettrico — in particolare oscillante-rotante o sonico — rimuove più placca, perché corregge l'errore più comune: spazzolare troppo forte e troppo in fretta. Se lo usi, appoggialo dente per dente e lascialo lavorare senza strofinare.",
+      "links": [
+        {
+          "label": "Igiene e prevenzione",
+          "href": "trattamenti/odontoiatria-generale/igiene-e-prevenzione/"
+        }
+      ],
+      "next": [
+        "quante-volte",
+        "recessioni"
+      ]
+    },
+    {
+      "id": "quante-volte",
+      "topic": "igiene",
+      "q": "Quante volte al giorno devo lavarmi i denti?",
+      "a": "Due volte, per due minuti effettivi, contano più di quattro volte frettolose. La più importante è quella serale: di notte la saliva diminuisce e la placca lasciata lì lavora indisturbata per ore. Dopo cibi o bevande acide, però, aspetta venti o trenta minuti prima di spazzolare.",
+      "links": [
+        {
+          "label": "Come mantenere denti e gengive sani",
+          "href": "journal/denti-e-gengive-sani/"
+        }
+      ],
+      "next": [
+        "filo-o-scovolino",
+        "dentifricio"
+      ]
+    },
+    {
+      "id": "filo-o-scovolino",
+      "topic": "igiene",
+      "q": "Filo interdentale o scovolino?",
+      "a": "Dipende dallo spazio. Dove i denti sono a stretto contatto serve il filo; dove esiste uno spazio, anche minimo, lo scovolino della misura giusta è più efficace. In molte bocche servono entrambi, in zone diverse. Al richiamo ti indichiamo quale usare e dove, con le misure precise.",
+      "links": [
+        {
+          "label": "Igiene e prevenzione",
+          "href": "trattamenti/odontoiatria-generale/igiene-e-prevenzione/"
+        }
+      ],
+      "next": [
+        "idropulsore",
+        "quante-volte"
+      ]
+    },
+    {
+      "id": "idropulsore",
+      "topic": "igiene",
+      "q": "L'idropulsore sostituisce il filo?",
+      "a": "No, lo affianca. Il getto d'acqua rimuove bene i residui alimentari e riduce l'infiammazione, ma non disgrega il biofilm aderente come fa il contatto meccanico di filo e scovolino. È invece molto utile attorno a impianti, ponti e apparecchi fissi, dove arrivare è difficile.",
+      "links": [
+        {
+          "label": "Igiene e prevenzione",
+          "href": "trattamenti/odontoiatria-generale/igiene-e-prevenzione/"
+        }
+      ],
+      "next": [
+        "filo-o-scovolino",
+        "corona-durata"
+      ]
+    },
+    {
+      "id": "collutorio",
+      "topic": "igiene",
+      "q": "Serve il collutorio?",
+      "a": "Non tutti i giorni e non per tutti. I collutori alla clorexidina sono farmaci a breve termine, per periodi definiti dopo un intervento o durante una terapia parodontale: usati a lungo pigmentano i denti e alterano il gusto. Per l'uso quotidiano un collutorio al fluoro può avere senso in chi ha alto rischio di carie, ma non sostituisce mai spazzolino e filo.",
+      "links": [
+        {
+          "label": "Igiene e prevenzione",
+          "href": "trattamenti/odontoiatria-generale/igiene-e-prevenzione/"
+        }
+      ],
+      "next": [
+        "dentifricio",
+        "quante-volte"
+      ]
+    },
+    {
+      "id": "dentifricio",
+      "topic": "igiene",
+      "q": "Quale dentifricio devo usare?",
+      "a": "Il fattore che conta davvero è il fluoro: almeno 1.000 ppm negli adulti, 1.450 ppm in chi ha rischio di carie elevato. Il resto — sbiancante, al carbone, alle erbe — incide poco, e i prodotti molto abrasivi consumano lo smalto nel tempo. Sputa senza sciacquare: il fluoro deve restare a contatto.",
+      "links": [
+        {
+          "label": "Prevenzione",
+          "href": "journal/prevenzione-controlli-periodici/"
+        }
+      ],
+      "next": [
+        "collutorio",
+        "fluoro-bambini"
+      ]
+    },
+    {
+      "id": "cambiare-spazzolino",
+      "topic": "igiene",
+      "q": "Ogni quanto si cambia lo spazzolino?",
+      "a": "Ogni tre mesi, e comunque appena le setole si aprono verso l'esterno: da quel momento pulisce molto meno. Da cambiare anche dopo un'infezione delle vie respiratorie. Le setole devono essere morbide: le medie e dure non puliscono di più, consumano solo colletti e gengive.",
+      "links": [
+        {
+          "label": "Igiene e prevenzione",
+          "href": "trattamenti/odontoiatria-generale/igiene-e-prevenzione/"
+        }
+      ],
+      "next": [
+        "spazzolino-elettrico",
+        "recessioni"
+      ]
+    },
+    {
+      "id": "pulire-lingua",
+      "topic": "igiene",
+      "q": "Bisogna pulire anche la lingua?",
+      "a": "Sì, e incide più di quanto si creda sull'alito: il dorso della lingua trattiene una patina batterica che nessun collutorio elimina. Un pulisci-lingua o il retro dello spazzolino, una volta al giorno, con movimenti dal fondo verso la punta, senza spingere troppo indietro.",
+      "links": [
+        {
+          "label": "Igiene e prevenzione",
+          "href": "trattamenti/odontoiatria-generale/igiene-e-prevenzione/"
+        }
+      ],
+      "next": [
+        "alitosi",
+        "quante-volte"
+      ]
+    },
+    {
+      "id": "denti-da-latte-carie",
+      "topic": "bambini",
+      "q": "I denti da latte cariati vanno curati?",
+      "a": "Sì, e non è un dettaglio: un dente da latte cariato fa male, può ascessualizzarsi e danneggiare il germe del permanente che sta sotto. Se viene perso troppo presto, lo spazio si chiude e il permanente non trova posto. Si cura, e spesso con interventi semplici se si arriva in tempo.",
+      "links": [
+        {
+          "label": "Ortodonzia pediatrica",
+          "href": "trattamenti/ortodonzia/ortodonzia-pediatrica/"
+        }
+      ],
+      "next": [
+        "sigillature",
+        "fluoro-bambini"
+      ]
+    },
+    {
+      "id": "sigillature",
+      "topic": "bambini",
+      "q": "Cosa sono le sigillature?",
+      "a": "Una resina fluida che chiude i solchi profondi dei molari permanenti appena erotti, dove lo spazzolino non arriva e dove nasce la maggior parte delle carie nei bambini. Si applicano senza anestesia e senza toccare il dente, in pochi minuti. Vanno controllate ai richiami, perché si possono consumare.",
+      "links": [
+        {
+          "label": "Igiene e prevenzione",
+          "href": "trattamenti/odontoiatria-generale/igiene-e-prevenzione/"
+        }
+      ],
+      "next": [
+        "denti-da-latte-carie",
+        "fluoro-bambini"
+      ]
+    },
+    {
+      "id": "fluoro-bambini",
+      "topic": "bambini",
+      "q": "Quanto fluoro per i bambini?",
+      "a": "Fino ai tre anni una quantità di dentifricio al fluoro grande come un chicco di riso; dai tre ai sei anni come un pisello, sempre sotto la supervisione di un adulto, perché a quell'età si tende a ingerirlo. Il dosaggio esatto lo calibriamo in visita sul rischio individuale: troppo poco non protegge, troppo può dare fluorosi.",
+      "links": [
+        {
+          "label": "Prenota una visita",
+          "href": "prenota/"
+        }
+      ],
+      "next": [
+        "sigillature",
+        "dentifricio"
+      ]
+    },
+    {
+      "id": "ciuccio",
+      "topic": "bambini",
+      "q": "Fino a che età ciuccio e dito?",
+      "a": "Entro i due-tre anni l'effetto sulla crescita è in genere reversibile. Oltre i quattro anni il succhiamento prolungato tende a produrre un morso aperto anteriore e un palato stretto, che poi richiedono un trattamento ortodontico. Se l'abitudine persiste, vale la pena una valutazione precoce.",
+      "links": [
+        {
+          "label": "Ortodonzia pediatrica",
+          "href": "trattamenti/ortodonzia/ortodonzia-pediatrica/"
+        }
+      ],
+      "next": [
+        "apparecchio-eta",
+        "bambini"
+      ]
+    },
+    {
+      "id": "apparecchio-eta",
+      "topic": "bambini",
+      "q": "A che età si mette l'apparecchio?",
+      "a": "Dipende dal problema, non dall'età anagrafica. Palato stretto, morso incrociato e abitudini viziate si intercettano fra i sei e i dieci anni, sfruttando la crescita: aspettare significa rendere necessario un trattamento più complesso. L'allineamento dei denti si affronta invece dopo la permuta, verso gli undici-tredici anni.",
+      "links": [
+        {
+          "label": "Ortodonzia pediatrica",
+          "href": "trattamenti/ortodonzia/ortodonzia-pediatrica/"
+        }
+      ],
+      "next": [
+        "ciuccio",
+        "ortodonzia-adulti"
+      ]
+    },
+    {
+      "id": "trauma-dente-latte",
+      "topic": "bambini",
+      "q": "Mio figlio ha battuto un dente da latte",
+      "a": "Va comunque controllato, anche se sembra tutto a posto: il trauma può danneggiare il germe del dente permanente sottostante, e alcune conseguenze compaiono settimane dopo. Nelle prime ore ghiaccio all'esterno e cibi morbidi. Un dente da latte uscito del tutto non si reimpianta mai, ma il controllo serve lo stesso.",
+      "links": [
+        {
+          "label": "Chiama lo studio",
+          "href": "tel"
+        }
+      ],
+      "next": [
+        "dente-caduto-trauma",
+        "denti-da-latte-carie"
+      ]
     }
   ]
 }

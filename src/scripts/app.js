@@ -223,39 +223,6 @@
     run();
   };
 
-  /* -- Quick nav: anteprima fotografica al passaggio ----------------------*/
-  const quicknav = () => {
-    const nav = $('[data-quicknav]');
-    const preview = $('.quicknav__preview');
-    if (!nav || !preview) return;
-    const imgs = $$('img', preview);
-    let raf = null, tx = 0, ty = 0, cx = 0, cy = 0, active = false;
-
-    const loop = () => {
-      cx += (tx - cx) * 0.14;
-      cy += (ty - cy) * 0.14;
-      preview.style.transform = `translate(${cx}px, ${cy}px) translate(-50%, -50%) scale(${active ? 1 : 0.94})`;
-      raf = requestAnimationFrame(loop);
-    };
-
-    nav.addEventListener('pointermove', (e) => {
-      tx = e.clientX; ty = e.clientY;
-      if (!raf) { cx = tx; cy = ty; raf = requestAnimationFrame(loop); }
-    });
-    $$('[data-preview]', nav).forEach((item) => {
-      item.addEventListener('pointerenter', () => {
-        active = true;
-        preview.classList.add('is-visible');
-        imgs.forEach((i) => i.classList.toggle('is-active', i.dataset.key === item.dataset.preview));
-      });
-    });
-    nav.addEventListener('pointerleave', () => {
-      active = false;
-      preview.classList.remove('is-visible');
-      setTimeout(() => { if (!active && raf) { cancelAnimationFrame(raf); raf = null; } }, 500);
-    });
-  };
-
   /* -- Rail (slider orizzontale) ------------------------------------------*/
   const rails = () => {
     $$('.rail').forEach((rail) => {
@@ -711,7 +678,7 @@
 
   /* -- Avvio ---------------------------------------------------------------*/
   const init = () => {
-    year(); header(); sectionNav(); reveals(); parallax(); quicknav(); rails();
+    year(); header(); sectionNav(); reveals(); parallax(); rails();
     faq(); beforeAfter(); filters(); forms(); wizard(); askBox(); transitions(); smoothScroll();
   };
 

@@ -4,7 +4,7 @@ export const LEGAL = [
   {
     slug: 'privacy',
     title: 'Privacy Policy',
-    description: 'Informativa sul trattamento dei dati personali dello Studio Canova, ai sensi del Regolamento UE 2016/679.',
+    description: 'Informativa sul trattamento dei dati personali dello Studio Liddi, ai sensi del Regolamento UE 2016/679.',
     intro: 'Informativa resa ai sensi degli articoli 13 e 14 del Regolamento UE 2016/679 (GDPR) agli utenti del sito e ai pazienti dello studio.',
     sections: [
       { h: 'Titolare del trattamento', p: [`${site.legalName}, ${site.address.street}, ${site.address.zip} ${site.address.city} — P. IVA ${site.vat}. Email: ${site.email}. Telefono: ${site.phone}.`] },
@@ -33,7 +33,7 @@ export const LEGAL = [
   {
     slug: 'cookie-policy',
     title: 'Cookie Policy',
-    description: 'Informativa sui cookie utilizzati dal sito dello Studio Canova.',
+    description: 'Informativa sui cookie utilizzati dal sito dello Studio Liddi.',
     intro: 'Questo sito utilizza esclusivamente cookie tecnici necessari al funzionamento. Non impiega cookie di profilazione né strumenti di tracciamento pubblicitario.',
     sections: [
       { h: 'Cookie tecnici', p: ['Sono i cookie necessari a garantire la navigazione e l\'erogazione dei servizi richiesti. Per il loro utilizzo non è richiesto il consenso dell\'utente, ai sensi dell\'art. 122 del Codice Privacy.'] },
@@ -47,7 +47,7 @@ export const LEGAL = [
   {
     slug: 'termini',
     title: 'Termini e condizioni',
-    description: 'Termini di utilizzo del sito e informazioni sulle prestazioni sanitarie dello Studio Canova.',
+    description: 'Termini di utilizzo del sito e informazioni sulle prestazioni sanitarie dello Studio Liddi.',
     intro: 'Condizioni di utilizzo del sito e informazioni previste dalla normativa in materia di comunicazione sanitaria.',
     sections: [
       { h: 'Natura delle informazioni', p: [

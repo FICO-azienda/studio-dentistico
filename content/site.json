@@ -1,7 +1,7 @@
 {
-  "name": "Studio Canova",
-  "wordmark": "Canova",
-  "legalName": "Studio Odontoiatrico Canova S.r.l.",
+  "name": "Studio Liddi",
+  "wordmark": "Liddi",
+  "legalName": "Studio Odontoiatrico Liddi S.r.l.",
   "tagline": "Odontoiatria contemporanea",
   "claim": "Your smile.\nOur commitment.",
   "url": "https://fico-azienda.github.io/studio-dentistico",
@@ -20,7 +20,7 @@
   "phoneHref": "+390247001188",
   "whatsapp": "+39 340 118 4477",
   "whatsappHref": "393401184477",
-  "email": "info@studiocanova.it",
+  "email": "info@studioliddi.it",
   "vat": "IT 09 8741 2209 6",
   "director": "Dr. Andrea Vitali — Direttore Sanitario, Albo degli Odontoiatri di Milano n. 7412",
   "hours": [
@@ -48,7 +48,7 @@
     },
     {
       "label": "Superficie",
-      "value": "Tram 1 e 19 · Bus 57, fermata Canova"
+      "value": "Tram 1 e 19 · Bus 57, fermata Liddi"
     }
   ],
   "social": [
@@ -102,5 +102,9 @@
       "text": "Il trattamento migliore è quello che non serve. Costruiamo percorsi di mantenimento su misura."
     }
   ],
-  "basePath": "/studio-dentistico/"
+  "basePath": "/studio-dentistico/",
+  "booking": {
+    "endpoint": "",
+    "mode": "demo"
+  }
 }

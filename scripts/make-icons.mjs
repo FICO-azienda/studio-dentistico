@@ -9,11 +9,11 @@ const INK = [18, 51, 85];
 const IVORY = [255, 255, 255];
 const SAGE = [157, 186, 218];
 
-/* -- marchio: arco aperto (una "C") -------------------------------------- */
+/* -- marchio: monogramma "L" ---------------------------------------------- */
 const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
   <rect width="64" height="64" fill="#123355"/>
-  <path d="M44 20.5A18 18 0 1 0 44 43.5" fill="none" stroke="#ffffff" stroke-width="5.5" stroke-linecap="butt"/>
-  <circle cx="46.5" cy="32" r="3.2" fill="#9dbada"/>
+  <path d="M23 16h6v27h16v6H23z" fill="#ffffff"/>
+  <circle cx="45.5" cy="19.5" r="3.4" fill="#9dbada"/>
 </svg>`;
 fs.writeFileSync(path.join(OUT, 'favicon.svg'), svg);
 
@@ -65,15 +65,14 @@ function crc32(buf) {
 const icon = (size) =>
   png(size, (x, y) => {
     const s = size / 64;
-    const cx = 32 * s, cy = 32 * s;
-    const dx = x + 0.5 - cx, dy = y + 0.5 - cy;
-    const r = Math.hypot(dx, dy);
-    const a = Math.atan2(dy, dx); // -pi..pi
-    const rIn = 15.3 * s, rOut = 20.8 * s;
-    const gap = Math.abs(a) < 0.62; // apertura a destra -> forma di C
-    if (r >= rIn && r <= rOut && !gap) return IVORY;
-    const pd = Math.hypot(x + 0.5 - 46.5 * s, y + 0.5 - 32 * s);
-    if (pd <= 3.2 * s) return SAGE;
+    const px = (x + 0.5) / s;
+    const py = (y + 0.5) / s;
+    // asta verticale e base della L
+    const asta = px >= 23 && px <= 29 && py >= 16 && py <= 49;
+    const base = px >= 23 && px <= 45 && py >= 43 && py <= 49;
+    if (asta || base) return IVORY;
+    // punto d'accento
+    if (Math.hypot(px - 45.5, py - 19.5) <= 3.4) return SAGE;
     return INK;
   });
 
@@ -84,8 +83,8 @@ fs.writeFileSync(
   path.join(OUT, 'site.webmanifest'),
   JSON.stringify(
     {
-      name: 'Studio Canova — Odontoiatria',
-      short_name: 'Canova',
+      name: 'Studio Liddi — Odontoiatria',
+      short_name: 'Liddi',
       description: 'Studio odontoiatrico a Milano',
       start_url: './',
       display: 'standalone',

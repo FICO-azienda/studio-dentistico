@@ -1,5 +1,5 @@
 /**
- * Studio Canova — generatore statico.
+ * Studio Liddi — generatore statico.
  * Tutti i contenuti vivono in /content (il "CMS"): modificando i JSON e
  * rilanciando `npm run build` il sito si rigenera senza toccare l'HTML.
  *

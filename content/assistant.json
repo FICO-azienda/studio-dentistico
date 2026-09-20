@@ -1,0 +1,196 @@
+{
+  "title": "Come possiamo aiutarti?",
+  "intro": "Scegli una domanda: la risposta è già pronta. Per tutto il resto c'è il telefono.",
+  "placeholder": "Cerca una domanda…",
+  "emptyLabel": "Nessuna domanda corrisponde. Prova con un'altra parola, oppure chiamaci.",
+  "footerLabel": "Non trovi quello che cerchi?",
+  "topics": [
+    { "id": "visita", "label": "Prima visita" },
+    { "id": "prenotazione", "label": "Prenotazione" },
+    { "id": "costi", "label": "Costi e pagamenti" },
+    { "id": "trattamenti", "label": "Trattamenti" },
+    { "id": "urgenze", "label": "Urgenze" },
+    { "id": "studio", "label": "Lo studio" }
+  ],
+  "items": [
+    {
+      "id": "durata-prima-visita",
+      "topic": "visita",
+      "q": "Quanto dura la prima visita?",
+      "a": "Circa 45 minuti. Comprende il colloquio iniziale, l'esame clinico completo, le fotografie, le radiografie necessarie e la presentazione del piano di trattamento con il preventivo scritto.",
+      "links": [{ "label": "Come funziona la prima visita", "href": "prima-visita/" }],
+      "next": ["costo-prima-visita", "cosa-portare"]
+    },
+    {
+      "id": "costo-prima-visita",
+      "topic": "costi",
+      "q": "Quanto costa la prima visita?",
+      "a": "80 euro, comprensivi di esame clinico, fotografie, radiografie necessarie e piano di trattamento scritto. L'importo viene scalato dal preventivo se decidi di iniziare il percorso in studio.",
+      "links": [{ "label": "Prenota la prima visita", "href": "prenota/" }],
+      "next": ["pagamento-rate", "assicurazioni"]
+    },
+    {
+      "id": "cosa-portare",
+      "topic": "visita",
+      "q": "Cosa devo portare alla prima visita?",
+      "a": "Documento d'identità, tessera sanitaria, eventuali radiografie o documentazione di trattamenti precedenti — anche vecchi — e l'elenco dei farmaci che assumi abitualmente. Se segui terapie particolari, porta anche i referti relativi.",
+      "links": [{ "label": "Tutti i dettagli", "href": "prima-visita/" }],
+      "next": ["durata-prima-visita", "come-prenotare"]
+    },
+    {
+      "id": "come-prenotare",
+      "topic": "prenotazione",
+      "q": "Come posso prenotare?",
+      "a": "Online dalla pagina Prenota in due minuti, per telefono negli orari di apertura, via WhatsApp oppure per email. La richiesta online non è una conferma: la segreteria ti ricontatta per confermare giorno e orario.",
+      "links": [
+        { "label": "Prenota online", "href": "prenota/" },
+        { "label": "Contatti e orari", "href": "contatti/" }
+      ],
+      "next": ["disdire", "orari"]
+    },
+    {
+      "id": "disdire",
+      "topic": "prenotazione",
+      "q": "Come disdico o sposto un appuntamento?",
+      "a": "Chiamaci o scrivici su WhatsApp con almeno 24 ore di anticipo: riusciamo a offrire quel posto a un altro paziente e a trovarti una nuova data in tempi brevi. Se hai prenotato online, indica il codice richiesta che ti è stato inviato per email.",
+      "links": [{ "label": "Contatti", "href": "contatti/" }],
+      "next": ["come-prenotare", "orari"]
+    },
+    {
+      "id": "orari",
+      "topic": "studio",
+      "q": "Quali sono gli orari dello studio?",
+      "a": "Dal lunedì al venerdì dalle 08:30 alle 19:30, il sabato dalle 09:00 alle 13:00 su appuntamento. La domenica siamo chiusi.",
+      "links": [{ "label": "Dove siamo", "href": "contatti/" }],
+      "next": ["dove-siamo", "parcheggio"]
+    },
+    {
+      "id": "dove-siamo",
+      "topic": "studio",
+      "q": "Dove si trova lo studio?",
+      "a": "In Via Antonio Canova 14, a Milano, zona Fiera. Sei minuti a piedi dalle fermate M5 Domodossola e M1 Amendola Fiera; in superficie tram 1 e 19 e bus 57, fermata Canova.",
+      "links": [{ "label": "Mappa e indicazioni", "href": "contatti/" }],
+      "next": ["parcheggio", "orari"]
+    },
+    {
+      "id": "parcheggio",
+      "topic": "studio",
+      "q": "C'è parcheggio?",
+      "a": "Sì, ci sono posti riservati ai pazienti nel cortile interno. Segnalalo in segreteria quando prendi l'appuntamento, così teniamo libero un posto.",
+      "links": [{ "label": "Come raggiungerci", "href": "contatti/" }],
+      "next": ["dove-siamo", "orari"]
+    },
+    {
+      "id": "pagamento-rate",
+      "topic": "costi",
+      "q": "Si può pagare a rate?",
+      "a": "Sì. Per i trattamenti complessi offriamo una dilazione interna senza interessi e, in alternativa, un finanziamento a tasso agevolato tramite istituto convenzionato, con esito in giornata.",
+      "links": [{ "label": "Parlane in prima visita", "href": "prenota/" }],
+      "next": ["assicurazioni", "costo-prima-visita"]
+    },
+    {
+      "id": "assicurazioni",
+      "topic": "costi",
+      "q": "Accettate assicurazioni e fondi sanitari?",
+      "a": "Siamo convenzionati con i principali fondi sanitari integrativi e casse di assistenza. In segreteria verifichiamo la copertura prima di iniziare il trattamento e gestiamo noi la pratica.",
+      "links": [{ "label": "Chiedi alla segreteria", "href": "contatti/" }],
+      "next": ["pagamento-rate", "preventivo"]
+    },
+    {
+      "id": "preventivo",
+      "topic": "costi",
+      "q": "Ricevo un preventivo prima di iniziare?",
+      "a": "Sempre, e per iscritto, voce per voce. Te lo consegniamo al termine della prima visita insieme al piano di trattamento: puoi valutarlo con calma, chiedere un secondo parere e tornare quando preferisci. Nessuna fase parte senza la tua approvazione.",
+      "links": [{ "label": "La prima visita", "href": "prima-visita/" }],
+      "next": ["costo-prima-visita", "pagamento-rate"]
+    },
+    {
+      "id": "impianti-dolore",
+      "topic": "trattamenti",
+      "q": "Gli impianti dentali sono dolorosi?",
+      "a": "L'intervento avviene in anestesia locale e non è doloroso. Nei due o tre giorni successivi può comparire un fastidio, gestibile con un antidolorifico comune. Su richiesta è disponibile la sedazione cosciente per chi ha molta ansia.",
+      "links": [{ "label": "Implantologia", "href": "trattamenti/implantologia/" }],
+      "next": ["impianti-durata", "ansia"]
+    },
+    {
+      "id": "impianti-durata",
+      "topic": "trattamenti",
+      "q": "Quanto dura un percorso implantare?",
+      "a": "Per un impianto singolo: intervento di 45-90 minuti, poi da 8 a 16 settimane di guarigione prima della corona definitiva. Nelle riabilitazioni complete consegniamo un provvisorio fisso entro 24-48 ore dall'intervento, così non resti mai senza denti.",
+      "links": [{ "label": "Implantologia", "href": "trattamenti/implantologia/" }],
+      "next": ["impianti-dolore", "preventivo"]
+    },
+    {
+      "id": "allineatori",
+      "topic": "trattamenti",
+      "q": "Quanto dura un trattamento con allineatori?",
+      "a": "Da 4-6 mesi per allineamenti lievi fino a 18-24 mesi per malocclusioni importanti. In prima visita facciamo una scansione e ti mostriamo la simulazione del tuo caso: vedi il risultato atteso e la durata stimata prima di decidere.",
+      "links": [{ "label": "Allineatori trasparenti", "href": "trattamenti/ortodonzia/allineatori-trasparenti/" }],
+      "next": ["ortodonzia-adulti", "preventivo"]
+    },
+    {
+      "id": "ortodonzia-adulti",
+      "topic": "trattamenti",
+      "q": "Si può fare ortodonzia da adulti?",
+      "a": "Sì, e una parte consistente dei nostri pazienti ortodontici è adulta. Quello che cambia rispetto all'età evolutiva non è la possibilità di spostare i denti, ma la necessità di valutare prima lo stato delle gengive e dell'osso.",
+      "links": [{ "label": "Ortodonzia", "href": "trattamenti/ortodonzia/" }],
+      "next": ["allineatori", "igiene-frequenza"]
+    },
+    {
+      "id": "igiene-frequenza",
+      "topic": "trattamenti",
+      "q": "Ogni quanto devo fare l'igiene dentale?",
+      "a": "Per la maggior parte dei pazienti ogni sei mesi. In presenza di parodontite, impianti o predisposizione al tartaro il richiamo può essere trimestrale o quadrimestrale: l'intervallo lo stabiliamo insieme in base al tuo rischio reale.",
+      "links": [{ "label": "Igiene e prevenzione", "href": "trattamenti/odontoiatria-generale/igiene-e-prevenzione/" }],
+      "next": ["sanguinamento", "sbiancamento"]
+    },
+    {
+      "id": "sanguinamento",
+      "topic": "trattamenti",
+      "q": "Le gengive mi sanguinano: è normale?",
+      "a": "No. Una gengiva sana non sanguina, nemmeno passando il filo. Il sanguinamento indica un'infiammazione in corso: nella maggior parte dei casi si risolve con una pulizia accurata, ma se persiste oltre una o due settimane va valutato in studio.",
+      "links": [{ "label": "Parodontologia", "href": "trattamenti/odontoiatria-generale/parodontologia/" }],
+      "next": ["igiene-frequenza", "come-prenotare"]
+    },
+    {
+      "id": "sbiancamento",
+      "topic": "trattamenti",
+      "q": "Lo sbiancamento rovina i denti?",
+      "a": "No. Il perossido agisce sui pigmenti depositati nella dentina, non asporta smalto e non assottiglia il dente. Può dare una sensibilità transitoria al freddo per 24-48 ore. Attenzione però: otturazioni e capsule non sbiancano e potrebbero dover essere sostituite.",
+      "links": [{ "label": "Sbiancamento", "href": "trattamenti/estetica-dentale/sbiancamento/" }],
+      "next": ["igiene-frequenza", "preventivo"]
+    },
+    {
+      "id": "dolore-ora",
+      "topic": "urgenze",
+      "q": "Ho un forte dolore adesso: cosa faccio?",
+      "a": "Chiama direttamente lo studio: teniamo liberi ogni giorno alcuni spazi per le urgenze. Nell'attesa, un antinfiammatorio comune e impacchi freddi all'esterno della guancia aiutano; evita il calore, che peggiora il dolore di origine infettiva.",
+      "links": [{ "label": "Chiama ora", "href": "tel" }],
+      "next": ["dente-rotto", "come-prenotare"]
+    },
+    {
+      "id": "dente-rotto",
+      "topic": "urgenze",
+      "q": "Si è rotto un dente o è saltata una capsula",
+      "a": "Conserva il frammento o la capsula in un contenitore pulito e portalo con te: spesso si può ricementare. Non usare colle. Chiamaci per una valutazione in giornata, soprattutto se il dente è scheggiato con esposizione della parte interna.",
+      "links": [{ "label": "Chiama lo studio", "href": "tel" }],
+      "next": ["dolore-ora", "come-prenotare"]
+    },
+    {
+      "id": "ansia",
+      "topic": "visita",
+      "q": "Ho molta paura del dentista",
+      "a": "Diccelo quando prenoti: non è un dettaglio secondario. Le prime sedute possono essere dedicate solo a conoscersi, e per gli interventi più impegnativi è disponibile la sedazione cosciente con monitoraggio. Nessuna manovra viene forzata.",
+      "links": [{ "label": "Parlane in prima visita", "href": "prenota/" }],
+      "next": ["bambini", "impianti-dolore"]
+    },
+    {
+      "id": "bambini",
+      "topic": "visita",
+      "q": "Seguite anche i bambini?",
+      "a": "Sì, con un'area dedicata all'odontoiatria pediatrica. La prima visita è consigliata entro i 4-5 anni, o prima in presenza di abitudini viziate o traumi. Le prime sedute servono soprattutto a prendere confidenza con lo studio.",
+      "links": [{ "label": "Ortodonzia pediatrica", "href": "trattamenti/ortodonzia/ortodonzia-pediatrica/" }],
+      "next": ["ansia", "come-prenotare"]
+    }
+  ]
+}

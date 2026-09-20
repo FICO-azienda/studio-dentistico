@@ -13,6 +13,7 @@ export const journal = read('journal.json');
 export const cases = read('cases.json');
 export const faqs = read('faq.json');
 export const reviews = read('reviews.json');
+export const assistant = read('assistant.json');
 
 export const byTreatment = Object.fromEntries(treatments.items.map((t) => [t.slug, t]));
 export const byPerson = Object.fromEntries(team.map((p) => [p.slug, p]));
@@ -91,7 +92,7 @@ export const lines = (arr, cls = '') =>
   arr.map((l) => `<span class="line-mask ${cls}"><span>${l}</span></span>`).join('');
 
 /** aggiunge il suffisso del brand solo se il title resta sotto i 65 caratteri */
-export const metaTitle = (base, suffix = 'Studio Canova') => {
+export const metaTitle = (base, suffix = 'Studio Liddi') => {
   const full = `${base} | ${suffix}`;
   return full.length <= 65 ? full : base;
 };

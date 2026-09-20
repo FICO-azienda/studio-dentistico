@@ -30,6 +30,8 @@ jobs:
           node-version: 22
       - name: Genera il sito
         run: node build.mjs
+      - name: Test del flusso di prenotazione
+        run: node --test "tests/*.test.mjs"
       - name: Controlla link, alt, title e dati strutturati
         run: node scripts/check.mjs
       - name: Fallisci se il controllo segnala problemi

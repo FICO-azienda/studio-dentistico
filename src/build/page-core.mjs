@@ -105,7 +105,7 @@ ${pageHero({
 ${bookingBand(base)}`;
 
   return layout({
-    title: 'Lo studio — Studio Canova, dentista a Milano',
+    title: 'Lo studio — Studio Liddi, dentista a Milano',
     description: 'Studio odontoiatrico a Milano zona Fiera: 340 mq, cinque sale operative, radiologia e laboratorio interni. Dodici professionisti e un protocollo condiviso.',
     path: 'studio/',
     depth: 1,
@@ -137,8 +137,8 @@ ${pageHero({
 ${bookingBand(base)}`;
 
   return layout({
-    title: 'Il team — Studio Canova, dentista a Milano',
-    description: 'I professionisti dello Studio Canova a Milano: implantologia, ortodonzia, endodonzia, estetica dentale, parodontologia e odontoiatria pediatrica.',
+    title: 'Il team — Studio Liddi, dentista a Milano',
+    description: 'I professionisti dello Studio Liddi a Milano: implantologia, ortodonzia, endodonzia, estetica dentale, parodontologia e odontoiatria pediatrica.',
     path: 'team/',
     depth: 1,
     current: 'team/',
@@ -217,7 +217,7 @@ ${bookingBand(base)}`;
 
   return layout({
     title: metaTitle(`${personName(p)} — ${p.role.split('·')[0].trim()}`),
-    description: `${personName(p)}, ${p.role} allo Studio Canova di Milano. ${p.short}`,
+    description: `${personName(p)}, ${p.role} allo Studio Liddi di Milano. ${p.short}`,
     path: `team/${p.slug}/`,
     depth: 2,
     current: 'team/',
@@ -278,8 +278,8 @@ ${pageHero({
 ${bookingBand(base)}`;
 
   return layout({
-    title: 'Tecnologie — Studio Canova, dentista a Milano',
-    description: 'Scanner intraorale, radiologia digitale a bassa dose, implantologia guidata, microscopia, Digital Smile Design e stampa 3D. Studio Canova, Milano.',
+    title: 'Tecnologie — Studio Liddi, dentista a Milano',
+    description: 'Scanner intraorale, radiologia digitale a bassa dose, implantologia guidata, microscopia, Digital Smile Design e stampa 3D. Studio Liddi, Milano.',
     path: 'tecnologie/',
     depth: 1,
     current: 'tecnologie/',
@@ -378,8 +378,8 @@ ${pageHero({
 ${bookingBand(base)}`;
 
   return layout({
-    title: 'La prima visita — Studio Canova, dentista a Milano',
-    description: 'Come funziona la prima visita allo Studio Canova di Milano: 45 minuti tra ascolto, diagnosi, piano di trattamento e preventivo scritto.',
+    title: 'La prima visita — Studio Liddi, dentista a Milano',
+    description: 'Come funziona la prima visita allo Studio Liddi di Milano: 45 minuti tra ascolto, diagnosi, piano di trattamento e preventivo scritto.',
     path: 'prima-visita/',
     depth: 1,
     current: 'prima-visita/',
@@ -454,8 +454,8 @@ ${pageHero({
 ${bookingBand(base)}`;
 
   return layout({
-    title: 'Contatti — Studio Canova, dentista a Milano zona Fiera',
-    description: 'Studio Canova, Via Antonio Canova 14, Milano. Telefono, WhatsApp, email, orari di apertura e indicazioni per raggiungerci.',
+    title: 'Contatti — Studio Liddi, dentista a Milano zona Fiera',
+    description: 'Studio Liddi, Via Antonio Canova 14, Milano. Telefono, WhatsApp, email, orari di apertura e indicazioni per raggiungerci.',
     path: 'contatti/',
     depth: 1,
     current: 'contatti/',
@@ -465,11 +465,16 @@ ${bookingBand(base)}`;
 };
 
 /* ======================================================== /prenota ======= */
+// i valori coincidono con VISIT_TYPES in api/_lib/validate.mjs
 const VISIT_TYPES = [
   { v: 'prima-visita', l: 'Prima visita', d: 'Esame completo, radiografie e piano di trattamento. 45 minuti.' },
-  { v: 'igiene', l: 'Igiene e controllo', d: 'Seduta di igiene professionale con controllo periodico.' },
+  { v: 'igiene', l: 'Igiene dentale', d: 'Seduta di igiene professionale e istruzioni personalizzate.' },
+  { v: 'controllo', l: 'Controllo', d: 'Controllo periodico di denti, gengive e restauri esistenti.' },
+  { v: 'ortodonzia', l: 'Ortodonzia', d: 'Allineatori o apparecchio: valutazione e simulazione digitale.' },
+  { v: 'implantologia', l: 'Implantologia', d: 'Valutazione per impianti e riabilitazioni su impianti.' },
+  { v: 'estetica', l: 'Estetica dentale', d: 'Sbiancamento, faccette, progetto del sorriso.' },
   { v: 'urgenza', l: 'Urgenza', d: 'Dolore, trauma o problema improvviso: ti richiamiamo entro poche ore.' },
-  { v: 'consulenza', l: 'Consulenza specialistica', d: 'Ortodonzia, implantologia o estetica: secondo parere e valutazione.' }
+  { v: 'altro', l: 'Altro', d: 'Descrivi la tua necessita\' nelle note: ti richiamiamo noi.' }
 ];
 
 export const bookingPage = () => {
@@ -489,7 +494,7 @@ ${pageHero({
   <div class="wrap">
     <div class="grid">
       <div class="col-8">
-        <div data-wizard>
+        <div data-wizard data-endpoint="${attr(site.booking?.endpoint || '')}" data-mode="${attr(site.booking?.mode || 'demo')}">
           <ol class="wizard__steps">
             <li data-state="current"><span class="num">01</span><span>Tipo di visita</span></li>
             <li data-state="todo"><span class="num">02</span><span>Professionista</span></li>
@@ -541,15 +546,31 @@ ${pageHero({
 
           <section class="wizard__panel" hidden>
             <h2 class="h3">I tuoi dati</h2>
-            <form class="mt-3" data-validate data-success="#booking-done" novalidate>
+            <form class="mt-3" data-booking data-validate data-success="#booking-done" novalidate>
               <div class="form-grid">
                 <label class="field"><span class="field__label label">Nome *</span><input type="text" name="nome" required autocomplete="given-name"><span class="field__error">Campo obbligatorio</span></label>
                 <label class="field"><span class="field__label label">Cognome *</span><input type="text" name="cognome" required autocomplete="family-name"><span class="field__error">Campo obbligatorio</span></label>
                 <label class="field"><span class="field__label label">Email *</span><input type="email" name="email" required autocomplete="email"><span class="field__error">Inserisci un indirizzo email valido</span></label>
                 <label class="field"><span class="field__label label">Telefono *</span><input type="tel" name="telefono" required autocomplete="tel" pattern="[0-9 +().-]{6,}"><span class="field__error">Inserisci un numero valido</span></label>
               </div>
-              <label class="field mt-3"><span class="field__label label">Note</span><textarea name="note" rows="3" placeholder="Qualcosa che è utile sapere prima dell'appuntamento"></textarea></label>
+              <p class="label mt-4">Seconda preferenza <span style="text-transform:none;letter-spacing:0;color:var(--stone-light)">— facoltativa</span></p>
+              <div class="form-grid mt-2">
+                <label class="field"><span class="field__label label">Giorno alternativo</span><input type="date" name="secondaData"><span class="field__error">Data non valida</span></label>
+                <label class="field"><span class="field__label label">Orario alternativo</span>
+                  <select name="secondaOra">
+                    <option value="">Nessuna preferenza</option>
+                    ${['08:30', '09:15', '10:00', '11:30', '12:15', '14:00', '15:00', '16:30', '17:15', '18:30']
+                      .map((h) => `<option value="${h}">${h}</option>`)
+                      .join('')}
+                  </select>
+                </label>
+              </div>
+              <label class="field mt-3"><span class="field__label label">Note</span><textarea name="messaggio" rows="3" placeholder="Qualcosa che è utile sapere prima dell'appuntamento"></textarea></label>
               <input type="hidden" name="appuntamento" data-booking-detail>
+              <!-- esca anti-spam: invisibile alle persone, compilata dai bot -->
+              <div aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden">
+                <label>Azienda<input type="text" name="azienda" tabindex="-1" autocomplete="off"></label>
+              </div>
               <dl class="summary-list mt-4">
                 <div><dt>Tipo di visita</dt><dd data-summary="tipoLabel">—</dd></div>
                 <div><dt>Professionista</dt><dd data-summary="dottore">—</dd></div>
@@ -561,12 +582,25 @@ ${pageHero({
                 <span class="check__box" aria-hidden="true"></span>
                 <span>Ho letto l'<a class="link-inline" href="${base}privacy/">informativa privacy</a> e acconsento al trattamento dei miei dati per la gestione dell'appuntamento. *</span>
               </label>
-              <div class="row mt-4"><button class="btn btn--ghost" type="button" data-prev>Indietro</button><button class="btn" type="submit">Conferma richiesta</button></div>
+              <label class="check mt-3">
+                <input type="checkbox" name="comunicazioni">
+                <span class="check__box" aria-hidden="true"></span>
+                <span>Accetto di ricevere comunicazioni relative al mio appuntamento (promemoria e variazioni).</span>
+              </label>
+              <p class="form-error mt-3" data-form-error hidden role="alert"></p>
+              <div class="row mt-4"><button class="btn btn--ghost" type="button" data-prev>Indietro</button><button class="btn" type="submit" data-submit>Conferma richiesta</button></div>
             </form>
-            <div class="form-success" id="booking-done" hidden>
-              <h2 class="h2">Richiesta inviata.</h2>
-              <p class="lead mt-2 measure-sm" style="margin-inline:auto">La segreteria ti ricontatta entro poche ore per confermare data e orario.</p>
-              <p class="mt-3"><a class="btn btn--ghost" href="${base}">Torna alla home</a></p>
+            <div class="form-success" id="booking-done" hidden tabindex="-1">
+              <h2 class="h2">Richiesta ricevuta.</h2>
+              <p class="lead mt-2 measure-sm" style="margin-inline:auto" data-done-lead></p>
+              <p class="body mt-2 measure-sm" style="margin-inline:auto" data-done-note></p>
+              <p class="mt-4"><span class="label">Codice richiesta</span><br>
+                <span class="h3" style="font-family:var(--font-sans);letter-spacing:.04em" data-done-code></span>
+              </p>
+              <div class="row mt-4" style="justify-content:center">
+                <a class="btn btn--ghost" href="${base}">Torna alla home</a>
+                <a class="btn" href="tel:${attr(site.phoneHref)}">Contatta lo studio</a>
+              </div>
             </div>
           </section>
         </div>
@@ -591,8 +625,8 @@ ${pageHero({
 </section>`;
 
   return layout({
-    title: 'Prenota una visita — Studio Canova, dentista a Milano',
-    description: 'Prenota online la tua visita allo Studio Canova di Milano: scegli il tipo di visita, il professionista e l\'orario che preferisci.',
+    title: 'Prenota una visita — Studio Liddi, dentista a Milano',
+    description: 'Prenota online la tua visita allo Studio Liddi di Milano: scegli il tipo di visita, il professionista e l\'orario che preferisci.',
     path: 'prenota/',
     depth: 1,
     current: 'prenota/',

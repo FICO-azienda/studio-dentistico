@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Studio Canova — design system
+   Studio Liddi — design system
    Palette: bianco / blu navy — contrasto netto, fotografia b/n che si colora all'hover
    Tipografia: Instrument Serif (editorial display) + Inter (interfaccia)
    ========================================================================== */
@@ -833,6 +833,17 @@ a.card-feature:hover h3, a.article-card:hover h3 { color: var(--navy-500); trans
 .summary-list dt { color: var(--stone); flex: 0 1 auto; }
 .summary-list dd { text-align: right; flex: 1 1 auto; }
 .form-note { background: var(--sand); padding: 1.4rem 1.6rem; font-size: var(--t-small); color: var(--ink-soft); }
+.form-error {
+  border-left: 2px solid #b2483c; padding: 0.9rem 1.1rem; background: #fdf6f5;
+  color: #8f3a30; font-size: var(--t-small); line-height: 1.6;
+}
+.form-error a { color: inherit; border-bottom: 1px solid currentColor; }
+.btn.is-busy { pointer-events: none; opacity: 0.65; }
+.btn.is-busy::before {
+  content: ""; width: 12px; height: 12px; margin-right: 0.6em; border-radius: 50%;
+  border: 1px solid currentColor; border-top-color: transparent; animation: spin 0.7s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
 .form-success { text-align: center; padding-block: clamp(3rem, 8vw, 6rem); }
 
 /* -- 24. Footer ----------------------------------------------------------- */
@@ -959,6 +970,96 @@ body.is-leaving .page-veil { opacity: 1; transition-duration: 0.35s; }
 .text-right { text-align: right; }
 @media (max-width: 900px) { .text-right { text-align: left; } }
 .arrow { display: inline-block; width: 1em; flex: none; }
+
+/* -- 27b. Box domande (risposte gia' scritte) ----------------------------- */
+.ask { position: fixed; right: clamp(16px, 2.5vw, 28px); bottom: clamp(16px, 2.5vw, 28px); z-index: 95; }
+.ask__toggle {
+  display: inline-flex; align-items: center; gap: 0.6rem; padding: 0.85rem 1.3rem;
+  background: var(--navy); color: var(--white); border: 1px solid var(--navy); border-radius: 999px;
+  font-size: var(--t-label); text-transform: uppercase; letter-spacing: 0.14em; font-weight: 500;
+  box-shadow: 0 14px 30px -20px rgba(7, 26, 47, 0.7);
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.35s var(--ease-out);
+}
+.ask__toggle:hover { background: var(--white); color: var(--navy); }
+.ask__icon { display: inline-flex; }
+.ask.is-open .ask__toggle { transform: translateY(6px) scale(0.96); opacity: 0; pointer-events: none; }
+
+.ask__panel {
+  position: absolute; right: 0; bottom: 0; width: min(380px, calc(100vw - 32px));
+  max-height: min(560px, calc(100vh - 120px));
+  background: var(--white); border: 1px solid var(--line);
+  box-shadow: 0 30px 60px -40px rgba(7, 26, 47, 0.55);
+  display: flex; flex-direction: column;
+  opacity: 0; transform: translateY(12px); pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.4s var(--ease-out);
+}
+.ask__panel[hidden] { display: none; }
+.ask.is-open .ask__panel { opacity: 1; transform: none; pointer-events: auto; }
+
+.ask__head {
+  display: flex; gap: 1rem; align-items: flex-start; justify-content: space-between;
+  padding: 1.2rem 1.3rem; border-bottom: 1px solid var(--line);
+}
+.ask__title { color: var(--navy); }
+.ask__intro { color: var(--stone-light); margin-top: 0.3rem; }
+.ask__close { color: var(--stone); padding: 0.3rem; transition: color 0.3s ease; flex: none; }
+.ask__close:hover { color: var(--navy); }
+
+.ask__body { overflow-y: auto; flex: 1; -webkit-overflow-scrolling: touch; }
+.ask__search { display: block; padding: 0.9rem 1.3rem 0; }
+.ask__search input {
+  width: 100%; padding: 0.7rem 0; background: transparent; border: 0;
+  border-bottom: 1px solid var(--line); font-size: 0.95rem; border-radius: 0;
+  -webkit-appearance: none; appearance: none;
+}
+.ask__search input:focus { outline: 0; border-color: var(--navy); }
+
+.ask__topics { display: flex; gap: 0.4rem; overflow-x: auto; padding: 0.9rem 1.3rem; scrollbar-width: none; }
+.ask__topics::-webkit-scrollbar { display: none; }
+.ask__topic {
+  flex: none; padding: 0.4em 0.9em; border: 1px solid var(--line); border-radius: 999px;
+  font-size: 0.75rem; color: var(--stone); white-space: nowrap; transition: all 0.3s ease;
+}
+.ask__topic:hover { border-color: var(--navy); color: var(--navy); }
+.ask__topic[aria-pressed="true"] { background: var(--navy); border-color: var(--navy); color: var(--white); }
+
+.ask__questions { border-top: 1px solid var(--line); }
+.ask__questions li { border-bottom: 1px solid var(--line-soft); }
+.ask__questions li[hidden] { display: none; }
+.ask__questions button, .ask__next button {
+  display: flex; width: 100%; gap: 0.8rem; justify-content: space-between; align-items: baseline;
+  padding: 0.95rem 1.3rem; text-align: left; font-size: 0.95rem; line-height: 1.45; color: var(--navy);
+  transition: background-color 0.25s ease, padding-left 0.35s var(--ease-out);
+}
+.ask__questions button:hover, .ask__next button:hover { background: var(--sand); padding-left: 1.6rem; }
+.ask__questions .arrow, .ask__next .arrow { opacity: 0.35; }
+.ask__empty { padding: 1.2rem 1.3rem; color: var(--stone-light); }
+
+.ask__answer { padding: 1.1rem 1.3rem 1.5rem; }
+.ask__answer[hidden] { display: none; }
+.ask__back {
+  font-size: var(--t-label); text-transform: uppercase; letter-spacing: 0.14em;
+  font-weight: 500; color: var(--stone); transition: color 0.3s ease;
+}
+.ask__back:hover { color: var(--navy); }
+.ask__next { margin-top: 1.6rem; border-top: 1px solid var(--line); padding-top: 0.9rem; }
+.ask__next .label { display: block; padding: 0 0 0.3rem; }
+.ask__next button { padding-inline: 0; }
+.ask__next button:hover { background: transparent; padding-left: 0.3rem; }
+
+.ask__foot {
+  border-top: 1px solid var(--line); padding: 1rem 1.3rem;
+  display: flex; flex-direction: column; gap: 0.7rem; background: var(--sand);
+}
+.ask__actions { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.ask__actions .btn { padding: 0.7em 1.1em; }
+
+@media (max-width: 800px) {
+  .ask { bottom: calc(76px + env(safe-area-inset-bottom)); right: 16px; }
+  .ask__panel { max-height: min(70vh, calc(100vh - 180px)); }
+  .ask__toggle-label { display: none; }
+  .ask__toggle { padding: 0.9rem; }
+}
 
 /* sticky CTA mobile */
 .mobile-cta {

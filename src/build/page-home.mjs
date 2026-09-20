@@ -282,7 +282,7 @@ const contactSection = () => `
 
 export const homePage = () =>
   layout({
-    title: 'Studio Canova — Dentista a Milano | Odontoiatria contemporanea',
+    title: 'Studio Liddi — Dentista a Milano | Odontoiatria contemporanea',
     description:
       'Studio dentistico a Milano zona Fiera: implantologia, ortodonzia invisibile, estetica dentale e prevenzione. Prima visita con piano di trattamento e preventivo scritto.',
     path: '',

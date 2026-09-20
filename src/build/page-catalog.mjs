@@ -42,8 +42,8 @@ ${pageHero({
 ${bookingBand(base)}`;
 
   return layout({
-    title: 'Trattamenti — Studio Canova, dentista a Milano',
-    description: 'Le quattro aree cliniche dello Studio Canova a Milano: odontoiatria generale, estetica dentale, implantologia e ortodonzia.',
+    title: 'Trattamenti — Studio Liddi, dentista a Milano',
+    description: 'Le quattro aree cliniche dello Studio Liddi a Milano: odontoiatria generale, estetica dentale, implantologia e ortodonzia.',
     path: 'trattamenti/',
     depth: 1,
     current: 'trattamenti/',
@@ -419,8 +419,8 @@ ${pageHero({
 ${bookingBand(base)}`;
 
   return layout({
-    title: 'Casi clinici — Studio Canova, dentista a Milano',
-    description: 'Casi clinici dello Studio Canova di Milano: estetica dentale, implantologia, ortodonzia e riabilitazioni, con durata del trattamento e medico responsabile.',
+    title: 'Casi clinici — Studio Liddi, dentista a Milano',
+    description: 'Casi clinici dello Studio Liddi di Milano: estetica dentale, implantologia, ortodonzia e riabilitazioni, con durata del trattamento e medico responsabile.',
     path: 'casi-clinici/',
     depth: 1,
     current: 'casi-clinici/',
@@ -460,8 +460,8 @@ ${pageHero({
 ${bookingBand(base)}`;
 
   return layout({
-    title: 'Journal — Studio Canova, dentista a Milano',
-    description: 'Articoli di approfondimento su prevenzione, ortodonzia, implantologia ed estetica dentale, scritti dal team dello Studio Canova di Milano.',
+    title: 'Journal — Studio Liddi, dentista a Milano',
+    description: 'Articoli di approfondimento su prevenzione, ortodonzia, implantologia ed estetica dentale, scritti dal team dello Studio Liddi di Milano.',
     path: 'journal/',
     depth: 1,
     current: 'journal/',
@@ -532,7 +532,7 @@ ${pageHero({
 ${bookingBand(base)}`;
 
   return layout({
-    title: metaTitle(a.title, 'Journal Studio Canova'),
+    title: metaTitle(a.title, 'Journal Studio Liddi'),
     description: a.excerpt,
     path: `journal/${a.slug}/`,
     depth: 2,
@@ -595,9 +595,9 @@ ${pageHero({
 /* ============================================================= 404 ======= */
 export const notFoundPage = () =>
   layout({
-    title: 'Pagina non trovata — Studio Canova',
+    title: 'Pagina non trovata — Studio Liddi',
     description:
-      'La pagina che stai cercando non esiste o è stata spostata. Torna alla home dello Studio Canova, studio odontoiatrico a Milano, oppure prenota direttamente una visita.',
+      'La pagina che stai cercando non esiste o è stata spostata. Torna alla home dello Studio Liddi, studio odontoiatrico a Milano, oppure prenota direttamente una visita.',
     path: '404.html',
     depth: 0,
     baseOverride: site.basePath,

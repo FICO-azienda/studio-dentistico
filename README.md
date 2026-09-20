@@ -1,8 +1,8 @@
-# Studio Canova — sito dello studio odontoiatrico
+# Studio Liddi — sito dello studio odontoiatrico
 
 > ### ⚠️ Progetto dimostrativo — contenuti fittizi
 >
-> **"Studio Canova" non esiste.** È uno studio odontoiatrico inventato, creato come
+> **"Studio Liddi" non esiste.** È uno studio odontoiatrico inventato, creato come
 > esercizio di design e sviluppo front-end. Sono inventati, e non vanno presi per
 > veri né riutilizzati come tali:
 >
@@ -171,6 +171,139 @@ mantengono lo scorrimento nativo, che è già fluido e più prevedibile.
 `node scripts/check.mjs` verifica link interni, file mancanti, `alt`, un solo `h1`
 per pagina, lunghezza dei title, presenza di description e canonical e validità del
 JSON-LD.
+
+---
+
+## Sistema di prenotazione ed email
+
+Il sito e' statico, quindi il form di prenotazione parla con una funzione
+server-side ospitata altrove. Il codice e' gia' scritto e testato: manca solo
+la distribuzione.
+
+### Come funziona
+
+```
+paziente compila il form
+        v
+POST all'endpoint            api/prenotazioni.js
+        v
+anti-spam e limite di frequenza
+        v
+validazione lato server      api/_lib/validate.mjs
+        v
+codice richiesta APT-2026-000124
+        v
+SALVATAGGIO                  api/_lib/store.mjs    <- prima delle email
+        v
+email al paziente + email allo studio              <- se falliscono, la
+        v                                             richiesta resta salva
+schermata di conferma con il codice
+```
+
+L'ordine non e' casuale: la richiesta viene archiviata **prima** di tentare
+l'invio delle email. Se il servizio email cade, i dati del paziente non si
+perdono e l'errore finisce nei log.
+
+### Cosa dice al paziente, e cosa non dice
+
+La richiesta non e' mai presentata come confermata, perche' nessun calendario
+verifica la disponibilita' in tempo reale. L'email e la schermata finale dicono
+"abbiamo ricevuto la tua richiesta" e annunciano che la segreteria ricontattera'
+il paziente. Se l'email non parte, la schermata lo dice invece di promettere un
+riepilogo mai spedito. Se l'invio fallisce del tutto, compare un errore con i
+recapiti dello studio, mai una falsa conferma.
+
+### Distribuzione su Vercel con Resend
+
+1. Importa la repository su Vercel. Il sito statico puo' restare su GitHub
+   Pages: a Vercel serve solo la cartella `api/`.
+2. Su Resend: verifica il dominio e crea una chiave API.
+3. In Vercel, *Settings -> Environment Variables*:
+
+| Variabile | Esempio | Note |
+|---|---|---|
+| `MAIL_PROVIDER` | `resend` | anche `sendgrid`, `postmark`, `console` |
+| `RESEND_API_KEY` | `re_...` | mai nel codice, mai nel front-end |
+| `MAIL_FROM` | `Studio Liddi <prenotazioni@dominio.it>` | dominio verificato su Resend |
+| `BOOKING_NOTIFY_EMAIL` | `segreteria@dominio.it` | riceve le notifiche interne |
+| `ALLOWED_ORIGINS` | `https://fico-azienda.github.io` | separati da virgola |
+| `BOOKING_STORE` | `log` | `kv` o `http` per archiviare altrove |
+| `RATELIMIT_MAX` | `5` | richieste per IP ogni 10 minuti |
+
+4. In `content/site.json` imposta:
+
+```json
+"booking": { "endpoint": "https://IL-TUO-PROGETTO.vercel.app/api/prenotazioni", "mode": "live" }
+```
+
+5. `npm run build` e push: il form inizia a inviare davvero.
+
+Finche' `mode` resta `"demo"` il form non invia nulla e la schermata finale lo
+dichiara apertamente. E' una scelta: mostrare una conferma finta a un paziente
+che crede di aver prenotato sarebbe peggio di un form disattivato.
+
+### Archivio delle richieste
+
+Ogni richiesta produce un record con `booking_id`, dati del paziente, tipo di
+visita, data e ora richieste, seconda preferenza, messaggio, `status`
+(`PENDING` all'inizio, poi `CONFIRMED`, `RESCHEDULED`, `CANCELLED`,
+`COMPLETED`) e `created_at`.
+
+Senza database configurato il record viene comunque scritto come riga JSON nei
+log della piattaforma, recuperabile in qualsiasi momento. Con `BOOKING_STORE=kv`
+finisce su Vercel KV / Upstash; con `http` viene inoltrato a un endpoint tuo.
+
+### Sicurezza e privacy
+
+Chiavi solo lato server, validazione e sanitizzazione server-side, campo esca
+invisibile per i bot, tempo minimo di compilazione, blocco dei link nel testo,
+limite di frequenza per IP e deduplica dei doppi invii — anche simultanei. Nelle
+email finisce solo quanto serve a fissare un appuntamento; il campo messaggio,
+scritto dal paziente, viene neutralizzato prima di entrare nell'HTML.
+
+### Prove
+
+```bash
+npm test                 # 25 test sul flusso completo
+npm run dev:api          # API locale su http://localhost:4174
+```
+
+I test coprono gli scenari richiesti: prenotazione normale, con e senza
+messaggio, senza seconda preferenza, email non valida, data mancante o non
+valida, guasto del servizio email, invio da mobile, doppio click. Verificano
+anche che l'email al paziente non usi mai la parola "confermato" per giorno e
+orario e che l'HTML inserito nei campi non venga eseguito.
+
+Per vedere le email senza spedirle:
+
+```bash
+npm run build && node -e "…"   # vedi scripts/ oppure apri dist/_email/*.html
+```
+
+---
+
+## Box domande
+
+In basso a destra, su ogni pagina, c'e' un pannello di domande frequenti.
+**Non contiene intelligenza artificiale**: domande e risposte sono scritte a
+mano in `content/assistant.json` e finiscono nell'HTML. La ricerca filtra per
+parole contenute nel testo, non interpreta nulla.
+
+Ogni voce ha un argomento, una risposta, i collegamenti alle pagine pertinenti e
+le domande correlate. Per aggiungerne una basta un oggetto nel file:
+
+```json
+{
+  "id": "nuova-domanda",
+  "topic": "costi",
+  "q": "La domanda",
+  "a": "La risposta.",
+  "links": [{ "label": "Vai alla pagina", "href": "trattamenti/" }],
+  "next": ["altra-domanda"]
+}
+```
+
+`href` accetta un percorso del sito, oppure `tel` e `wa` per telefono e WhatsApp.
 
 ---
 

@@ -1,4 +1,4 @@
-import { site, NAV, rel, esc, attr, arrow, treatments, imgTag, catPath } from './utils.mjs';
+import { site, NAV, rel, esc, attr, arrow, treatments, imgTag, catPath, assistant } from './utils.mjs';
 
 /* -- dati strutturati ----------------------------------------------------- */
 export const dentistLd = () => ({
@@ -202,6 +202,8 @@ const footer = (base) => `
   </div>
 </footer>
 
+${askBox(base)}
+
 <div class="mobile-cta" aria-label="Azioni rapide">
   <div class="mobile-cta__row">
     <a class="btn btn--sm" href="${base}prenota/">Prenota</a>
@@ -211,6 +213,99 @@ const footer = (base) => `
     </a>
   </div>
 </div>`;
+
+/* -- box domande ---------------------------------------------------------- */
+/**
+ * Risposte gia' scritte, nessun modello linguistico: ogni domanda e la sua
+ * risposta stanno in content/assistant.json e finiscono nell'HTML. La ricerca
+ * filtra per parole, non interpreta nulla.
+ */
+const askBox = (base) => {
+  const href = (h) =>
+    h === 'tel' ? `tel:${attr(site.phoneHref)}` : h === 'wa' ? `https://wa.me/${attr(site.whatsappHref)}` : `${base}${h}`;
+
+  return `
+<div class="ask" data-ask>
+  <button class="ask__toggle" type="button" aria-expanded="false" aria-controls="ask-panel">
+    <span class="ask__icon" aria-hidden="true">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3 21l2.2-5.2A8.5 8.5 0 1 1 21 11.5Z"/></svg>
+    </span>
+    <span class="ask__toggle-label">Domande</span>
+  </button>
+
+  <div class="ask__panel" id="ask-panel" hidden>
+    <div class="ask__head">
+      <div>
+        <p class="ask__title h4">${esc(assistant.title)}</p>
+        <p class="ask__intro small">${esc(assistant.intro)}</p>
+      </div>
+      <button class="ask__close" type="button" aria-label="Chiudi">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"/></svg>
+      </button>
+    </div>
+
+    <div class="ask__body">
+      <div class="ask__list" data-ask-list>
+        <label class="ask__search">
+          <span class="sr-only">Cerca tra le domande</span>
+          <input type="search" placeholder="${attr(assistant.placeholder)}" data-ask-search autocomplete="off">
+        </label>
+        <div class="ask__topics" role="group" aria-label="Argomenti">
+          <button class="ask__topic" type="button" data-topic="all" aria-pressed="true">Tutte</button>
+          ${assistant.topics.map((t) => `<button class="ask__topic" type="button" data-topic="${attr(t.id)}" aria-pressed="false">${esc(t.label)}</button>`).join('')}
+        </div>
+        <ul class="ask__questions">
+          ${assistant.items
+            .map(
+              (i) => `<li data-topic="${attr(i.topic)}" data-text="${attr((i.q + ' ' + i.a).toLowerCase())}">
+            <button type="button" data-open="${attr(i.id)}">${esc(i.q)} ${arrow}</button>
+          </li>`
+            )
+            .join('')}
+        </ul>
+        <p class="ask__empty small" data-ask-empty hidden>${esc(assistant.emptyLabel)}</p>
+      </div>
+
+      ${assistant.items
+        .map(
+          (i) => `<article class="ask__answer" id="ask-${attr(i.id)}" hidden tabindex="-1">
+        <button class="ask__back" type="button" data-ask-back>&#8592; Tutte le domande</button>
+        <h3 class="h4 mt-2">${esc(i.q)}</h3>
+        <p class="body mt-2">${esc(i.a)}</p>
+        ${
+          i.links && i.links.length
+            ? `<p class="mt-3">${i.links.map((l) => `<a class="link-u" href="${href(l.href)}">${esc(l.label)} ${arrow}</a>`).join(' ')}</p>`
+            : ''
+        }
+        ${
+          i.next && i.next.length
+            ? `<div class="ask__next">
+          <span class="label">Altre domande</span>
+          <ul>${i.next
+            .map((n) => {
+              const t = assistant.items.find((x) => x.id === n);
+              return t ? `<li><button type="button" data-open="${attr(t.id)}">${esc(t.q)} ${arrow}</button></li>` : '';
+            })
+            .join('')}</ul>
+        </div>`
+            : ''
+        }
+      </article>`
+        )
+        .join('')}
+    </div>
+
+    <div class="ask__foot">
+      <span class="label">${esc(assistant.footerLabel)}</span>
+      <div class="ask__actions">
+        <a class="btn btn--sm" href="${base}prenota/">Prenota</a>
+        <a class="btn btn--sm btn--ghost" href="tel:${attr(site.phoneHref)}">Chiama</a>
+        <a class="btn btn--sm btn--ghost" href="https://wa.me/${attr(site.whatsappHref)}" target="_blank" rel="noopener">WhatsApp</a>
+      </div>
+    </div>
+  </div>
+</div>`;
+};
 
 /* -- layout --------------------------------------------------------------- */
 export function layout({

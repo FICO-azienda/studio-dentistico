@@ -1,5 +1,5 @@
 /* =============================================================================
-   Studio Canova — interazioni
+   Studio Liddi — interazioni
    Vanilla JS, nessuna dipendenza. Tutto degrada con grazia senza JS.
    ========================================================================== */
 (() => {
@@ -373,7 +373,8 @@
   };
 
   const forms = () => {
-    $$('form[data-validate]').forEach((form) => {
+    // il form di prenotazione ha un invio proprio (bookingSubmit)
+    $$('form[data-validate]:not([data-booking])').forEach((form) => {
       form.setAttribute('novalidate', '');
       $$('input, textarea, select', form).forEach((el) => {
         el.addEventListener('blur', () => validateField(el));
@@ -397,7 +398,8 @@
     if (!wz) return;
     const panels = $$('.wizard__panel', wz);
     const steps = $$('.wizard__steps li', wz);
-    const state = { tipo: '', tipoLabel: '', dottore: 'Nessuna preferenza', giorno: '', ora: '' };
+    const state = { tipo: '', tipoLabel: '', dottore: 'Nessuna preferenza', giorno: '', giornoLabel: '', ora: '' };
+    const apertoIl = Date.now();
     let idx = 0;
 
     let started = false;
@@ -415,9 +417,12 @@
     };
 
     const syncSummary = () => {
-      $$('[data-summary]', wz).forEach((el) => { el.textContent = state[el.dataset.summary] || '—'; });
+      $$('[data-summary]', wz).forEach((el) => {
+        const k = el.dataset.summary === 'giorno' ? 'giornoLabel' : el.dataset.summary;
+        el.textContent = state[k] || '—';
+      });
       const hidden = $('[data-booking-detail]', wz);
-      if (hidden) hidden.value = `${state.tipoLabel} · ${state.dottore} · ${state.giorno} ${state.ora}`;
+      if (hidden) hidden.value = `${state.tipoLabel} · ${state.dottore} · ${state.giornoLabel} ${state.ora}`;
     };
 
     const syncNext = () => {
@@ -439,7 +444,8 @@
         const label = d.toLocaleDateString('it-IT', { weekday: 'short' });
         const month = d.toLocaleDateString('it-IT', { month: 'short' });
         const full = d.toLocaleDateString('it-IT', { weekday: 'long', day: 'numeric', month: 'long' });
-        out.push(`<button class="day" type="button" data-set="giorno" data-value="${full}" aria-pressed="false">
+        const iso = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+        out.push(`<button class="day" type="button" data-set="giorno" data-value="${iso}" data-label="${full}" aria-pressed="false">
           <span>${label}</span><strong>${d.getDate()}</strong><span>${month}</span>
         </button>`);
       }
@@ -453,13 +459,235 @@
         $$(`[data-set="${key}"]`, scope).forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
         state[key] = btn.dataset.value;
         if (key === 'tipo') state.tipoLabel = btn.dataset.label || btn.dataset.value;
+        if (key === 'giorno') state.giornoLabel = btn.dataset.label || btn.dataset.value;
         syncSummary(); syncNext();
       });
     });
+    bookingSubmit(wz, state, apertoIl);
+
     $$('[data-next]', wz).forEach((b) => b.addEventListener('click', () => show(idx + 1)));
     $$('[data-prev]', wz).forEach((b) => b.addEventListener('click', () => show(idx - 1)));
     show(0);
     started = true;
+  };
+
+  /* -- Invio della richiesta di appuntamento -------------------------------*/
+  const bookingSubmit = (wz, state, apertoIl) => {
+    const form = $('form[data-booking]', wz);
+    if (!form) return;
+    form.setAttribute('novalidate', '');
+    $$('input, textarea, select', form).forEach((el) => {
+      el.addEventListener('blur', () => validateField(el));
+      el.addEventListener('input', () => {
+        const f = el.closest('.field') || el.closest('.check');
+        if (f?.classList.contains('is-invalid')) validateField(el);
+      });
+    });
+    const done = $('#booking-done', wz);
+    const box = $('[data-form-error]', form);
+    const btn = $('[data-submit]', form);
+    const endpoint = wz.dataset.endpoint || '';
+    const demo = !endpoint || wz.dataset.mode !== 'live';
+    let inviando = false;
+
+    const errore = (html) => {
+      if (!box) return;
+      box.innerHTML = html;
+      box.hidden = false;
+      box.scrollIntoView({ behavior: reduced() ? 'auto' : 'smooth', block: 'center' });
+    };
+
+    const mostraConferma = ({ bookingId, emailSent }) => {
+      const lead = $('[data-done-lead]', done);
+      const note = $('[data-done-note]', done);
+      const code = $('[data-done-code]', done);
+      const nome = form.nome.value.trim();
+      if (lead) lead.textContent = `Grazie, ${nome}. Abbiamo ricevuto la tua richiesta di appuntamento per ${state.giornoLabel} alle ${state.ora}.`;
+      if (note) {
+        note.textContent = demo
+          ? 'Modalità dimostrativa: nessuna email è stata inviata e nessun appuntamento è stato registrato.'
+          : emailSent
+            ? 'Ti abbiamo inviato una email con il riepilogo. Il nostro team ti contatterà per confermare definitivamente la disponibilità.'
+            : 'Non siamo riusciti a inviarti l\'email di riepilogo, ma la richiesta è registrata. Il nostro team ti contatterà per confermare la disponibilità.';
+      }
+      if (code) code.textContent = bookingId || '—';
+      form.hidden = true;
+      done.hidden = false;
+      done.focus({ preventScroll: true });
+      done.scrollIntoView({ behavior: reduced() ? 'auto' : 'smooth', block: 'center' });
+    };
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (inviando) return; // doppio click: il secondo non parte nemmeno
+      if (box) box.hidden = true;
+
+      const campi = $$('input, textarea, select', form).filter((el) => !el.disabled);
+      const invalidi = campi.filter((el) => !validateField(el));
+      if (invalidi.length) { invalidi[0].focus(); return; }
+      if (!state.giorno || !state.ora) {
+        errore('Scegli giorno e orario prima di inviare la richiesta.');
+        return;
+      }
+
+      inviando = true;
+      btn.classList.add('is-busy');
+      btn.disabled = true;
+      const etichetta = btn.textContent;
+      btn.textContent = 'Invio in corso';
+
+      const payload = {
+        nome: form.nome.value,
+        cognome: form.cognome.value,
+        email: form.email.value,
+        telefono: form.telefono.value,
+        tipoVisita: state.tipo,
+        dottore: state.dottore,
+        dataRichiesta: state.giorno,
+        oraRichiesta: state.ora,
+        secondaData: form.secondaData?.value || '',
+        secondaOra: form.secondaOra?.value || '',
+        messaggio: form.messaggio?.value || '',
+        privacy: form.privacy.checked,
+        comunicazioni: form.comunicazioni?.checked || false,
+        azienda: form.azienda?.value || '',
+        startedAt: apertoIl
+      };
+
+      const ripristina = () => {
+        inviando = false;
+        btn.classList.remove('is-busy');
+        btn.disabled = false;
+        btn.textContent = etichetta;
+      };
+
+      if (demo) {
+        // nessun endpoint configurato: si mostra la conferma dicendo chiaramente
+        // che è una dimostrazione, mai una finta conferma
+        setTimeout(() => {
+          ripristina();
+          mostraConferma({ bookingId: 'APT-DEMO-000000', emailSent: false });
+        }, 600);
+        return;
+      }
+
+      try {
+        const res = await fetch(endpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json().catch(() => ({}));
+
+        if (res.status === 422 && data.fields) {
+          ripristina();
+          Object.entries(data.fields).forEach(([nome, msg]) => {
+            const el = form.elements[nome];
+            const field = el?.closest('.field') || el?.closest('.check');
+            if (field) {
+              field.classList.add('is-invalid');
+              const e2 = field.querySelector('.field__error');
+              if (e2) e2.textContent = msg;
+            }
+          });
+          errore(data.message || 'Alcuni dati non sono validi.');
+          return;
+        }
+        if (!res.ok || !data.ok) {
+          ripristina();
+          errore(
+            (data.message || 'Non siamo riusciti a inviare la richiesta. Riprova oppure contatta direttamente lo studio.') +
+              ' <a href="tel:' + (form.dataset.phone || '') + '">Chiama lo studio</a>'
+          );
+          return;
+        }
+        ripristina();
+        mostraConferma({ bookingId: data.bookingId, emailSent: data.emailSent !== false });
+      } catch {
+        ripristina();
+        errore('Non siamo riusciti a inviare la richiesta. Controlla la connessione, riprova oppure contatta direttamente lo studio.');
+      }
+    });
+  };
+
+  /* -- Box domande: elenco, filtro e risposte gia' scritte -----------------*/
+  const askBox = () => {
+    const box = $('[data-ask]');
+    if (!box) return;
+    const panel = $('.ask__panel', box);
+    const toggle = $('.ask__toggle', box);
+    const lista = $('[data-ask-list]', box);
+    const ricerca = $('[data-ask-search]', box);
+    const vuoto = $('[data-ask-empty]', box);
+    const voci = $$('.ask__questions li', box);
+    const risposte = $$('.ask__answer', box);
+    const topics = $$('.ask__topic', box);
+    let topic = 'all';
+
+    const mostraElenco = () => {
+      risposte.forEach((r) => (r.hidden = true));
+      lista.hidden = false;
+      box.querySelector('.ask__body').scrollTop = 0;
+    };
+
+    const apri = (id) => {
+      const target = $('#ask-' + CSS.escape(id), box);
+      if (!target) return;
+      lista.hidden = true;
+      risposte.forEach((r) => (r.hidden = r !== target));
+      box.querySelector('.ask__body').scrollTop = 0;
+      target.focus({ preventScroll: true });
+    };
+
+    const filtra = () => {
+      const q = (ricerca?.value || '').trim().toLowerCase();
+      let visibili = 0;
+      voci.forEach((li) => {
+        const okTopic = topic === 'all' || li.dataset.topic === topic;
+        const okTesto = !q || li.dataset.text.includes(q);
+        li.hidden = !(okTopic && okTesto);
+        if (!li.hidden) visibili++;
+      });
+      if (vuoto) vuoto.hidden = visibili > 0;
+    };
+
+    const apriPannello = () => {
+      panel.hidden = false;
+      requestAnimationFrame(() => box.classList.add('is-open'));
+      toggle.setAttribute('aria-expanded', 'true');
+      setTimeout(() => ricerca?.focus({ preventScroll: true }), 260);
+    };
+    const chiudiPannello = () => {
+      box.classList.remove('is-open');
+      toggle.setAttribute('aria-expanded', 'false');
+      setTimeout(() => { panel.hidden = true; }, 320);
+      toggle.focus({ preventScroll: true });
+    };
+
+    toggle.addEventListener('click', apriPannello);
+    $('.ask__close', box)?.addEventListener('click', chiudiPannello);
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && box.classList.contains('is-open')) chiudiPannello();
+    });
+    document.addEventListener('click', (e) => {
+      if (box.classList.contains('is-open') && !box.contains(e.target)) chiudiPannello();
+    });
+
+    box.addEventListener('click', (e) => {
+      const apriBtn = e.target.closest('[data-open]');
+      if (apriBtn) { apri(apriBtn.dataset.open); return; }
+      if (e.target.closest('[data-ask-back]')) mostraElenco();
+    });
+
+    topics.forEach((t) => {
+      t.addEventListener('click', () => {
+        topic = t.dataset.topic;
+        topics.forEach((x) => x.setAttribute('aria-pressed', String(x === t)));
+        filtra();
+      });
+    });
+    ricerca?.addEventListener('input', filtra);
+    filtra();
   };
 
   /* -- Transizione di pagina ----------------------------------------------*/
@@ -484,7 +712,7 @@
   /* -- Avvio ---------------------------------------------------------------*/
   const init = () => {
     year(); header(); sectionNav(); reveals(); parallax(); quicknav(); rails();
-    faq(); beforeAfter(); filters(); forms(); wizard(); transitions(); smoothScroll();
+    faq(); beforeAfter(); filters(); forms(); wizard(); askBox(); transitions(); smoothScroll();
   };
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);

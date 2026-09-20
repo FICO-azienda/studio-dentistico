@@ -125,37 +125,8 @@ const header = (base, current, lang, asset, altFor) => `
 </div>`;
 
 /* -- barra di sezione ----------------------------------------------------- */
-/** ancore delle sezioni della homepage, per chiave di navigazione */
-export const ANCHORS = {
-  studio: 'studio',
-  treatments: 'trattamenti',
-  technologies: 'tecnologie',
-  team: 'team',
-  firstVisit: 'prima-visita',
-  cases: 'casi',
-  journal: 'journal',
-  contact: 'contatti'
-};
-
-/**
- * Navigazione editoriale di sezione, sottile e sticky sotto l'header.
- * In homepage punta alle ancore con scroll morbido e voce attiva durante lo
- * scorrimento; nelle pagine interne porta alle pagine corrispondenti.
- */
-const subnav = (base, current, isHome) => {
-  // solo in homepage: nelle pagine interne ripeterebbe il menu dell'header
-  if (!isHome) return '<div class="header-spacer" aria-hidden="true"></div>';
-  return `
-<nav class="subnav" aria-label="${attr(t('nav.sections'))}" data-scrollspy>
-  <div class="wrap" style="height:100%">
-    <div class="subnav__track">
-      ${nav()
-        .map((n) => `<a class="subnav__link" href="#${ANCHORS[n.key]}" data-spy="${ANCHORS[n.key]}">${esc(n.label)}</a>`)
-        .join('\n      ')}
-    </div>
-  </div>
-</nav>`;
-};
+// la barra di sezione e' sparita con le sezioni: ora ogni area ha la sua pagina
+const subnav = () => '<div class="header-spacer" aria-hidden="true"></div>';
 
 /* -- footer --------------------------------------------------------------- */
 const footer = (base) => `
@@ -283,11 +254,11 @@ ${LANGS.filter((l) => l !== lang).map((l) => `<meta property="og:locale:alternat
 ${preload.map((p) => `<link rel="preload" as="image" href="${asset}images/${p}-1280.webp" imagesrcset="${asset}images/${p}-640.webp 640w, ${asset}images/${p}-1280.webp 1280w, ${asset}images/${p}-1920.webp 1920w" imagesizes="70vw" fetchpriority="high">`).join('\n')}
 <script type="application/ld+json">${JSON.stringify(graph)}</script>
 </head>
-<body class="${bodyClass}${isHome ? '' : ' no-subnav'}">
+<body class="${bodyClass} no-subnav">
 <div class="page-veil" aria-hidden="true"></div>
 <a class="skip-link" href="#main">${esc(t('nav.skip'))}</a>
 ${header(base, current, lang, asset, altFor)}
-${subnav(base, current, isHome)}
+${subnav()}
 <main id="main">
 ${main}
 </main>

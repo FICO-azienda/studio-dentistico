@@ -160,6 +160,45 @@ const UI = {
   'home.quick.team': ['12 professionisti', '12 professionals'],
   'home.quick.book': ['Online, 2 minuti', 'Online, 2 minutes'],
 
+  /* descrizione di ogni voce: la home si legge senza dover scorrere oltre */
+  'home.quick.d.treatments': [
+    'Quattro aree di cura, sedici trattamenti: dalla prevenzione alla riabilitazione completa, spiegati senza gergo.',
+    'Four areas of care, sixteen treatments: from prevention to full rehabilitation, explained without jargon.'
+  ],
+  'home.quick.d.studio': [
+    'A pochi passi dalla Fiera: ambienti curati, percorsi chiari e sterilizzazione a vista.',
+    'A short walk from the Fiera district: considered spaces, clear routes and sterilisation in plain sight.'
+  ],
+  'home.quick.d.team': [
+    'Dodici professionisti e un unico piano di cura condiviso: chi ti visita è chi ti segue.',
+    'Twelve professionals and a single shared treatment plan: the person who examines you is the person who follows you.'
+  ],
+  'home.quick.d.cases': [
+    'Prima e dopo, con i tempi e il numero di sedute dichiarati. Ogni bocca è diversa dalle altre.',
+    'Before and after, with the timescales and number of appointments stated. Every mouth is different.'
+  ],
+  'home.quick.d.book': [
+    'Scegli il motivo, rispondi a poche domande e proponi tu data e ora. Nessun pagamento anticipato.',
+    'Choose the reason, answer a few questions and suggest a date and time yourself. No payment up front.'
+  ],
+
+  /* aree di cura in homepage */
+  'home.areas.label': ['Aree di cura', 'Areas of care'],
+  'home.areas.t1': ['Quattro aree.', 'Four areas.'],
+  'home.areas.t2': ['Una sola cartella clinica.', 'One single clinical record.'],
+  'home.areas.aside': [
+    'Ogni area ha la sua pagina: cosa comprende, come si svolge, chi se ne occupa.',
+    'Each area has its own page: what it covers, how it works, who looks after it.'
+  ],
+  'tr.allLabel': ['Tutti i trattamenti', 'All treatments'],
+  'tr.allT1': ['Sedici trattamenti,', 'Sixteen treatments,'],
+  'tr.allT2': ['tutti in un elenco.', 'all in one list.'],
+  'tr.allAside': [
+    'Se sai già cosa cerchi, qui c’è tutto l’elenco senza passare dalle aree.',
+    'If you already know what you are looking for, the full list is here without going through the areas.'
+  ],
+  'common.discoverArea': ['Scopri l’area', 'Explore the area'],
+
   /* sezioni della home */
   'home.treatments.label': ['Trattamenti', 'Treatments'],
   'home.treatments.t1': ['Soluzioni personalizzate', 'Tailored solutions'],

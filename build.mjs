@@ -13,7 +13,7 @@ import { ROOT, site, team, treatments, journal, write, applyLang, PATH } from '.
 import { LANGS, DEFAULT_LANG, ROUTES, altPath, setLang } from './src/build/i18n.mjs';
 import { homePage } from './src/build/page-home.mjs';
 import { studioPage, teamPage, personPage, techPage, firstVisitPage, contactPage, bookingPage } from './src/build/page-core.mjs';
-import { treatmentsIndex, treatmentPage, casesPage, journalIndex, articlePage, legalPage, notFoundPage } from './src/build/page-catalog.mjs';
+import { treatmentsIndex, categoryPage, treatmentPage, casesPage, journalIndex, articlePage, legalPage, notFoundPage } from './src/build/page-catalog.mjs';
 import { legalPages } from './src/build/legal.mjs';
 
 const OUT = path.join(ROOT, 'dist');
@@ -47,6 +47,7 @@ for (const lang of LANGS) {
   add(R.team, teamPage());
   team.forEach((p) => add(`${R.team}/${p.slug}`, personPage(p)));
   add(R.treatments, treatmentsIndex());
+  treatments.categories.forEach((c) => add(`${R.treatments}/${c.slug}`, categoryPage(c)));
   treatments.items.forEach((x) => add(`${R.treatments}/${x.slug}`, treatmentPage(x)));
   add(R.technologies, techPage());
   add(R.cases, casesPage());

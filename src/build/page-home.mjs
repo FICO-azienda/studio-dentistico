@@ -1,16 +1,16 @@
-import { site, treatments, technologies, team, cases, esc, attr, arrow, imgTag, figure, lines, catPath, treatmentPath, PATH } from './utils.mjs';
+import { site, treatments, esc, attr, arrow, imgTag, figure, lines, catPath, PATH } from './utils.mjs';
 import { t } from './i18n.mjs';
 import { layout, dentistLd } from './layout.mjs';
-import { sectionHead, personCard, bookingBand, testimonials, journalPreview } from './components.mjs';
+import { sectionHead, bookingBand } from './components.mjs';
 
 const base = '';
 
 const quickItems = () => [
-  { label: t('nav.treatments'), href: PATH.treatments, meta: t('home.quick.treatments') },
-  { label: t('home.studio.label'), href: PATH.studio, meta: t('home.quick.studio') },
-  { label: t('home.team.label'), href: PATH.team, meta: t('home.quick.team') },
-  { label: t('nav.cases'), href: PATH.cases, meta: t('common.results') },
-  { label: t('nav.bookShort'), href: PATH.book, meta: t('home.quick.book') }
+  { label: t('nav.treatments'), href: PATH.treatments, meta: t('home.quick.treatments'), desc: t('home.quick.d.treatments') },
+  { label: t('home.studio.label'), href: PATH.studio, meta: t('home.quick.studio'), desc: t('home.quick.d.studio') },
+  { label: t('home.team.label'), href: PATH.team, meta: t('home.quick.team'), desc: t('home.quick.d.team') },
+  { label: t('nav.cases'), href: PATH.cases, meta: t('common.results'), desc: t('home.quick.d.cases') },
+  { label: t('nav.bookShort'), href: PATH.book, meta: t('home.quick.book'), desc: t('home.quick.d.book') }
 ];
 
 const hero = () => `
@@ -59,7 +59,10 @@ const quicknav = () => `
       ${quickItems().map(
         (q, i) => `<a class="quicknav__item" href="${q.href}">
         <span class="num" style="color:var(--stone-light)">0${i + 1}</span>
-        <span class="h3">${esc(q.label)}</span>
+        <span class="quicknav__text">
+          <span class="h3">${esc(q.label)}</span>
+          <span class="quicknav__desc">${esc(q.desc)}</span>
+        </span>
         <span class="row"><span class="label">${esc(q.meta)}</span> ${arrow}</span>
       </a>`
       ).join('')}
@@ -67,184 +70,39 @@ const quicknav = () => `
   </div>
 </section>`;
 
-const treatmentsSection = () => `
+/**
+ * Le quattro aree di cura: una fascia a tutta larghezza ciascuna, che porta
+ * alla pagina dell'area. La home descrive, le pagine approfondiscono.
+ */
+const areasSection = () => `
 <section class="section" id="trattamenti">
   <div class="wrap">
     ${sectionHead({
       num: '01',
-      label: t('home.treatments.label'),
-      title: lines([t('home.treatments.t1'), `<em class="serif-italic">${t('home.treatments.t2')}</em>`]),
-      aside: t('home.treatments.aside'),
+      label: t('home.areas.label'),
+      title: lines([t('home.areas.t1'), `<em class="serif-italic">${t('home.areas.t2')}</em>`]),
+      aside: t('home.areas.aside'),
       link: { href: PATH.treatments, label: t('common.allTreatments') },
       base
     })}
-    <div class="team-grid team-grid--2">
-      ${treatments.categories
-        .map(
-          (c) => `<a class="person reveal" href="${catPath(c)}">
-        <div class="media media--ar media__zoom" style="--ar:4/3">
-          ${imgTag(c.image, { base, sizes: '(max-width: 760px) 100vw, 46vw' })}
-        </div>
-        <div class="person__info">
-          <div class="row row--between" style="gap:1rem">
-            <h3 class="h3">${esc(c.title)}</h3>
-            <span class="num" style="color:var(--stone-light)">${esc(c.num)}</span>
-          </div>
-          <p class="body mt-1 measure-sm">${esc(c.lead)}</p>
-          <p class="mt-3"><span class="link-u">${esc(t('common.discover'))} ${arrow}</span></p>
-        </div>
-      </a>`
-        )
-        .join('')}
-    </div>
   </div>
-</section>`;
-
-const studioSection = () => `
-<section class="section" id="studio">
-  <div class="wrap">
-    ${sectionHead({
-      num: '02',
-      label: t('home.studio.label'),
-      title: lines([t('home.studio.t1'), `<em class="serif-italic">${t('home.studio.t2')}</em>`]),
-      aside: t('home.studio.aside'),
-      link: { href: PATH.studio, label: t('common.discoverStudio') },
-      base
-    })}
-    <div class="grid">
-      <div class="col-7">
-        ${figure('studio-interno', { base, ar: '16/10', className: 'media__zoom', sizes: '(max-width: 1000px) 100vw, 58vw' })}
+  <div class="arealanes">
+    ${treatments.categories
+      .map(
+        (c) => `<a class="arealane reveal" href="${catPath(c)}">
+      <div class="arealane__media">${imgTag(c.image, { base, sizes: '100vw' })}</div>
+      <div class="wrap arealane__inner">
+        <span class="num arealane__num">${esc(c.num)}</span>
+        <h3 class="h1 arealane__title">${esc(c.title)}</h3>
+        <p class="arealane__lead">${esc(c.lead)}</p>
+        <span class="arealane__meta">
+          <span class="label">${c.items.length} ${esc(t('cat.treatmentsCount'))}</span>
+          <span class="link-u">${esc(t('common.discoverArea'))} ${arrow}</span>
+        </span>
       </div>
-      <div class="col-4 start-9" style="grid-column:9 / span 4">
-        <p class="lead reveal">${esc(t('home.studio.lead'))}</p>
-        <p class="mt-4 reveal" data-delay="1"><a class="btn btn--ghost" href="${PATH.studio}">${esc(t('common.discoverStudio'))}</a></p>
-      </div>
-    </div>
-  </div>
-</section>`;
-
-const techSection = () => `
-<section class="section dark" id="tecnologie">
-  <div class="wrap">
-    ${sectionHead({
-      num: '03',
-      label: t('home.tech.label'),
-      title: lines([t('home.tech.t1'), `<em class="serif-italic">${t('home.tech.t2')}</em>`]),
-      aside: t('home.tech.aside'),
-      link: { href: PATH.technologies, label: t('common.discoverTech') },
-      base
-    })}
-    <div class="team-grid team-grid--3">
-      ${technologies
-        .slice(0, 3)
-        .map(
-          (tec) => `<a class="person reveal" href="${PATH.technologies}#${tec.slug}">
-        <div class="media media--ar media--duo media__zoom" style="--ar:3/4">
-          ${imgTag(tec.image, { base, sizes: '(max-width: 560px) 100vw, (max-width: 1000px) 50vw, 33vw' })}
-          <div class="person__overlay">
-            <p>${esc(tec.text)}</p>
-            <span class="link-u">${esc(t('common.discoverTechnology'))} ${arrow}</span>
-          </div>
-        </div>
-        <div class="person__info">
-          <div class="row row--between" style="gap:1rem">
-            <h3 class="h4">${esc(tec.title)}</h3>
-            <span class="num" style="color:var(--navy-soft)">${esc(tec.num)}</span>
-          </div>
-          <p class="person__role">${esc(tec.kicker)}</p>
-        </div>
-      </a>`
-        )
-        .join('')}
-    </div>
-    <p class="mt-4 reveal"><a class="btn btn--outline-light" href="${PATH.technologies}">${esc(t('common.discoverTech'))}</a></p>
-  </div>
-</section>`;
-
-const teamSection = () => `
-<section class="section" id="team">
-  <div class="wrap">
-    ${sectionHead({
-      num: '04',
-      label: t('home.team.label'),
-      title: lines([t('home.team.t1'), `<em class="serif-italic">${t('home.team.t2')}</em>`]),
-      aside: t('home.team.aside'),
-      link: { href: PATH.team, label: t('common.meetTeam') },
-      base
-    })}
-    <div class="team-grid">
-      ${team.filter((p) => p.featured).map((p) => personCard(p, base)).join('')}
-    </div>
-  </div>
-</section>`;
-
-// valutati a ogni pagina: il dizionario dipende dalla lingua corrente
-const steps = () => [
-  { t: t('steps.1.t'), d: t('steps.1.d') },
-  { t: t('steps.2.t'), d: t('steps.2.d') },
-  { t: t('steps.3.t'), d: t('steps.3.d') },
-  { t: t('steps.4.t'), d: t('steps.4.d') }
-];
-
-const firstVisit = () => `
-<section class="section dark" id="prima-visita">
-  <div class="wrap">
-    ${sectionHead({
-      num: '05',
-      label: t('home.firstVisit.label'),
-      title: lines([t('home.firstVisit.t1')]),
-      aside: t('home.firstVisit.aside'),
-      link: { href: PATH.firstVisit, label: t('common.howItWorks') },
-      base
-    })}
-    <div class="steps">
-      ${steps().map(
-        (s, i) => `<article class="step">
-        <span class="step__num">0${i + 1}</span>
-        <h3 class="h4">${esc(s.t)}</h3>
-      </article>`
-      ).join('')}
-    </div>
-    <div class="row mt-5 reveal">
-      <a class="btn" href="${PATH.book}">${esc(t('home.firstVisit.cta'))}</a>
-      <a class="link-u" href="${PATH.firstVisit}">${esc(t('home.firstVisit.what'))} ${arrow}</a>
-    </div>
-  </div>
-</section>`;
-
-const casesPreview = () => `
-<section class="section" id="casi">
-  <div class="wrap">
-    ${sectionHead({
-      label: t('home.cases.label'),
-      title: lines([t('home.cases.t1')]),
-      aside: t('home.cases.aside'),
-      link: { href: PATH.cases, label: t('common.allCases') },
-      base
-    })}
-    <div class="case-grid">
-      ${cases.items
-        .slice(0, 2)
-        .map(
-          (c) => `<article class="case reveal">
-        <div class="ba" style="--pos:50%">
-          ${imgTag(c.before, { base, sizes: '(max-width:760px) 100vw, 46vw', alt: `${c.title} — prima del trattamento` })}
-          ${imgTag(c.after, { base, sizes: '(max-width:760px) 100vw, 46vw', alt: `${c.title} — dopo il trattamento`, className: 'ba__after' })}
-          <span class="ba__tag ba__tag--l">Prima</span>
-          <span class="ba__tag ba__tag--r">Dopo</span>
-          <div class="ba__handle" role="slider" tabindex="0" aria-label="Confronto prima e dopo" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50"></div>
-        </div>
-        <div class="row row--between mt-2">
-          <span class="label label--accent">${esc(c.cat)}</span>
-          <span class="label">${esc(c.duration)}</span>
-        </div>
-        <h3 class="h3 mt-1">${esc(c.title)}</h3>
-        <p class="body mt-1 measure-sm">${esc(c.summary)}</p>
-      </article>`
-        )
-        .join('')}
-    </div>
-    <p class="disclaimer mt-4 reveal">Ogni caso clinico è individuale. I risultati possono variare da paziente a paziente. ${esc(cases.note)}</p>
+    </a>`
+      )
+      .join('')}
   </div>
 </section>`;
 
@@ -292,15 +150,8 @@ export const homePage = () =>
     main: [
       hero(),
       quicknav(),
-      treatmentsSection(),
-      studioSection(),
-      techSection(),
-      teamSection(),
-      firstVisit(),
-      casesPreview(),
-      testimonials(base),
+      areasSection(),
       bookingBand(base),
-      journalPreview(base, true),
       contactSection()
     ].join('\n')
   });

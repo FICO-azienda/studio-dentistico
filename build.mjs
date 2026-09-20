@@ -10,7 +10,7 @@ import path from 'node:path';
 import { ROOT, site, team, treatments, journal, write } from './src/build/utils.mjs';
 import { homePage } from './src/build/page-home.mjs';
 import { studioPage, teamPage, personPage, techPage, firstVisitPage, contactPage, bookingPage } from './src/build/page-core.mjs';
-import { treatmentsIndex, treatmentPage, casesPage, journalIndex, articlePage, legalPage, notFoundPage } from './src/build/page-catalog.mjs';
+import { treatmentsIndex, categoryPage, treatmentPage, casesPage, journalIndex, articlePage, legalPage, notFoundPage } from './src/build/page-catalog.mjs';
 import { LEGAL } from './src/build/legal.mjs';
 
 const OUT = path.join(ROOT, 'dist');
@@ -37,7 +37,8 @@ add('studio', studioPage());
 add('team', teamPage());
 team.forEach((p) => add(`team/${p.slug}`, personPage(p)));
 add('trattamenti', treatmentsIndex());
-treatments.items.forEach((t) => add(`trattamenti/${t.slug}`, treatmentPage(t)));
+treatments.categories.forEach((c) => add(`trattamenti/${c.slug}`, categoryPage(c)));
+treatments.items.forEach((t) => add(`trattamenti/${t.category}/${t.slug}`, treatmentPage(t)));
 add('tecnologie', techPage());
 add('casi-clinici', casesPage());
 add('journal', journalIndex());

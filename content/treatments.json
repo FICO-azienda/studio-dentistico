@@ -11,7 +11,15 @@
         "conservativa",
         "endodonzia",
         "parodontologia"
-      ]
+      ],
+      "intro": [
+        "L'odontoiatria generale è la parte del lavoro che si vede meno e che conta di più: la diagnosi accurata, la cura della carie con il minor sacrificio possibile di tessuto, la salute delle gengive e il programma di richiami che tiene stabile il risultato negli anni.",
+        "È anche l'area in cui si decide quasi tutto il resto. Un problema intercettato qui si risolve in una seduta; lo stesso problema due anni dopo può richiedere una cura canalare, una corona o un impianto. Per questo dedichiamo alla prima visita e ai controlli periodici più tempo di quanto sia consuetudine."
+      ],
+      "seo": {
+        "title": "Odontoiatria generale a Milano — igiene, carie, gengive",
+        "description": "Igiene e prevenzione, conservativa, endodonzia al microscopio e parodontologia. Studio Canova, Milano zona Fiera."
+      }
     },
     {
       "slug": "estetica-dentale",
@@ -24,7 +32,15 @@
         "faccette",
         "estetica-del-sorriso",
         "ricostruzioni-estetiche"
-      ]
+      ],
+      "intro": [
+        "L'estetica dentale contemporanea lavora per sottrazione: si tocca il meno possibile e si progetta molto. Prima di preparare un dente costruiamo il progetto sul volto con il Digital Smile Design e lo proviamo fisicamente in bocca con un mock-up, che il paziente approva prima di qualsiasi passaggio irreversibile.",
+        "L'obiettivo non è un sorriso perfetto ma un sorriso credibile, coerente con l'età, i lineamenti e il modo di parlare della persona. Un risultato riuscito è quello di cui nessuno si accorge."
+      ],
+      "seo": {
+        "title": "Estetica dentale a Milano — faccette e sbiancamento",
+        "description": "Sbiancamento professionale, faccette in ceramica, Digital Smile Design e ricostruzioni estetiche. Studio Canova, Milano."
+      }
     },
     {
       "slug": "implantologia",
@@ -33,11 +49,19 @@
       "lead": "Sostituire un dente mancante con una soluzione fissa, pianificata al computer e verificata in ogni fase chirurgica e protesica.",
       "image": "cat-implantologia",
       "items": [
-        "implantologia",
+        "impianti-dentali",
         "chirurgia-orale",
         "riabilitazione-completa",
         "protesi"
-      ]
+      ],
+      "intro": [
+        "Sostituire un dente perso con un impianto è oggi una procedura affidabile, con sopravvivenze superiori al 95% a dieci anni. Quel 95% però non dipende dalla vite in titanio: dipende da come viene pianificata la posizione, da quanto la protesi finale sarà detergibile e dalla costanza dei controlli successivi.",
+        "Per questo ogni caso parte da una TC cone beam e da una pianificazione digitale in cui la posizione dell'impianto viene decisa a partire dalla protesi che dovrà sostenere, non dall'osso che capita di trovare. In sala operatoria una dima chirurgica trasferisce il progetto al millimetro."
+      ],
+      "seo": {
+        "title": "Implantologia a Milano — impianti e riabilitazioni",
+        "description": "Impianti dentali guidati, chirurgia orale, protesi e riabilitazioni complete su impianti. Studio Canova, Milano."
+      }
     },
     {
       "slug": "ortodonzia",
@@ -50,7 +74,15 @@
         "allineatori-trasparenti",
         "ortodonzia-tradizionale",
         "ortodonzia-pediatrica"
-      ]
+      ],
+      "intro": [
+        "L'ortodonzia non serve solo all'estetica: denti allineati si puliscono meglio, si consumano in modo più uniforme e distribuiscono il carico masticatorio come dovrebbero. Nell'adulto lavoriamo prevalentemente con dispositivi poco visibili; nel bambino, con la crescita.",
+        "Ogni percorso parte da una simulazione digitale che mostra il piano di movimento e il risultato atteso prima di iniziare. Se dalla simulazione emerge che una tecnica diversa arriva più lontano, lo diciamo in fase di diagnosi."
+      ],
+      "seo": {
+        "title": "Ortodonzia a Milano — allineatori e apparecchi",
+        "description": "Ortodonzia invisibile, allineatori trasparenti, apparecchio fisso e ortodonzia pediatrica. Studio Canova, Milano."
+      }
     }
   ],
   "items": [
@@ -375,7 +407,7 @@
       "doctor": "elena-moretti",
       "related": [
         "igiene-e-prevenzione",
-        "implantologia",
+        "impianti-dentali",
         "chirurgia-orale"
       ],
       "seo": {
@@ -717,7 +749,7 @@
       }
     },
     {
-      "slug": "implantologia",
+      "slug": "impianti-dentali",
       "category": "implantologia",
       "title": "Implantologia",
       "short": "Sostituzione dei denti mancanti con impianti pianificati digitalmente.",
@@ -877,7 +909,7 @@
       ],
       "doctor": "luca-sartori",
       "related": [
-        "implantologia",
+        "impianti-dentali",
         "parodontologia",
         "endodonzia"
       ],
@@ -960,7 +992,7 @@
       ],
       "doctor": "andrea-vitali",
       "related": [
-        "implantologia",
+        "impianti-dentali",
         "protesi",
         "chirurgia-orale"
       ],
@@ -1043,7 +1075,7 @@
       ],
       "doctor": "marta-colombo",
       "related": [
-        "implantologia",
+        "impianti-dentali",
         "riabilitazione-completa",
         "ricostruzioni-estetiche"
       ],

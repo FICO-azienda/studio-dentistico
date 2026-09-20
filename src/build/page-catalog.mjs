@@ -1,8 +1,9 @@
-import { site, treatments, cases, journal, team, esc, attr, arrow, imgTag, figure, lines, dateIt, personName, byTreatment, byPerson, byTech, metaTitle } from './utils.mjs';
+import { site, treatments, cases, journal, team, esc, attr, arrow, imgTag, figure, lines, dateIt, personName, byTreatment, byPerson, byTech, metaTitle, byCategory, catPath, treatmentPath, specialistsOf, techOf } from './utils.mjs';
 import { layout, dentistLd } from './layout.mjs';
 import { sectionHead, bookingBand, faqList, faqLd, pageHero, articleCard, personCard } from './components.mjs';
 
 /* ==================================================== /trattamenti ======= */
+/** Indice: solo i quattro gruppi, con ingresso alle pagine dedicate. */
 export const treatmentsIndex = () => {
   const base = '../';
   const main = `
@@ -16,33 +17,33 @@ ${pageHero({
   })}
 <section class="section section--flush-top">
   <div class="wrap">
-    ${treatments.categories
-      .map(
-        (c) => `<article class="treatment-row" id="${c.slug}">
-      <div class="treatment-row__media">${figure(c.image, { base, ar: '4/3', className: 'media__zoom', sizes: '(max-width:1000px) 100vw, 48vw' })}</div>
-      <div class="treatment-row__content reveal">
-        <p class="treatment-row__num">${esc(c.num)}</p>
-        <h2 class="h2">${esc(c.title)}</h2>
-        <p class="body mt-2 measure-sm">${esc(c.lead)}</p>
-        <ul class="treatment-row__list">
-          ${c.items
-            .map((s) => {
-              const t = byTreatment[s];
-              return `<li><a href="${base}trattamenti/${t.slug}/"><span>${esc(t.title)}</span><span class="small" style="color:var(--stone-light);flex:1;text-align:right;margin-right:1rem">${esc(t.short)}</span> ${arrow}</a></li>`;
-            })
-            .join('')}
-        </ul>
-      </div>
-    </article>`
-      )
-      .join('')}
+    <div class="team-grid team-grid--2">
+      ${treatments.categories
+        .map(
+          (c) => `<a class="person reveal" href="${base}${catPath(c)}">
+        <div class="media media--ar media__zoom" style="--ar:4/3">
+          ${imgTag(c.image, { base, sizes: '(max-width: 760px) 100vw, 46vw' })}
+        </div>
+        <div class="person__info">
+          <div class="row row--between" style="gap:1rem">
+            <h2 class="h3">${esc(c.title)}</h2>
+            <span class="num" style="color:var(--stone-light)">${esc(c.num)}</span>
+          </div>
+          <p class="body mt-1 measure-sm">${esc(c.lead)}</p>
+          <p class="small mt-2" style="color:var(--stone-light)">${c.items.map((x) => esc(byTreatment[x].title)).join(' · ')}</p>
+          <p class="mt-3"><span class="link-u">Scopri ${arrow}</span></p>
+        </div>
+      </a>`
+        )
+        .join('')}
+    </div>
   </div>
 </section>
 ${bookingBand(base)}`;
 
   return layout({
     title: 'Trattamenti — Studio Canova, dentista a Milano',
-    description: 'Implantologia, ortodonzia invisibile, estetica dentale, endodonzia, parodontologia e prevenzione. Tutti i trattamenti dello Studio Canova a Milano.',
+    description: 'Le quattro aree cliniche dello Studio Canova a Milano: odontoiatria generale, estetica dentale, implantologia e ortodonzia.',
     path: 'trattamenti/',
     depth: 1,
     current: 'trattamenti/',
@@ -51,10 +52,145 @@ ${bookingBand(base)}`;
   });
 };
 
-/* ============================================ /trattamenti/[slug] ======== */
-export const treatmentPage = (t) => {
+/* ========================================= /trattamenti/[gruppo] ========= */
+export const categoryPage = (c) => {
   const base = '../../';
-  const cat = treatments.categories.find((c) => c.slug === t.category);
+  const items = c.items.map((s) => byTreatment[s]).filter(Boolean);
+  const techs = techOf(c);
+  const docs = specialistsOf(c);
+  const faq = items.map((t) => t.faq[0]).filter(Boolean);
+
+  const main = `
+${pageHero({
+    label: `${c.num} — Area clinica`,
+    title: lines([esc(c.title)]),
+    lead: esc(c.lead),
+    aside: `${items.length} trattamenti<br>${docs.length} specialisti`,
+    crumbs: [{ label: 'Home', path: '' }, { label: 'Trattamenti', path: 'trattamenti/' }, { label: c.title }],
+    base,
+    media: c.image,
+    mediaAr: '21/9'
+  })}
+
+<section class="section">
+  <div class="wrap">
+    <div class="grid">
+      <div class="col-5">
+        <span class="label reveal">L'area</span>
+        <h2 class="h2 mt-2 reveal">${lines(['Come la', '<em class="serif-italic">affrontiamo.</em>'])}</h2>
+      </div>
+      <div class="col-6 start-7 prose reveal">
+        ${c.intro.map((p) => `<p>${esc(p)}</p>`).join('')}
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section--flush-top">
+  <div class="wrap">
+    ${sectionHead({
+      label: 'I trattamenti',
+      title: lines(['Cosa comprende', `<em class="serif-italic">${esc(c.title.toLowerCase())}.</em>`]),
+      aside: 'Ogni trattamento ha una pagina dedicata con fasi, durata, tecnologia e domande frequenti.'
+    })}
+    <div class="article-list">
+      ${items
+        .map(
+          (t) => `<a class="article-card reveal" href="${base}${treatmentPath(t)}">
+        <div class="media media--ar media__zoom" style="--ar:4/3">${imgTag(t.image, { base, sizes: '(max-width:900px) 50vw, 33vw' })}</div>
+        <h3 class="h3 mt-2">${esc(t.title)}</h3>
+        <p>${esc(t.short)}</p>
+        <p class="mt-2"><span class="link-u">Scopri ${arrow}</span></p>
+      </a>`
+        )
+        .join('')}
+    </div>
+  </div>
+</section>
+
+<section class="section dark">
+  <div class="wrap">
+    ${sectionHead({
+      label: 'Tecnologia utilizzata',
+      title: lines(['Gli strumenti', '<em class="serif-italic">di questa area.</em>']),
+      link: { href: 'tecnologie/', label: 'Tutte le tecnologie' },
+      base
+    })}
+    <div class="team-grid team-grid--3">
+      ${techs
+        .map(
+          (x) => `<a class="person reveal" href="${base}tecnologie/#${x.slug}">
+        <div class="media media--ar media--duo media__zoom" style="--ar:3/4">
+          ${imgTag(x.image, { base, sizes: '(max-width: 560px) 100vw, (max-width: 1000px) 50vw, 33vw' })}
+          <div class="person__overlay"><p>${esc(x.text)}</p><span class="link-u">Scopri la tecnologia ${arrow}</span></div>
+        </div>
+        <div class="person__info">
+          <h3 class="h4">${esc(x.title)}</h3>
+          <p class="person__role">${esc(x.kicker)}</p>
+        </div>
+      </a>`
+        )
+        .join('')}
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    ${sectionHead({
+      label: 'Specialisti',
+      title: lines(['Chi se ne', '<em class="serif-italic">occupa.</em>']),
+      link: { href: 'team/', label: 'Tutto il team' },
+      base
+    })}
+    <div class="team-grid">${docs.map((p) => personCard(p, base)).join('')}</div>
+  </div>
+</section>
+
+<section class="section section--flush-top">
+  <div class="wrap">
+    <div class="grid">
+      <div class="col-4">
+        <span class="label reveal">Domande frequenti</span>
+        <h2 class="h2 mt-2 reveal">${lines([esc(c.title) + '.'])}</h2>
+        <p class="body mt-3 measure-sm reveal">Hai una domanda diversa? Scrivici: rispondiamo entro un giorno lavorativo.</p>
+        <p class="mt-3 reveal"><a class="link-u" href="${base}contatti/">Fai una domanda ${arrow}</a></p>
+      </div>
+      <div class="col-7 start-7">${faqList(faq, 'cat')}</div>
+    </div>
+  </div>
+</section>
+${bookingBand(base)}`;
+
+  return layout({
+    title: metaTitle(c.seo.title),
+    description: c.seo.description,
+    path: catPath(c),
+    depth: 2,
+    current: 'trattamenti/',
+    preload: [c.image],
+    crumbs: [
+      { label: 'Home', path: '' },
+      { label: 'Trattamenti', path: 'trattamenti/' },
+      { label: c.title, path: catPath(c) }
+    ],
+    jsonLd: [
+      {
+        '@type': 'MedicalSpecialty',
+        name: c.title,
+        description: c.lead,
+        url: `${site.url}/${catPath(c)}`
+      },
+      faqLd(faq)
+    ],
+    main
+  });
+};
+
+/* ================================ /trattamenti/[gruppo]/[slug] =========== */
+export const treatmentPage = (t) => {
+  const base = '../../../';
+  const cat = byCategory[t.category];
   const doc = byPerson[t.doctor];
   const related = t.related.map((s) => byTreatment[s]).filter(Boolean);
   const techs = (t.tech || []).map((s) => byTech[s]).filter(Boolean);
@@ -65,7 +201,12 @@ ${pageHero({
     title: lines([esc(t.title)]),
     lead: esc(t.lead),
     aside: `Responsabile clinico<br><a class="link-inline" href="${base}team/${doc.slug}/">${esc(personName(doc))}</a>`,
-    crumbs: [{ label: 'Home', path: '' }, { label: 'Trattamenti', path: 'trattamenti/' }, { label: t.title }],
+    crumbs: [
+      { label: 'Home', path: '' },
+      { label: 'Trattamenti', path: 'trattamenti/' },
+      { label: cat.title, path: catPath(cat) },
+      { label: t.title }
+    ],
     base,
     media: t.image,
     mediaAr: '21/9'
@@ -108,6 +249,11 @@ ${pageHero({
               </span>
             </a>
           </div>
+          <div class="sidebar-card reveal">
+            <span class="label">Area clinica</span>
+            <p class="h4 mt-2"><a class="link-inline" href="${base}${catPath(cat)}">${esc(cat.title)}</a></p>
+            <p class="small mt-2" style="color:var(--stone)">${esc(cat.lead)}</p>
+          </div>
         </div>
       </aside>
     </div>
@@ -123,11 +269,7 @@ ${pageHero({
       </div>
       <div class="col-7 start-7">
         <ol class="phase-list">
-          ${t.phases
-            .map(
-              (p) => `<li class="reveal"><div><h3>${esc(p.title)}</h3><p>${esc(p.text)}</p></div></li>`
-            )
-            .join('')}
+          ${t.phases.map((p) => `<li class="reveal"><div><h3>${esc(p.title)}</h3><p>${esc(p.text)}</p></div></li>`).join('')}
         </ol>
       </div>
     </div>
@@ -144,14 +286,16 @@ ${
       link: { href: 'tecnologie/', label: 'Tutte le tecnologie' },
       base
     })}
-    <div class="tech-grid">
+    <div class="team-grid team-grid--3">
       ${techs
         .map(
-          (x) => `<article class="tech-item reveal">
-        <div class="tech-item__bg">${imgTag(x.image, { base, sizes: '33vw', alt: '' })}</div>
-        <span class="num" style="color:var(--sage)">${esc(x.num)}</span>
-        <div><h3 class="h3">${esc(x.title)}</h3><p class="mt-2">${esc(x.text)}</p></div>
-      </article>`
+          (x) => `<a class="person reveal" href="${base}tecnologie/#${x.slug}">
+        <div class="media media--ar media--duo media__zoom" style="--ar:3/4">
+          ${imgTag(x.image, { base, sizes: '(max-width: 560px) 100vw, (max-width: 1000px) 50vw, 33vw' })}
+          <div class="person__overlay"><p>${esc(x.text)}</p><span class="link-u">Scopri la tecnologia ${arrow}</span></div>
+        </div>
+        <div class="person__info"><h3 class="h4">${esc(x.title)}</h3><p class="person__role">${esc(x.kicker)}</p></div>
+      </a>`
         )
         .join('')}
     </div>
@@ -174,13 +318,13 @@ ${
 
 <section class="section section--flush-top">
   <div class="wrap">
-    ${sectionHead({ label: 'Correlati', title: lines(['Altri trattamenti']), link: { href: 'trattamenti/', label: 'Tutti i trattamenti' }, base })}
+    ${sectionHead({ label: 'Correlati', title: lines(['Altri trattamenti']), link: { href: catPath(cat), label: `Tutta l'area ${cat.title.toLowerCase()}` }, base })}
     <div class="article-list">
       ${related
         .map(
-          (r) => `<a class="article-card reveal" href="${base}trattamenti/${r.slug}/">
+          (r) => `<a class="article-card reveal" href="${base}${treatmentPath(r)}">
         <div class="media media--ar media__zoom" style="--ar:4/3">${imgTag(r.image, { base, sizes: '(max-width:900px) 50vw, 33vw' })}</div>
-        <div class="article-card__meta"><span class="label label--accent">${esc(treatments.categories.find((c) => c.slug === r.category).title)}</span></div>
+        <div class="article-card__meta"><span class="label label--accent">${esc(byCategory[r.category].title)}</span></div>
         <h3 class="h3">${esc(r.title)}</h3>
         <p>${esc(r.short)}</p>
       </a>`
@@ -194,14 +338,15 @@ ${bookingBand(base)}`;
   return layout({
     title: metaTitle(t.seo.title),
     description: t.seo.description,
-    path: `trattamenti/${t.slug}/`,
-    depth: 2,
+    path: treatmentPath(t),
+    depth: 3,
     current: 'trattamenti/',
     preload: [t.image],
     crumbs: [
       { label: 'Home', path: '' },
       { label: 'Trattamenti', path: 'trattamenti/' },
-      { label: t.title, path: `trattamenti/${t.slug}/` }
+      { label: cat.title, path: catPath(cat) },
+      { label: t.title, path: treatmentPath(t) }
     ],
     jsonLd: [
       {
@@ -209,7 +354,7 @@ ${bookingBand(base)}`;
         name: t.title,
         description: t.lead,
         howPerformed: t.how.join(' '),
-        url: `${site.url}/trattamenti/${t.slug}/`,
+        url: `${site.url}/${treatmentPath(t)}`,
         provider: { '@id': site.url + '/#studio' }
       },
       faqLd(t.faq)

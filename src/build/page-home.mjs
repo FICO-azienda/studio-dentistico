@@ -1,6 +1,6 @@
-import { site, treatments, technologies, team, cases, faqs, esc, attr, arrow, imgTag, figure, lines, byTreatment } from './utils.mjs';
+import { site, treatments, technologies, team, cases, esc, attr, arrow, imgTag, figure, lines, catPath, treatmentPath } from './utils.mjs';
 import { layout, dentistLd } from './layout.mjs';
-import { sectionHead, stats, personCard, bookingBand, testimonials, journalPreview, faqSection, faqList, faqLd } from './components.mjs';
+import { sectionHead, personCard, bookingBand, testimonials, journalPreview } from './components.mjs';
 
 const base = '';
 
@@ -76,74 +76,31 @@ const treatmentsSection = () => `
       num: '01',
       label: 'Trattamenti',
       title: lines(['Soluzioni personalizzate', '<em class="serif-italic">per ogni sorriso.</em>']),
-      aside: 'Quattro aree cliniche, sedici trattamenti. Ogni percorso parte da una diagnosi e da un preventivo scritto.',
-      link: { href: 'trattamenti/', label: 'Tutti i trattamenti' },
+      aside: 'Quattro aree cliniche, sedici trattamenti. Ogni area ha la sua pagina, con fasi, tempi e specialisti.',
+      link: { href: 'trattamenti/', label: 'Tutte le aree' },
       base
     })}
-  </div>
-  <div class="wrap">
-    ${treatments.categories
-      .map(
-        (c) => `<article class="treatment-row">
-      <div class="treatment-row__media">
-        ${figure(c.image, { base, ar: '4/3', className: 'media__zoom', sizes: '(max-width: 1000px) 100vw, 48vw' })}
-      </div>
-      <div class="treatment-row__content reveal">
-        <p class="treatment-row__num">${esc(c.num)}</p>
-        <h3 class="h2">${esc(c.title)}</h3>
-        <p class="body mt-2 measure-sm">${esc(c.lead)}</p>
-        <ul class="treatment-row__list">
-          ${c.items
-            .map((s) => {
-              const t = byTreatment[s];
-              return `<li><a href="trattamenti/${t.slug}/"><span>${esc(t.title)}</span> ${arrow}</a></li>`;
-            })
-            .join('')}
-        </ul>
-        <p class="mt-3"><a class="link-u" href="trattamenti/#${c.slug}">Scopri ${esc(c.title.toLowerCase())} ${arrow}</a></p>
-      </div>
-    </article>`
-      )
-      .join('')}
-  </div>
-</section>`;
-
-const featuredRail = () => {
-  const items = treatments.items.filter((t) => t.featured);
-  return `
-<section class="section section--sm dark">
-  <div class="wrap">
-    <div class="row row--between mb-4">
-      <div>
-        <span class="label reveal">In evidenza</span>
-        <h2 class="h3 mt-1 reveal">Trattamenti più richiesti</h2>
-      </div>
-      <div class="rail__nav">
-        <button class="rail__btn" type="button" data-rail="prev" aria-label="Precedente">&#8592;</button>
-        <button class="rail__btn" type="button" data-rail="next" aria-label="Successivo">&#8594;</button>
-      </div>
-    </div>
-  </div>
-  <div class="rail">
-    <div class="rail__track">
-      ${items
+    <div class="team-grid team-grid--2">
+      ${treatments.categories
         .map(
-          (t) => `<a class="card-feature reveal" href="trattamenti/${t.slug}/">
-        <div class="media media--ar media__zoom" style="--ar:3/4">${imgTag(t.image, { base, sizes: '(max-width: 700px) 70vw, 26vw' })}</div>
-        <div class="card-feature__head"><h3 class="h4">${esc(t.title)}</h3>${arrow}</div>
-        <p>${esc(t.short)}</p>
+          (c) => `<a class="person reveal" href="${catPath(c)}">
+        <div class="media media--ar media__zoom" style="--ar:4/3">
+          ${imgTag(c.image, { base, sizes: '(max-width: 760px) 100vw, 46vw' })}
+        </div>
+        <div class="person__info">
+          <div class="row row--between" style="gap:1rem">
+            <h3 class="h3">${esc(c.title)}</h3>
+            <span class="num" style="color:var(--stone-light)">${esc(c.num)}</span>
+          </div>
+          <p class="body mt-1 measure-sm">${esc(c.lead)}</p>
+          <p class="mt-3"><span class="link-u">Scopri ${arrow}</span></p>
+        </div>
       </a>`
         )
         .join('')}
-      <a class="card-feature reveal" href="prima-visita/">
-        <div class="media media--ar media__zoom" style="--ar:3/4">${imgTag('trattamento-visita', { base, sizes: '(max-width: 700px) 70vw, 26vw' })}</div>
-        <div class="card-feature__head"><h3 class="h4">Prima visita</h3>${arrow}</div>
-        <p>45 minuti per capire la situazione e ricevere un piano di trattamento.</p>
-      </a>
     </div>
   </div>
 </section>`;
-};
 
 const studioSection = () => `
 <section class="section" id="studio">
@@ -152,37 +109,19 @@ const studioSection = () => `
       num: '02',
       label: 'Lo Studio',
       title: lines(['Competenza clinica.', '<em class="serif-italic">Attenzione umana.</em>']),
-      aside: 'Nato a Milano nel 2004, lo studio riunisce dodici professionisti attorno a un unico protocollo di lavoro.',
+      aside: 'Trecentoquaranta metri quadrati in zona Fiera, dodici professionisti e un modo di lavorare che mette la diagnosi prima del preventivo.',
       link: { href: 'studio/', label: 'Scopri lo studio' },
       base
     })}
-    <div class="compose">
-      <div class="compose__lead">
-        ${figure('studio-interno', { base, ar: '4/5', sizes: '(max-width: 1000px) 100vw, 40vw', className: 'media__zoom' })}
-        <p class="small mt-2" style="color:var(--stone-light)">Via Antonio Canova 14, Milano</p>
+    <div class="grid">
+      <div class="col-7">
+        ${figure('studio-interno', { base, ar: '16/10', className: 'media__zoom', sizes: '(max-width: 1000px) 100vw, 58vw' })}
       </div>
-      <div class="compose__stack">
-        <div class="reveal">
-          <p class="lead">Crediamo che la qualità di una cura si misuri su un arco di anni, non di sedute. Per questo investiamo tempo nella diagnosi, spieghiamo le alternative e costruiamo percorsi che possano durare.</p>
-          <p class="body mt-3">Lo studio occupa 340 metri quadrati in zona Fiera: cinque sale operative, una sala chirurgica dedicata, radiologia interna e laboratorio odontotecnico. Ogni ambiente è pensato per ridurre l'attesa, il rumore e la percezione clinica.</p>
-        </div>
-        <div>
-          ${site.values
-            .map(
-              (v, i) => `<div class="value-item reveal" data-delay="${i}">
-            <span class="num value-item__num">0${i + 1}</span>
-            <div><h3 class="h4">${esc(v.title)}</h3><p>${esc(v.text)}</p></div>
-          </div>`
-            )
-            .join('')}
-        </div>
-        <div class="grid" style="grid-template-columns:repeat(2,1fr)">
-          ${figure('studio-scala', { base, ar: '3/4', sizes: '30vw', className: 'media__zoom' })}
-          ${figure('studio-attesa', { base, ar: '3/4', sizes: '30vw', className: 'media__zoom' })}
-        </div>
+      <div class="col-4 start-9" style="grid-column:9 / span 4">
+        <p class="lead reveal">Crediamo che la qualità di una cura si misuri su un arco di anni, non di sedute. Per questo investiamo tempo nella diagnosi, spieghiamo le alternative e costruiamo percorsi che possano durare.</p>
+        <p class="mt-4 reveal" data-delay="1"><a class="btn btn--ghost" href="studio/">Scopri lo studio</a></p>
       </div>
     </div>
-    <div class="mt-5">${stats()}</div>
   </div>
 </section>`;
 
@@ -194,11 +133,12 @@ const techSection = () => `
       label: 'Tecnologia',
       title: lines(['La tecnologia al servizio', '<em class="serif-italic">della precisione.</em>']),
       aside: 'Strumenti scelti per ridurre invasività, tempi e numero di sedute. Non per fare scena.',
-      link: { href: 'tecnologie/', label: 'Tutte le tecnologie' },
+      link: { href: 'tecnologie/', label: 'Scopri le tecnologie' },
       base
     })}
     <div class="team-grid team-grid--3">
       ${technologies
+        .slice(0, 3)
         .map(
           (t) => `<a class="person reveal" href="tecnologie/#${t.slug}">
         <div class="media media--ar media--duo media__zoom" style="--ar:3/4">
@@ -219,6 +159,7 @@ const techSection = () => `
         )
         .join('')}
     </div>
+    <p class="mt-4 reveal"><a class="btn btn--outline-light" href="tecnologie/">Scopri le tecnologie</a></p>
   </div>
 </section>`;
 
@@ -253,7 +194,7 @@ const firstVisit = () => `
       num: '05',
       label: 'Prima visita',
       title: lines(['La prima visita.']),
-      aside: '45 minuti, un percorso in quattro passaggi. Al termine sai esattamente qual è la situazione e quali sono le opzioni.',
+      aside: '45 minuti, un percorso in quattro passaggi. Al termine sai qual è la situazione, quali sono le opzioni e quanto costa ciascuna.',
       link: { href: 'prima-visita/', label: 'Come funziona' },
       base
     })}
@@ -262,7 +203,6 @@ const firstVisit = () => `
         (s, i) => `<article class="step">
         <span class="step__num">0${i + 1}</span>
         <h3 class="h4">${esc(s.t)}</h3>
-        <p>${esc(s.d)}</p>
       </article>`
       ).join('')}
     </div>
@@ -316,29 +256,24 @@ const contactSection = () => `
       label: 'Contatti',
       title: lines(['Vieni a trovarci.']),
       aside: 'Zona Fiera, a sei minuti dalla metropolitana. Parcheggio riservato ai pazienti nel cortile interno.',
-      link: { href: 'contatti/', label: 'Tutti i contatti' },
+      link: { href: 'contatti/', label: 'Mappa e indicazioni' },
       base
     })}
     <div class="grid">
-      <div class="col-5">
+      <div class="col-6">
         <div class="info-list">
-          <div class="info-list__row"><span class="label">Indirizzo</span><span>${esc(site.address.street)}<br>${esc(site.address.zip)} ${esc(site.address.city)}</span></div>
+          <div class="info-list__row"><span class="label">Indirizzo</span><span>${esc(site.address.street)}, ${esc(site.address.zip)} ${esc(site.address.city)}</span></div>
           <div class="info-list__row"><span class="label">Telefono</span><span><a class="link-inline" href="tel:${attr(site.phoneHref)}">${esc(site.phone)}</a></span></div>
           <div class="info-list__row"><span class="label">WhatsApp</span><span><a class="link-inline" href="https://wa.me/${attr(site.whatsappHref)}" target="_blank" rel="noopener">${esc(site.whatsapp)}</a></span></div>
           <div class="info-list__row"><span class="label">Email</span><span><a class="link-inline" href="mailto:${attr(site.email)}">${esc(site.email)}</a></span></div>
-          ${site.hours.map((h) => `<div class="info-list__row"><span class="label">${esc(h.d)}</span><span>${esc(h.h)}</span></div>`).join('')}
-        </div>
-        <div class="row mt-4">
-          <a class="btn btn--ghost btn--sm" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(site.address.street + ', ' + site.address.city)}" target="_blank" rel="noopener">Apri in Google Maps ${arrow}</a>
+          <div class="info-list__row"><span class="label">Orari</span><span>${site.hours.map((h) => `${esc(h.d)} · ${esc(h.h)}`).join('<br>')}</span></div>
         </div>
       </div>
-      <div class="col-6 start-7">
-        <div class="map reveal">
-          <iframe title="Mappa dello studio" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
-            src="https://www.openstreetmap.org/export/embed.html?bbox=9.158%2C45.474%2C9.179%2C45.484&amp;layer=mapnik&amp;marker=${site.address.lat}%2C${site.address.lng}"></iframe>
-        </div>
-        <div class="grid mt-3" style="grid-template-columns:repeat(3,1fr);gap:1.5rem">
-          ${site.directions.map((d) => `<div><span class="label">${esc(d.label)}</span><p class="small mt-1" style="color:var(--stone)">${esc(d.value)}</p></div>`).join('')}
+      <div class="col-5 start-8" style="grid-column:8 / span 5">
+        ${figure('studio-reception', { base, ar: '4/3', className: 'media__zoom', sizes: '(max-width: 1000px) 100vw, 40vw' })}
+        <div class="row mt-4">
+          <a class="btn" href="prenota/">Prenota una visita</a>
+          <a class="btn btn--ghost" href="contatti/">Tutti i contatti</a>
         </div>
       </div>
     </div>
@@ -354,12 +289,11 @@ export const homePage = () =>
     depth: 0,
     current: '',
     preload: ['hero-studio'],
-    jsonLd: [dentistLd(), faqLd(faqs.slice(0, 6))],
+    jsonLd: [dentistLd()],
     main: [
       hero(),
       quicknav(),
       treatmentsSection(),
-      featuredRail(),
       studioSection(),
       techSection(),
       teamSection(),
@@ -367,8 +301,7 @@ export const homePage = () =>
       casesPreview(),
       testimonials(base),
       bookingBand(base),
-      journalPreview(base),
-      faqSection(base),
+      journalPreview(base, true),
       contactSection()
     ].join('\n')
   });

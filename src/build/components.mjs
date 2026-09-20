@@ -158,7 +158,28 @@ export const testimonials = (base) => `
 </section>`;
 
 /* -- journal preview ------------------------------------------------------ */
-export const journalPreview = (base) => {
+export const journalPreview = (base, compact = false) => {
+  // in homepage: solo gli ultimi tre articoli e un invito all'archivio
+  if (compact) {
+    return `
+<section class="section" id="journal">
+  <div class="wrap">
+    ${sectionHead({
+      num: '06',
+      label: 'Journal',
+      title: lines(['Journal']),
+      aside: 'Approfondimenti clinici scritti dal nostro team, senza gergo inutile.',
+      link: { href: 'journal/', label: 'Vai al Journal' },
+      base
+    })}
+    <div class="article-list">
+      ${journal.slice(0, 3).map((x) => articleCard(x, base)).join('')}
+    </div>
+    <p class="mt-4 reveal"><a class="btn btn--ghost" href="${base}journal/">Vai al Journal</a></p>
+  </div>
+</section>`;
+  }
+
   const [featured, ...rest] = journal;
   const a = byPerson[featured.author];
   return `

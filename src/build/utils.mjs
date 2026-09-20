@@ -17,6 +17,23 @@ export const reviews = read('reviews.json');
 export const byTreatment = Object.fromEntries(treatments.items.map((t) => [t.slug, t]));
 export const byPerson = Object.fromEntries(team.map((p) => [p.slug, p]));
 export const byTech = Object.fromEntries(technologies.map((t) => [t.slug, t]));
+export const byCategory = Object.fromEntries(treatments.categories.map((c) => [c.slug, c]));
+
+/** i trattamenti vivono sotto la pagina del loro gruppo */
+export const catOf = (t) => byCategory[t.category];
+export const catPath = (c) => `trattamenti/${c.slug}/`;
+export const treatmentPath = (t) => `trattamenti/${t.category}/${t.slug}/`;
+
+/** professionisti che si occupano dei trattamenti di un gruppo */
+export const specialistsOf = (c) =>
+  team.filter((p) => (p.treatments || []).some((s) => c.items.includes(s)));
+
+/** tecnologie usate dai trattamenti di un gruppo, senza ripetizioni */
+export const techOf = (c) => {
+  const seen = new Set();
+  for (const s of c.items) for (const x of byTreatment[s]?.tech || []) seen.add(x);
+  return [...seen].map((x) => byTech[x]).filter(Boolean);
+};
 
 /* -- escaping ------------------------------------------------------------- */
 export const esc = (s = '') =>

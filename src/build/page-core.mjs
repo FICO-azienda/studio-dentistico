@@ -1,4 +1,4 @@
-import { site, team, technologies, faqs, treatments, esc, attr, arrow, imgTag, figure, lines, personName, byTreatment, byPerson, metaTitle } from './utils.mjs';
+import { site, team, technologies, faqs, treatments, esc, attr, arrow, imgTag, figure, lines, personName, byTreatment, byPerson, metaTitle, treatmentPath } from './utils.mjs';
 import { layout, dentistLd } from './layout.mjs';
 import { sectionHead, stats, personCard, bookingBand, faqList, faqLd, pageHero, testimonials } from './components.mjs';
 
@@ -196,7 +196,7 @@ export const personPage = (p) => {
               ? `<div class="sidebar-card reveal">
             <span class="label">Trattamenti</span>
             <ul class="treatment-row__list" style="margin-top:1rem">
-              ${trats.map((t) => `<li><a href="${base}trattamenti/${t.slug}/"><span>${esc(t.title)}</span> ${arrow}</a></li>`).join('')}
+              ${trats.map((t) => `<li><a href="${base}${treatmentPath(t)}"><span>${esc(t.title)}</span> ${arrow}</a></li>`).join('')}
             </ul>
           </div>`
               : ''

@@ -8,14 +8,23 @@
     "featured": true,
     "short": "Guida clinica dello studio dal 2007. Si occupa di riabilitazioni complesse e chirurgia implantare guidata.",
     "bio": "Laureato in Odontoiatria e Protesi Dentaria all'Università degli Studi di Milano, si specializza in chirurgia orale e implantologia con una formazione tra Italia e Svezia. Dal 2007 guida lo studio come direttore sanitario, dedicandosi in particolare alle riabilitazioni complesse su impianti e alla chirurgia guidata. Ha introdotto in studio il flusso di lavoro interamente digitale, dalla diagnosi alla protesi.",
-    "focus": ["Implantologia guidata", "Rigenerazione ossea", "Riabilitazioni full-arch", "Chirurgia orale"],
+    "focus": [
+      "Implantologia guidata",
+      "Rigenerazione ossea",
+      "Riabilitazioni full-arch",
+      "Chirurgia orale"
+    ],
     "education": [
       "Laurea in Odontoiatria e Protesi Dentaria — Università degli Studi di Milano",
       "Specializzazione in Chirurgia Orale — Università di Torino",
       "Continuing education in implantologia — Göteborg, Svezia"
     ],
     "member": "Socio attivo SIO — Società Italiana di Implantologia Osteointegrata",
-    "treatments": ["implantologia", "chirurgia-orale", "riabilitazione-completa"],
+    "treatments": [
+      "impianti-dentali",
+      "chirurgia-orale",
+      "riabilitazione-completa"
+    ],
     "quote": "Un impianto non è un intervento: è l'inizio di un rapporto che dura vent'anni."
   },
   {
@@ -27,14 +36,23 @@
     "featured": true,
     "short": "Ortodonzia invisibile, allineatori e terapia intercettiva nei bambini.",
     "bio": "Specialista in Ortognatodonzia, segue pazienti adulti e in età evolutiva. Lavora prevalentemente con allineatori trasparenti e tecniche a basso impatto estetico, integrando la valutazione gnatologica nella pianificazione di ogni caso. È relatrice in corsi di aggiornamento sull'ortodonzia digitale.",
-    "focus": ["Allineatori trasparenti", "Ortodonzia linguale", "Ortodonzia intercettiva", "Gnatologia"],
+    "focus": [
+      "Allineatori trasparenti",
+      "Ortodonzia linguale",
+      "Ortodonzia intercettiva",
+      "Gnatologia"
+    ],
     "education": [
       "Laurea in Odontoiatria e Protesi Dentaria — Università di Bologna",
       "Specializzazione in Ortognatodonzia — Università di Ferrara",
       "Certificazione avanzata in terapia con allineatori"
     ],
     "member": "Socia SIDO — Società Italiana di Ortodonzia",
-    "treatments": ["ortodonzia-invisibile", "allineatori-trasparenti", "ortodonzia-pediatrica"],
+    "treatments": [
+      "ortodonzia-invisibile",
+      "allineatori-trasparenti",
+      "ortodonzia-pediatrica"
+    ],
     "quote": "Spostare un dente è semplice. Capire dove deve arrivare, molto meno."
   },
   {
@@ -46,14 +64,23 @@
     "featured": true,
     "short": "Lavora al microscopio operatorio su ritrattamenti e ricostruzioni adesive.",
     "bio": "Dedica la propria attività clinica esclusivamente all'endodonzia e alla conservativa, operando sempre con microscopio ad alti ingrandimenti. Si occupa in particolare di ritrattamenti di casi complessi, denti fratturati e ricostruzioni adesive che consentono di evitare la corona protesica.",
-    "focus": ["Endodonzia microscopica", "Ritrattamenti", "Ricostruzioni adesive", "Traumatologia dentale"],
+    "focus": [
+      "Endodonzia microscopica",
+      "Ritrattamenti",
+      "Ricostruzioni adesive",
+      "Traumatologia dentale"
+    ],
     "education": [
       "Laurea in Odontoiatria e Protesi Dentaria — Università di Pavia",
       "Master in Endodonzia clinica e microscopica",
       "Perfezionamento in odontoiatria adesiva"
     ],
     "member": "Socio SIE — Società Italiana di Endodonzia",
-    "treatments": ["endodonzia", "conservativa", "ricostruzioni-estetiche"],
+    "treatments": [
+      "endodonzia",
+      "conservativa",
+      "ricostruzioni-estetiche"
+    ],
     "quote": "Il dente naturale, anche compromesso, vale quasi sempre più di qualunque sostituto."
   },
   {
@@ -65,14 +92,24 @@
     "featured": true,
     "short": "Progetta il sorriso con il Digital Smile Design, dalle faccette alle riabilitazioni estetiche.",
     "bio": "Si occupa di estetica dentale e protesi fissa, con particolare attenzione alle ceramiche a spessore minimo. Utilizza il Digital Smile Design per progettare il risultato sul volto del paziente prima di qualsiasi preparazione, e collabora stabilmente con un laboratorio odontotecnico interno.",
-    "focus": ["Faccette in ceramica", "Digital Smile Design", "Protesi fissa", "Sbiancamento professionale"],
+    "focus": [
+      "Faccette in ceramica",
+      "Digital Smile Design",
+      "Protesi fissa",
+      "Sbiancamento professionale"
+    ],
     "education": [
       "Laurea in Odontoiatria e Protesi Dentaria — Università Vita-Salute San Raffaele",
       "Master in Estetica dentale e protesi adesiva",
       "Formazione in fotografia clinica odontoiatrica"
     ],
     "member": "Socia SIDOC — Società Italiana di Odontoiatria Conservativa",
-    "treatments": ["faccette", "estetica-del-sorriso", "sbiancamento", "protesi"],
+    "treatments": [
+      "faccette",
+      "estetica-del-sorriso",
+      "sbiancamento",
+      "protesi"
+    ],
     "quote": "Un sorriso riuscito è quello di cui nessuno si accorge."
   },
   {
@@ -83,13 +120,21 @@
     "image": "team-moretti",
     "short": "Coordina il programma di prevenzione e la terapia parodontale non chirurgica.",
     "bio": "Specialista in parodontologia, coordina il reparto di igiene e prevenzione dello studio. Segue i pazienti con parodontite dalla terapia causale al mantenimento, e struttura i richiami personalizzati che tengono stabile il risultato nel tempo.",
-    "focus": ["Terapia parodontale", "Mantenimento", "Perimplantite", "Prevenzione"],
+    "focus": [
+      "Terapia parodontale",
+      "Mantenimento",
+      "Perimplantite",
+      "Prevenzione"
+    ],
     "education": [
       "Laurea in Odontoiatria e Protesi Dentaria — Università di Milano-Bicocca",
       "Master in Parodontologia clinica"
     ],
     "member": "Socia SIdP — Società Italiana di Parodontologia e Implantologia",
-    "treatments": ["parodontologia", "igiene-e-prevenzione"],
+    "treatments": [
+      "parodontologia",
+      "igiene-e-prevenzione"
+    ],
     "quote": "La parodontite non fa male finché non è tardi. Per questo controlliamo."
   },
   {
@@ -100,13 +145,21 @@
     "image": "team-sartori",
     "short": "Chirurgia dei terzi molari, rigenerativa e gestione del paziente ansioso.",
     "bio": "Si occupa di chirurgia orale ambulatoriale, estrazioni complesse, chirurgia rigenerativa e rialzi di seno mascellare. È referente per la sedazione cosciente, che consente di trattare pazienti con forte ansia o riflesso faringeo accentuato.",
-    "focus": ["Terzi molari inclusi", "Rigenerativa", "Rialzo del seno", "Sedazione cosciente"],
+    "focus": [
+      "Terzi molari inclusi",
+      "Rigenerativa",
+      "Rialzo del seno",
+      "Sedazione cosciente"
+    ],
     "education": [
       "Laurea in Odontoiatria e Protesi Dentaria — Università di Padova",
       "Specializzazione in Chirurgia Odontostomatologica"
     ],
     "member": "Socio SIdP e SICOI",
-    "treatments": ["chirurgia-orale", "implantologia"],
+    "treatments": [
+      "chirurgia-orale",
+      "impianti-dentali"
+    ],
     "quote": "Metà del lavoro è tecnica. L'altra metà è far sentire una persona al sicuro."
   },
   {
@@ -117,13 +170,21 @@
     "image": "team-pace",
     "short": "Prima visita, prevenzione e ortodonzia intercettiva per bambini e ragazzi.",
     "bio": "Dedica la propria attività ai pazienti in età evolutiva, dalla prima visita intorno ai quattro anni fino all'adolescenza. Lavora su desensibilizzazione, prevenzione e intercettazione precoce dei problemi di crescita, con sedute brevi e un linguaggio pensato per i bambini.",
-    "focus": ["Prima visita pediatrica", "Sigillature", "Ortodonzia intercettiva", "Traumi dentali"],
+    "focus": [
+      "Prima visita pediatrica",
+      "Sigillature",
+      "Ortodonzia intercettiva",
+      "Traumi dentali"
+    ],
     "education": [
       "Laurea in Odontoiatria e Protesi Dentaria — Università di Firenze",
       "Master in Odontoiatria infantile"
     ],
     "member": "Socia SIOI — Società Italiana di Odontoiatria Infantile",
-    "treatments": ["ortodonzia-pediatrica", "igiene-e-prevenzione"],
+    "treatments": [
+      "ortodonzia-pediatrica",
+      "igiene-e-prevenzione"
+    ],
     "quote": "Un bambino che non ha paura del dentista è un adulto che si controlla i denti."
   },
   {
@@ -134,13 +195,21 @@
     "image": "team-colombo",
     "short": "Protesi fissa e mobile, riabilitazioni complete e flussi digitali.",
     "bio": "Si occupa di protesi fissa e rimovibile e di riabilitazioni complete su denti naturali e impianti. Gestisce il flusso digitale dello studio, dalla scansione intraorale alla progettazione CAD, in collaborazione con il laboratorio interno.",
-    "focus": ["Riabilitazioni full-arch", "Protesi su impianti", "Flusso digitale", "Bite e gnatologia"],
+    "focus": [
+      "Riabilitazioni full-arch",
+      "Protesi su impianti",
+      "Flusso digitale",
+      "Bite e gnatologia"
+    ],
     "education": [
       "Laurea in Odontoiatria e Protesi Dentaria — Università di Genova",
       "Master in Protesi dentale digitale"
     ],
     "member": "Socia AIOP — Accademia Italiana di Odontoiatria Protesica",
-    "treatments": ["protesi", "riabilitazione-completa"],
+    "treatments": [
+      "protesi",
+      "riabilitazione-completa"
+    ],
     "quote": "Una protesi ben fatta non si nota: si dimentica."
   },
   {
@@ -151,7 +220,12 @@
     "image": "team-ferrari",
     "short": "Gestisce agenda, preventivi, pratiche assicurative e accoglienza dei pazienti.",
     "bio": "È la prima persona che si incontra entrando in studio e il riferimento per tutto ciò che sta intorno alla cura: appuntamenti, preventivi, piani di pagamento, pratiche con fondi e assicurazioni, coordinamento tra i reparti.",
-    "focus": ["Agenda clinica", "Preventivi", "Fondi e assicurazioni", "Accoglienza"],
+    "focus": [
+      "Agenda clinica",
+      "Preventivi",
+      "Fondi e assicurazioni",
+      "Accoglienza"
+    ],
     "education": [],
     "member": "",
     "treatments": [],

@@ -336,6 +336,30 @@ a:hover .media__zoom img, .media__zoom:hover img { transform: scale(1.025); }
   .btn--header { display: none; }
 }
 
+/* Mega menu dei trattamenti */
+.nav__item { position: relative; display: inline-flex; }
+.mega {
+  position: absolute; top: calc(100% + 0.9rem); left: 50%; transform: translateX(-50%) translateY(-6px);
+  width: min(760px, 86vw); background: var(--white); border: 1px solid var(--line);
+  padding: clamp(1rem, 1.6vw, 1.4rem); opacity: 0; visibility: hidden; pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.35s var(--ease-out), visibility 0.3s;
+  box-shadow: 0 18px 40px -28px rgba(7, 26, 47, 0.45);
+}
+.has-mega:hover .mega, .has-mega:focus-within .mega {
+  opacity: 1; visibility: visible; pointer-events: auto; transform: translateX(-50%) translateY(0);
+}
+.mega::before { content: ""; position: absolute; inset: -0.9rem 0 100% 0; }
+.mega__inner { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+.mega__item { display: block; color: var(--navy); }
+.mega__item .media { display: block; margin-bottom: 0.7rem; }
+.mega__num { display: block; color: var(--stone-light); margin-bottom: 0.3rem; }
+.mega__title { display: block; line-height: 1.2; transition: color 0.3s ease; }
+.mega__item:hover .mega__title { color: var(--navy-500); }
+.mega__text { display: block; color: var(--stone-light); margin-top: 0.25rem; }
+.menu__sub { padding-left: 2.6rem; margin: 0.2rem 0 1rem; display: flex; flex-wrap: wrap; gap: 0.4rem 1.4rem; }
+.menu__sub a { font-size: 0.9rem; color: var(--on-dark-soft); transition: color 0.3s ease; }
+.menu__sub a:hover { color: var(--white); }
+
 /* Menu fullscreen */
 .menu {
   position: fixed; inset: 0; z-index: 110; background: var(--navy-900); color: var(--on-dark);
@@ -621,8 +645,10 @@ a.card-feature:hover h3, a.article-card:hover h3 { color: var(--navy-500); trans
 /* -- 15. Team ------------------------------------------------------------- */
 .team-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--gap) var(--gap); }
 .team-grid--3 { grid-template-columns: repeat(3, 1fr); }
+.team-grid--2 { grid-template-columns: repeat(2, 1fr); gap: clamp(2rem, 4vw, 4rem) var(--gap); }
 @media (max-width: 1000px) { .team-grid, .team-grid--3 { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 560px) { .team-grid, .team-grid--3 { grid-template-columns: 1fr; } }
+@media (max-width: 760px) { .team-grid--2 { grid-template-columns: 1fr; } }
+@media (max-width: 560px) { .team-grid, .team-grid--3, .team-grid--2 { grid-template-columns: 1fr; } }
 .person { display: block; position: relative; }
 .person .media { aspect-ratio: 3 / 4; }
 .person__overlay {

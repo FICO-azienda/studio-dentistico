@@ -1,4 +1,4 @@
-import { site, NAV, rel, esc, attr, arrow } from './utils.mjs';
+import { site, NAV, rel, esc, attr, arrow, treatments, imgTag, catPath } from './utils.mjs';
 
 /* -- dati strutturati ----------------------------------------------------- */
 export const dentistLd = () => ({
@@ -51,7 +51,27 @@ const header = (base, current) => `
   <div class="header__inner">
     ${logo(base)}
     <nav class="nav nav--main" aria-label="Navigazione principale">
-      ${NAV.map((n) => `<a class="nav__link" href="${base}${n.href}"${current === n.href ? ' aria-current="page"' : ''}>${esc(n.label)}</a>`).join('\n      ')}
+      ${NAV.map((n) =>
+        n.href === 'trattamenti/'
+          ? `<span class="nav__item has-mega">
+        <a class="nav__link" href="${base}${n.href}"${current === n.href ? ' aria-current="page"' : ''} aria-haspopup="true">${esc(n.label)}</a>
+        <div class="mega" role="group" aria-label="Aree di trattamento">
+          <div class="mega__inner">
+            ${treatments.categories
+              .map(
+                (c) => `<a class="mega__item" href="${base}${catPath(c)}">
+              <span class="media media--ar media__zoom" style="--ar:4/3">${imgTag(c.image, { base, sizes: '220px' })}</span>
+              <span class="mega__num num">${esc(c.num)}</span>
+              <span class="mega__title h4">${esc(c.title)}</span>
+              <span class="mega__text small">${c.items.length} trattamenti</span>
+            </a>`
+              )
+              .join('')}
+          </div>
+        </div>
+      </span>`
+          : `<a class="nav__link" href="${base}${n.href}"${current === n.href ? ' aria-current="page"' : ''}>${esc(n.label)}</a>`
+      ).join('\n      ')}
     </nav>
     <div class="header__actions">
       <a class="btn btn--sm btn--header" href="${base}prenota/">Prenota una visita</a>
@@ -66,7 +86,11 @@ const header = (base, current) => `
   <div></div>
   <div class="menu__body">
     <ul class="menu__list">
-      ${NAV.map((n, i) => `<li class="menu__item"><a href="${base}${n.href}"><span class="idx">0${i + 1}</span>${esc(n.label)}</a></li>`).join('\n      ')}
+      ${NAV.map((n, i) => `<li class="menu__item"><a href="${base}${n.href}"><span class="idx">0${i + 1}</span>${esc(n.label)}</a></li>${
+        n.href === 'trattamenti/'
+          ? `<li class="menu__sub">${treatments.categories.map((c) => `<a href="${base}${catPath(c)}">${esc(c.title)}</a>`).join('')}</li>`
+          : ''
+      }`).join('\n      ')}
       <li class="menu__item"><a href="${base}prenota/"><span class="idx">09</span><em class="serif-italic">Prenota una visita</em></a></li>
     </ul>
     <div class="menu__aside">
@@ -146,9 +170,11 @@ const footer = (base) => `
       <nav class="footer__col" aria-label="Trattamenti">
         <span class="label">Trattamenti</span>
         <ul>
-          <li><a href="${base}trattamenti/">Tutti i trattamenti</a></li>
+          <li><a href="${base}trattamenti/">Tutte le aree</a></li>
+          <li><a href="${base}trattamenti/odontoiatria-generale/">Odontoiatria generale</a></li>
+          <li><a href="${base}trattamenti/estetica-dentale/">Estetica dentale</a></li>
           <li><a href="${base}trattamenti/implantologia/">Implantologia</a></li>
-          <li><a href="${base}trattamenti/allineatori-trasparenti/">Allineatori</a></li>
+          <li><a href="${base}trattamenti/ortodonzia/">Ortodonzia</a></li>
           <li><a href="${base}casi-clinici/">Casi clinici</a></li>
           <li><a href="${base}journal/">Journal</a></li>
         </ul>

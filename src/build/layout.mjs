@@ -198,9 +198,11 @@ export function layout({
   preload = [],
   jsonLd = [],
   crumbs = null,
-  bodyClass = ''
+  bodyClass = '',
+  baseOverride = null
 }) {
-  const base = rel(depth);
+  // la 404 viene servita da URL arbitrari: usa percorsi assoluti, non relativi
+  const base = baseOverride ?? rel(depth);
   const canonical = `${site.url}/${pagePath}`;
   const ld = [...jsonLd];
   if (crumbs) ld.push(breadcrumbLd(base, crumbs));

@@ -3,6 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 const DIST = path.resolve(import.meta.dirname, '..', 'dist');
+const BASE = JSON.parse(fs.readFileSync(path.resolve(import.meta.dirname, '..', 'content', 'site.json'), 'utf8')).basePath || '/';
 const pages = [];
 (function walk(d) {
   for (const e of fs.readdirSync(d, { withFileTypes: true })) {
@@ -24,20 +25,27 @@ for (const file of pages) {
   for (const m of html.matchAll(/href="([^"]+)"/g)) {
     const href = m[1];
     if (/^(https?:|mailto:|tel:|#|data:)/.test(href)) continue;
-    const clean = href.split('#')[0] || '.';
+    let clean = href.split('#')[0] || '.';
+    if (clean.startsWith(BASE)) clean = '/' + clean.slice(BASE.length);
     const target = clean.startsWith('/') ? path.join(DIST, clean) : path.resolve(dir, clean);
     if (!exists(target)) problems.push(`${rel}: link rotto -> ${href}`);
   }
   // immagini e asset
   for (const m of html.matchAll(/src="([^"]+)"/g)) {
-    const src = m[1];
+    let src = m[1];
     if (/^(https?:|data:)/.test(src)) continue;
-    if (!fs.existsSync(path.resolve(dir, src))) problems.push(`${rel}: file mancante -> ${src}`);
+    if (src.startsWith(BASE)) src = src.slice(BASE.length);
+    const p2 = src.startsWith('/') ? path.join(DIST, src) : path.resolve(dir, src);
+    if (!fs.existsSync(p2)) problems.push(`${rel}: file mancante -> ${m[1]}`);
   }
   for (const m of html.matchAll(/srcset="([^"]+)"/g)) {
     for (const part of m[1].split(',')) {
-      const u = part.trim().split(/\s+/)[0];
-      if (u && !/^https?:/.test(u) && !fs.existsSync(path.resolve(dir, u))) problems.push(`${rel}: srcset mancante -> ${u}`);
+      let u = part.trim().split(/\s+/)[0];
+      if (!u || /^https?:/.test(u)) continue;
+      const orig = u;
+      if (u.startsWith(BASE)) u = u.slice(BASE.length);
+      const p3 = u.startsWith('/') ? path.join(DIST, u) : path.resolve(dir, u);
+      if (!fs.existsSync(p3)) problems.push(`${rel}: srcset mancante -> ${orig}`);
     }
   }
   // alt

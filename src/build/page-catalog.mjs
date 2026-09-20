@@ -455,13 +455,14 @@ export const notFoundPage = () =>
       'La pagina che stai cercando non esiste o è stata spostata. Torna alla home dello Studio Canova, studio odontoiatrico a Milano, oppure prenota direttamente una visita.',
     path: '404.html',
     depth: 0,
+    baseOverride: site.basePath,
     main: `
 <section class="page-hero" data-header-over>
   <div class="wrap" style="min-height:52vh;display:flex;flex-direction:column;justify-content:center">
     <span class="label label--accent">Errore 404</span>
     <h1 class="display mt-2">${lines(['Questa pagina', '<em class="serif-italic">non esiste.</em>'])}</h1>
     <p class="lead mt-3 measure-sm">Potrebbe essere stata spostata. Da qui puoi tornare alla home o prenotare direttamente una visita.</p>
-    <div class="row mt-4"><a class="btn" href="/">Torna alla home</a><a class="btn btn--ghost" href="/prenota/">Prenota una visita</a></div>
+    <div class="row mt-4"><a class="btn" href="${site.basePath}">Torna alla home</a><a class="btn btn--ghost" href="${site.basePath}prenota/">Prenota una visita</a></div>
   </div>
 </section>`
   });

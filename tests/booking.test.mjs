@@ -13,6 +13,7 @@ import { validateBooking, looksLikeSpam, checkDate } from '../api/_lib/validate.
 import { buildBookingId, buildRecord } from '../api/_lib/store.mjs';
 import { emailPaziente, emailStudio } from '../api/_lib/templates.mjs';
 import { rateLimit, _reset } from '../api/_lib/ratelimit.mjs';
+import { byService, visibleQuestions, computePriority, computeTags, buildSummary, validateAnswers } from '../api/_lib/flows.mjs';
 
 // niente email vere durante i test
 const ENV = { MAIL_PROVIDER: 'console', BOOKING_STORE: 'log', BOOKING_NOTIFY_EMAIL: 'studio@example.it' };
@@ -31,7 +32,14 @@ const base = () => ({
   cognome: 'Rossi',
   email: 'mario.rossi@example.com',
   telefono: '+39 340 1234567',
-  tipoVisita: 'prima-visita',
+  servizio: 'prima-visita',
+  risposte: {
+    'prima-volta': 'si',
+    motivo: 'controllo-generale',
+    dolore: 'no',
+    'ultima-visita': 'meno-di-6-mesi-fa'
+  },
+  modalita: 'prenota',
   dataRichiesta: domani(),
   oraRichiesta: '11:30',
   privacy: true
@@ -94,6 +102,59 @@ test('seconda preferenza completa finisce nel record', () => {
 });
 
 /* -- 5. email non valida -------------------------------------------------- */
+/* -- logica condizionale per servizio ------------------------------------- */
+test('le domande non pertinenti vengono saltate', () => {
+  const s = byService.implantologia;
+  const senza = visibleQuestions(s, {}).map((q) => q.id);
+  const con = visibleQuestions(s, { estratto: 'si' }).map((q) => q.id);
+  assert.ok(!senza.includes('da-quanto'), 'se non si sa se il dente e\' estratto, non si chiede da quanto');
+  assert.ok(con.includes('da-quanto'));
+});
+
+test('ogni servizio ha da una a cinque domande', () => {
+  for (const s of Object.values(byService)) {
+    assert.ok(s.questions.length >= 1 && s.questions.length <= 5, `${s.id}: ${s.questions.length} domande`);
+  }
+});
+
+test('priorita\' interna calcolata dalle risposte, non dal client', () => {
+  assert.equal(computePriority(byService['controllo-generale'], { segnalazione: 'no' }), 'normal');
+  assert.equal(computePriority(byService['controllo-generale'], { segnalazione: 'dolore' }), 'high');
+  assert.equal(computePriority(byService.urgenza, { problema: 'gonfiore' }), 'high');
+  assert.equal(computePriority(byService.trauma, {}), 'urgent');
+  assert.equal(computePriority(byService['dente-del-giudizio'], { apertura: 'si-importante' }), 'urgent');
+});
+
+test('tag automatici: servizio piu\' eventuali tag delle risposte', () => {
+  assert.deepEqual(computeTags(byService.igiene, {}), ['SERVICE_HYGIENE']);
+  assert.deepEqual(computeTags(byService.ortodonzia, { 'per-chi': 'figlio' }), ['SERVICE_ORTHODONTICS', 'SERVICE_PEDIATRIC']);
+});
+
+test('riepilogo: una riga per domanda pertinente', () => {
+  const s = byService.sbiancamento;
+  const a = { 'gia-fatto': 'mai', obiettivo: 'ridurre-macchie', sensibilita: 'no', tempi: 'non-ho-fretta' };
+  const r = buildSummary(s, a);
+  assert.equal(r.length, 4);
+  assert.equal(r[1].value, 'Ridurre macchie');
+});
+
+test('risposta non prevista dalla configurazione: rifiutata', () => {
+  const r = validateAnswers('igiene', { 'ultima-igiene': 'inventata', problemi: ['nessuno'], dispositivi: 'no' });
+  assert.equal(r.ok, false);
+  assert.ok(r.errors['ultima-igiene']);
+});
+
+test('richiesta di richiamata: niente data, servono canale e fascia', async () => {
+  const b = { ...base(), email: 'richiamata@example.com', modalita: 'ricontatto', dataRichiesta: '', oraRichiesta: '' };
+  const senza = await handleBooking(b, ctx());
+  assert.equal(senza.status, 422);
+  assert.ok(senza.body.fields.canale);
+
+  const con = await handleBooking({ ...b, canale: 'whatsapp', fascia: 'pomeriggio' }, ctx());
+  assert.equal(con.status, 201);
+  assert.equal(con.body.riepilogo.modalita, 'ricontatto');
+});
+
 test('email non valida: 422 e campo segnalato', async () => {
   const r = await handleBooking({ ...base(), email: 'mario.rossi@' }, ctx());
   assert.equal(r.status, 422);
@@ -223,11 +284,23 @@ test('email allo studio: oggetto riconoscibile e azioni rapide', () => {
   const v = validateBooking(base());
   const rec = buildRecord(v.data, { bookingId: 'APT-2026-000006' });
   const { subject, html } = emailStudio(rec);
-  assert.match(subject, /^Nuova richiesta appuntamento — Mario Rossi — /);
+  assert.match(subject, /^Nuova richiesta Prima visita — Mario Rossi — /);
   assert.ok(html.includes('tel:'));
   assert.ok(html.includes('mailto:'));
   assert.ok(html.includes('wa.me'));
   assert.ok(html.includes('PENDING'));
+  assert.ok(html.includes('SERVICE_FIRST_VISIT'), 'i tag interni compaiono nella mail allo studio');
+});
+
+test('oggetto in evidenza quando la priorita\' e\' alta o urgente', () => {
+  const v = validateBooking({ ...base(), servizio: 'trauma', risposte: { quando: 'meno-di-2-ore-fa', cosa: ['dente-perso'] } });
+  assert.equal(v.ok, true);
+  const rec = buildRecord(v.data, { bookingId: 'APT-2026-000008' });
+  assert.equal(rec.priority, 'urgent');
+  assert.match(emailStudio(rec).subject, /^\[URGENTE\] /);
+  // al paziente non viene mai mostrata la classificazione interna
+  const p = emailPaziente(rec);
+  assert.ok(!/URGENTE|priorit/i.test(p.text));
 });
 
 test('codice richiesta nel formato previsto', () => {

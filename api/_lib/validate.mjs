@@ -3,18 +3,11 @@
  * Non si fida mai del client: il browser puo' essere aggirato.
  */
 
-export const VISIT_TYPES = [
-  { value: 'prima-visita', label: 'Prima visita' },
-  { value: 'igiene', label: 'Igiene dentale' },
-  { value: 'controllo', label: 'Controllo' },
-  { value: 'ortodonzia', label: 'Ortodonzia' },
-  { value: 'implantologia', label: 'Implantologia' },
-  { value: 'estetica', label: 'Estetica dentale' },
-  { value: 'urgenza', label: 'Urgenza' },
-  { value: 'altro', label: 'Altro' }
-];
+import { byService, validateAnswers, computePriority, computeTags, buildSummary, flows } from './flows.mjs';
 
-const LABELS = Object.fromEntries(VISIT_TYPES.map((t) => [t.value, t.label]));
+/** L'elenco dei servizi arriva dalla configurazione, non da una copia qui. */
+export const VISIT_TYPES = flows.services.map((s) => ({ value: s.id, label: s.label }));
+const LABELS = Object.fromEntries(flows.services.map((s) => [s.id, s.label]));
 
 const LIMITS = {
   nome: 60,
@@ -93,26 +86,56 @@ export function validateBooking(body = {}, opts = {}) {
     errors.telefono = 'Inserisci un numero di telefono valido.';
   }
 
-  d.tipoVisita = clean(body.tipoVisita, 40);
-  if (!LABELS[d.tipoVisita]) errors.tipoVisita = 'Scegli il tipo di visita.';
-  d.tipoVisitaLabel = LABELS[d.tipoVisita] || '';
-
-  d.dataRichiesta = clean(body.dataRichiesta, 10);
-  const dataErr = checkDate(d.dataRichiesta, opts);
-  if (dataErr) errors.dataRichiesta = 'Scegli una data valida: ' + dataErr + '.';
-
-  d.oraRichiesta = clean(body.oraRichiesta, LIMITS.ora);
-  if (!TIME_RE.test(d.oraRichiesta)) errors.oraRichiesta = 'Scegli un orario.';
-
-  // seconda preferenza: facoltativa, ma se c'e' deve essere coerente
-  d.secondaData = clean(body.secondaData, 10);
-  d.secondaOra = clean(body.secondaOra, LIMITS.ora);
-  if (d.secondaData) {
-    const e = checkDate(d.secondaData, opts);
-    if (e) errors.secondaData = 'Seconda preferenza non valida: ' + e + '.';
+  // servizio richiesto e risposte alle sue domande condizionali
+  d.tipoVisita = clean(body.servizio ?? body.tipoVisita, 40);
+  const servizio = byService[d.tipoVisita];
+  if (!servizio) {
+    errors.servizio = 'Scegli il servizio.';
+  } else {
+    d.tipoVisitaLabel = servizio.label;
+    const ris = validateAnswers(d.tipoVisita, body.risposte || {});
+    if (!ris.ok) {
+      for (const [k, v] of Object.entries(ris.errors)) errors['risposte.' + k] = v;
+    } else {
+      d.risposte = ris.answers;
+      d.riepilogoServizio = buildSummary(servizio, ris.answers);
+      d.priorita = computePriority(servizio, ris.answers);
+      d.tags = computeTags(servizio, ris.answers);
+    }
   }
-  if (d.secondaOra && !TIME_RE.test(d.secondaOra)) errors.secondaOra = 'Secondo orario non valido.';
-  if (d.secondaOra && !d.secondaData) errors.secondaData = 'Indica anche il giorno della seconda preferenza.';
+
+  // appuntamento oppure richiamata: cambiano i campi obbligatori
+  d.modalita = clean(body.modalita, 20) || 'prenota';
+  if (!['prenota', 'ricontatto'].includes(d.modalita)) errors.modalita = 'Scegli come vuoi procedere.';
+
+  if (d.modalita === 'prenota') {
+    d.dataRichiesta = clean(body.dataRichiesta, 10);
+    const dataErr = checkDate(d.dataRichiesta, opts);
+    if (dataErr) errors.dataRichiesta = 'Scegli una data valida: ' + dataErr + '.';
+
+    d.oraRichiesta = clean(body.oraRichiesta, LIMITS.ora);
+    if (!TIME_RE.test(d.oraRichiesta)) errors.oraRichiesta = 'Scegli un orario.';
+
+    // seconda preferenza: facoltativa, ma se c'e' deve essere coerente
+    d.secondaData = clean(body.secondaData, 10);
+    d.secondaOra = clean(body.secondaOra, LIMITS.ora);
+    if (d.secondaData) {
+      const e = checkDate(d.secondaData, opts);
+      if (e) errors.secondaData = 'Seconda preferenza non valida: ' + e + '.';
+    }
+    if (d.secondaOra && !TIME_RE.test(d.secondaOra)) errors.secondaOra = 'Secondo orario non valido.';
+    if (d.secondaOra && !d.secondaData) errors.secondaData = 'Indica anche il giorno della seconda preferenza.';
+  } else {
+    // richiamata: data e ora non servono, servono canale e fascia oraria
+    d.dataRichiesta = '';
+    d.oraRichiesta = '';
+    d.secondaData = '';
+    d.secondaOra = '';
+    d.canale = clean(body.canale, 20);
+    if (!['telefono', 'whatsapp', 'email'].includes(d.canale)) errors.canale = 'Scegli come preferisci essere contattato.';
+    d.fascia = clean(body.fascia, 20);
+    if (!['mattina', 'pausa-pranzo', 'pomeriggio', 'sera'].includes(d.fascia)) errors.fascia = 'Scegli quando preferisci essere contattato.';
+  }
 
   d.dottore = clean(body.dottore, LIMITS.dottore) || 'Nessuna preferenza';
   d.messaggio = cleanMultiline(body.messaggio, LIMITS.messaggio);

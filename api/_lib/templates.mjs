@@ -79,6 +79,14 @@ const shell = (titolo, contenuto, { preheader = '' } = {}) => `<!DOCTYPE html>
 </body>
 </html>`;
 
+const CANALE = { telefono: 'Telefono', whatsapp: 'WhatsApp', email: 'Email' };
+const FASCIA = { mattina: 'Mattina', 'pausa-pranzo': 'Pausa pranzo', pomeriggio: 'Pomeriggio', sera: 'Sera' };
+const PRIORITA = { normal: 'Normale', high: 'Alta', urgent: 'Urgente' };
+
+/** Righe generate dalle domande del servizio scelto. */
+const righeServizio = (r) =>
+  (r.riepilogo_servizio || []).map((x) => row(x.label, escapeHtml(x.value))).join('');
+
 /** Riepilogo condiviso dalle due email. */
 function riepilogo(r, { perStudio = false } = {}) {
   const seconda = r.seconda_preferenza
@@ -90,9 +98,16 @@ function riepilogo(r, { perStudio = false } = {}) {
   ${row('Codice richiesta', `<span style="font-family:'SFMono-Regular',Menlo,Consolas,monospace;letter-spacing:.04em">${escapeHtml(r.booking_id)}</span>`, { mono: true })}
   ${row('Nome', escapeHtml(r.nome + ' ' + r.cognome))}
   ${row('Trattamento / motivo', escapeHtml(r.tipo_visita))}
-  ${row('Data richiesta', escapeHtml(dateIt(r.data_richiesta)))}
-  ${row('Orario richiesto', escapeHtml(r.ora_richiesta))}
-  ${row('Seconda preferenza', seconda)}
+  ${righeServizio(r)}
+  ${
+    r.modalita === 'ricontatto'
+      ? row('Modalita', 'Richiamata') +
+        row('Canale preferito', escapeHtml(CANALE[r.canale_contatto] || r.canale_contatto || '—')) +
+        row('Fascia oraria', escapeHtml(FASCIA[r.fascia_contatto] || r.fascia_contatto || '—'))
+      : row('Data richiesta', escapeHtml(dateIt(r.data_richiesta))) +
+        row('Orario richiesto', escapeHtml(r.ora_richiesta)) +
+        row('Seconda preferenza', seconda)
+  }
   ${row('Professionista', escapeHtml(r.professionista))}
   ${row('Telefono', `<a href="tel:${escapeHtml(r.telefono.replace(/\s/g, ''))}" style="color:${NAVY};text-decoration:none">${escapeHtml(r.telefono)}</a>`)}
   ${row('Email', `<a href="mailto:${escapeHtml(r.email)}" style="color:${NAVY};text-decoration:none">${escapeHtml(r.email)}</a>`)}
@@ -106,9 +121,18 @@ const riepilogoTesto = (r, { perStudio = false } = {}) =>
     'Codice richiesta: ' + r.booking_id,
     'Nome: ' + r.nome + ' ' + r.cognome,
     'Trattamento / motivo: ' + r.tipo_visita,
-    'Data richiesta: ' + dateIt(r.data_richiesta),
-    'Orario richiesto: ' + r.ora_richiesta,
-    'Seconda preferenza: ' + (r.seconda_preferenza ? dateIt(r.seconda_preferenza.slice(0, 10)) + (r.seconda_preferenza.length > 10 ? ' alle ' + r.seconda_preferenza.slice(11) : '') : '—'),
+    ...(r.riepilogo_servizio || []).map((x) => x.label + ': ' + x.value),
+    ...(r.modalita === 'ricontatto'
+      ? [
+          'Modalita: richiamata',
+          'Canale preferito: ' + (CANALE[r.canale_contatto] || '—'),
+          'Fascia oraria: ' + (FASCIA[r.fascia_contatto] || '—')
+        ]
+      : [
+          'Data richiesta: ' + dateIt(r.data_richiesta),
+          'Orario richiesto: ' + r.ora_richiesta,
+          'Seconda preferenza: ' + (r.seconda_preferenza ? dateIt(r.seconda_preferenza.slice(0, 10)) + (r.seconda_preferenza.length > 10 ? ' alle ' + r.seconda_preferenza.slice(11) : '') : '—')
+        ]),
     'Professionista: ' + r.professionista,
     'Telefono: ' + r.telefono,
     'Email: ' + r.email,
@@ -194,15 +218,23 @@ export function emailStudio(r) {
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:0 0 22px">
   <tr><td bgcolor="${NAVY_DARK}" style="padding:16px 20px">
     <p style="margin:0;font:500 11px/1 Helvetica,Arial,sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#9dbada">Sito web</p>
-    <p style="margin:6px 0 0;font:400 22px/1.2 Georgia,'Times New Roman',serif;color:#ffffff">Nuova richiesta di appuntamento</p>
+    <p style="margin:6px 0 0;font:400 22px/1.2 Georgia,'Times New Roman',serif;color:#ffffff">${escapeHtml(r.tipo_visita || 'Nuova richiesta')}</p>
+    <p style="margin:8px 0 0;font:500 11px/1.5 Helvetica,Arial,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:${r.priority === 'urgent' ? '#ffb4a8' : r.priority === 'high' ? '#ffd9a8' : '#9dbada'}">
+      Priorita&#39; interna: ${escapeHtml(PRIORITA[r.priority] || 'Normale')}${r.modalita === 'ricontatto' ? ' · richiamata' : ''}
+    </p>
   </td></tr>
 </table>
+<p style="margin:0 0 18px;font:400 12px/1.6 Helvetica,Arial,sans-serif;color:${MUTED}">
+  La priorita&#39; e&#39; una classificazione interna per organizzare le richieste, ricavata dalle
+  risposte del paziente. Non e&#39; una diagnosi e non e&#39; stata mostrata al paziente.
+</p>
 ${riepilogo(r, { perStudio: true })}
 <p style="margin:24px 0 10px;font:500 11px/1 Helvetica,Arial,sans-serif;letter-spacing:.18em;text-transform:uppercase;color:${MUTED}">Azioni rapide</p>
 ${button('tel:' + tel, 'Chiama il cliente')}
 ${button('mailto:' + r.email, 'Invia email', { light: true })}
 ${wa ? button('https://wa.me/' + wa, 'WhatsApp', { light: true }) : ''}
 <p style="margin:20px 0 0;font:400 13px/1.7 Helvetica,Arial,sans-serif;color:${MUTED}">
+  Tag: <strong style="color:${INK}">${escapeHtml((r.tags || []).join(' · ') || '—')}</strong><br>
   Stato attuale della richiesta: <strong style="color:${INK}">PENDING</strong>.
   Va confermata contattando il paziente: l&#39;email inviata al paziente non conferma giorno e orario.
 </p>`,
@@ -211,6 +243,9 @@ ${wa ? button('https://wa.me/' + wa, 'WhatsApp', { light: true }) : ''}
 
   const text = [
     'NUOVA RICHIESTA DI APPUNTAMENTO',
+    'Servizio: ' + r.tipo_visita,
+    'Priorita interna: ' + (PRIORITA[r.priority] || 'Normale') + (r.modalita === 'ricontatto' ? ' - richiamata' : ''),
+    'Tag: ' + ((r.tags || []).join(' ') || '-'),
     '',
     riepilogoTesto(r, { perStudio: true }),
     '',
@@ -223,8 +258,11 @@ ${wa ? button('https://wa.me/' + wa, 'WhatsApp', { light: true }) : ''}
     .filter(Boolean)
     .join('\n');
 
+  const quando = r.modalita === 'ricontatto' ? 'richiamata' : dateIt(r.data_richiesta);
+  const urgente = r.priority === 'urgent' ? '[URGENTE] ' : r.priority === 'high' ? '[PRIORITA ALTA] ' : '';
+
   return {
-    subject: `Nuova richiesta appuntamento — ${r.nome} ${r.cognome} — ${dateIt(r.data_richiesta)}`,
+    subject: `${urgente}Nuova richiesta ${r.tipo_visita} — ${r.nome} ${r.cognome} — ${quando}`,
     html,
     text
   };

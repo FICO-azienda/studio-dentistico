@@ -359,89 +359,422 @@
     });
   };
 
-  /* -- Wizard prenotazione -------------------------------------------------*/
+  /* -- Wizard di prenotazione guidato dalla configurazione ------------------
+     I passi non sono scritti qui: vengono dedotti da content/booking-flows.json.
+     Una domanda la cui condizione non e' soddisfatta viene saltata, cosi' non
+     si chiede mai qualcosa di non pertinente. Le risposte restano in memoria:
+     tornando indietro non si perde nulla. Priorita' e tag li calcola il
+     server, non il browser.                                                  */
   const wizard = () => {
     const wz = $('[data-wizard]');
     if (!wz) return;
-    const panels = $$('.wizard__panel', wz);
-    const steps = $$('.wizard__steps li', wz);
-    const state = { tipo: '', tipoLabel: '', dottore: 'Nessuna preferenza', giorno: '', giornoLabel: '', ora: '' };
+
+    const cfgEl = $('script[data-flows]');
+    const slotEl = $('script[data-slots]');
+    if (!cfgEl) return;
+    const cfg = JSON.parse(cfgEl.textContent);
+    const slots = slotEl ? JSON.parse(slotEl.textContent) : { orari: [], dottori: [] };
+
+    const stage = $('[data-stage]', wz);
+    const finale = $('[data-final]', wz);
+    const nav = $('[data-nav]', wz);
+    const btnNext = $('[data-next]', wz);
+    const btnBack = $('[data-back]', wz);
+    const barra = $('[data-progress-bar]', wz);
+    const etichetta = $('[data-progress-label]', wz);
+    const servizioLabel = $('[data-progress-service]', wz);
+    const form = $('form[data-booking]', wz);
     const apertoIl = Date.now();
-    let idx = 0;
 
-    let started = false;
-    const show = (i) => {
-      idx = clamp(i, 0, panels.length - 1);
-      panels.forEach((p, n) => (p.hidden = n !== idx));
-      steps.forEach((s, n) => s.setAttribute('data-state', n === idx ? 'current' : n < idx ? 'done' : 'todo'));
-      const title = $('h2, h3', panels[idx]);
-      if (title) title.setAttribute('tabindex', '-1');
-      if (started && idx > 0) title?.focus({ preventScroll: true });
-      // al primo render non si sposta la pagina: la hero deve restare visibile
-      if (started) wz.scrollIntoView({ behavior: reduced() ? 'auto' : 'smooth', block: 'start' });
-      syncSummary();
-      syncNext();
+    const state = {
+      servizio: '',
+      servizioOrigine: '',
+      risposte: {},
+      modalita: '',
+      canale: '',
+      fascia: '',
+      giorno: '',
+      giornoLabel: '',
+      ora: '',
+      secondaData: '',
+      secondaOra: '',
+      dottore: 'Nessuna preferenza'
     };
 
-    const syncSummary = () => {
-      $$('[data-summary]', wz).forEach((el) => {
-        const k = el.dataset.summary === 'giorno' ? 'giornoLabel' : el.dataset.summary;
-        el.textContent = state[k] || '—';
-      });
-      const hidden = $('[data-booking-detail]', wz);
-      if (hidden) hidden.value = `${state.tipoLabel} · ${state.dottore} · ${state.giornoLabel} ${state.ora}`;
+    const servizio = () => cfg.services.find((s) => s.id === state.servizio) || null;
+
+    /** Stessa regola del server: una domanda si mostra solo se pertinente. */
+    const visibile = (q) => {
+      if (!q.when) return true;
+      const val = state.risposte[q.when.q];
+      const lista = Array.isArray(val) ? val : val ? [val] : [];
+      if (q.when.in) return lista.some((v) => q.when.in.includes(v));
+      if (q.when.not) return lista.length > 0 && !lista.some((v) => q.when.not.includes(v));
+      return true;
     };
 
-    const syncNext = () => {
-      const next = $('[data-next]', panels[idx]);
-      if (!next) return;
-      const need = panels[idx].dataset.requires;
-      next.disabled = need ? need.split(' ').some((k) => !state[k]) : false;
+    /** Sequenza dei passi, ricalcolata a ogni risposta. */
+    const passi = () => {
+      const out = [{ kind: 'service' }];
+      const s = servizio();
+      if (!s) return out;
+      s.questions.filter(visibile).forEach((q) => out.push({ kind: 'question', q }));
+      out.push({ kind: 'mode' });
+      if (state.modalita === 'prenota') out.push({ kind: 'when' });
+      if (state.modalita === 'ricontatto') out.push({ kind: 'contact' });
+      out.push({ kind: 'final' });
+      return out;
     };
 
-    // giorni disponibili generati a runtime: niente date che invecchiano nell'HTML
-    const days = $('[data-days]', wz);
-    if (days) {
+    let i = 0;
+
+    /* -- mattoni dell'interfaccia ----------------------------------------- */
+    const opzione = (v, l, sotto, premuto) =>
+      `<button class="option" type="button" data-pick="${v}" aria-pressed="${premuto ? 'true' : 'false'}">
+        <strong>${l}</strong>${sotto ? `<span class="small" style="color:var(--stone)">${sotto}</span>` : ''}
+      </button>`;
+
+    const titolo = (t, sub) =>
+      `<h2 class="h3">${t}</h2>${sub ? `<p class="body mt-1 measure-sm">${sub}</p>` : ''}`;
+
+    const giorniDisponibili = () => {
       const out = [];
       const d = new Date();
       d.setHours(12, 0, 0, 0);
       while (out.length < 12) {
         d.setDate(d.getDate() + 1);
         if (d.getDay() === 0) continue; // domenica chiuso
-        const label = d.toLocaleDateString('it-IT', { weekday: 'short' });
-        const month = d.toLocaleDateString('it-IT', { month: 'short' });
-        const full = d.toLocaleDateString('it-IT', { weekday: 'long', day: 'numeric', month: 'long' });
-        const iso = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
-        out.push(`<button class="day" type="button" data-set="giorno" data-value="${iso}" data-label="${full}" aria-pressed="false">
-          <span>${label}</span><strong>${d.getDate()}</strong><span>${month}</span>
-        </button>`);
+        out.push({
+          iso: `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`,
+          gs: d.toLocaleDateString('it-IT', { weekday: 'short' }),
+          n: d.getDate(),
+          ms: d.toLocaleDateString('it-IT', { month: 'short' }),
+          full: d.toLocaleDateString('it-IT', { weekday: 'long', day: 'numeric', month: 'long' })
+        });
       }
-      days.innerHTML = out.join('');
-    }
+      return out;
+    };
 
-    $$('[data-set]', wz).forEach((btn) => {
-      btn.addEventListener('click', () => {
-        const key = btn.dataset.set;
-        const scope = btn.closest('[data-group]') || wz;
-        $$(`[data-set="${key}"]`, scope).forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
-        state[key] = btn.dataset.value;
-        if (key === 'tipo') state.tipoLabel = btn.dataset.label || btn.dataset.value;
-        if (key === 'giorno') state.giornoLabel = btn.dataset.label || btn.dataset.value;
-        syncSummary(); syncNext();
-      });
+    /* -- disegno dei passi -------------------------------------------------- */
+    const disegnaServizi = () => {
+      const gruppi = cfg.groups
+        .map((g) => {
+          const items = cfg.services.filter((s) => s.group === g.id);
+          if (!items.length) return '';
+          return `<div class="svc-group" data-group-block>
+            <p class="label mt-3">${g.label}</p>
+            <div class="option-grid mt-2">
+              ${items.map((s) => opzione(s.id, s.label, s.hint, state.servizio === s.id)).join('')}
+            </div>
+          </div>`;
+        })
+        .join('');
+      return `${titolo(cfg.chooseLabel, cfg.chooseHint)}
+        <label class="field mt-3"><span class="sr-only">Cerca un servizio</span>
+          <input type="search" data-svc-search placeholder="${cfg.searchPlaceholder}" autocomplete="off">
+        </label>
+        ${gruppi}`;
+    };
+
+    const disegnaDomanda = (q) => {
+      const val = state.risposte[q.id];
+      if (q.type === 'text') {
+        return `${titolo(q.q)}
+          <label class="field mt-3"><span class="sr-only">${q.q}</span>
+            <textarea data-text rows="4" placeholder="${q.placeholder || ''}">${val ? String(val) : ''}</textarea>
+          </label>`;
+      }
+      const scelte = Array.isArray(val) ? val : val ? [val] : [];
+      const multi = q.type === 'multi';
+      return `${titolo(q.q, multi ? 'Puoi scegliere più di una risposta.' : '')}
+        ${q.note ? `<p class="small mt-2" style="color:var(--stone-light)">${q.note}</p>` : ''}
+        <div class="option-grid mt-3" data-multi="${multi}">
+          ${q.options.map((o) => opzione(o.v, o.l, '', scelte.includes(o.v))).join('')}
+        </div>`;
+    };
+
+    const disegnaModalita = () => {
+      const q = cfg.tail.modeQuestion;
+      return `${titolo(q.q)}
+        <div class="option-grid mt-3">
+          ${q.options
+            .map((o) =>
+              opzione(
+                o.v,
+                o.l,
+                o.v === 'prenota' ? 'Scegli giorno e orario dal calendario.' : 'Ti richiamiamo noi quando preferisci.',
+                state.modalita === o.v
+              )
+            )
+            .join('')}
+        </div>`;
+    };
+
+    const disegnaQuando = () => {
+      const giorni = giorniDisponibili();
+      return `${titolo('Quando ti è comodo?', 'Gli orari mostrati sono indicativi: la segreteria conferma la disponibilità effettiva.')}
+        <p class="label mt-4">Giorno</p>
+        <div class="daypick mt-2">
+          ${giorni
+            .map(
+              (g) => `<button class="day" type="button" data-day="${g.iso}" data-label="${g.full}" aria-pressed="${state.giorno === g.iso}">
+            <span>${g.gs}</span><strong>${g.n}</strong><span>${g.ms}</span>
+          </button>`
+            )
+            .join('')}
+        </div>
+        <p class="label mt-4">Orario</p>
+        <div class="slots mt-2">
+          ${slots.orari.map((h) => `<button class="slot" type="button" data-hour="${h}" aria-pressed="${state.ora === h}">${h}</button>`).join('')}
+        </div>
+        <p class="label mt-4">Seconda preferenza <span style="text-transform:none;letter-spacing:0;color:var(--stone-light)">— facoltativa</span></p>
+        <div class="form-grid mt-2">
+          <label class="field"><span class="field__label label">Giorno alternativo</span>
+            <input type="date" data-second-date value="${state.secondaData}"></label>
+          <label class="field"><span class="field__label label">Orario alternativo</span>
+            <select data-second-hour>
+              <option value="">Nessuna preferenza</option>
+              ${slots.orari.map((h) => `<option value="${h}"${state.secondaOra === h ? ' selected' : ''}>${h}</option>`).join('')}
+            </select>
+          </label>
+        </div>
+        <p class="label mt-4">Professionista</p>
+        <label class="field"><span class="sr-only">Professionista</span>
+          <select data-doctor>
+            ${slots.dottori.map((n) => `<option value="${n}"${state.dottore === n ? ' selected' : ''}>${n}</option>`).join('')}
+          </select>
+        </label>`;
+    };
+
+    const disegnaContatto = () => {
+      const c = cfg.tail.channelQuestion;
+      const f = cfg.tail.windowQuestion;
+      return `${titolo(c.q)}
+        <div class="option-grid mt-3" data-field="canale">
+          ${c.options.map((o) => opzione(o.v, o.l, '', state.canale === o.v)).join('')}
+        </div>
+        <p class="h4 mt-5">${f.q}</p>
+        <div class="option-grid mt-3" data-field="fascia">
+          ${f.options.map((o) => opzione(o.v, o.l, '', state.fascia === o.v)).join('')}
+        </div>`;
+    };
+
+    /* -- riepilogo ---------------------------------------------------------- */
+    const etichettaOpzione = (q, v) => (q.options.find((o) => o.v === v) || {}).l || v;
+
+    const riepilogo = () => {
+      const s = servizio();
+      const righe = [];
+      if (state.servizioOrigine) righe.push(['Richiesta iniziale', cfg.services.find((x) => x.id === state.servizioOrigine)?.label || '—']);
+      righe.push(['Servizio', s ? s.label : '—']);
+      if (s) {
+        s.questions.filter(visibile).forEach((q) => {
+          const val = state.risposte[q.id];
+          if (!val || (Array.isArray(val) && !val.length)) return;
+          righe.push([q.q, q.type === 'text' ? String(val) : (Array.isArray(val) ? val : [val]).map((v) => etichettaOpzione(q, v)).join(', ')]);
+        });
+      }
+      if (state.modalita === 'prenota') {
+        righe.push(['Giorno', state.giornoLabel || '—']);
+        righe.push(['Orario', state.ora || '—']);
+        if (state.secondaData) righe.push(['Seconda preferenza', state.secondaData + (state.secondaOra ? ' alle ' + state.secondaOra : '')]);
+        righe.push(['Professionista', state.dottore]);
+      } else if (state.modalita === 'ricontatto') {
+        righe.push(['Modalità', 'Richiamata']);
+        righe.push(['Canale preferito', etichettaOpzione(cfg.tail.channelQuestion, state.canale)]);
+        righe.push(['Fascia oraria', etichettaOpzione(cfg.tail.windowQuestion, state.fascia)]);
+      }
+      return righe;
+    };
+
+    const aggiornaRiepilogo = () => {
+      const dl = $('[data-summary-list]', wz);
+      if (!dl) return;
+      dl.innerHTML = riepilogo()
+        .map(([k, v]) => `<div><dt>${k}</dt><dd>${String(v).replace(/</g, '&lt;')}</dd></div>`)
+        .join('');
+    };
+
+    /* -- avanzamento e validazione del passo -------------------------------- */
+    const passoCompleto = (p) => {
+      if (p.kind === 'service') return !!state.servizio;
+      if (p.kind === 'question') {
+        const val = state.risposte[p.q.id];
+        if (p.q.type === 'text') return String(val || '').trim().length >= 3;
+        return Array.isArray(val) ? val.length > 0 : !!val;
+      }
+      if (p.kind === 'mode') return !!state.modalita;
+      if (p.kind === 'when') return !!state.giorno && !!state.ora;
+      if (p.kind === 'contact') return !!state.canale && !!state.fascia;
+      return true;
+    };
+
+    const render = () => {
+      const lista = passi();
+      i = Math.max(0, Math.min(i, lista.length - 1));
+      const p = lista[i];
+      const totale = lista.length;
+
+      // finche' il servizio non e' scelto non si conosce il numero di passi
+      const noto = !!servizio();
+      if (barra) barra.style.width = noto ? `${Math.round(((i + 1) / totale) * 100)}%` : '6%';
+      if (etichetta) etichetta.textContent = noto ? `Passo ${i + 1} di ${totale}` : 'Scegli il servizio';
+      if (servizioLabel) servizioLabel.textContent = servizio() ? servizio().label : '';
+
+      if (p.kind === 'final') {
+        stage.innerHTML = '';
+        stage.hidden = true;
+        nav.hidden = true;
+        finale.hidden = false;
+        aggiornaRiepilogo();
+        const h = $('h2', finale);
+        h?.setAttribute('tabindex', '-1');
+        h?.focus({ preventScroll: true });
+      } else {
+        finale.hidden = true;
+        stage.hidden = false;
+        nav.hidden = false;
+        stage.innerHTML =
+          p.kind === 'service'
+            ? disegnaServizi()
+            : p.kind === 'question'
+              ? disegnaDomanda(p.q)
+              : p.kind === 'mode'
+                ? disegnaModalita()
+                : p.kind === 'when'
+                  ? disegnaQuando()
+                  : disegnaContatto();
+        stage.dataset.kind = p.kind;
+        stage.dataset.question = p.kind === 'question' ? p.q.id : '';
+        btnBack.hidden = i === 0;
+        btnNext.textContent = lista[i + 1] && lista[i + 1].kind === 'final' ? 'Vai ai tuoi dati' : 'Continua';
+        btnNext.disabled = !passoCompleto(p);
+      }
+
+      if (i > 0) wz.scrollIntoView({ behavior: reduced() ? 'auto' : 'smooth', block: 'start' });
+    };
+
+    const aggiornaAvanti = () => {
+      const lista = passi();
+      btnNext.disabled = !passoCompleto(lista[Math.min(i, lista.length - 1)]);
+    };
+
+    /* -- interazioni -------------------------------------------------------- */
+    stage.addEventListener('click', (e) => {
+      const b = e.target.closest('[data-pick], [data-day], [data-hour]');
+      if (!b) return;
+      const kind = stage.dataset.kind;
+
+      if (b.dataset.day) {
+        state.giorno = b.dataset.day;
+        state.giornoLabel = b.dataset.label;
+        $$('[data-day]', stage).forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+        aggiornaAvanti();
+        return;
+      }
+      if (b.dataset.hour) {
+        state.ora = b.dataset.hour;
+        $$('[data-hour]', stage).forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+        aggiornaAvanti();
+        return;
+      }
+
+      const v = b.dataset.pick;
+
+      if (kind === 'service') {
+        state.servizio = v;
+        state.servizioOrigine = '';
+        state.risposte = {};
+        i = 1;
+        render();
+        return;
+      }
+
+      if (kind === 'question') {
+        const s = servizio();
+        const q = s.questions.find((x) => x.id === stage.dataset.question);
+        const opt = q.options.find((o) => o.v === v);
+
+        // alcune risposte indirizzano a un percorso piu' specifico
+        if (opt && opt.goto) {
+          state.servizioOrigine = state.servizio;
+          state.servizio = opt.goto;
+          state.risposte = {};
+          i = 1;
+          render();
+          return;
+        }
+
+        if (q.type === 'multi') {
+          const cur = Array.isArray(state.risposte[q.id]) ? [...state.risposte[q.id]] : [];
+          const pos = cur.indexOf(v);
+          if (pos >= 0) cur.splice(pos, 1);
+          else cur.push(v);
+          state.risposte[q.id] = cur;
+          b.setAttribute('aria-pressed', String(cur.includes(v)));
+        } else {
+          state.risposte[q.id] = v;
+          $$('[data-pick]', stage).forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+        }
+        aggiornaAvanti();
+        return;
+      }
+
+      if (kind === 'mode') {
+        state.modalita = v;
+        $$('[data-pick]', stage).forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+        aggiornaAvanti();
+        return;
+      }
+
+      if (kind === 'contact') {
+        const campo = b.closest('[data-field]').dataset.field;
+        state[campo] = v;
+        $$('[data-pick]', b.closest('[data-field]')).forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+        aggiornaAvanti();
+      }
     });
-    bookingSubmit(wz, state, apertoIl);
 
-    $$('[data-next]', wz).forEach((b) => b.addEventListener('click', () => show(idx + 1)));
-    $$('[data-prev]', wz).forEach((b) => b.addEventListener('click', () => show(idx - 1)));
-    show(0);
-    started = true;
-  };
+    stage.addEventListener('input', (e) => {
+      const t = e.target;
+      if (t.matches('[data-text]')) {
+        state.risposte[stage.dataset.question] = t.value;
+        aggiornaAvanti();
+      }
+      if (t.matches('[data-second-date]')) state.secondaData = t.value;
+      if (t.matches('[data-second-hour]')) state.secondaOra = t.value;
+      if (t.matches('[data-doctor]')) state.dottore = t.value;
+      if (t.matches('[data-svc-search]')) {
+        const q = t.value.trim().toLowerCase();
+        $$('[data-group-block]', stage).forEach((blocco) => {
+          let visibili = 0;
+          $$('[data-pick]', blocco).forEach((b) => {
+            const ok = !q || b.textContent.toLowerCase().includes(q);
+            b.style.display = ok ? '' : 'none';
+            if (ok) visibili++;
+          });
+          blocco.hidden = visibili === 0;
+        });
+      }
+    });
 
-  /* -- Invio della richiesta di appuntamento -------------------------------*/
-  const bookingSubmit = (wz, state, apertoIl) => {
-    const form = $('form[data-booking]', wz);
-    if (!form) return;
+    btnNext.addEventListener('click', () => { i += 1; render(); });
+    btnBack.addEventListener('click', () => { i -= 1; render(); });
+    $('[data-back-final]', wz)?.addEventListener('click', () => {
+      i = passi().length - 2;
+      render();
+    });
+
+    render();
+
+    /* -- invio -------------------------------------------------------------- */
+    const done = $('#booking-done', wz);
+    const box = $('[data-form-error]', form);
+    const btn = $('[data-submit]', form);
+    const endpoint = wz.dataset.endpoint || '';
+    const demo = !endpoint || wz.dataset.mode !== 'live';
+    let inviando = false;
+
     form.setAttribute('novalidate', '');
     $$('input, textarea, select', form).forEach((el) => {
       el.addEventListener('blur', () => validateField(el));
@@ -450,12 +783,6 @@
         if (f?.classList.contains('is-invalid')) validateField(el);
       });
     });
-    const done = $('#booking-done', wz);
-    const box = $('[data-form-error]', form);
-    const btn = $('[data-submit]', form);
-    const endpoint = wz.dataset.endpoint || '';
-    const demo = !endpoint || wz.dataset.mode !== 'live';
-    let inviando = false;
 
     const errore = (html) => {
       if (!box) return;
@@ -466,16 +793,20 @@
 
     const mostraConferma = ({ bookingId, emailSent }) => {
       const lead = $('[data-done-lead]', done);
-      const note = $('[data-done-note]', done);
+      const nota = $('[data-done-note]', done);
       const code = $('[data-done-code]', done);
       const nome = form.nome.value.trim();
-      if (lead) lead.textContent = `Grazie, ${nome}. Abbiamo ricevuto la tua richiesta di appuntamento per ${state.giornoLabel} alle ${state.ora}.`;
-      if (note) {
-        note.textContent = demo
+      const quando =
+        state.modalita === 'prenota'
+          ? `per ${state.giornoLabel} alle ${state.ora}`
+          : 'e la richiamata che ci hai chiesto';
+      if (lead) lead.textContent = `Grazie, ${nome}. Abbiamo ricevuto la tua richiesta ${quando}.`;
+      if (nota) {
+        nota.textContent = demo
           ? 'Modalità dimostrativa: nessuna email è stata inviata e nessun appuntamento è stato registrato.'
           : emailSent
             ? 'Ti abbiamo inviato una email con il riepilogo. Il nostro team ti contatterà per confermare definitivamente la disponibilità.'
-            : 'Non siamo riusciti a inviarti l\'email di riepilogo, ma la richiesta è registrata. Il nostro team ti contatterà per confermare la disponibilità.';
+            : "Non siamo riusciti a inviarti l'email di riepilogo, ma la richiesta è registrata. Il nostro team ti contatterà per confermare la disponibilità.";
       }
       if (code) code.textContent = bookingId || '—';
       form.hidden = true;
@@ -492,15 +823,11 @@
       const campi = $$('input, textarea, select', form).filter((el) => !el.disabled);
       const invalidi = campi.filter((el) => !validateField(el));
       if (invalidi.length) { invalidi[0].focus(); return; }
-      if (!state.giorno || !state.ora) {
-        errore('Scegli giorno e orario prima di inviare la richiesta.');
-        return;
-      }
 
       inviando = true;
       btn.classList.add('is-busy');
       btn.disabled = true;
-      const etichetta = btn.textContent;
+      const testo = btn.textContent;
       btn.textContent = 'Invio in corso';
 
       const payload = {
@@ -508,12 +835,16 @@
         cognome: form.cognome.value,
         email: form.email.value,
         telefono: form.telefono.value,
-        tipoVisita: state.tipo,
+        servizio: state.servizio,
+        risposte: state.risposte,
+        modalita: state.modalita,
+        canale: state.canale,
+        fascia: state.fascia,
         dottore: state.dottore,
         dataRichiesta: state.giorno,
         oraRichiesta: state.ora,
-        secondaData: form.secondaData?.value || '',
-        secondaOra: form.secondaOra?.value || '',
+        secondaData: state.secondaData,
+        secondaOra: state.secondaOra,
         messaggio: form.messaggio?.value || '',
         privacy: form.privacy.checked,
         comunicazioni: form.comunicazioni?.checked || false,
@@ -525,12 +856,10 @@
         inviando = false;
         btn.classList.remove('is-busy');
         btn.disabled = false;
-        btn.textContent = etichetta;
+        btn.textContent = testo;
       };
 
       if (demo) {
-        // nessun endpoint configurato: si mostra la conferma dicendo chiaramente
-        // che è una dimostrazione, mai una finta conferma
         setTimeout(() => {
           ripristina();
           mostraConferma({ bookingId: 'APT-DEMO-000000', emailSent: false });
@@ -562,10 +891,7 @@
         }
         if (!res.ok || !data.ok) {
           ripristina();
-          errore(
-            (data.message || 'Non siamo riusciti a inviare la richiesta. Riprova oppure contatta direttamente lo studio.') +
-              ' <a href="tel:' + (form.dataset.phone || '') + '">Chiama lo studio</a>'
-          );
+          errore(data.message || 'Non siamo riusciti a inviare la richiesta. Riprova oppure contatta direttamente lo studio.');
           return;
         }
         ripristina();
@@ -576,6 +902,7 @@
       }
     });
   };
+
 
   /* -- Box domande: elenco, filtro e risposte gia' scritte -----------------*/
   const askBox = () => {

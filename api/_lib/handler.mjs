@@ -26,7 +26,7 @@ const recenti = new Map();
 const inCorso = new Map();
 const DEDUPE_MS = 90 * 1000;
 
-const chiave = (d) => [d.email, d.dataRichiesta, d.oraRichiesta, d.tipoVisita].join('|');
+const chiave = (d) => [d.email, d.modalita, d.dataRichiesta, d.oraRichiesta, d.tipoVisita].join('|');
 
 function dedupe(d, now) {
   for (const [k, v] of recenti) if (now - v.at > DEDUPE_MS) recenti.delete(k);
@@ -139,10 +139,12 @@ async function elabora(data, { ip, userAgent, env, now, k }) {
       stored: salvataggio.saved,
       riepilogo: {
         nome: record.nome,
+        servizio: record.tipo_visita,
+        modalita: record.modalita,
         data: record.data_richiesta,
-        ora: record.ora_richiesta,
-        tipoVisita: record.tipo_visita
+        ora: record.ora_richiesta
       }
+      // priorita' e tag restano interni: non vengono restituiti al browser
     }
   };
 }

@@ -789,6 +789,16 @@ a.card-feature:hover h3, a.article-card:hover h3 { color: var(--navy-500); trans
 .check input:focus-visible + .check__box { outline: 2px solid var(--navy); outline-offset: 3px; }
 
 /* Booking wizard */
+.wizard__progress { margin-bottom: clamp(2rem, 4vw, 3rem); }
+.wizard__bar { height: 2px; background: var(--line); margin-top: 0.7rem; overflow: hidden; }
+.wizard__bar i {
+  display: block; height: 100%; background: var(--navy);
+  transition: width 0.5s var(--ease-out);
+}
+.wizard__stage[hidden] { display: none; }
+.svc-group + .svc-group { margin-top: 1.6rem; }
+.svc-group[hidden] { display: none; }
+.option[style*="display: none"] { display: none !important; }
 .wizard__steps { display: flex; gap: 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); margin-bottom: clamp(2.5rem, 5vw, 4rem); }
 .wizard__steps li { flex: 1; padding: 1.1rem 0.5rem 1.1rem 0; display: flex; gap: 0.7rem; align-items: baseline; color: var(--stone-light); position: relative; }
 .wizard__steps li::after { content: ""; position: absolute; left: 0; bottom: -1px; height: 1px; width: 0; background: var(--ink); transition: width 0.6s var(--ease-out); }

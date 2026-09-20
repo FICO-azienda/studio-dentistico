@@ -1,4 +1,5 @@
 import { site, team, technologies, faqs, treatments, esc, attr, arrow, imgTag, figure, lines, personName, byTreatment, byPerson, metaTitle, treatmentPath } from './utils.mjs';
+import { clientConfig } from '../../api/_lib/flows.mjs';
 import { layout, dentistLd } from './layout.mjs';
 import { sectionHead, stats, personCard, bookingBand, faqList, faqLd, pageHero, testimonials } from './components.mjs';
 
@@ -480,11 +481,13 @@ const VISIT_TYPES = [
 export const bookingPage = () => {
   const base = '../';
   const docs = team.filter((p) => p.featured || p.treatments.length);
+  const orari = ['08:30', '09:15', '10:00', '11:30', '12:15', '14:00', '15:00', '16:30', '17:15', '18:30'];
+
   const main = `
 ${pageHero({
     label: 'Prenota',
     title: lines(['Prenota', '<em class="serif-italic">una visita.</em>']),
-    lead: 'Quattro passaggi, due minuti. Riceverai una conferma via email e un promemoria il giorno prima dell\'appuntamento.',
+    lead: 'Scegli il servizio: le domande cambiano di conseguenza e sono al massimo cinque. Puoi prenotare un appuntamento oppure chiedere di essere ricontattato.',
     aside: `Preferisci parlare?<br><a class="link-inline" href="tel:${attr(site.phoneHref)}">${esc(site.phone)}</a>`,
     crumbs: [{ label: 'Home', path: '' }, { label: 'Prenota' }],
     base
@@ -495,56 +498,24 @@ ${pageHero({
     <div class="grid">
       <div class="col-8">
         <div data-wizard data-endpoint="${attr(site.booking?.endpoint || '')}" data-mode="${attr(site.booking?.mode || 'demo')}">
-          <ol class="wizard__steps">
-            <li data-state="current"><span class="num">01</span><span>Tipo di visita</span></li>
-            <li data-state="todo"><span class="num">02</span><span>Professionista</span></li>
-            <li data-state="todo"><span class="num">03</span><span>Giorno e ora</span></li>
-            <li data-state="todo"><span class="num">04</span><span>I tuoi dati</span></li>
-          </ol>
-
-          <section class="wizard__panel" data-requires="tipo">
-            <h2 class="h3">Di cosa hai bisogno?</h2>
-            <div class="option-grid mt-3" data-group>
-              ${VISIT_TYPES.map(
-                (t) => `<button class="option" type="button" data-set="tipo" data-value="${attr(t.v)}" data-label="${attr(t.l)}" aria-pressed="false">
-                <strong>${esc(t.l)}</strong><span class="small" style="color:var(--stone)">${esc(t.d)}</span>
-              </button>`
-              ).join('')}
+          <div class="wizard__progress">
+            <div class="row row--between">
+              <span class="label" data-progress-label>Passo 1</span>
+              <span class="label" data-progress-service></span>
             </div>
-            <div class="row mt-4"><button class="btn" type="button" data-next disabled>Continua</button></div>
-          </section>
+            <div class="wizard__bar"><i data-progress-bar style="width:0%"></i></div>
+          </div>
 
-          <section class="wizard__panel" hidden>
-            <h2 class="h3">Con chi preferisci?</h2>
-            <p class="body mt-1">Se non hai preferenze, assegniamo il professionista più adatto al tuo caso.</p>
-            <div class="option-grid mt-3" data-group>
-              <button class="option" type="button" data-set="dottore" data-value="Nessuna preferenza" aria-pressed="true"><strong>Nessuna preferenza</strong><span class="small" style="color:var(--stone)">Scegliamo noi in base al motivo della visita.</span></button>
-              ${docs
-                .map(
-                  (p) => `<button class="option" type="button" data-set="dottore" data-value="${attr(personName(p))}" aria-pressed="false">
-                <strong>${esc(personName(p))}</strong><span class="small" style="color:var(--stone)">${esc(p.role)}</span>
-              </button>`
-                )
-                .join('')}
-            </div>
-            <div class="row mt-4"><button class="btn btn--ghost" type="button" data-prev>Indietro</button><button class="btn" type="button" data-next>Continua</button></div>
-          </section>
+          <!-- i passi dinamici vengono costruiti dalla configurazione -->
+          <div class="wizard__stage" data-stage aria-live="polite"></div>
 
-          <section class="wizard__panel" hidden data-requires="giorno ora">
-            <h2 class="h3">Quando ti è comodo?</h2>
-            <p class="label mt-3">Giorno</p>
-            <div class="daypick mt-2" data-days data-group aria-label="Scegli il giorno"></div>
-            <p class="label mt-4">Orario</p>
-            <div class="slots mt-2" data-group>
-              ${['08:30', '09:15', '10:00', '11:30', '12:15', '14:00', '15:00', '16:30', '17:15', '18:30']
-                .map((h) => `<button class="slot" type="button" data-set="ora" data-value="${h}" aria-pressed="false">${h}</button>`)
-                .join('')}
-            </div>
-            <p class="small mt-3" style="color:var(--stone-light)">Gli orari mostrati sono indicativi: la segreteria conferma la disponibilità effettiva.</p>
-            <div class="row mt-4"><button class="btn btn--ghost" type="button" data-prev>Indietro</button><button class="btn" type="button" data-next disabled>Continua</button></div>
-          </section>
+          <div class="row mt-4" data-nav>
+            <button class="btn btn--ghost" type="button" data-back hidden>Indietro</button>
+            <button class="btn" type="button" data-next disabled>Continua</button>
+          </div>
 
-          <section class="wizard__panel" hidden>
+          <!-- ultimo passo: dati personali e riepilogo -->
+          <section class="wizard__panel" data-final hidden>
             <h2 class="h3">I tuoi dati</h2>
             <form class="mt-3" data-booking data-validate data-success="#booking-done" novalidate>
               <div class="form-grid">
@@ -553,30 +524,16 @@ ${pageHero({
                 <label class="field"><span class="field__label label">Email *</span><input type="email" name="email" required autocomplete="email"><span class="field__error">Inserisci un indirizzo email valido</span></label>
                 <label class="field"><span class="field__label label">Telefono *</span><input type="tel" name="telefono" required autocomplete="tel" pattern="[0-9 +().-]{6,}"><span class="field__error">Inserisci un numero valido</span></label>
               </div>
-              <p class="label mt-4">Seconda preferenza <span style="text-transform:none;letter-spacing:0;color:var(--stone-light)">— facoltativa</span></p>
-              <div class="form-grid mt-2">
-                <label class="field"><span class="field__label label">Giorno alternativo</span><input type="date" name="secondaData"><span class="field__error">Data non valida</span></label>
-                <label class="field"><span class="field__label label">Orario alternativo</span>
-                  <select name="secondaOra">
-                    <option value="">Nessuna preferenza</option>
-                    ${['08:30', '09:15', '10:00', '11:30', '12:15', '14:00', '15:00', '16:30', '17:15', '18:30']
-                      .map((h) => `<option value="${h}">${h}</option>`)
-                      .join('')}
-                  </select>
-                </label>
-              </div>
               <label class="field mt-3"><span class="field__label label">Note</span><textarea name="messaggio" rows="3" placeholder="Qualcosa che è utile sapere prima dell'appuntamento"></textarea></label>
-              <input type="hidden" name="appuntamento" data-booking-detail>
+
               <!-- esca anti-spam: invisibile alle persone, compilata dai bot -->
               <div aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden">
                 <label>Azienda<input type="text" name="azienda" tabindex="-1" autocomplete="off"></label>
               </div>
-              <dl class="summary-list mt-4">
-                <div><dt>Tipo di visita</dt><dd data-summary="tipoLabel">—</dd></div>
-                <div><dt>Professionista</dt><dd data-summary="dottore">—</dd></div>
-                <div><dt>Giorno</dt><dd data-summary="giorno">—</dd></div>
-                <div><dt>Orario</dt><dd data-summary="ora">—</dd></div>
-              </dl>
+
+              <p class="label mt-4">Riepilogo della richiesta</p>
+              <dl class="summary-list mt-2" data-summary-list></dl>
+
               <label class="check mt-4">
                 <input type="checkbox" name="privacy" required>
                 <span class="check__box" aria-hidden="true"></span>
@@ -587,9 +544,18 @@ ${pageHero({
                 <span class="check__box" aria-hidden="true"></span>
                 <span>Accetto di ricevere comunicazioni relative al mio appuntamento (promemoria e variazioni).</span>
               </label>
+
               <p class="form-error mt-3" data-form-error hidden role="alert"></p>
-              <div class="row mt-4"><button class="btn btn--ghost" type="button" data-prev>Indietro</button><button class="btn" type="submit" data-submit>Conferma richiesta</button></div>
+              <div class="row mt-4">
+                <button class="btn btn--ghost" type="button" data-back-final>Indietro</button>
+                <button class="btn" type="submit" data-submit>Invia richiesta</button>
+              </div>
+              <p class="small mt-2" style="color:var(--stone-light)">
+                Le informazioni raccolte servono alla segreteria per capire la richiesta: non sono una diagnosi.
+                La richiesta non è una conferma, ti ricontattiamo noi.
+              </p>
             </form>
+
             <div class="form-success" id="booking-done" hidden tabindex="-1">
               <h2 class="h2">Richiesta ricevuta.</h2>
               <p class="lead mt-2 measure-sm" style="margin-inline:auto" data-done-lead></p>
@@ -603,10 +569,18 @@ ${pageHero({
               </div>
             </div>
           </section>
+
+          <noscript>
+            <p class="form-note mt-4">
+              Per prenotare online serve JavaScript attivo. In alternativa chiamaci allo
+              <a class="link-inline" href="tel:${attr(site.phoneHref)}">${esc(site.phone)}</a>
+              o scrivici a <a class="link-inline" href="mailto:${attr(site.email)}">${esc(site.email)}</a>.
+            </p>
+          </noscript>
         </div>
       </div>
 
-      <aside class="col-3 start-8" style="grid-column:10 / span 3">
+      <aside class="col-3" style="grid-column:10 / span 3">
         <div class="sticky">
           <div class="sidebar-card">
             <span class="label">Preferisci il telefono?</span>
@@ -622,11 +596,15 @@ ${pageHero({
       </aside>
     </div>
   </div>
-</section>`;
+</section>
+
+<script type="application/json" data-flows>${JSON.stringify(clientConfig()).replace(/</g, '\\u003c')}</script>
+<script type="application/json" data-slots>${JSON.stringify({ orari, dottori: ['Nessuna preferenza', ...docs.map((p) => personName(p))] })}</script>`;
 
   return layout({
     title: 'Prenota una visita — Studio Liddi, dentista a Milano',
-    description: 'Prenota online la tua visita allo Studio Liddi di Milano: scegli il tipo di visita, il professionista e l\'orario che preferisci.',
+    description:
+      'Prenota online la tua visita allo Studio Liddi di Milano: scegli il servizio, rispondi a poche domande e indica quando preferisci.',
     path: 'prenota/',
     depth: 1,
     current: 'prenota/',

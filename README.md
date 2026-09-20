@@ -242,6 +242,55 @@ Finche' `mode` resta `"demo"` il form non invia nulla e la schermata finale lo
 dichiara apertamente. E' una scelta: mostrare una conferma finta a un paziente
 che crede di aver prenotato sarebbe peggio di un form disattivato.
 
+### Logica condizionale per servizio
+
+Il percorso non e' uno solo: ogni servizio ha le sue domande. La configurazione
+sta in **`content/booking-flows.json`** — 27 servizi, 88 domande — e il motore
+(`api/_lib/flows.mjs`) la interpreta sia nel browser sia sul server. Aggiungere
+un servizio significa aggiungere un oggetto al file, mai toccare il codice.
+
+```
+scelta del servizio
+        v
+domande del servizio (max 5, solo quelle pertinenti)
+        v
+appuntamento oppure richiamata
+        v
+dati personali + riepilogo automatico
+```
+
+**Domande saltate.** Una domanda con `when` compare solo se la condizione e'
+soddisfatta. In implantologia, per esempio, "da quanto tempo manca il dente?"
+viene posta solo a chi ha risposto che il dente e' gia' stato estratto: il
+percorso passa da otto a sette passi da solo.
+
+**Indirizzamento.** Un'opzione con `goto` porta al percorso piu' specifico:
+da "Estetica dentale" si finisce su sbiancamento, faccette o allineatori senza
+che il paziente debba ricominciare. Il servizio di partenza resta nel riepilogo.
+
+**Priorita' e tag** sono calcolati **sul server** a partire dalle risposte, mai
+inviati dal browser. Un'opzione puo' portare `priority` (`high`, `urgent`) e
+`tag`; il motore prende la priorita' piu' alta fra quelle incontrate. Trauma
+dentale nasce gia' `urgent`, il dolore moderato porta a `high`, un controllo
+resta `normal`. L'oggetto dell'email allo studio si apre con `[URGENTE]` o
+`[PRIORITA ALTA]` quando serve.
+
+Questa classificazione e' **organizzativa, non clinica**: serve alla segreteria
+per mettere in ordine le richieste, non viene mostrata al paziente e non compare
+in nessuna forma nell'email che riceve. Le domande raccolgono informazioni
+preliminari: non producono una diagnosi e non propongono terapie.
+
+**Riepilogo automatico.** Il riepilogo mostrato prima dell'invio e quello
+inserito nelle due email si costruiscono dalle domande effettivamente poste, per
+cui cambiano da servizio a servizio senza template scritti a mano.
+
+**Richiamata.** Chi sceglie "essere ricontattato" non vede il calendario: gli si
+chiede canale e fascia oraria, e data e ora smettono di essere obbligatorie
+anche lato server.
+
+**Navigazione.** Indicatore di avanzamento, ritorno al passo precedente senza
+perdere le risposte gia' date, ricerca fra i 27 servizi.
+
 ### Archivio delle richieste
 
 Ogni richiesta produce un record con `booking_id`, dati del paziente, tipo di

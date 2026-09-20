@@ -11,7 +11,8 @@
  *   http  POST a un endpoint proprio (BOOKING_WEBHOOK_URL, BOOKING_WEBHOOK_TOKEN)
  *
  * Schema del record:
- *   booking_id, nome, cognome, email, telefono, tipo_visita, data_richiesta,
+ *   booking_id, nome, cognome, email, telefono, tipo_visita, riepilogo_servizio,
+ *   priority, tags, modalita, canale_contatto, fascia_contatto, data_richiesta,
  *   ora_richiesta, seconda_preferenza, messaggio, status, created_at
  */
 
@@ -42,6 +43,15 @@ export function buildRecord(data, { bookingId, ip = '', userAgent = '', now = ne
     telefono: data.telefono,
     tipo_visita: data.tipoVisitaLabel,
     tipo_visita_slug: data.tipoVisita,
+    // risposte alle domande condizionali del servizio scelto
+    riepilogo_servizio: data.riepilogoServizio || [],
+    risposte: data.risposte || {},
+    // classificazione interna, non e' una diagnosi e non viene mostrata al paziente
+    priority: data.priorita || 'normal',
+    tags: data.tags || [],
+    modalita: data.modalita,
+    canale_contatto: data.canale || '',
+    fascia_contatto: data.fascia || '',
     professionista: data.dottore,
     data_richiesta: data.dataRichiesta,
     ora_richiesta: data.oraRichiesta,

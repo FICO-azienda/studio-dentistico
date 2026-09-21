@@ -334,21 +334,8 @@ a:hover .media__zoom img, .media__zoom:hover img { transform: scale(1.025); }
 .langsw__item.is-current { opacity: 1; }
 @media (max-width: 1180px) { .langsw { margin-right: 0.3rem; } }
 
-.burger {
-  width: 46px; height: 46px; display: none; align-items: center; justify-content: center;
-  border: 1px solid currentColor; border-radius: 999px; flex: none;
-}
-.burger span { display: block; width: 15px; height: 1px; background: currentColor; position: relative; transition: background-color 0.2s; }
-.burger span::before, .burger span::after {
-  content: ""; position: absolute; left: 0; width: 15px; height: 1px; background: currentColor;
-  transition: transform 0.45s var(--ease-out);
-}
-.burger span::before { top: -4px; }
-.burger span::after { top: 4px; }
-.is-open .burger span { background: transparent; }
-.is-open .burger span::before { transform: translateY(4px) rotate(45deg); }
-.is-open .burger span::after { transform: translateY(-4px) rotate(-45deg); }
-
+/* Sotto i 1180 il menu orizzontale non ci sta: la navigazione resta
+   affidata alla barra di sezione, che elenca le stesse voci. */
 @media (max-width: 1180px) {
   .nav--main { display: none; }
   /* selettore di lingua */
@@ -364,10 +351,8 @@ a:hover .media__zoom img, .media__zoom:hover img { transform: scale(1.025); }
 .langsw__item:hover { opacity: 0.85; }
 .langsw__item.is-current { opacity: 1; }
 @media (max-width: 1180px) { .langsw { margin-right: 0.3rem; } }
-
-.burger { display: inline-flex; }
-  .btn--header { display: none; }
 }
+@media (max-width: 800px) { .btn--header { display: none; } }
 
 /* Mega menu dei trattamenti */
 .nav__item { position: relative; display: inline-flex; }
@@ -389,52 +374,6 @@ a:hover .media__zoom img, .media__zoom:hover img { transform: scale(1.025); }
 .mega__title { display: block; line-height: 1.2; transition: color 0.3s ease; }
 .mega__item:hover .mega__title { color: var(--navy-500); }
 .mega__text { display: block; color: var(--stone-light); margin-top: 0.25rem; }
-.menu__sub { padding-left: 2.6rem; margin: 0.2rem 0 1rem; display: flex; flex-wrap: wrap; gap: 0.4rem 1.4rem; }
-.menu__sub a { font-size: 0.9rem; color: var(--on-dark-soft); transition: color 0.3s ease; }
-.menu__sub a:hover { color: var(--white); }
-
-/* Menu fullscreen */
-.menu {
-  position: fixed; inset: 0; z-index: 110; background: var(--navy-900); color: var(--on-dark);
-  display: grid; grid-template-rows: var(--header-h) 1fr auto;
-  clip-path: inset(0 0 100% 0); transition: clip-path 0.85s var(--ease-out);
-  pointer-events: none; overflow-y: auto;
-}
-.menu.is-open { clip-path: inset(0 0 0 0); pointer-events: auto; }
-.menu__body {
-  max-width: var(--maxw); margin-inline: auto; width: 100%; padding-inline: var(--gutter);
-  display: grid; grid-template-columns: repeat(12, 1fr); gap: var(--gap);
-  align-content: center; padding-block: clamp(2rem, 5vw, 4rem);
-}
-.menu__list { grid-column: 1 / span 7; }
-.menu__aside { grid-column: 9 / span 4; align-self: end; }
-.menu__item { overflow: hidden; }
-.menu__item a {
-  display: block; font-family: var(--font-display); font-size: clamp(2rem, 5.2vw, 4.2rem);
-  line-height: 1.16; letter-spacing: -0.02em; transform: translateY(105%);
-  transition: transform 0.8s var(--ease-out), opacity 0.5s var(--ease);
-}
-.menu.is-open .menu__item a { transform: translateY(0); }
-.menu__list:hover .menu__item a { opacity: 0.4; }
-.menu__list .menu__item a:hover { opacity: 1; }
-.menu__item a .idx {
-  font-family: var(--font-sans); font-size: 0.625rem; letter-spacing: 0.18em;
-  vertical-align: super; margin-right: 0.8em; opacity: 0.45;
-}
-.menu__aside .label { color: var(--on-dark-soft); }
-.menu__aside p { color: var(--on-dark); }
-.menu__meta + .menu__meta { margin-top: 1.8rem; }
-.menu__foot {
-  border-top: 1px solid var(--line-dark); padding-block: 1.4rem;
-  display: flex; flex-wrap: wrap; gap: 1.5rem; justify-content: space-between;
-}
-@media (max-width: 900px) {
-  .menu__list, .menu__aside { grid-column: 1 / -1; }
-  .menu__aside { margin-top: 2.5rem; }
-  .menu { grid-template-rows: var(--header-h) auto auto; }
-  .menu__body { align-content: start; }
-}
-
 /* -- 7b. Barra di sezione (sotto l'header) -------------------------------- */
 .subnav {
   position: sticky; top: var(--header-h); z-index: 100;

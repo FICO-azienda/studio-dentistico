@@ -83,46 +83,11 @@ const header = (base, current, lang, asset, altFor) => `
         ).join('')}
       </nav>
       <a class="btn btn--sm btn--header" href="${base}${PATH.book}">${esc(t('nav.book'))}</a>
-      <button class="burger" type="button" aria-expanded="false" aria-controls="menu" aria-label="${attr(t('nav.menuOpen'))}">
-        <span></span>
-      </button>
     </div>
   </div>
 </header>
 
-<div class="menu" id="menu" role="dialog" aria-modal="true" aria-label="${attr(t('nav.menuLabel'))}">
-  <div></div>
-  <div class="menu__body">
-    <ul class="menu__list">
-      ${nav().map((n, i) => `<li class="menu__item"><a href="${base}${n.href}"><span class="idx">0${i + 1}</span>${esc(n.label)}</a></li>${
-        n.href === PATH.treatments
-          ? `<li class="menu__sub">${treatments.categories.map((c) => `<a href="${base}${catPath(c)}">${esc(c.title)}</a>`).join('')}</li>`
-          : ''
-      }`).join('\n      ')}
-      <li class="menu__item"><a href="${base}${PATH.book}"><span class="idx">09</span><em class="serif-italic">${esc(t('nav.book'))}</em></a></li>
-    </ul>
-    <div class="menu__aside">
-      <div class="menu__meta">
-        <span class="label">Studio</span>
-        <p>${esc(site.address.street)}<br>${esc(site.address.zip)} ${esc(site.address.city)}</p>
-      </div>
-      <div class="menu__meta">
-        <span class="label">Contatti</span>
-        <p><a href="tel:${attr(site.phoneHref)}">${esc(site.phone)}</a><br><a href="mailto:${attr(site.email)}">${esc(site.email)}</a></p>
-      </div>
-      <div class="menu__meta">
-        <span class="label">Orari</span>
-        <p>${site.hours.map((h) => `${esc(h.d)} · ${esc(h.h)}`).join('<br>')}</p>
-      </div>
-    </div>
-  </div>
-  <div class="menu__foot">
-    <div class="wrap" style="display:flex;flex-wrap:wrap;gap:1.5rem;justify-content:space-between">
-      <span class="label">${esc(t('header.city'))}</span>
-      <span class="label">${site.social.map((s) => `<a href="${attr(s.url)}" target="_blank" rel="noopener">${esc(s.label)}</a>`).join(' &nbsp;·&nbsp; ')}</span>
-    </div>
-  </div>
-</div>`;
+`;
 
 /* -- barra di sezione ----------------------------------------------------- */
 /** ancore delle sezioni della homepage, per chiave di navigazione */

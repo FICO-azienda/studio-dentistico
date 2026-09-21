@@ -31,7 +31,6 @@
       if (e.ctrlKey || e.defaultPrevented) return;
       // i trackpad producono molti eventi piccoli: li lasciamo al browser
       if (e.deltaMode === 0 && Math.abs(e.deltaY) < 40) { running = false; target = window.scrollY; return; }
-      if ($('.menu.is-open')) return;
       e.preventDefault();
       if (!running) { current = window.scrollY; }
       target = clamp(target + e.deltaY * 1.05, 0, max());
@@ -83,8 +82,6 @@
     const hd = $('.header');
     if (!hd) return;
     const hero = $('[data-header-over]');
-    const menu = $('.menu');
-    const burger = $('.burger');
     const mcta = $('.mobile-cta');
     let last = window.scrollY;
 
@@ -96,7 +93,7 @@
       hd.classList.toggle('header--over', over);
       hd.classList.toggle('header--on-dark', over && hero?.dataset.headerOver === 'dark');
       hd.classList.toggle('header--solid', !over && y > 40);
-      const hidden = y > last + 4 && y > 400 && !menu?.classList.contains('is-open');
+      const hidden = y > last + 4 && y > 400;
       hd.classList.toggle('header--hidden', hidden);
       document.body.classList.toggle('header-hidden', hidden);
       if (mcta) mcta.classList.toggle('is-visible', y > 600);
@@ -106,25 +103,6 @@
     window.addEventListener('scroll', update, { passive: true });
     window.addEventListener('resize', update);
 
-    if (!menu || !burger) return;
-    const close = () => {
-      menu.classList.remove('is-open');
-      hd.classList.remove('is-open');
-      document.body.classList.remove('is-locked');
-      burger.setAttribute('aria-expanded', 'false');
-      update();
-    };
-    const open = () => {
-      menu.classList.add('is-open');
-      hd.classList.add('is-open');
-      document.body.classList.add('is-locked');
-      burger.setAttribute('aria-expanded', 'true');
-      const first = $('a', menu);
-      if (first) setTimeout(() => first.focus({ preventScroll: true }), 420);
-    };
-    burger.addEventListener('click', () => (menu.classList.contains('is-open') ? close() : open()));
-    menu.addEventListener('click', (e) => { if (e.target.closest('a')) close(); });
-    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && menu.classList.contains('is-open')) { close(); burger.focus(); } });
   };
 
   /* -- Barra di sezione: scroll morbido + voce attiva ----------------------*/

@@ -108,7 +108,7 @@ ${bookingBand(base)}`;
 
   return layout({
     title: t('meta.studio.title'),
-    description: t('meta.studio.desc'),
+    description: t('meta.studio.desc', { n: team.length }),
     path: PATH.studio,
     depth: 1,
     current: PATH.studio,
@@ -125,7 +125,7 @@ export const teamPage = () => {
 ${pageHero({
     label: t('team.label'),
     title: lines([t('home.team.t1'), `<em class="serif-italic">${t('home.team.t2')}</em>`]),
-    lead: t('team.lead'),
+    lead: t('team.lead', { n: team.length }),
     aside: t('team.aside'),
     crumbs: [{ label: t('nav.home'), path: '' }, { label: t('nav.team') }],
     base
@@ -140,7 +140,7 @@ ${bookingBand(base)}`;
 
   return layout({
     title: t('meta.team.title'),
-    description: t('meta.team.desc'),
+    description: t('meta.team.desc', { n: team.length }),
     path: PATH.team,
     depth: 1,
     current: PATH.team,

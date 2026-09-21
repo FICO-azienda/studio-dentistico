@@ -8,7 +8,7 @@ const base = '';
 const quickItems = () => [
   { label: t('nav.treatments'), href: PATH.treatments, meta: t('home.quick.treatments') },
   { label: t('home.studio.label'), href: PATH.studio, meta: t('home.quick.studio') },
-  { label: t('home.team.label'), href: PATH.team, meta: t('home.quick.team') },
+  { label: t('home.team.label'), href: PATH.team, meta: t('home.quick.team', { n: team.length }) },
   { label: t('nav.cases'), href: PATH.cases, meta: t('common.results') },
   { label: t('nav.bookShort'), href: PATH.book, meta: t('home.quick.book') }
 ];

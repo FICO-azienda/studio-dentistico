@@ -60,7 +60,7 @@ export const articleCard = (a, base) => `
 /* -- fascia prenotazione -------------------------------------------------- */
 export const bookingBand = (base) => `
 <section class="band">
-  <div class="band__bg" data-parallax="6">${imgTag('studio-corridoio', { base, sizes: '100vw' })}</div>
+  <div class="band__bg" data-parallax="3">${imgTag('studio-corridoio', { base, sizes: '100vw' })}</div>
   <div class="band__inner">
     <div class="wrap">
       <div class="grid">

@@ -11,36 +11,6 @@
   const $$ = (s, c = document) => Array.from(c.querySelectorAll(s));
   const clamp = (v, a, b) => Math.min(Math.max(v, a), b);
 
-  /* -- Smooth scroll ammortizzato (solo mouse wheel, no trackpad) ---------- */
-  const smoothScroll = () => {
-    if (reduced() || window.matchMedia('(hover: none)').matches) return;
-    let target = window.scrollY;
-    let current = target;
-    let running = false;
-
-    const max = () => document.documentElement.scrollHeight - window.innerHeight;
-
-    const loop = () => {
-      current += (target - current) * 0.12;
-      if (Math.abs(target - current) < 0.4) { current = target; running = false; }
-      window.scrollTo(0, current);
-      if (running) requestAnimationFrame(loop);
-    };
-
-    window.addEventListener('wheel', (e) => {
-      if (e.ctrlKey || e.defaultPrevented) return;
-      // i trackpad producono molti eventi piccoli: li lasciamo al browser
-      if (e.deltaMode === 0 && Math.abs(e.deltaY) < 40) { running = false; target = window.scrollY; return; }
-      e.preventDefault();
-      if (!running) { current = window.scrollY; }
-      target = clamp(target + e.deltaY * 1.05, 0, max());
-      if (!running) { running = true; requestAnimationFrame(loop); }
-    }, { passive: false });
-
-    window.addEventListener('scroll', () => { if (!running) target = window.scrollY; }, { passive: true });
-    document.documentElement.classList.add('has-lenis');
-  };
-
   /* -- Reveal --------------------------------------------------------------*/
   const reveals = () => {
     const items = $$('.reveal, .img-mask, .line-mask, .step, [data-count]');
@@ -857,7 +827,7 @@
       if (!href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:') || href.startsWith('http')) return;
       e.preventDefault();
       document.body.classList.add('is-leaving');
-      setTimeout(() => { window.location.href = a.href; }, 320);
+      setTimeout(() => { window.location.href = a.href; }, 180);
     });
     window.addEventListener('pageshow', (e) => { if (e.persisted) document.body.classList.remove('is-leaving'); });
   };
@@ -868,7 +838,7 @@
   /* -- Avvio ---------------------------------------------------------------*/
   const init = () => {
     year(); header(); sectionNav(); reveals(); parallax(); rails();
-    faq(); beforeAfter(); filters(); forms(); wizard(); transitions(); smoothScroll();
+    faq(); beforeAfter(); filters(); forms(); wizard(); transitions();
   };
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);

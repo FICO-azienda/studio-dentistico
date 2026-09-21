@@ -115,6 +115,7 @@ const UI = {
   'common.next': ['Successivo', 'Next'],
   'common.profile': ['Profilo', 'Profile'],
   'common.discoverProfile': ['Scopri il profilo', 'View profile'],
+  'common.bookWith': ['Prenota con {name}', 'Book with {name}'],
   'common.openInMaps': ['Apri in Google Maps', 'Open in Google Maps'],
   'common.mapAria': ['Mappa dello studio', 'Practice location map'],
   'common.backHome': ['Torna alla home', 'Back to home'],
@@ -157,7 +158,7 @@ const UI = {
   /* navigazione rapida */
   'home.quick.treatments': ['16 trattamenti', '16 treatments'],
   'home.quick.studio': ['Milano, zona Fiera', 'Milan, Fiera district'],
-  'home.quick.team': ['12 professionisti', '12 professionals'],
+  'home.quick.team': ['{n} professionisti', '{n} professionals'],
   'home.quick.book': ['Online, 2 minuti', 'Online, 2 minutes'],
 
   /* descrizione di ogni voce: la home si legge senza dover scorrere oltre */
@@ -170,8 +171,8 @@ const UI = {
     'A short walk from the Fiera district: considered spaces, clear routes and sterilisation in plain sight.'
   ],
   'home.quick.d.team': [
-    'Dodici professionisti e un unico piano di cura condiviso: chi ti visita è chi ti segue.',
-    'Twelve professionals and a single shared treatment plan: the person who examines you is the person who follows you.'
+    '{n} professionisti e un unico piano di cura condiviso: chi ti visita è chi ti segue.',
+    '{n} professionals and a single shared treatment plan: the person who examines you is the person who follows you.'
   ],
   'home.quick.d.cases': [
     'Prima e dopo, con i tempi e il numero di sedute dichiarati. Ogni bocca è diversa dalle altre.',
@@ -232,8 +233,8 @@ const UI = {
   'home.team.t1': ['Persone, prima ancora', 'People, before'],
   'home.team.t2': ['che professionisti.', 'professionals.'],
   'home.team.aside': [
-    'Dodici professionisti, un unico protocollo condiviso e riunioni cliniche settimanali sui casi complessi.',
-    'Twelve professionals, one shared protocol and weekly clinical meetings on complex cases.'
+    'Un unico protocollo condiviso e riunioni cliniche settimanali sui casi complessi.',
+    'One shared protocol and weekly clinical meetings on complex cases.'
   ],
 
   'home.firstVisit.label': ['Prima visita', 'First visit'],
@@ -420,8 +421,8 @@ const UI = {
   ],
   'meta.studio.title': ['Lo studio — Studio Liddi, dentista a Milano', 'The practice — Studio Liddi, dentist in Milan'],
   'meta.studio.desc': [
-    'Studio odontoiatrico a Milano zona Fiera: 340 mq, cinque sale operative, radiologia e laboratorio interni. Dodici professionisti e un protocollo condiviso.',
-    'Dental practice in Milan, Fiera district: 340 sqm, five surgeries, in-house radiology and laboratory. Twelve professionals and one shared protocol.'
+    'Studio odontoiatrico a Milano zona Fiera: 340 mq, cinque sale operative, radiologia e laboratorio interni. {n} professionisti e un protocollo condiviso.',
+    'Dental practice in Milan, Fiera district: 340 sqm, five surgeries, in-house radiology and laboratory. {n} professionals and one shared protocol.'
   ],
   'meta.team.title': ['Il team — Studio Liddi, dentista a Milano', 'The team — Studio Liddi, dentist in Milan'],
   'meta.team.desc': [
@@ -550,8 +551,8 @@ const UI = {
   /* team */
   'team.label': ['04 — Il Team', '04 — The Team'],
   'team.lead': [
-    'Dodici professionisti che condividono protocolli, riunioni cliniche settimanali e un criterio: la soluzione più conservativa fra quelle efficaci.',
-    'Twelve professionals who share protocols, weekly clinical meetings and one criterion: the most conservative of the effective options.'
+    '{n} professionisti che condividono protocolli, riunioni cliniche settimanali e un criterio: la soluzione più conservativa fra quelle efficaci.',
+    '{n} professionals who share protocols, weekly clinical meetings and one criterion: the most conservative of the effective options.'
   ],
   'team.aside': ['Riunione clinica<br>ogni martedì', 'Clinical meeting<br>every Tuesday'],
   'team.note': [

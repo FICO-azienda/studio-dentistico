@@ -1,4 +1,4 @@
-import { site, treatments, esc, attr, arrow, imgTag, figure, lines, catPath, PATH } from './utils.mjs';
+import { site, treatments, team, esc, attr, arrow, imgTag, figure, lines, catPath, PATH } from './utils.mjs';
 import { t } from './i18n.mjs';
 import { layout, dentistLd } from './layout.mjs';
 import { sectionHead, bookingBand } from './components.mjs';
@@ -8,7 +8,7 @@ const base = '';
 const quickItems = () => [
   { label: t('nav.treatments'), href: PATH.treatments, meta: t('home.quick.treatments'), desc: t('home.quick.d.treatments') },
   { label: t('home.studio.label'), href: PATH.studio, meta: t('home.quick.studio'), desc: t('home.quick.d.studio') },
-  { label: t('home.team.label'), href: PATH.team, meta: t('home.quick.team'), desc: t('home.quick.d.team') },
+  { label: t('home.team.label'), href: PATH.team, meta: t('home.quick.team', { n: team.length }), desc: t('home.quick.d.team', { n: team.length }) },
   { label: t('nav.cases'), href: PATH.cases, meta: t('common.results'), desc: t('home.quick.d.cases') },
   { label: t('nav.bookShort'), href: PATH.book, meta: t('home.quick.book'), desc: t('home.quick.d.book') }
 ];

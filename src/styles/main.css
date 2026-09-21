@@ -239,7 +239,8 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 }
 .media--reveal:hover img, .media--duo:hover img,
 a:hover .media--reveal img, a:hover .media--duo img,
-.case:hover .media--reveal img, .person:hover .media--duo img {
+.case:hover .media--reveal img, .person:hover .media--duo img,
+.crew:hover .media--duo img {
   filter: grayscale(0%) contrast(1);
   transform: scale(1.025);
 }
@@ -578,6 +579,26 @@ body.no-subnav { --subnav-h: 0px; }
 .areanav__item .small { display: block; margin-top: 0.3rem; }
 @media (max-width: 900px) { .areanav { grid-template-columns: repeat(2, 1fr); } .areanav__item:nth-child(2n) { border-right: 0; } }
 @media (max-width: 520px) { .areanav { grid-template-columns: 1fr; } .areanav__item { border-right: 0; border-bottom: 1px solid var(--line); padding-inline: 0; } .areanav__item:last-child { border-bottom: 0; } }
+
+/* -- team impaginato a righe ---------------------------------------------- */
+/* una persona per riga: nome grande a sinistra, ritratto a destra. */
+.crew {
+  display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  gap: clamp(1.8rem, 5vw, 5rem); align-items: center;
+  padding-block: clamp(2.6rem, 6vw, 5.5rem);
+  border-top: 1px solid var(--line);
+}
+.crew-list > .crew:first-child { border-top: 0; padding-top: 0; }
+.crew__num { display: block; color: var(--stone-light); margin-bottom: 0.8rem; }
+.crew__name { transition: transform 0.6s var(--ease-out); }
+.crew:hover .crew__name { transform: translateX(10px); }
+.crew__links { display: flex; flex-wrap: wrap; gap: 1.4rem 2.4rem; }
+.crew__media { display: block; overflow: hidden; }
+@media (max-width: 900px) {
+  .crew { grid-template-columns: 1fr; gap: 1.6rem; }
+  .crew__media { order: -1; }
+  .crew:hover .crew__name { transform: none; }
+}
 
 /* -- fasce delle aree in homepage ----------------------------------------- */
 /* una fascia per area: immagine a tutta larghezza velata di navy, il titolo

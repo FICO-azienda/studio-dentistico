@@ -140,43 +140,6 @@
       if (t) setTimeout(() => scrollToTarget(t), 60);
     }
 
-    if (!bar || !bar.hasAttribute('data-scrollspy')) return;
-
-    const links = $$('.subnav__link[data-spy]', bar);
-    const sections = links
-      .map((l) => ({ link: l, el: document.getElementById(l.dataset.spy) }))
-      .filter((x) => x.el);
-    if (!sections.length) return;
-
-    const track = $('.subnav__track', bar);
-    let current = null;
-    let ticking = false;
-
-    const update = () => {
-      const line = window.scrollY + offset() + 8;
-      let active = null;
-      for (const s of sections) if (s.el.offsetTop <= line) active = s;
-      // in fondo alla pagina vince sempre l'ultima sezione
-      if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4) {
-        active = sections[sections.length - 1];
-      }
-      if (active === current) { ticking = false; return; }
-      current = active;
-      links.forEach((l) => l.classList.toggle('is-active', !!active && l === active.link));
-      if (active && track && track.scrollWidth > track.clientWidth) {
-        const r = active.link.getBoundingClientRect();
-        const t = track.getBoundingClientRect();
-        if (r.left < t.left + 16 || r.right > t.right - 16) {
-          track.scrollTo({ left: active.link.offsetLeft - 24, behavior: reduced() ? 'auto' : 'smooth' });
-        }
-      }
-      ticking = false;
-    };
-
-    const onScroll = () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } };
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll);
-    update();
   };
 
   /* -- Parallax ------------------------------------------------------------*/

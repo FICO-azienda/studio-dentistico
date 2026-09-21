@@ -67,17 +67,6 @@ const header = (base, current, lang, asset, altFor) => `
 `;
 
 /* -- barra di sezione ----------------------------------------------------- */
-/** ancore delle sezioni della homepage, per chiave di navigazione */
-export const ANCHORS = {
-  studio: 'studio',
-  treatments: 'trattamenti',
-  technologies: 'tecnologie',
-  team: 'team',
-  firstVisit: 'prima-visita',
-  cases: 'casi',
-  journal: 'journal',
-  contact: 'contatti'
-};
 
 /**
  * Navigazione editoriale di sezione, sottile e sticky sotto l'header.
@@ -100,15 +89,17 @@ const mega = (base) => `<div class="mega" role="group" aria-label="${attr(t('nav
   </div>
 </div>`;
 
-const subnav = (base, current, isHome) => `
-<nav class="subnav" aria-label="${attr(t('nav.sections'))}"${isHome ? ' data-scrollspy' : ''}>
+/**
+ * Barra dei gruppi: ogni voce porta alla sua pagina, anche in homepage.
+ * Non sono ancore di un'unica pagina lunga: ogni gruppo e' una pagina a se'.
+ */
+const subnav = (base, current) => `
+<nav class="subnav" aria-label="${attr(t('nav.sections'))}">
   <div class="wrap" style="height:100%">
     <div class="subnav__track">
       ${nav()
         .map((n) => {
-          const link = isHome
-            ? `<a class="subnav__link" href="#${ANCHORS[n.key]}" data-spy="${ANCHORS[n.key]}">${esc(n.label)}</a>`
-            : `<a class="subnav__link" href="${base}${n.href}"${current === n.href ? ' aria-current="page"' : ''}>${esc(n.label)}</a>`;
+          const link = `<a class="subnav__link" href="${base}${n.href}"${current === n.href ? ' aria-current="page"' : ''}>${esc(n.label)}</a>`;
           // la tendina delle quattro aree vive qui, unica navigazione rimasta
           return n.key === 'treatments' ? `<span class="subnav__item has-mega">${link}${mega(base)}</span>` : link;
         })
@@ -249,7 +240,7 @@ ${preload.map((p) => `<link rel="preload" as="image" href="${asset}images/${p}-1
 <div class="page-veil" aria-hidden="true"></div>
 <a class="skip-link" href="#main">${esc(t('nav.skip'))}</a>
 ${header(base, current, lang, asset, altFor)}
-${subnav(base, current, depth === 0 && pagePath === '')}
+${subnav(base, current)}
 <main id="main">
 ${main}
 </main>

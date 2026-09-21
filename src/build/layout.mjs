@@ -109,7 +109,7 @@ const subnav = (base, current) => `
 </nav>`;
 
 /* -- footer --------------------------------------------------------------- */
-const footer = (base) => `
+const footer = (base, asset) => `
 <footer class="footer">
   <div class="wrap">
     <div class="footer__top">
@@ -159,6 +159,12 @@ const footer = (base) => `
         <li><a href="${base}${PATH.terms}">Termini</a></li>
         ${site.social.map((s) => `<li><a href="${attr(s.url)}" target="_blank" rel="noopener">${esc(s.label)}</a></li>`).join('')}
       </ul>
+    </div>
+    <div class="footer__credit">
+      <a class="credit-line" href="mailto:ficolc78@gmail.com?subject=RICHIESTA%20INFORMAZIONI%20PER%20SITO">
+        <span>Website designed by FICO</span>
+        <img src="${asset}fico-logo.png" alt="Logo FICO" width="28" height="28" loading="lazy" decoding="async">
+      </a>
     </div>
   </div>
 </footer>
@@ -244,7 +250,7 @@ ${subnav(base, current)}
 <main id="main">
 ${main}
 </main>
-${footer(base)}
+${footer(base, asset)}
 <script src="${asset}scripts/app.js" defer></script>
 </body>
 </html>`;

@@ -842,6 +842,10 @@ a.card-feature:hover h3, a.article-card:hover h3 { color: var(--navy-500); trans
   gap: 1rem 2rem; justify-content: space-between; color: rgba(238, 236, 229, 0.5); font-size: 0.8125rem;
 }
 .footer__legal ul { display: flex; flex-wrap: wrap; gap: 1.4rem; }
+.footer__credit { border-top: 1px solid var(--line-dark); padding-block: 1.2rem 1.6rem; display: flex; justify-content: center; }
+.credit-line { display: inline-flex; align-items: center; gap: 0.7rem; font-size: 0.8125rem; letter-spacing: 0.04em; color: rgba(238, 236, 229, 0.6); }
+.credit-line img { width: 28px; height: 28px; border-radius: 7px; }
+.credit-line:hover { color: var(--on-dark); }
 @media (max-width: 1000px) {
   .footer__brand { grid-column: 1 / -1; margin-bottom: 2.5rem; }
   .footer__col, .footer__col:nth-of-type(2) { grid-column: span 6; }

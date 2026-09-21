@@ -51,29 +51,6 @@ const header = (base, current, lang, asset, altFor) => `
 <header class="header header--over">
   <div class="header__inner">
     ${logo(base)}
-    <nav class="nav nav--main" aria-label="${attr(t('nav.aria'))}">
-      ${nav().map((n) =>
-        n.href === PATH.treatments
-          ? `<span class="nav__item has-mega">
-        <a class="nav__link" href="${base}${n.href}"${current === n.href ? ' aria-current="page"' : ''} aria-haspopup="true">${esc(n.label)}</a>
-        <div class="mega" role="group" aria-label="${attr(t('nav.treatmentAreas'))}">
-          <div class="mega__inner">
-            ${treatments.categories
-              .map(
-                (c) => `<a class="mega__item" href="${base}${catPath(c)}">
-              <span class="media media--ar media__zoom" style="--ar:4/3">${imgTag(c.image, { base, sizes: '220px' })}</span>
-              <span class="mega__num num">${esc(c.num)}</span>
-              <span class="mega__title h4">${esc(c.title)}</span>
-              <span class="mega__text small">${c.items.length} ${esc(t('nav.treatments').toLowerCase())}</span>
-            </a>`
-              )
-              .join('')}
-          </div>
-        </div>
-      </span>`
-          : `<a class="nav__link" href="${base}${n.href}"${current === n.href ? ' aria-current="page"' : ''}>${esc(n.label)}</a>`
-      ).join('\n      ')}
-    </nav>
     <div class="header__actions">
       <nav class="langsw" aria-label="${attr(t('nav.langLabel'))}">
         ${LANGS.map((l) =>
@@ -107,16 +84,34 @@ export const ANCHORS = {
  * In homepage punta alle ancore con scroll morbido e voce attiva durante lo
  * scorrimento; nelle pagine interne porta alle pagine corrispondenti.
  */
+/** Tendina delle quattro aree, agganciata alla voce Trattamenti. */
+const mega = (base) => `<div class="mega" role="group" aria-label="${attr(t('nav.treatmentAreas'))}">
+  <div class="mega__inner">
+    ${treatments.categories
+      .map(
+        (c) => `<a class="mega__item" href="${base}${catPath(c)}">
+      <span class="media media--ar media__zoom" style="--ar:4/3">${imgTag(c.image, { base, sizes: '220px' })}</span>
+      <span class="mega__num num">${esc(c.num)}</span>
+      <span class="mega__title h4">${esc(c.title)}</span>
+      <span class="mega__text small">${c.items.length} ${esc(t('nav.treatments').toLowerCase())}</span>
+    </a>`
+      )
+      .join('')}
+  </div>
+</div>`;
+
 const subnav = (base, current, isHome) => `
 <nav class="subnav" aria-label="${attr(t('nav.sections'))}"${isHome ? ' data-scrollspy' : ''}>
   <div class="wrap" style="height:100%">
     <div class="subnav__track">
       ${nav()
-        .map((n) =>
-          isHome
+        .map((n) => {
+          const link = isHome
             ? `<a class="subnav__link" href="#${ANCHORS[n.key]}" data-spy="${ANCHORS[n.key]}">${esc(n.label)}</a>`
-            : `<a class="subnav__link" href="${base}${n.href}"${current === n.href ? ' aria-current="page"' : ''}>${esc(n.label)}</a>`
-        )
+            : `<a class="subnav__link" href="${base}${n.href}"${current === n.href ? ' aria-current="page"' : ''}>${esc(n.label)}</a>`;
+          // la tendina delle quattro aree vive qui, unica navigazione rimasta
+          return n.key === 'treatments' ? `<span class="subnav__item has-mega">${link}${mega(base)}</span>` : link;
+        })
         .join('\n      ')}
     </div>
   </div>

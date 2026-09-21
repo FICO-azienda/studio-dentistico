@@ -350,7 +350,11 @@ a:hover .media__zoom img, .media__zoom:hover img { transform: scale(1.025); }
 @media (max-width: 800px) { .btn--header { display: none; } }
 
 /* Mega menu dei trattamenti */
-.nav__item { position: relative; display: inline-flex; }
+.subnav__item { position: relative; display: inline-flex; align-items: stretch; flex: none; }
+/* la tendina scende dalla barra, non dalla voce: resta ancorata a sinistra */
+.subnav__item .mega { top: 100%; left: 0; transform: translateY(-6px); }
+.has-mega:hover .subnav__item .mega, .subnav__item.has-mega:hover .mega,
+.subnav__item.has-mega:focus-within .mega { transform: translateY(0); }
 .mega {
   position: absolute; top: calc(100% + 0.9rem); left: 50%; transform: translateX(-50%) translateY(-6px);
   width: min(760px, 86vw); background: var(--white); border: 1px solid var(--line);
@@ -388,6 +392,12 @@ body.header-hidden .subnav { top: 0; }
   scroll-padding-inline: var(--gutter);
 }
 .subnav__track::-webkit-scrollbar { display: none; }
+/* da desktop le voci ci stanno tutte: senza scorrimento la tendina puo'
+   uscire dalla barra invece di essere tagliata */
+@media (min-width: 1000px) { .subnav__track { overflow: visible; } }
+/* sotto, la barra scorre: la tendina sarebbe tagliata, e la voce porta
+   comunque alla pagina con tutte le aree */
+@media (max-width: 999px) { .subnav__item .mega { display: none; } }
 .subnav__link {
   position: relative; display: inline-flex; align-items: center; flex: none;
   font-size: var(--t-label); text-transform: uppercase; letter-spacing: 0.16em;

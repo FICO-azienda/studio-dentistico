@@ -1,94 +1,50 @@
 {
   "_nota": "Configurazione dei percorsi di prenotazione. Il motore (front-end e backend) e' generico: per aggiungere un servizio basta un oggetto qui, senza toccare il codice. Le domande raccolgono informazioni preliminari: non sono una diagnosi e non suggeriscono terapie.",
+
   "chooseLabel": "Di cosa hai bisogno?",
-  "chooseHint": "Scegli il motivo: le domande cambiano di conseguenza e non sono mai più di quattro.",
+  "chooseHint": "Scegli il servizio: le domande successive cambiano di conseguenza. Sono al massimo cinque.",
   "searchPlaceholder": "Cerca un servizio…",
+
   "priorityLabels": {
     "normal": "Normale",
     "high": "Alta",
     "urgent": "Urgente"
   },
+
   "tail": {
     "modeQuestion": {
       "id": "modalita",
       "q": "Come preferisci procedere?",
       "options": [
-        {
-          "l": "Prenotare un appuntamento",
-          "v": "prenota"
-        },
-        {
-          "l": "Essere ricontattato",
-          "v": "ricontatto"
-        }
+        { "l": "Prenotare un appuntamento", "v": "prenota" },
+        { "l": "Essere ricontattato", "v": "ricontatto" }
       ]
     },
     "channelQuestion": {
       "id": "canale",
       "q": "Come preferisci essere contattato?",
-      "when": {
-        "q": "modalita",
-        "in": [
-          "ricontatto"
-        ]
-      },
-      "options": [
-        "Telefono",
-        "WhatsApp",
-        "Email"
-      ]
+      "when": { "q": "modalita", "in": ["ricontatto"] },
+      "options": ["Telefono", "WhatsApp", "Email"]
     },
     "windowQuestion": {
       "id": "fascia",
       "q": "Quando preferisci essere contattato?",
-      "when": {
-        "q": "modalita",
-        "in": [
-          "ricontatto"
-        ]
-      },
-      "options": [
-        "Mattina",
-        "Pausa pranzo",
-        "Pomeriggio",
-        "Sera"
-      ]
+      "when": { "q": "modalita", "in": ["ricontatto"] },
+      "options": ["Mattina", "Pausa pranzo", "Pomeriggio", "Sera"]
     }
   },
+
   "groups": [
-    {
-      "id": "visite",
-      "label": "Visite e controlli"
-    },
-    {
-      "id": "estetica",
-      "label": "Estetica"
-    },
-    {
-      "id": "ortodonzia",
-      "label": "Ortodonzia"
-    },
-    {
-      "id": "mancanti",
-      "label": "Denti mancanti e protesi"
-    },
-    {
-      "id": "cure",
-      "label": "Cure"
-    },
-    {
-      "id": "chirurgia",
-      "label": "Chirurgia"
-    },
-    {
-      "id": "urgenze",
-      "label": "Urgenze"
-    },
-    {
-      "id": "informazioni",
-      "label": "Informazioni"
-    }
+    { "id": "visite", "label": "Visite e controlli" },
+    { "id": "estetica", "label": "Estetica" },
+    { "id": "ortodonzia", "label": "Ortodonzia" },
+    { "id": "mancanti", "label": "Denti mancanti e protesi" },
+    { "id": "cure", "label": "Cure" },
+    { "id": "chirurgia", "label": "Chirurgia" },
+    { "id": "urgenze", "label": "Urgenze" },
+    { "id": "informazioni", "label": "Informazioni" }
   ],
+
   "services": [
     {
       "id": "prima-visita",
@@ -97,31 +53,18 @@
       "hint": "Esame completo, radiografie e piano di trattamento.",
       "tag": "SERVICE_FIRST_VISIT",
       "questions": [
-        {
-          "id": "prima-volta",
-          "q": "È la prima volta che vieni nel nostro studio?",
-          "options": [
-            "Sì",
-            "No"
-          ]
-        },
+        { "id": "prima-volta", "q": "È la prima volta che vieni nel nostro studio?", "options": ["Sì", "No"] },
         {
           "id": "motivo",
           "q": "Qual è il motivo principale della visita?",
           "options": [
             "Controllo generale",
-            {
-              "l": "Dolore o fastidio",
-              "priority": "high"
-            },
+            { "l": "Dolore o fastidio", "priority": "high" },
             "Problema estetico",
             "Denti mancanti",
             "Gengive",
             "Denti storti",
-            {
-              "l": "Dente rotto",
-              "priority": "high"
-            },
+            { "l": "Dente rotto", "priority": "high" },
             "Vorrei migliorare il mio sorriso",
             "Non ho un problema specifico",
             "Altro"
@@ -133,30 +76,18 @@
           "options": [
             "No",
             "Lieve",
-            {
-              "l": "Moderato",
-              "priority": "high"
-            },
-            {
-              "l": "Forte",
-              "priority": "high"
-            }
+            { "l": "Moderato", "priority": "high" },
+            { "l": "Forte", "priority": "high" }
           ]
         },
         {
           "id": "ultima-visita",
           "q": "Quando hai effettuato l'ultima visita dentistica?",
-          "options": [
-            "Meno di 6 mesi fa",
-            "6-12 mesi fa",
-            "1-2 anni fa",
-            "Più di 2 anni fa",
-            "Non ricordo"
-          ]
+          "options": ["Meno di 6 mesi fa", "6-12 mesi fa", "1-2 anni fa", "Più di 2 anni fa", "Non ricordo"]
         }
-      ],
-      "featured": true
+      ]
     },
+
     {
       "id": "controllo-generale",
       "group": "visite",
@@ -167,12 +98,7 @@
         {
           "id": "ultimo-controllo",
           "q": "Quanto tempo è passato dall'ultimo controllo?",
-          "options": [
-            "Meno di 6 mesi",
-            "6-12 mesi",
-            "1-2 anni",
-            "Più di 2 anni"
-          ]
+          "options": ["Meno di 6 mesi", "6-12 mesi", "1-2 anni", "Più di 2 anni"]
         },
         {
           "id": "segnalazione",
@@ -180,22 +106,17 @@
           "options": [
             "No",
             "Sensibilità",
-            {
-              "l": "Dolore",
-              "priority": "high"
-            },
+            { "l": "Dolore", "priority": "high" },
             "Sanguinamento gengivale",
-            {
-              "l": "Dente rotto",
-              "priority": "high"
-            },
+            { "l": "Dente rotto", "priority": "high" },
             "Fastidio durante la masticazione",
             "Altro"
           ]
-        }
-      ],
-      "featured": true
+        },
+        { "id": "gia-paziente", "q": "Hai già effettuato trattamenti nel nostro studio?", "options": ["Sì", "No"] }
+      ]
     },
+
     {
       "id": "igiene",
       "group": "visite",
@@ -206,42 +127,22 @@
         {
           "id": "ultima-igiene",
           "q": "Quando hai effettuato l'ultima igiene professionale?",
-          "options": [
-            "Meno di 6 mesi",
-            "6-12 mesi",
-            "Più di un anno",
-            "Mai",
-            "Non ricordo"
-          ]
+          "options": ["Meno di 6 mesi", "6-12 mesi", "Più di un anno", "Mai", "Non ricordo"]
         },
         {
           "id": "problemi",
           "q": "Hai uno di questi problemi?",
           "type": "multi",
-          "options": [
-            "Nessuno",
-            "Sanguinamento gengivale",
-            "Tartaro evidente",
-            "Alito cattivo",
-            "Sensibilità dentale",
-            "Macchie"
-          ]
+          "options": ["Nessuno", "Sanguinamento gengivale", "Tartaro evidente", "Alito cattivo", "Sensibilità dentale", "Macchie"]
         },
         {
           "id": "dispositivi",
           "q": "Porti apparecchi o dispositivi?",
-          "options": [
-            "No",
-            "Apparecchio fisso",
-            "Allineatori",
-            "Impianti",
-            "Protesi",
-            "Altro"
-          ]
+          "options": ["No", "Apparecchio fisso", "Allineatori", "Impianti", "Protesi", "Altro"]
         }
-      ],
-      "featured": true
+      ]
     },
+
     {
       "id": "sbiancamento",
       "group": "estetica",
@@ -249,15 +150,7 @@
       "hint": "Sbiancamento professionale in studio o domiciliare.",
       "tag": "SERVICE_WHITENING",
       "questions": [
-        {
-          "id": "gia-fatto",
-          "q": "Hai già effettuato uno sbiancamento?",
-          "options": [
-            "Mai",
-            "Sì, una volta",
-            "Sì, più volte"
-          ]
-        },
+        { "id": "gia-fatto", "q": "Hai già effettuato uno sbiancamento?", "options": ["Mai", "Sì, una volta", "Sì, più volte"] },
         {
           "id": "obiettivo",
           "q": "Qual è il tuo obiettivo?",
@@ -269,17 +162,15 @@
             "Vorrei prima una consulenza"
           ]
         },
+        { "id": "sensibilita", "q": "Hai sensibilità dentale?", "options": ["No", "Occasionale", "Frequente"] },
         {
-          "id": "sensibilita",
-          "q": "Hai sensibilità dentale?",
-          "options": [
-            "No",
-            "Occasionale",
-            "Frequente"
-          ]
+          "id": "tempi",
+          "q": "Quando vorresti ottenere il risultato?",
+          "options": ["Il prima possibile", "Entro un mese", "Entro 3 mesi", "Non ho fretta"]
         }
       ]
     },
+
     {
       "id": "ortodonzia",
       "group": "ortodonzia",
@@ -287,21 +178,7 @@
       "hint": "Valutazione ortodontica per adulti e ragazzi.",
       "tag": "SERVICE_ORTHODONTICS",
       "questions": [
-        {
-          "id": "per-chi",
-          "q": "Per chi è la visita?",
-          "options": [
-            {
-              "l": "Per me",
-              "v": "me"
-            },
-            {
-              "l": "Per mio figlio/a",
-              "v": "figlio",
-              "tag": "SERVICE_PEDIATRIC"
-            }
-          ]
-        },
+        { "id": "per-chi", "q": "Per chi è la visita?", "options": [{ "l": "Per me", "v": "me" }, { "l": "Per mio figlio/a", "v": "figlio", "tag": "SERVICE_PEDIATRIC" }] },
         {
           "id": "motivo",
           "q": "Qual è il motivo principale?",
@@ -315,30 +192,20 @@
             "Non lo so, vorrei una valutazione"
           ]
         },
-        {
-          "id": "gia-trattato",
-          "q": "Hai già effettuato un trattamento ortodontico?",
-          "options": [
-            "Sì",
-            "No"
-          ]
-        },
+        { "id": "gia-trattato", "q": "Hai già effettuato un trattamento ortodontico?", "options": ["Sì", "No"] },
         {
           "id": "soluzione",
           "q": "Che tipo di soluzione ti interessa?",
           "options": [
-            {
-              "l": "Allineatori trasparenti",
-              "tag": "SERVICE_ALIGNERS"
-            },
+            { "l": "Allineatori trasparenti", "tag": "SERVICE_ALIGNERS" },
             "Apparecchio tradizionale",
             "Non ho preferenze",
             "Vorrei capire le alternative"
           ]
         }
-      ],
-      "featured": true
+      ]
     },
+
     {
       "id": "allineatori",
       "group": "ortodonzia",
@@ -346,22 +213,8 @@
       "hint": "Mascherine rimovibili su misura.",
       "tag": "SERVICE_ALIGNERS",
       "questions": [
-        {
-          "id": "valutazione",
-          "q": "Hai già fatto una valutazione ortodontica?",
-          "options": [
-            "Sì",
-            "No"
-          ]
-        },
-        {
-          "id": "apparecchi-passati",
-          "q": "Hai già utilizzato apparecchi ortodontici?",
-          "options": [
-            "Sì",
-            "No"
-          ]
-        },
+        { "id": "valutazione", "q": "Hai già fatto una valutazione ortodontica?", "options": ["Sì", "No"] },
+        { "id": "apparecchi-passati", "q": "Hai già utilizzato apparecchi ortodontici?", "options": ["Sì", "No"] },
         {
           "id": "obiettivo",
           "q": "Qual è il tuo obiettivo principale?",
@@ -373,9 +226,15 @@
             "Migliorare l'estetica",
             "Non lo so"
           ]
+        },
+        {
+          "id": "visibilita",
+          "q": "Quanto è importante per te che il trattamento sia poco visibile?",
+          "options": ["Molto importante", "Abbastanza importante", "Non è prioritario"]
         }
       ]
     },
+
     {
       "id": "implantologia",
       "group": "mancanti",
@@ -386,53 +245,20 @@
         {
           "id": "quanti-denti",
           "q": "Quanti denti devono essere sostituiti?",
-          "options": [
-            "1",
-            "2-3",
-            "Più di 3",
-            "Arcata completa",
-            "Non lo so"
-          ]
+          "options": ["1", "2-3", "Più di 3", "Arcata completa", "Non lo so"]
         },
-        {
-          "id": "estratto",
-          "q": "Il dente è già stato estratto?",
-          "options": [
-            "Sì",
-            "No",
-            "Parzialmente",
-            "Non lo so"
-          ]
-        },
+        { "id": "estratto", "q": "Il dente è già stato estratto?", "options": ["Sì", "No", "Parzialmente", "Non lo so"] },
         {
           "id": "da-quanto",
           "q": "Da quanto tempo manca il dente?",
-          "when": {
-            "q": "estratto",
-            "in": [
-              "si",
-              "parzialmente"
-            ]
-          },
-          "options": [
-            "Meno di 6 mesi",
-            "6-12 mesi",
-            "Più di un anno",
-            "Non ricordo"
-          ]
+          "when": { "q": "estratto", "in": ["si", "parzialmente"] },
+          "options": ["Meno di 6 mesi", "6-12 mesi", "Più di un anno", "Non ricordo"]
         },
-        {
-          "id": "esami",
-          "q": "Hai già effettuato radiografie o TAC?",
-          "options": [
-            "Sì",
-            "No",
-            "Non so"
-          ]
-        }
-      ],
-      "featured": true
+        { "id": "esami", "q": "Hai già effettuato radiografie o TAC?", "options": ["Sì", "No", "Non so"] },
+        { "id": "preventivo-ricevuto", "q": "Hai già ricevuto un preventivo o un piano di trattamento?", "options": ["Sì", "No"] }
+      ]
     },
+
     {
       "id": "faccette",
       "group": "estetica",
@@ -452,27 +278,16 @@
             "Non lo so"
           ]
         },
-        {
-          "id": "quanti-denti",
-          "q": "Quanti denti vorresti migliorare?",
-          "options": [
-            "1-2",
-            "3-6",
-            "Più di 6",
-            "Non lo so"
-          ]
-        },
+        { "id": "quanti-denti", "q": "Quanti denti vorresti migliorare?", "options": ["1-2", "3-6", "Più di 6", "Non lo so"] },
+        { "id": "gia-estetici", "q": "Hai già effettuato trattamenti estetici?", "options": ["Sì", "No"] },
         {
           "id": "simulazione",
           "q": "Vorresti una simulazione estetica del risultato?",
-          "options": [
-            "Sì",
-            "No",
-            "Vorrei maggiori informazioni"
-          ]
+          "options": ["Sì", "No", "Vorrei maggiori informazioni"]
         }
       ]
     },
+
     {
       "id": "estetica",
       "group": "estetica",
@@ -483,44 +298,22 @@
         {
           "id": "migliorare",
           "q": "Cosa vorresti migliorare?",
-          "options": [
-            "Colore dei denti",
-            "Forma",
-            "Allineamento",
-            "Spazi",
-            "Denti consumati",
-            "Sorriso nel suo complesso",
-            "Non lo so"
-          ]
+          "options": ["Colore dei denti", "Forma", "Allineamento", "Spazi", "Denti consumati", "Sorriso nel suo complesso", "Non lo so"]
         },
         {
           "id": "percorso",
           "q": "Quale percorso ti interessa?",
           "options": [
-            {
-              "l": "Sbiancamento",
-              "goto": "sbiancamento"
-            },
-            {
-              "l": "Faccette",
-              "goto": "faccette"
-            },
-            {
-              "l": "Ricostruzioni estetiche",
-              "v": "ricostruzioni"
-            },
-            {
-              "l": "Allineatori",
-              "goto": "allineatori"
-            },
-            {
-              "l": "Consulenza estetica completa",
-              "v": "consulenza"
-            }
+            { "l": "Sbiancamento", "goto": "sbiancamento" },
+            { "l": "Faccette", "goto": "faccette" },
+            { "l": "Ricostruzioni estetiche", "v": "ricostruzioni" },
+            { "l": "Allineatori", "goto": "allineatori" },
+            { "l": "Consulenza estetica completa", "v": "consulenza" }
           ]
         }
       ]
     },
+
     {
       "id": "conservativa",
       "group": "cure",
@@ -536,10 +329,7 @@
             "Dente sensibile",
             "Vecchia otturazione",
             "Otturazione persa",
-            {
-              "l": "Dente scheggiato",
-              "priority": "high"
-            },
+            { "l": "Dente scheggiato", "priority": "high" },
             "Altro"
           ]
         },
@@ -549,28 +339,18 @@
           "options": [
             "No",
             "Solo con caldo/freddo",
-            {
-              "l": "Durante la masticazione",
-              "priority": "high"
-            },
-            {
-              "l": "Continuo",
-              "priority": "high"
-            }
+            { "l": "Durante la masticazione", "priority": "high" },
+            { "l": "Continuo", "priority": "high" }
           ]
         },
         {
           "id": "da-quanto",
           "q": "Da quanto tempo hai questo problema?",
-          "options": [
-            "Da oggi",
-            "Da alcuni giorni",
-            "Da alcune settimane",
-            "Da più tempo"
-          ]
+          "options": ["Da oggi", "Da alcuni giorni", "Da alcune settimane", "Da più tempo"]
         }
       ]
     },
+
     {
       "id": "endodonzia",
       "group": "cure",
@@ -578,59 +358,22 @@
       "hint": "Cure canalari e ritrattamenti al microscopio.",
       "tag": "SERVICE_ENDODONTICS",
       "questions": [
-        {
-          "id": "consigliata",
-          "q": "Ti è già stata consigliata una devitalizzazione?",
-          "options": [
-            "Sì",
-            "No",
-            "Non so"
-          ]
-        },
+        { "id": "consigliata", "q": "Ti è già stata consigliata una devitalizzazione?", "options": ["Sì", "No", "Non so"] },
         {
           "id": "dolore",
           "q": "Hai dolore?",
-          "options": [
-            "No",
-            "Lieve",
-            {
-              "l": "Moderato",
-              "priority": "high"
-            },
-            {
-              "l": "Forte",
-              "priority": "high"
-            }
-          ]
+          "options": ["No", "Lieve", { "l": "Moderato", "priority": "high" }, { "l": "Forte", "priority": "high" }]
         },
         {
           "id": "quando-dolore",
           "q": "Quando compare il dolore?",
-          "when": {
-            "q": "dolore",
-            "not": [
-              "no"
-            ]
-          },
-          "options": [
-            "Con caldo/freddo",
-            "Durante la masticazione",
-            "Spontaneamente",
-            "Di notte",
-            "Continuamente"
-          ]
+          "when": { "q": "dolore", "not": ["no"] },
+          "options": ["Con caldo/freddo", "Durante la masticazione", "Spontaneamente", "Di notte", "Continuamente"]
         },
-        {
-          "id": "gia-trattato",
-          "q": "Il dente è già stato trattato in passato?",
-          "options": [
-            "Sì",
-            "No",
-            "Non ricordo"
-          ]
-        }
+        { "id": "gia-trattato", "q": "Il dente è già stato trattato in passato?", "options": ["Sì", "No", "Non ricordo"] }
       ]
     },
+
     {
       "id": "parodontologia",
       "group": "cure",
@@ -644,15 +387,9 @@
           "type": "multi",
           "options": [
             "Sanguinamento",
-            {
-              "l": "Gengive gonfie",
-              "priority": "high"
-            },
+            { "l": "Gengive gonfie", "priority": "high" },
             "Recessione gengivale",
-            {
-              "l": "Mobilità dentale",
-              "priority": "high"
-            },
+            { "l": "Mobilità dentale", "priority": "high" },
             "Alito cattivo",
             "Sensibilità",
             "Altro"
@@ -661,24 +398,13 @@
         {
           "id": "frequenza",
           "q": "Con quale frequenza sanguinano le gengive?",
-          "options": [
-            "Mai",
-            "Occasionalmente",
-            "Spesso",
-            "Ogni giorno"
-          ]
+          "options": ["Mai", "Occasionalmente", "Spesso", "Ogni giorno"]
         },
-        {
-          "id": "diagnosi",
-          "q": "Hai già ricevuto una diagnosi di parodontite?",
-          "options": [
-            "Sì",
-            "No",
-            "Non lo so"
-          ]
-        }
+        { "id": "diagnosi", "q": "Hai già ricevuto una diagnosi di parodontite?", "options": ["Sì", "No", "Non lo so"] },
+        { "id": "gia-trattamenti", "q": "Hai già effettuato trattamenti gengivali?", "options": ["Sì", "No"] }
       ]
     },
+
     {
       "id": "protesi",
       "group": "mancanti",
@@ -693,53 +419,26 @@
             "Dente mancante",
             "Più denti mancanti",
             "Protesi esistente da sostituire",
-            {
-              "l": "Protesi danneggiata",
-              "priority": "high"
-            },
+            { "l": "Protesi danneggiata", "priority": "high" },
             "Difficoltà nella masticazione",
             "Motivo estetico"
           ]
         },
-        {
-          "id": "protesi-attuale",
-          "q": "Utilizzi già una protesi?",
-          "options": [
-            "No",
-            "Protesi fissa",
-            "Protesi mobile",
-            "Impianti",
-            "Non so"
-          ]
-        },
+        { "id": "protesi-attuale", "q": "Utilizzi già una protesi?", "options": ["No", "Protesi fissa", "Protesi mobile", "Impianti", "Non so"] },
         {
           "id": "percorso",
           "q": "Quale soluzione vuoi approfondire?",
           "options": [
-            {
-              "l": "Corona",
-              "goto": "corona"
-            },
-            {
-              "l": "Ponte",
-              "goto": "ponte"
-            },
-            {
-              "l": "Protesi mobile",
-              "goto": "dentiera"
-            },
-            {
-              "l": "Impianti",
-              "goto": "implantologia"
-            },
-            {
-              "l": "Consulenza protesica",
-              "v": "consulenza"
-            }
+            { "l": "Corona", "goto": "corona" },
+            { "l": "Ponte", "goto": "ponte" },
+            { "l": "Protesi mobile", "goto": "dentiera" },
+            { "l": "Impianti", "goto": "implantologia" },
+            { "l": "Consulenza protesica", "v": "consulenza" }
           ]
         }
       ]
     },
+
     {
       "id": "corona",
       "group": "mancanti",
@@ -751,10 +450,7 @@
           "id": "motivo",
           "q": "Perché richiedi una corona?",
           "options": [
-            {
-              "l": "Dente rotto",
-              "priority": "high"
-            },
+            { "l": "Dente rotto", "priority": "high" },
             "Dente devitalizzato",
             "Corona esistente danneggiata",
             "Problema estetico",
@@ -762,28 +458,15 @@
             "Altro"
           ]
         },
-        {
-          "id": "corona-presente",
-          "q": "Hai già una corona su questo dente?",
-          "options": [
-            "Sì",
-            "No"
-          ]
-        },
+        { "id": "corona-presente", "q": "Hai già una corona su questo dente?", "options": ["Sì", "No"] },
         {
           "id": "dolore",
           "q": "Hai dolore o fastidio?",
-          "options": [
-            "No",
-            "Sì, lieve",
-            {
-              "l": "Sì, forte",
-              "priority": "high"
-            }
-          ]
+          "options": ["No", "Sì, lieve", { "l": "Sì, forte", "priority": "high" }]
         }
       ]
     },
+
     {
       "id": "ponte",
       "group": "mancanti",
@@ -791,35 +474,16 @@
       "hint": "Sostituzione di uno o più denti mancanti.",
       "tag": "SERVICE_PROSTHETICS",
       "questions": [
-        {
-          "id": "quanti",
-          "q": "Quanti denti mancano?",
-          "options": [
-            "1",
-            "2",
-            "3 o più",
-            "Non lo so"
-          ]
-        },
-        {
-          "id": "ponte-presente",
-          "q": "Hai già un ponte?",
-          "options": [
-            "Sì",
-            "No"
-          ]
-        },
+        { "id": "quanti", "q": "Quanti denti mancano?", "options": ["1", "2", "3 o più", "Non lo so"] },
+        { "id": "ponte-presente", "q": "Hai già un ponte?", "options": ["Sì", "No"] },
         {
           "id": "alternative",
           "q": "Vuoi valutare anche alternative come gli impianti?",
-          "options": [
-            "Sì",
-            "No",
-            "Vorrei capire le differenze"
-          ]
+          "options": ["Sì", "No", "Vorrei capire le differenze"]
         }
       ]
     },
+
     {
       "id": "dentiera",
       "group": "mancanti",
@@ -827,27 +491,14 @@
       "hint": "Protesi rimovibile: nuova, da rifare o da stabilizzare.",
       "tag": "SERVICE_PROSTHETICS",
       "questions": [
-        {
-          "id": "usa-protesi",
-          "q": "Utilizzi già una protesi mobile?",
-          "options": [
-            "Sì",
-            "No"
-          ]
-        },
+        { "id": "usa-protesi", "q": "Utilizzi già una protesi mobile?", "options": ["Sì", "No"] },
         {
           "id": "problema",
           "q": "Qual è il problema principale?",
           "options": [
             "La protesi si muove",
-            {
-              "l": "Fa male",
-              "priority": "high"
-            },
-            {
-              "l": "È rotta",
-              "priority": "high"
-            },
+            { "l": "Fa male", "priority": "high" },
+            { "l": "È rotta", "priority": "high" },
             "È molto vecchia",
             "Vorrei una nuova protesi",
             "Vorrei una soluzione più stabile"
@@ -856,14 +507,11 @@
         {
           "id": "impianti",
           "q": "Vorresti valutare anche una soluzione su impianti?",
-          "options": [
-            "Sì",
-            "No",
-            "Vorrei informazioni"
-          ]
+          "options": ["Sì", "No", "Vorrei informazioni"]
         }
       ]
     },
+
     {
       "id": "chirurgia",
       "group": "chirurgia",
@@ -874,43 +522,22 @@
         {
           "id": "motivo",
           "q": "Per quale motivo richiedi la visita?",
-          "options": [
-            "Estrazione dentale",
-            "Dente incluso",
-            "Cisti",
-            "Intervento consigliato",
-            "Altro"
-          ]
+          "options": ["Estrazione dentale", "Dente incluso", "Cisti", "Intervento consigliato", "Altro"]
         },
-        {
-          "id": "esami",
-          "q": "Hai già effettuato esami radiografici?",
-          "options": [
-            "Sì",
-            "No"
-          ]
-        },
+        { "id": "esami", "q": "Hai già effettuato esami radiografici?", "options": ["Sì", "No"] },
         {
           "id": "sintomi",
           "q": "Hai dolore o gonfiore?",
           "options": [
             "No",
-            {
-              "l": "Dolore",
-              "priority": "high"
-            },
-            {
-              "l": "Gonfiore",
-              "priority": "high"
-            },
-            {
-              "l": "Entrambi",
-              "priority": "high"
-            }
+            { "l": "Dolore", "priority": "high" },
+            { "l": "Gonfiore", "priority": "high" },
+            { "l": "Entrambi", "priority": "high" }
           ]
         }
       ]
     },
+
     {
       "id": "dente-del-giudizio",
       "group": "chirurgia",
@@ -922,46 +549,23 @@
           "id": "problema",
           "q": "Qual è il problema?",
           "options": [
-            {
-              "l": "Dolore",
-              "priority": "high"
-            },
-            {
-              "l": "Gonfiore",
-              "priority": "high"
-            },
+            { "l": "Dolore", "priority": "high" },
+            { "l": "Gonfiore", "priority": "high" },
             "Dente parzialmente uscito",
             "Dente incluso",
             "Mi è stata consigliata l'estrazione",
             "Controllo"
           ]
         },
-        {
-          "id": "panoramica",
-          "q": "Hai già effettuato una panoramica?",
-          "options": [
-            "Sì",
-            "No",
-            "Non ricordo"
-          ]
-        },
+        { "id": "panoramica", "q": "Hai già effettuato una panoramica?", "options": ["Sì", "No", "Non ricordo"] },
         {
           "id": "apertura",
           "q": "Hai gonfiore o difficoltà ad aprire la bocca?",
-          "options": [
-            "No",
-            {
-              "l": "Sì, leggero",
-              "priority": "high"
-            },
-            {
-              "l": "Sì, importante",
-              "priority": "urgent"
-            }
-          ]
+          "options": ["No", { "l": "Sì, leggero", "priority": "high" }, { "l": "Sì, importante", "priority": "urgent" }]
         }
       ]
     },
+
     {
       "id": "pediatrica",
       "group": "ortodonzia",
@@ -969,16 +573,7 @@
       "hint": "Visite e cure per bambini e ragazzi.",
       "tag": "SERVICE_PEDIATRIC",
       "questions": [
-        {
-          "id": "eta",
-          "q": "Quanti anni ha il bambino?",
-          "options": [
-            "0-5",
-            "6-10",
-            "11-14",
-            "15-17"
-          ]
-        },
+        { "id": "eta", "q": "Quanti anni ha il bambino?", "options": ["0-5", "6-10", "11-14", "15-17"] },
         {
           "id": "motivo",
           "q": "Qual è il motivo della visita?",
@@ -986,45 +581,22 @@
             "Prima visita",
             "Controllo",
             "Carie",
-            {
-              "l": "Dolore",
-              "priority": "high"
-            },
-            {
-              "l": "Trauma",
-              "priority": "urgent"
-            },
+            { "l": "Dolore", "priority": "high" },
+            { "l": "Trauma", "priority": "urgent" },
             "Igiene",
             "Ortodonzia",
             "Altro"
           ]
         },
-        {
-          "id": "prima-volta",
-          "q": "È la prima visita dal dentista?",
-          "options": [
-            "Sì",
-            "No"
-          ]
-        },
+        { "id": "prima-volta", "q": "È la prima visita dal dentista?", "options": ["Sì", "No"] },
         {
           "id": "dolore",
           "q": "Il bambino ha dolore in questo momento?",
-          "options": [
-            "No",
-            "Lieve",
-            {
-              "l": "Moderato",
-              "priority": "high"
-            },
-            {
-              "l": "Forte",
-              "priority": "high"
-            }
-          ]
+          "options": ["No", "Lieve", { "l": "Moderato", "priority": "high" }, { "l": "Forte", "priority": "high" }]
         }
       ]
     },
+
     {
       "id": "bruxismo",
       "group": "cure",
@@ -1036,28 +608,17 @@
           "id": "problema",
           "q": "Quale problema stai riscontrando?",
           "type": "multi",
-          "options": [
-            "Digrigno i denti",
-            "Stringo i denti",
-            "Dolore mandibolare",
-            "Mal di testa",
-            "Denti consumati",
-            "Bite da sostituire",
-            "Altro"
-          ]
+          "options": ["Digrigno i denti", "Stringo i denti", "Dolore mandibolare", "Mal di testa", "Denti consumati", "Bite da sostituire", "Altro"]
         },
         {
           "id": "quando",
           "q": "Quando avverti maggiormente il problema?",
-          "options": [
-            "Di notte",
-            "Al risveglio",
-            "Durante il giorno",
-            "Sempre"
-          ]
-        }
+          "options": ["Di notte", "Al risveglio", "Durante il giorno", "Sempre"]
+        },
+        { "id": "bite-usato", "q": "Hai già utilizzato un bite?", "options": ["Sì", "No"] }
       ]
     },
+
     {
       "id": "urgenza",
       "group": "urgenze",
@@ -1070,77 +631,30 @@
           "id": "problema",
           "q": "Qual è il problema?",
           "options": [
-            {
-              "l": "Dolore forte",
-              "priority": "high"
-            },
-            {
-              "l": "Gonfiore",
-              "priority": "high"
-            },
-            {
-              "l": "Dente rotto",
-              "priority": "high"
-            },
-            {
-              "l": "Trauma",
-              "priority": "urgent"
-            },
-            {
-              "l": "Sanguinamento",
-              "priority": "high"
-            },
+            { "l": "Dolore forte", "priority": "high" },
+            { "l": "Gonfiore", "priority": "high" },
+            { "l": "Dente rotto", "priority": "high" },
+            { "l": "Trauma", "priority": "urgent" },
+            { "l": "Sanguinamento", "priority": "high" },
             "Otturazione/corona persa",
             "Altro"
           ]
         },
-        {
-          "id": "da-quanto",
-          "q": "Da quanto tempo?",
-          "options": [
-            "Da oggi",
-            "1-3 giorni",
-            "Più di 3 giorni"
-          ]
-        },
+        { "id": "da-quanto", "q": "Da quanto tempo?", "options": ["Da oggi", "1-3 giorni", "Più di 3 giorni"] },
         {
           "id": "intensita",
           "q": "Quanto è intenso il dolore, da 1 a 10?",
           "options": [
-            {
-              "l": "1-3",
-              "v": "1-3"
-            },
-            {
-              "l": "4-6",
-              "v": "4-6"
-            },
-            {
-              "l": "7-8",
-              "v": "7-8",
-              "priority": "high"
-            },
-            {
-              "l": "9-10",
-              "v": "9-10",
-              "priority": "high"
-            }
+            { "l": "1-3", "v": "1-3" },
+            { "l": "4-6", "v": "4-6" },
+            { "l": "7-8", "v": "7-8", "priority": "high" },
+            { "l": "9-10", "v": "9-10", "priority": "high" }
           ]
         },
-        {
-          "id": "gonfiore",
-          "q": "Hai gonfiore?",
-          "options": [
-            {
-              "l": "Sì",
-              "priority": "high"
-            },
-            "No"
-          ]
-        }
-      ],
-      "featured": true
+        { "id": "gonfiore", "q": "Hai gonfiore?", "options": [{ "l": "Sì", "priority": "high" }, "No"] }
+      ]
     },
+
     {
       "id": "dente-rotto",
       "group": "urgenze",
@@ -1152,43 +666,17 @@
         {
           "id": "come",
           "q": "Come si è rotto?",
-          "options": [
-            "Durante la masticazione",
-            {
-              "l": "Trauma",
-              "priority": "urgent"
-            },
-            "Si è rotto spontaneamente",
-            "Non lo so"
-          ]
+          "options": ["Durante la masticazione", { "l": "Trauma", "priority": "urgent" }, "Si è rotto spontaneamente", "Non lo so"]
         },
-        {
-          "id": "dolore",
-          "q": "Hai dolore?",
-          "options": [
-            "No",
-            "Lieve",
-            {
-              "l": "Forte",
-              "priority": "high"
-            }
-          ]
-        },
+        { "id": "dolore", "q": "Hai dolore?", "options": ["No", "Lieve", { "l": "Forte", "priority": "high" }] },
         {
           "id": "entita",
           "q": "Il dente ha perso una parte importante?",
-          "options": [
-            "Piccola scheggiatura",
-            "Parte del dente",
-            {
-              "l": "Gran parte del dente",
-              "priority": "high"
-            },
-            "Non so"
-          ]
+          "options": ["Piccola scheggiatura", "Parte del dente", { "l": "Gran parte del dente", "priority": "high" }, "Non so"]
         }
       ]
     },
+
     {
       "id": "trauma",
       "group": "urgenze",
@@ -1201,28 +689,17 @@
         {
           "id": "quando",
           "q": "Quando è avvenuto il trauma?",
-          "options": [
-            "Meno di 2 ore fa",
-            "Oggi",
-            "Ieri",
-            "Più di un giorno fa"
-          ]
+          "options": ["Meno di 2 ore fa", "Oggi", "Ieri", "Più di un giorno fa"]
         },
         {
           "id": "cosa",
           "q": "Cosa è successo?",
           "type": "multi",
-          "options": [
-            "Dente scheggiato",
-            "Dente spostato",
-            "Dente perso",
-            "Dolore",
-            "Sanguinamento",
-            "Altro"
-          ]
+          "options": ["Dente scheggiato", "Dente spostato", "Dente perso", "Dolore", "Sanguinamento", "Altro"]
         }
       ]
     },
+
     {
       "id": "secondo-parere",
       "group": "informazioni",
@@ -1233,39 +710,19 @@
         {
           "id": "ambito",
           "q": "Per quale trattamento vuoi un secondo parere?",
-          "options": [
-            "Implantologia",
-            "Ortodonzia",
-            "Protesi",
-            "Chirurgia",
-            "Estetica",
-            "Devitalizzazione",
-            "Altro"
-          ]
+          "options": ["Implantologia", "Ortodonzia", "Protesi", "Chirurgia", "Estetica", "Devitalizzazione", "Altro"]
         },
-        {
-          "id": "piano",
-          "q": "Hai già ricevuto un piano di trattamento?",
-          "options": [
-            "Sì",
-            "No"
-          ]
-        },
+        { "id": "piano", "q": "Hai già ricevuto un piano di trattamento?", "options": ["Sì", "No"] },
         {
           "id": "documentazione",
           "q": "Hai documentazione disponibile?",
           "type": "multi",
-          "options": [
-            "Radiografie",
-            "TAC",
-            "Preventivo",
-            "Piano di trattamento",
-            "Nessuna documentazione"
-          ],
+          "options": ["Radiografie", "TAC", "Preventivo", "Piano di trattamento", "Nessuna documentazione"],
           "note": "Non caricare documenti qui: li porterai in visita, oppure te li chiederemo su un canale sicuro."
         }
       ]
     },
+
     {
       "id": "preventivo",
       "group": "informazioni",
@@ -1292,24 +749,11 @@
             "Altro"
           ]
         },
-        {
-          "id": "visita-fatta",
-          "q": "Hai già effettuato una visita?",
-          "options": [
-            "Sì",
-            "No"
-          ]
-        },
-        {
-          "id": "diagnosi",
-          "q": "Hai già una diagnosi o un piano di trattamento?",
-          "options": [
-            "Sì",
-            "No"
-          ]
-        }
+        { "id": "visita-fatta", "q": "Hai già effettuato una visita?", "options": ["Sì", "No"] },
+        { "id": "diagnosi", "q": "Hai già una diagnosi o un piano di trattamento?", "options": ["Sì", "No"] }
       ]
     },
+
     {
       "id": "post-trattamento",
       "group": "visite",
@@ -1320,42 +764,20 @@
         {
           "id": "trattamento",
           "q": "Quale trattamento hai effettuato?",
-          "options": [
-            "Igiene",
-            "Otturazione",
-            "Devitalizzazione",
-            "Estrazione",
-            "Impianto",
-            "Chirurgia",
-            "Ortodonzia",
-            "Protesi",
-            "Sbiancamento",
-            "Altro"
-          ]
+          "options": ["Igiene", "Otturazione", "Devitalizzazione", "Estrazione", "Impianto", "Chirurgia", "Ortodonzia", "Protesi", "Sbiancamento", "Altro"]
         },
         {
           "id": "quando",
           "q": "Quando hai effettuato il trattamento?",
-          "options": [
-            "Questa settimana",
-            "1-4 settimane fa",
-            "1-6 mesi fa",
-            "Più di 6 mesi fa"
-          ]
+          "options": ["Questa settimana", "1-4 settimane fa", "1-6 mesi fa", "Più di 6 mesi fa"]
         },
         {
           "id": "problema",
           "q": "Hai qualche problema?",
           "options": [
             "No",
-            {
-              "l": "Dolore",
-              "priority": "high"
-            },
-            {
-              "l": "Gonfiore",
-              "priority": "high"
-            },
+            { "l": "Dolore", "priority": "high" },
+            { "l": "Gonfiore", "priority": "high" },
             "Fastidio",
             "Sensibilità",
             "Problema con la protesi/apparecchio",
@@ -1364,6 +786,7 @@
         }
       ]
     },
+
     {
       "id": "altro",
       "group": "informazioni",
@@ -1379,9 +802,5 @@
         }
       ]
     }
-  ],
-  "featuredLabel": "I motivi più comuni",
-  "moreLabel": "Altri servizi",
-  "moreHint": "Estetica, protesi, chirurgia, bambini, preventivi e secondi pareri.",
-  "emptyLabel": "Nessun servizio corrisponde alla ricerca. Prova con un'altra parola, oppure scegli «Prima visita»: ci pensiamo noi."
+  ]
 }

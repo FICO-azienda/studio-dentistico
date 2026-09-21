@@ -48,7 +48,7 @@ for (const lang of LANGS) {
   team.forEach((p) => add(`${R.team}/${p.slug}`, personPage(p)));
   add(R.treatments, treatmentsIndex());
   treatments.categories.forEach((c) => add(`${R.treatments}/${c.slug}`, categoryPage(c)));
-  treatments.items.forEach((x) => add(`${R.treatments}/${x.slug}`, treatmentPage(x)));
+  treatments.items.forEach((x) => add(`${R.treatments}/${x.category}/${x.slug}`, treatmentPage(x)));
   add(R.technologies, techPage());
   add(R.cases, casesPage());
   add(R.journal, journalIndex());

@@ -457,44 +457,23 @@
 
     /* -- disegno dei passi -------------------------------------------------- */
     const disegnaServizi = () => {
-      // in apertura solo i motivi piu' comuni: il resto si apre su richiesta
-      const evidenza = cfg.services.filter((s) => s.featured);
-      const resto = cfg.services.filter((s) => !s.featured);
-
-      const scheda = (s) => opzione(s.id, s.label, s.hint, state.servizio === s.id);
-
       const gruppi = cfg.groups
         .map((g) => {
-          const items = resto.filter((s) => s.group === g.id);
+          const items = cfg.services.filter((s) => s.group === g.id);
           if (!items.length) return '';
           return `<div class="svc-group" data-group-block>
             <p class="label mt-3">${g.label}</p>
-            <div class="option-grid mt-2">${items.map(scheda).join('')}</div>
+            <div class="option-grid mt-2">
+              ${items.map((s) => opzione(s.id, s.label, s.hint, state.servizio === s.id)).join('')}
+            </div>
           </div>`;
         })
         .join('');
-
       return `${titolo(cfg.chooseLabel, cfg.chooseHint)}
-        <label class="field mt-3"><span class="sr-only">${cfg.searchPlaceholder}</span>
+        <label class="field mt-3"><span class="sr-only">Cerca un servizio</span>
           <input type="search" data-svc-search placeholder="${cfg.searchPlaceholder}" autocomplete="off">
         </label>
-        ${
-          evidenza.length
-            ? `<div class="svc-group" data-group-block data-featured>
-          <p class="label mt-3">${cfg.featuredLabel || ''}</p>
-          <div class="option-grid mt-2">${evidenza.map(scheda).join('')}</div>
-        </div>`
-            : ''
-        }
-        <div class="svc-more" data-more>
-          <button class="svc-more__toggle" type="button" data-more-toggle aria-expanded="false">
-            <span>${cfg.moreLabel || ''}</span>
-            <span class="svc-more__sign" aria-hidden="true"></span>
-          </button>
-          ${cfg.moreHint ? `<p class="small svc-more__hint">${cfg.moreHint}</p>` : ''}
-          <div class="svc-more__panel" data-more-panel hidden>${gruppi}</div>
-        </div>
-        <p class="small mt-3" data-svc-empty hidden>${cfg.emptyLabel || ''}</p>`;
+        ${gruppi}`;
     };
 
     const disegnaDomanda = (q) => {
@@ -767,10 +746,6 @@
       if (t.matches('[data-doctor]')) state.dottore = t.value;
       if (t.matches('[data-svc-search]')) {
         const q = t.value.trim().toLowerCase();
-        const piu = $('[data-more-panel]', stage);
-        if (piu && q) apriAltri(true);          // cercando si guarda fra tutti i servizi
-        if (piu && !q) apriAltri(false);
-        let trovati = 0;
         $$('[data-group-block]', stage).forEach((blocco) => {
           let visibili = 0;
           $$('[data-pick]', blocco).forEach((b) => {
@@ -779,31 +754,7 @@
             if (ok) visibili++;
           });
           blocco.hidden = visibili === 0;
-          trovati += visibili;
         });
-        // senza risultati la schermata resterebbe vuota: meglio dirlo
-        const vuoto = $('[data-svc-empty]', stage);
-        if (vuoto) vuoto.hidden = !q || trovati > 0;
-        const box = $('[data-more]', stage);
-        if (box) box.hidden = q !== '' && trovati === 0;
-      }
-    });
-
-    // apertura e chiusura dell'elenco completo dei servizi
-    function apriAltri(apri) {
-      const box = $('[data-more]', stage);
-      const panel = $('[data-more-panel]', stage);
-      const toggle = $('[data-more-toggle]', stage);
-      if (!panel || !toggle) return;
-      panel.hidden = !apri;
-      box?.classList.toggle('is-open', apri);
-      toggle.setAttribute('aria-expanded', String(apri));
-    }
-
-    stage.addEventListener('click', (e) => {
-      if (e.target.closest('[data-more-toggle]')) {
-        const panel = $('[data-more-panel]', stage);
-        apriAltri(panel?.hidden !== false);
       }
     });
 

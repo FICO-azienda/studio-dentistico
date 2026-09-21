@@ -115,7 +115,6 @@ const UI = {
   'common.next': ['Successivo', 'Next'],
   'common.profile': ['Profilo', 'Profile'],
   'common.discoverProfile': ['Scopri il profilo', 'View profile'],
-  'common.bookWith': ['Prenota con {name}', 'Book with {name}'],
   'common.openInMaps': ['Apri in Google Maps', 'Open in Google Maps'],
   'common.mapAria': ['Mappa dello studio', 'Practice location map'],
   'common.backHome': ['Torna alla home', 'Back to home'],
@@ -158,47 +157,8 @@ const UI = {
   /* navigazione rapida */
   'home.quick.treatments': ['16 trattamenti', '16 treatments'],
   'home.quick.studio': ['Milano, zona Fiera', 'Milan, Fiera district'],
-  'home.quick.team': ['{n} professionisti', '{n} professionals'],
+  'home.quick.team': ['12 professionisti', '12 professionals'],
   'home.quick.book': ['Online, 2 minuti', 'Online, 2 minutes'],
-
-  /* descrizione di ogni voce: la home si legge senza dover scorrere oltre */
-  'home.quick.d.treatments': [
-    'Quattro aree di cura, sedici trattamenti: dalla prevenzione alla riabilitazione completa, spiegati senza gergo.',
-    'Four areas of care, sixteen treatments: from prevention to full rehabilitation, explained without jargon.'
-  ],
-  'home.quick.d.studio': [
-    'A pochi passi dalla Fiera: ambienti curati, percorsi chiari e sterilizzazione a vista.',
-    'A short walk from the Fiera district: considered spaces, clear routes and sterilisation in plain sight.'
-  ],
-  'home.quick.d.team': [
-    '{n} professionisti e un unico piano di cura condiviso: chi ti visita è chi ti segue.',
-    '{n} professionals and a single shared treatment plan: the person who examines you is the person who follows you.'
-  ],
-  'home.quick.d.cases': [
-    'Prima e dopo, con i tempi e il numero di sedute dichiarati. Ogni bocca è diversa dalle altre.',
-    'Before and after, with the timescales and number of appointments stated. Every mouth is different.'
-  ],
-  'home.quick.d.book': [
-    'Scegli il motivo, rispondi a poche domande e proponi tu data e ora. Nessun pagamento anticipato.',
-    'Choose the reason, answer a few questions and suggest a date and time yourself. No payment up front.'
-  ],
-
-  /* aree di cura in homepage */
-  'home.areas.label': ['Aree di cura', 'Areas of care'],
-  'home.areas.t1': ['Quattro aree.', 'Four areas.'],
-  'home.areas.t2': ['Una sola cartella clinica.', 'One single clinical record.'],
-  'home.areas.aside': [
-    'Ogni area ha la sua pagina: cosa comprende, come si svolge, chi se ne occupa.',
-    'Each area has its own page: what it covers, how it works, who looks after it.'
-  ],
-  'tr.allLabel': ['Tutti i trattamenti', 'All treatments'],
-  'tr.allT1': ['Sedici trattamenti,', 'Sixteen treatments,'],
-  'tr.allT2': ['tutti in un elenco.', 'all in one list.'],
-  'tr.allAside': [
-    'Se sai già cosa cerchi, qui c’è tutto l’elenco senza passare dalle aree.',
-    'If you already know what you are looking for, the full list is here without going through the areas.'
-  ],
-  'common.discoverArea': ['Scopri l’area', 'Explore the area'],
 
   /* sezioni della home */
   'home.treatments.label': ['Trattamenti', 'Treatments'],
@@ -233,8 +193,8 @@ const UI = {
   'home.team.t1': ['Persone, prima ancora', 'People, before'],
   'home.team.t2': ['che professionisti.', 'professionals.'],
   'home.team.aside': [
-    'Un unico protocollo condiviso e riunioni cliniche settimanali sui casi complessi.',
-    'One shared protocol and weekly clinical meetings on complex cases.'
+    'Dodici professionisti, un unico protocollo condiviso e riunioni cliniche settimanali sui casi complessi.',
+    'Twelve professionals, one shared protocol and weekly clinical meetings on complex cases.'
   ],
 
   'home.firstVisit.label': ['Prima visita', 'First visit'],
@@ -421,8 +381,8 @@ const UI = {
   ],
   'meta.studio.title': ['Lo studio — Studio Liddi, dentista a Milano', 'The practice — Studio Liddi, dentist in Milan'],
   'meta.studio.desc': [
-    'Studio odontoiatrico a Milano zona Fiera: 340 mq, cinque sale operative, radiologia e laboratorio interni. {n} professionisti e un protocollo condiviso.',
-    'Dental practice in Milan, Fiera district: 340 sqm, five surgeries, in-house radiology and laboratory. {n} professionals and one shared protocol.'
+    'Studio odontoiatrico a Milano zona Fiera: 340 mq, cinque sale operative, radiologia e laboratorio interni. Dodici professionisti e un protocollo condiviso.',
+    'Dental practice in Milan, Fiera district: 340 sqm, five surgeries, in-house radiology and laboratory. Twelve professionals and one shared protocol.'
   ],
   'meta.team.title': ['Il team — Studio Liddi, dentista a Milano', 'The team — Studio Liddi, dentist in Milan'],
   'meta.team.desc': [
@@ -551,8 +511,8 @@ const UI = {
   /* team */
   'team.label': ['04 — Il Team', '04 — The Team'],
   'team.lead': [
-    '{n} professionisti che condividono protocolli, riunioni cliniche settimanali e un criterio: la soluzione più conservativa fra quelle efficaci.',
-    '{n} professionals who share protocols, weekly clinical meetings and one criterion: the most conservative of the effective options.'
+    'Dodici professionisti che condividono protocolli, riunioni cliniche settimanali e un criterio: la soluzione più conservativa fra quelle efficaci.',
+    'Twelve professionals who share protocols, weekly clinical meetings and one criterion: the most conservative of the effective options.'
   ],
   'team.aside': ['Riunione clinica<br>ogni martedì', 'Clinical meeting<br>every Tuesday'],
   'team.note': [
@@ -599,8 +559,8 @@ const UI = {
   'book.title1': ['Prenota', 'Book'],
   'book.title2': ['una visita.', 'an appointment.'],
   'book.lead': [
-    'Due minuti. Puoi fissare un appuntamento oppure chiedere di essere ricontattato.',
-    'Two minutes. You can book an appointment or ask us to call you back.'
+    'Scegli il servizio: le domande cambiano di conseguenza e sono al massimo cinque. Puoi prenotare un appuntamento oppure chiedere di essere ricontattato.',
+    'Choose the service: the questions change accordingly, and there are never more than five. You can book an appointment or ask us to call you back.'
   ],
   'book.preferPhone': ['Preferisci parlare?', 'Prefer to talk?'],
   'book.step': ['Passo', 'Step'],

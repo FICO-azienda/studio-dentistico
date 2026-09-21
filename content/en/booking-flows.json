@@ -1,8 +1,10 @@
 {
   "_nota": "Traduzione inglese dei percorsi di prenotazione. I VALORI delle opzioni restano quelli italiani: sono identificatori stabili, non testo. Qui si traducono solo le etichette. 'common' copre le risposte che ricorrono in piu' servizi; 'services' contiene le specifiche.",
+
   "chooseLabel": "What do you need?",
-  "chooseHint": "Choose the reason: the questions change accordingly, and there are never more than four.",
+  "chooseHint": "Choose the service: the questions change accordingly. There are never more than five.",
   "searchPlaceholder": "Search for a service…",
+
   "groups": {
     "visite": "Visits and check-ups",
     "estetica": "Cosmetic",
@@ -13,32 +15,22 @@
     "urgenze": "Urgent care",
     "informazioni": "Information"
   },
+
   "tail": {
     "modalita": {
       "q": "How would you like to proceed?",
-      "o": {
-        "prenota": "Book an appointment",
-        "ricontatto": "Ask us to call you back"
-      }
+      "o": { "prenota": "Book an appointment", "ricontatto": "Ask us to call you back" }
     },
     "canale": {
       "q": "How would you prefer to be contacted?",
-      "o": {
-        "telefono": "Phone",
-        "whatsapp": "WhatsApp",
-        "email": "Email"
-      }
+      "o": { "telefono": "Phone", "whatsapp": "WhatsApp", "email": "Email" }
     },
     "fascia": {
       "q": "When would you prefer to be contacted?",
-      "o": {
-        "mattina": "Morning",
-        "pausa-pranzo": "Lunchtime",
-        "pomeriggio": "Afternoon",
-        "sera": "Evening"
-      }
+      "o": { "mattina": "Morning", "pausa-pranzo": "Lunchtime", "pomeriggio": "Afternoon", "sera": "Evening" }
     }
   },
+
   "common": {
     "si": "Yes",
     "no": "No",
@@ -108,14 +100,13 @@
     "durante-la-masticazione": "When chewing",
     "difficolta-nella-masticazione": "Difficulty chewing"
   },
+
   "services": {
     "prima-visita": {
       "label": "First visit",
       "hint": "Full examination, radiographs and treatment plan.",
       "q": {
-        "prima-volta": {
-          "q": "Is this your first time at our practice?"
-        },
+        "prima-volta": { "q": "Is this your first time at our practice?" },
         "motivo": {
           "q": "What is the main reason for your visit?",
           "o": {
@@ -125,60 +116,41 @@
             "non-ho-un-problema-specifico": "No specific problem"
           }
         },
-        "dolore": {
-          "q": "Are you in pain or discomfort right now?"
-        },
-        "ultima-visita": {
-          "q": "When did you last see a dentist?"
-        }
+        "dolore": { "q": "Are you in pain or discomfort right now?" },
+        "ultima-visita": { "q": "When did you last see a dentist?" }
       }
     },
+
     "controllo-generale": {
       "label": "General check-up",
       "hint": "Routine check of teeth, gums and existing restorations.",
       "q": {
-        "ultimo-controllo": {
-          "q": "How long since your last check-up?"
-        },
+        "ultimo-controllo": { "q": "How long since your last check-up?" },
         "segnalazione": {
           "q": "Is there anything specific you would like to mention?",
-          "o": {
-            "fastidio-durante-la-masticazione": "Discomfort when chewing"
-          }
+          "o": { "fastidio-durante-la-masticazione": "Discomfort when chewing" }
         },
-        "gia-paziente": {
-          "q": "Have you had treatment at our practice before?"
-        }
+        "gia-paziente": { "q": "Have you had treatment at our practice before?" }
       }
     },
+
     "igiene": {
       "label": "Dental hygiene",
       "hint": "Professional hygiene appointment and personalised advice.",
       "q": {
-        "ultima-igiene": {
-          "q": "When did you last have a professional hygiene appointment?"
-        },
-        "problemi": {
-          "q": "Do you have any of these?",
-          "o": {
-            "tartaro-evidente": "Visible calculus"
-          }
-        },
-        "dispositivi": {
-          "q": "Do you wear any appliances or have any restorations?"
-        }
+        "ultima-igiene": { "q": "When did you last have a professional hygiene appointment?" },
+        "problemi": { "q": "Do you have any of these?", "o": { "tartaro-evidente": "Visible calculus" } },
+        "dispositivi": { "q": "Do you wear any appliances or have any restorations?" }
       }
     },
+
     "sbiancamento": {
       "label": "Teeth whitening",
       "hint": "Professional whitening in the practice or at home.",
       "q": {
         "gia-fatto": {
           "q": "Have you had whitening before?",
-          "o": {
-            "si-una-volta": "Yes, once",
-            "si-piu-volte": "Yes, more than once"
-          }
+          "o": { "si-una-volta": "Yes, once", "si-piu-volte": "Yes, more than once" }
         },
         "obiettivo": {
           "q": "What are you hoping for?",
@@ -189,13 +161,7 @@
             "vorrei-prima-una-consulenza": "I would like advice first"
           }
         },
-        "sensibilita": {
-          "q": "Do you have sensitive teeth?",
-          "o": {
-            "occasionale": "Occasionally",
-            "frequente": "Often"
-          }
-        },
+        "sensibilita": { "q": "Do you have sensitive teeth?", "o": { "occasionale": "Occasionally", "frequente": "Often" } },
         "tempi": {
           "q": "When would you like the result?",
           "o": {
@@ -207,17 +173,12 @@
         }
       }
     },
+
     "ortodonzia": {
       "label": "Orthodontics",
       "hint": "Orthodontic assessment for adults and teenagers.",
       "q": {
-        "per-chi": {
-          "q": "Who is the appointment for?",
-          "o": {
-            "me": "For me",
-            "figlio": "For my child"
-          }
-        },
+        "per-chi": { "q": "Who is the appointment for?", "o": { "me": "For me", "figlio": "For my child" } },
         "motivo": {
           "q": "What is the main reason?",
           "o": {
@@ -228,9 +189,7 @@
             "non-lo-so-vorrei-una-valutazione": "I'm not sure, I would like an assessment"
           }
         },
-        "gia-trattato": {
-          "q": "Have you had orthodontic treatment before?"
-        },
+        "gia-trattato": { "q": "Have you had orthodontic treatment before?" },
         "soluzione": {
           "q": "What kind of solution interests you?",
           "o": {
@@ -242,16 +201,13 @@
         }
       }
     },
+
     "allineatori": {
       "label": "Clear aligners",
       "hint": "Custom removable trays.",
       "q": {
-        "valutazione": {
-          "q": "Have you already had an orthodontic assessment?"
-        },
-        "apparecchi-passati": {
-          "q": "Have you worn orthodontic appliances before?"
-        },
+        "valutazione": { "q": "Have you already had an orthodontic assessment?" },
+        "apparecchi-passati": { "q": "Have you worn orthodontic appliances before?" },
         "obiettivo": {
           "q": "What is your main goal?",
           "o": {
@@ -272,34 +228,22 @@
         }
       }
     },
+
     "implantologia": {
       "label": "Dental implants",
       "hint": "Replacing missing teeth with implants.",
       "q": {
         "quanti-denti": {
           "q": "How many teeth need replacing?",
-          "o": {
-            "piu-di-3": "More than 3",
-            "arcata-completa": "A full arch"
-          }
+          "o": { "piu-di-3": "More than 3", "arcata-completa": "A full arch" }
         },
-        "estratto": {
-          "q": "Has the tooth already been removed?",
-          "o": {
-            "parzialmente": "Partly"
-          }
-        },
-        "da-quanto": {
-          "q": "How long has the tooth been missing?"
-        },
-        "esami": {
-          "q": "Have you already had radiographs or a CT scan?"
-        },
-        "preventivo-ricevuto": {
-          "q": "Have you already received an estimate or a treatment plan?"
-        }
+        "estratto": { "q": "Has the tooth already been removed?", "o": { "parzialmente": "Partly" } },
+        "da-quanto": { "q": "How long has the tooth been missing?" },
+        "esami": { "q": "Have you already had radiographs or a CT scan?" },
+        "preventivo-ricevuto": { "q": "Have you already received an estimate or a treatment plan?" }
       }
     },
+
     "faccette": {
       "label": "Dental veneers",
       "hint": "Ceramic laminates for shape, colour and proportion.",
@@ -313,23 +257,15 @@
             "correggere-denti-consumati": "Repair worn teeth"
           }
         },
-        "quanti-denti": {
-          "q": "How many teeth would you like to improve?",
-          "o": {
-            "piu-di-6": "More than 6"
-          }
-        },
-        "gia-estetici": {
-          "q": "Have you had cosmetic dental treatment before?"
-        },
+        "quanti-denti": { "q": "How many teeth would you like to improve?", "o": { "piu-di-6": "More than 6" } },
+        "gia-estetici": { "q": "Have you had cosmetic dental treatment before?" },
         "simulazione": {
           "q": "Would you like a simulation of the result?",
-          "o": {
-            "vorrei-maggiori-informazioni": "I would like more information"
-          }
+          "o": { "vorrei-maggiori-informazioni": "I would like more information" }
         }
       }
     },
+
     "estetica": {
       "label": "Cosmetic dentistry",
       "hint": "Not sure where to start: we will guide you.",
@@ -345,11 +281,10 @@
             "sorriso-nel-suo-complesso": "My smile as a whole"
           }
         },
-        "percorso": {
-          "q": "Which route interests you?"
-        }
+        "percorso": { "q": "Which route interests you?" }
       }
     },
+
     "conservativa": {
       "label": "Fillings / Restorative",
       "hint": "Treating decay and restorations.",
@@ -366,26 +301,18 @@
         },
         "dolore": {
           "q": "Are you in pain?",
-          "o": {
-            "solo-con-caldo-freddo": "Only with hot or cold",
-            "continuo": "Constant"
-          }
+          "o": { "solo-con-caldo-freddo": "Only with hot or cold", "continuo": "Constant" }
         },
-        "da-quanto": {
-          "q": "How long have you had this problem?"
-        }
+        "da-quanto": { "q": "How long have you had this problem?" }
       }
     },
+
     "endodonzia": {
       "label": "Root canal treatment",
       "hint": "Root canals and retreatment under the microscope.",
       "q": {
-        "consigliata": {
-          "q": "Has root canal treatment already been recommended to you?"
-        },
-        "dolore": {
-          "q": "Are you in pain?"
-        },
+        "consigliata": { "q": "Has root canal treatment already been recommended to you?" },
+        "dolore": { "q": "Are you in pain?" },
         "quando-dolore": {
           "q": "When does the pain appear?",
           "o": {
@@ -395,11 +322,10 @@
             "continuamente": "All the time"
           }
         },
-        "gia-trattato": {
-          "q": "Has this tooth been treated before?"
-        }
+        "gia-trattato": { "q": "Has this tooth been treated before?" }
       }
     },
+
     "parodontologia": {
       "label": "Gums / Periodontology",
       "hint": "Bleeding, swollen gums, loose teeth.",
@@ -414,20 +340,13 @@
         },
         "frequenza": {
           "q": "How often do your gums bleed?",
-          "o": {
-            "occasionalmente": "Occasionally",
-            "spesso": "Often",
-            "ogni-giorno": "Every day"
-          }
+          "o": { "occasionalmente": "Occasionally", "spesso": "Often", "ogni-giorno": "Every day" }
         },
-        "diagnosi": {
-          "q": "Have you been diagnosed with periodontitis?"
-        },
-        "gia-trattamenti": {
-          "q": "Have you had gum treatment before?"
-        }
+        "diagnosi": { "q": "Have you been diagnosed with periodontitis?" },
+        "gia-trattamenti": { "q": "Have you had gum treatment before?" }
       }
     },
+
     "protesi": {
       "label": "Dental restorations",
       "hint": "Not sure which solution is right for you.",
@@ -441,14 +360,11 @@
             "protesi-danneggiata": "A damaged restoration"
           }
         },
-        "protesi-attuale": {
-          "q": "Do you already wear a denture or restoration?"
-        },
-        "percorso": {
-          "q": "Which solution would you like to explore?"
-        }
+        "protesi-attuale": { "q": "Do you already wear a denture or restoration?" },
+        "percorso": { "q": "Which solution would you like to explore?" }
       }
     },
+
     "corona": {
       "label": "Crown",
       "hint": "Rebuilding a compromised tooth.",
@@ -461,46 +377,29 @@
             "mi-e-stata-consigliata": "It has been recommended to me"
           }
         },
-        "corona-presente": {
-          "q": "Do you already have a crown on this tooth?"
-        },
-        "dolore": {
-          "q": "Any pain or discomfort?",
-          "o": {
-            "si-lieve": "Yes, mild",
-            "si-forte": "Yes, severe"
-          }
-        }
+        "corona-presente": { "q": "Do you already have a crown on this tooth?" },
+        "dolore": { "q": "Any pain or discomfort?", "o": { "si-lieve": "Yes, mild", "si-forte": "Yes, severe" } }
       }
     },
+
     "ponte": {
       "label": "Dental bridge",
       "hint": "Replacing one or more missing teeth.",
       "q": {
-        "quanti": {
-          "q": "How many teeth are missing?",
-          "o": {
-            "3-o-piu": "3 or more"
-          }
-        },
-        "ponte-presente": {
-          "q": "Do you already have a bridge?"
-        },
+        "quanti": { "q": "How many teeth are missing?", "o": { "3-o-piu": "3 or more" } },
+        "ponte-presente": { "q": "Do you already have a bridge?" },
         "alternative": {
           "q": "Would you also like to consider implants?",
-          "o": {
-            "vorrei-capire-le-differenze": "I would like to understand the differences"
-          }
+          "o": { "vorrei-capire-le-differenze": "I would like to understand the differences" }
         }
       }
     },
+
     "dentiera": {
       "label": "Dentures",
       "hint": "Removable dentures: new, replacement or stabilised.",
       "q": {
-        "usa-protesi": {
-          "q": "Do you already wear a removable denture?"
-        },
+        "usa-protesi": { "q": "Do you already wear a removable denture?" },
         "problema": {
           "q": "What is the main problem?",
           "o": {
@@ -512,14 +411,10 @@
             "vorrei-una-soluzione-piu-stabile": "I would like something more stable"
           }
         },
-        "impianti": {
-          "q": "Would you like to consider an implant-supported solution?",
-          "o": {
-            "vorrei-informazioni": "I would like information"
-          }
-        }
+        "impianti": { "q": "Would you like to consider an implant-supported solution?", "o": { "vorrei-informazioni": "I would like information" } }
       }
     },
+
     "chirurgia": {
       "label": "Oral surgery",
       "hint": "Extractions, impacted teeth, outpatient procedures.",
@@ -533,17 +428,11 @@
             "intervento-consigliato": "Surgery has been recommended"
           }
         },
-        "esami": {
-          "q": "Have you already had radiographs?"
-        },
-        "sintomi": {
-          "q": "Any pain or swelling?",
-          "o": {
-            "entrambi": "Both"
-          }
-        }
+        "esami": { "q": "Have you already had radiographs?" },
+        "sintomi": { "q": "Any pain or swelling?", "o": { "entrambi": "Both" } }
       }
     },
+
     "dente-del-giudizio": {
       "label": "Wisdom tooth",
       "hint": "Assessment or removal of a third molar.",
@@ -556,39 +445,25 @@
             "mi-e-stata-consigliata-l-estrazione": "Removal has been recommended"
           }
         },
-        "panoramica": {
-          "q": "Have you had a panoramic radiograph?"
-        },
+        "panoramica": { "q": "Have you had a panoramic radiograph?" },
         "apertura": {
           "q": "Any swelling or difficulty opening your mouth?",
-          "o": {
-            "si-leggero": "Yes, slight",
-            "si-importante": "Yes, marked"
-          }
+          "o": { "si-leggero": "Yes, slight", "si-importante": "Yes, marked" }
         }
       }
     },
+
     "pediatrica": {
       "label": "Children's dentistry",
       "hint": "Visits and treatment for children and teenagers.",
       "q": {
-        "eta": {
-          "q": "How old is the child?"
-        },
-        "motivo": {
-          "q": "What is the reason for the visit?",
-          "o": {
-            "carie": "Decay"
-          }
-        },
-        "prima-volta": {
-          "q": "Is this the child's first dental visit?"
-        },
-        "dolore": {
-          "q": "Is the child in pain right now?"
-        }
+        "eta": { "q": "How old is the child?" },
+        "motivo": { "q": "What is the reason for the visit?", "o": { "carie": "Decay" } },
+        "prima-volta": { "q": "Is this the child's first dental visit?" },
+        "dolore": { "q": "Is the child in pain right now?" }
       }
     },
+
     "bruxismo": {
       "label": "Bruxism / Night guard",
       "hint": "Grinding, clenching, custom night guards.",
@@ -606,18 +481,12 @@
         },
         "quando": {
           "q": "When do you notice it most?",
-          "o": {
-            "di-notte": "At night",
-            "al-risveglio": "On waking",
-            "durante-il-giorno": "During the day",
-            "sempre": "All the time"
-          }
+          "o": { "di-notte": "At night", "al-risveglio": "On waking", "durante-il-giorno": "During the day", "sempre": "All the time" }
         },
-        "bite-usato": {
-          "q": "Have you worn a night guard before?"
-        }
+        "bite-usato": { "q": "Have you worn a night guard before?" }
       }
     },
+
     "urgenza": {
       "label": "Pain / Urgent",
       "hint": "A short path: four questions and we call you back.",
@@ -625,22 +494,14 @@
       "q": {
         "problema": {
           "q": "What is the problem?",
-          "o": {
-            "dolore-forte": "Severe pain",
-            "otturazione-corona-persa": "A filling or crown has come out"
-          }
+          "o": { "dolore-forte": "Severe pain", "otturazione-corona-persa": "A filling or crown has come out" }
         },
-        "da-quanto": {
-          "q": "How long has it been going on?"
-        },
-        "intensita": {
-          "q": "How intense is the pain, from 1 to 10?"
-        },
-        "gonfiore": {
-          "q": "Do you have any swelling?"
-        }
+        "da-quanto": { "q": "How long has it been going on?" },
+        "intensita": { "q": "How intense is the pain, from 1 to 10?" },
+        "gonfiore": { "q": "Do you have any swelling?" }
       }
     },
+
     "dente-rotto": {
       "label": "Broken tooth",
       "hint": "A fractured or chipped tooth.",
@@ -652,9 +513,7 @@
             "si-e-rotto-spontaneamente": "It broke on its own"
           }
         },
-        "dolore": {
-          "q": "Are you in pain?"
-        },
+        "dolore": { "q": "Are you in pain?" },
         "entita": {
           "q": "Has a significant part of the tooth come away?",
           "o": {
@@ -665,6 +524,7 @@
         }
       }
     },
+
     "trauma": {
       "label": "Dental injury",
       "hint": "A knock, a fall, a tooth moved or knocked out.",
@@ -689,16 +549,13 @@
         }
       }
     },
+
     "secondo-parere": {
       "label": "Second opinion",
       "hint": "A review of a treatment plan received elsewhere.",
       "q": {
-        "ambito": {
-          "q": "Which treatment would you like a second opinion on?"
-        },
-        "piano": {
-          "q": "Have you already received a treatment plan?"
-        },
+        "ambito": { "q": "Which treatment would you like a second opinion on?" },
+        "piano": { "q": "Have you already received a treatment plan?" },
         "documentazione": {
           "q": "What documentation do you have?",
           "note": "Please do not upload documents here: bring them to your appointment, or we will ask for them through a secure channel.",
@@ -712,6 +569,7 @@
         }
       }
     },
+
     "preventivo": {
       "label": "Request an estimate",
       "hint": "Information about the cost of treatment.",
@@ -727,21 +585,16 @@
             "protesi-corona-o-ponte": "A denture, crown or bridge"
           }
         },
-        "visita-fatta": {
-          "q": "Have you already had a visit?"
-        },
-        "diagnosi": {
-          "q": "Do you already have a diagnosis or a treatment plan?"
-        }
+        "visita-fatta": { "q": "Have you already had a visit?" },
+        "diagnosi": { "q": "Do you already have a diagnosis or a treatment plan?" }
       }
     },
+
     "post-trattamento": {
       "label": "Follow-up check",
       "hint": "A review after treatment you have already had.",
       "q": {
-        "trattamento": {
-          "q": "Which treatment did you have?"
-        },
+        "trattamento": { "q": "Which treatment did you have?" },
         "quando": {
           "q": "When did you have it?",
           "o": {
@@ -760,6 +613,7 @@
         }
       }
     },
+
     "altro": {
       "label": "Something else",
       "hint": "Your request does not fit the categories.",
@@ -770,9 +624,5 @@
         }
       }
     }
-  },
-  "featuredLabel": "The most common reasons",
-  "moreLabel": "Other services",
-  "moreHint": "Cosmetic, restorations, surgery, children, estimates and second opinions.",
-  "emptyLabel": "No service matches your search. Try another word, or simply choose \u201cFirst visit\u201d and we will take it from there."
+  }
 }

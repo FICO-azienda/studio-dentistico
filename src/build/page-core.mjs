@@ -108,7 +108,7 @@ ${bookingBand(base)}`;
 
   return layout({
     title: t('meta.studio.title'),
-    description: t('meta.studio.desc', { n: team.length }),
+    description: t('meta.studio.desc'),
     path: PATH.studio,
     depth: 1,
     current: PATH.studio,
@@ -121,41 +121,18 @@ ${bookingBand(base)}`;
 /* =========================================================== /team ======= */
 export const teamPage = () => {
   const base = '../';
-
-  // una riga per persona: il nome grande a sinistra, il ritratto a destra.
-  // Con nove persone una griglia di provini diceva meno di quanto dice
-  // ciascuno di loro con il proprio spazio.
-  const riga = (p, i) => `
-<article class="crew reveal">
-  <div class="crew__text">
-    <span class="num crew__num">${String(i + 1).padStart(2, '0')}</span>
-    <h2 class="h1 crew__name">${esc(personName(p))}</h2>
-    <p class="label label--accent mt-2">${esc(p.role)}</p>
-    <p class="body mt-3 measure-sm">${esc(p.short)}</p>
-    <p class="crew__links mt-4">
-      <a class="link-u" href="${base}${teamPath(p)}">${esc(t('common.discoverProfile'))} ${arrow}</a>
-      <a class="link-u" href="${base}${PATH.book}">${esc(t('common.bookWith', { name: `${p.title ? p.title + ' ' : ''}${p.name.split(' ').pop()}` }))} ${arrow}</a>
-    </p>
-  </div>
-  <a class="crew__media media media--ar media--duo media__zoom" style="--ar:4/5" href="${base}${teamPath(p)}" aria-label="${attr(personName(p))}">
-    ${imgTag(p.image, { base, sizes: '(max-width: 900px) 100vw, 46vw' })}
-  </a>
-</article>`;
-
   const main = `
 ${pageHero({
     label: t('team.label'),
     title: lines([t('home.team.t1'), `<em class="serif-italic">${t('home.team.t2')}</em>`]),
-    lead: t('team.lead', { n: team.length }),
+    lead: t('team.lead'),
     aside: t('team.aside'),
     crumbs: [{ label: t('nav.home'), path: '' }, { label: t('nav.team') }],
-    base,
-    media: 'studio-interno',
-    mediaAr: '21/9'
+    base
   })}
-<section class="section">
+<section class="section section--flush-top">
   <div class="wrap">
-    <div class="crew-list">${team.map(riga).join('')}</div>
+    <div class="team-grid">${team.map((p) => personCard(p, base)).join('')}</div>
     <p class="disclaimer mt-5 reveal">${esc(t('team.note'))}</p>
   </div>
 </section>
@@ -163,11 +140,10 @@ ${bookingBand(base)}`;
 
   return layout({
     title: t('meta.team.title'),
-    description: t('meta.team.desc', { n: team.length }),
+    description: t('meta.team.desc'),
     path: PATH.team,
     depth: 1,
     current: PATH.team,
-    preload: ['studio-interno'],
     crumbs: [{ label: t('nav.home'), path: '' }, { label: t('nav.team'), path: PATH.team }],
     main
   });

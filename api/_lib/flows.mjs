@@ -68,7 +68,6 @@ function normalizza(raw) {
     tag: s.tag,
     note: s.note || '',
     priority: s.priority || 'normal',
-    featured: !!s.featured,
     questions: s.questions.map(normQuestion)
   }));
   return {
@@ -110,10 +109,6 @@ export function flowsFor(lang = 'it') {
     chooseLabel: EN.chooseLabel || flows.chooseLabel,
     chooseHint: EN.chooseHint || flows.chooseHint,
     searchPlaceholder: EN.searchPlaceholder || flows.searchPlaceholder,
-    featuredLabel: EN.featuredLabel || flows.featuredLabel,
-    moreLabel: EN.moreLabel || flows.moreLabel,
-    moreHint: EN.moreHint || flows.moreHint,
-    emptyLabel: EN.emptyLabel || flows.emptyLabel,
     groups: flows.groups.map((g) => ({ ...g, label: EN.groups?.[g.id] || g.label })),
     tail: {
       modeQuestion: dom(flows.tail.modeQuestion, EN.tail?.modalita),
@@ -239,16 +234,11 @@ export const clientConfig = (lang = 'it') => {
   chooseLabel: f.chooseLabel,
   chooseHint: f.chooseHint,
   searchPlaceholder: f.searchPlaceholder,
-  featuredLabel: f.featuredLabel,
-  moreLabel: f.moreLabel,
-  moreHint: f.moreHint,
-  emptyLabel: f.emptyLabel,
   groups: f.groups,
   tail: f.tail,
   services: f.services.map((s) => ({
     id: s.id,
     group: s.group,
-    featured: !!s.featured,
     label: s.label,
     hint: s.hint,
     note: s.note,

@@ -11,6 +11,156 @@
   const $$ = (s, c = document) => Array.from(c.querySelectorAll(s));
   const clamp = (v, a, b) => Math.min(Math.max(v, a), b);
 
+  /* -- Lingua della pagina: per il wizard e la pagina di autogestione, il
+     cui HTML e' generato via JS (non a build time come il resto del sito)
+     e quindi non passa per src/build/i18n.mjs. ------------------------- */
+  const LANG = document.documentElement.lang === 'en' ? 'en' : 'it';
+  const LOCALE = LANG === 'en' ? 'en-GB' : 'it-IT';
+
+  const STR = {
+    it: {
+      searchService: 'Cerca un servizio',
+      multiHint: 'Puoi scegliere più di una risposta.',
+      modeBookHint: 'Scegli giorno e orario dal calendario.',
+      modeCallHint: 'Ti richiamiamo noi quando preferisci.',
+      whenTitle: 'Quando ti è comodo?',
+      whenSub: 'Gli orari mostrati sono indicativi: la segreteria conferma la disponibilità effettiva.',
+      day: 'Giorno',
+      time: 'Orario',
+      secondChoice: 'Seconda preferenza',
+      optional: '— facoltativa',
+      altDay: 'Giorno alternativo',
+      altTime: 'Orario alternativo',
+      noPreference: 'Nessuna preferenza',
+      professional: 'Professionista',
+      sInitialRequest: 'Richiesta iniziale',
+      sService: 'Servizio',
+      sDay: 'Giorno',
+      sTime: 'Orario',
+      sSecondChoice: 'Seconda preferenza',
+      sAt: (h) => ` alle ${h}`,
+      sProfessional: 'Professionista',
+      sMode: 'Modalità',
+      sCallback: 'Richiamata',
+      sChannel: 'Canale preferito',
+      sWindow: 'Fascia oraria',
+      stepOf: (i, n) => `Passo ${i} di ${n}`,
+      chooseService: 'Scegli il servizio',
+      goToDetails: 'Vai ai tuoi dati',
+      continueBtn: 'Continua',
+      sendingBtn: 'Invio in corso',
+      thanksFor: (name, when) => `Grazie, ${name}. Abbiamo ricevuto la tua richiesta ${when}.`,
+      whenFor: (day, hour) => `per ${day} alle ${hour}`,
+      whenCallback: 'e la richiamata che ci hai chiesto',
+      demoNote: 'Modalità dimostrativa: nessuna email è stata inviata e nessun appuntamento è stato registrato.',
+      emailSentNote:
+        'Ti abbiamo inviato una email con il riepilogo. Il nostro team ti contatterà per confermare definitivamente la disponibilità.',
+      emailFailedNote:
+        "Non siamo riusciti a inviarti l'email di riepilogo, ma la richiesta è registrata. Il nostro team ti contatterà per confermare la disponibilità.",
+      invalidFields: 'Alcuni dati non sono validi.',
+      submitFailed: 'Non siamo riusciti a inviare la richiesta. Riprova oppure contatta direttamente lo studio.',
+      networkFailed: 'Non siamo riusciti a inviare la richiesta. Controlla la connessione, riprova oppure contatta direttamente lo studio.',
+
+      manageLoadError: 'Non riusciamo a caricare la prenotazione',
+      manageLoadErrorBody: 'Il link potrebbe non essere più valido. Se hai bisogno di annullare o spostare il tuo appuntamento, contattaci direttamente.',
+      contatti: (telHref, tel, email) =>
+        `Chiamaci al <a class="link-inline" href="tel:${telHref}">${tel}</a> oppure scrivici a <a class="link-inline" href="mailto:${email}">${email}</a>.`,
+      atHour: (h) => `alle ${h}`,
+      code: (id) => `Codice ${id}`,
+      outOfWindow: 'Mancano meno di 24 ore a questo appuntamento: la modifica online non è più disponibile. Se hai un imprevisto, contattaci il prima possibile.',
+      statusCancelled: 'annullato',
+      statusCompleted: 'concluso',
+      notManageable: (stato) => `Questo appuntamento risulta ${stato}: non ci sono ulteriori azioni disponibili.`,
+      rescheduleBtn: 'Sposta appuntamento',
+      cancelBtn: 'Annulla appuntamento',
+      confirmCancel: 'Confermi di voler annullare questo appuntamento? Lo slot verrà liberato.',
+      cancelledTitle: 'Appuntamento annullato',
+      cancelledBody: 'Ti abbiamo inviato una email di conferma. Puoi prenotare un nuovo appuntamento quando vuoi.',
+      newDay: 'Nuovo giorno',
+      newTime: 'Nuovo orario',
+      chooseDayFirst: 'Scegli prima un giorno.',
+      confirmNewTime: 'Conferma nuovo orario',
+      checkingAvailability: 'Verifica disponibilità…',
+      rescheduledTitle: 'Appuntamento spostato',
+      rescheduledBody: (when, hour) => `Il nuovo appuntamento è per ${when} alle ${hour}. Ti abbiamo inviato una email di conferma con il calendario aggiornato.`,
+      slotTaken: 'Questo orario è appena stato occupato: scegline un altro.',
+      rescheduleFailed: 'Non siamo riusciti a completare lo spostamento. Riprova.',
+      networkRetry: 'Errore di rete: riprova tra poco.'
+    },
+    en: {
+      searchService: 'Search for a service',
+      multiHint: 'You can choose more than one answer.',
+      modeBookHint: 'Pick a day and time from the calendar.',
+      modeCallHint: "We'll call you back whenever suits you.",
+      whenTitle: 'When suits you best?',
+      whenSub: 'The times shown are indicative: our front desk confirms actual availability.',
+      day: 'Day',
+      time: 'Time',
+      secondChoice: 'Second choice',
+      optional: '— optional',
+      altDay: 'Alternative day',
+      altTime: 'Alternative time',
+      noPreference: 'No preference',
+      professional: 'Practitioner',
+      sInitialRequest: 'Initial request',
+      sService: 'Service',
+      sDay: 'Day',
+      sTime: 'Time',
+      sSecondChoice: 'Second choice',
+      sAt: (h) => ` at ${h}`,
+      sProfessional: 'Practitioner',
+      sMode: 'Mode',
+      sCallback: 'Call back',
+      sChannel: 'Preferred channel',
+      sWindow: 'Preferred time',
+      stepOf: (i, n) => `Step ${i} of ${n}`,
+      chooseService: 'Choose the service',
+      goToDetails: 'Go to your details',
+      continueBtn: 'Continue',
+      sendingBtn: 'Sending',
+      thanksFor: (name, when) => `Thank you, ${name}. We've received your request ${when}.`,
+      whenFor: (day, hour) => `for ${day} at ${hour}`,
+      whenCallback: 'and the call back you asked for',
+      demoNote: 'Demo mode: no email was sent and no appointment was recorded.',
+      emailSentNote: "We've sent you a summary email. Our team will contact you to confirm final availability.",
+      emailFailedNote:
+        "We couldn't send you the summary email, but your request has been recorded. Our team will contact you to confirm availability.",
+      invalidFields: 'Some information is not valid.',
+      submitFailed: "We couldn't send your request. Please try again or contact the practice directly.",
+      networkFailed: "We couldn't send your request. Check your connection, try again, or contact the practice directly.",
+
+      manageLoadError: "We can't load this booking",
+      manageLoadErrorBody: 'This link may no longer be valid. If you need to cancel or reschedule your appointment, please contact us directly.',
+      contatti: (telHref, tel, email) =>
+        `Call us at <a class="link-inline" href="tel:${telHref}">${tel}</a> or email <a class="link-inline" href="mailto:${email}">${email}</a>.`,
+      atHour: (h) => `at ${h}`,
+      code: (id) => `Code ${id}`,
+      outOfWindow: 'Less than 24 hours remain before this appointment: the online change is no longer available. If something has come up, please contact us as soon as possible.',
+      statusCancelled: 'cancelled',
+      statusCompleted: 'completed',
+      notManageable: (stato) => `This appointment is ${stato}: there are no further actions available.`,
+      rescheduleBtn: 'Reschedule appointment',
+      cancelBtn: 'Cancel appointment',
+      confirmCancel: 'Are you sure you want to cancel this appointment? The slot will be released.',
+      cancelledTitle: 'Appointment cancelled',
+      cancelledBody: "We've sent you a confirmation email. You can book a new appointment whenever you like.",
+      newDay: 'New day',
+      newTime: 'New time',
+      chooseDayFirst: 'Choose a day first.',
+      confirmNewTime: 'Confirm new time',
+      checkingAvailability: 'Checking availability…',
+      rescheduledTitle: 'Appointment rescheduled',
+      rescheduledBody: (when, hour) => `Your new appointment is for ${when} at ${hour}. We've sent you a confirmation email with the updated calendar invite.`,
+      slotTaken: 'This time slot was just taken: please choose another one.',
+      rescheduleFailed: "We couldn't complete the reschedule. Please try again.",
+      networkRetry: 'Network error: please try again shortly.'
+    }
+  };
+  const tr = (key, ...args) => {
+    const v = STR[LANG][key];
+    return typeof v === 'function' ? v(...args) : v;
+  };
+
   /* -- Contatori numerici: partono quando entrano nello schermo ------------*/
   const reveals = () => {
     const items = $$('[data-count]');
@@ -35,7 +185,7 @@
     const dec = parseInt(el.dataset.decimals || '0', 10);
     const dur = 1500;
     const t0 = performance.now();
-    const fmt = (v) => v.toLocaleString('it-IT', { minimumFractionDigits: dec, maximumFractionDigits: dec });
+    const fmt = (v) => v.toLocaleString(LOCALE, { minimumFractionDigits: dec, maximumFractionDigits: dec });
     const tick = (t) => {
       const p = clamp((t - t0) / dur, 0, 1);
       const eased = 1 - Math.pow(1 - p, 3);
@@ -324,7 +474,7 @@
       ora: '',
       secondaData: '',
       secondaOra: '',
-      dottore: 'Nessuna preferenza'
+      dottore: tr('noPreference')
     };
 
     const servizio = () => cfg.services.find((s) => s.id === state.servizio) || null;
@@ -387,10 +537,10 @@
         if (giornoChiuso(iso, d.getDay())) continue;
         out.push({
           iso,
-          gs: d.toLocaleDateString('it-IT', { weekday: 'short' }),
+          gs: d.toLocaleDateString(LOCALE, { weekday: 'short' }),
           n: d.getDate(),
-          ms: d.toLocaleDateString('it-IT', { month: 'short' }),
-          full: d.toLocaleDateString('it-IT', { weekday: 'long', day: 'numeric', month: 'long' })
+          ms: d.toLocaleDateString(LOCALE, { month: 'short' }),
+          full: d.toLocaleDateString(LOCALE, { weekday: 'long', day: 'numeric', month: 'long' })
         });
       }
       return out;
@@ -411,7 +561,7 @@
         })
         .join('');
       return `${titolo(cfg.chooseLabel, cfg.chooseHint)}
-        <label class="field mt-3"><span class="sr-only">Cerca un servizio</span>
+        <label class="field mt-3"><span class="sr-only">${tr('searchService')}</span>
           <input type="search" data-svc-search placeholder="${cfg.searchPlaceholder}" autocomplete="off">
         </label>
         ${gruppi}`;
@@ -427,7 +577,7 @@
       }
       const scelte = Array.isArray(val) ? val : val ? [val] : [];
       const multi = q.type === 'multi';
-      return `${titolo(q.q, multi ? 'Puoi scegliere più di una risposta.' : '')}
+      return `${titolo(q.q, multi ? tr('multiHint') : '')}
         ${q.note ? `<p class="small mt-2" style="color:var(--stone-light)">${q.note}</p>` : ''}
         <div class="option-grid mt-3" data-multi="${multi}">
           ${q.options.map((o) => opzione(o.v, o.l, '', scelte.includes(o.v))).join('')}
@@ -443,7 +593,7 @@
               opzione(
                 o.v,
                 o.l,
-                o.v === 'prenota' ? 'Scegli giorno e orario dal calendario.' : 'Ti richiamiamo noi quando preferisci.',
+                o.v === 'prenota' ? tr('modeBookHint') : tr('modeCallHint'),
                 state.modalita === o.v
               )
             )
@@ -463,8 +613,8 @@
 
     const disegnaQuando = () => {
       const giorni = giorniDisponibili();
-      return `${titolo('Quando ti è comodo?', 'Gli orari mostrati sono indicativi: la segreteria conferma la disponibilità effettiva.')}
-        <p class="label mt-4">Giorno</p>
+      return `${titolo(tr('whenTitle'), tr('whenSub'))}
+        <p class="label mt-4">${tr('day')}</p>
         <div class="daypick mt-2">
           ${giorni
             .map(
@@ -474,21 +624,21 @@
             )
             .join('')}
         </div>
-        <p class="label mt-4">Orario</p>
+        <p class="label mt-4">${tr('time')}</p>
         <div class="slots mt-2" data-slots-box>${slotsHtml()}</div>
-        <p class="label mt-4">Seconda preferenza <span style="text-transform:none;letter-spacing:0;color:var(--stone-light)">— facoltativa</span></p>
+        <p class="label mt-4">${tr('secondChoice')} <span style="text-transform:none;letter-spacing:0;color:var(--stone-light)">${tr('optional')}</span></p>
         <div class="form-grid mt-2">
-          <label class="field"><span class="field__label label">Giorno alternativo</span>
+          <label class="field"><span class="field__label label">${tr('altDay')}</span>
             <input type="date" data-second-date value="${state.secondaData}"></label>
-          <label class="field"><span class="field__label label">Orario alternativo</span>
+          <label class="field"><span class="field__label label">${tr('altTime')}</span>
             <select data-second-hour>
-              <option value="">Nessuna preferenza</option>
+              <option value="">${tr('noPreference')}</option>
               ${slots.orari.map((h) => `<option value="${h}"${state.secondaOra === h ? ' selected' : ''}>${h}</option>`).join('')}
             </select>
           </label>
         </div>
-        <p class="label mt-4">Professionista</p>
-        <label class="field"><span class="sr-only">Professionista</span>
+        <p class="label mt-4">${tr('professional')}</p>
+        <label class="field"><span class="sr-only">${tr('professional')}</span>
           <select data-doctor>
             ${slots.dottori.map((n) => `<option value="${n}"${state.dottore === n ? ' selected' : ''}>${n}</option>`).join('')}
           </select>
@@ -514,8 +664,8 @@
     const riepilogo = () => {
       const s = servizio();
       const righe = [];
-      if (state.servizioOrigine) righe.push(['Richiesta iniziale', cfg.services.find((x) => x.id === state.servizioOrigine)?.label || '—']);
-      righe.push(['Servizio', s ? s.label : '—']);
+      if (state.servizioOrigine) righe.push([tr('sInitialRequest'), cfg.services.find((x) => x.id === state.servizioOrigine)?.label || '—']);
+      righe.push([tr('sService'), s ? s.label : '—']);
       if (s) {
         s.questions.filter(visibile).forEach((q) => {
           const val = state.risposte[q.id];
@@ -524,14 +674,14 @@
         });
       }
       if (state.modalita === 'prenota') {
-        righe.push(['Giorno', state.giornoLabel || '—']);
-        righe.push(['Orario', state.ora || '—']);
-        if (state.secondaData) righe.push(['Seconda preferenza', state.secondaData + (state.secondaOra ? ' alle ' + state.secondaOra : '')]);
-        righe.push(['Professionista', state.dottore]);
+        righe.push([tr('sDay'), state.giornoLabel || '—']);
+        righe.push([tr('sTime'), state.ora || '—']);
+        if (state.secondaData) righe.push([tr('sSecondChoice'), state.secondaData + (state.secondaOra ? tr('sAt', state.secondaOra) : '')]);
+        righe.push([tr('sProfessional'), state.dottore]);
       } else if (state.modalita === 'ricontatto') {
-        righe.push(['Modalità', 'Richiamata']);
-        righe.push(['Canale preferito', etichettaOpzione(cfg.tail.channelQuestion, state.canale)]);
-        righe.push(['Fascia oraria', etichettaOpzione(cfg.tail.windowQuestion, state.fascia)]);
+        righe.push([tr('sMode'), tr('sCallback')]);
+        righe.push([tr('sChannel'), etichettaOpzione(cfg.tail.channelQuestion, state.canale)]);
+        righe.push([tr('sWindow'), etichettaOpzione(cfg.tail.windowQuestion, state.fascia)]);
       }
       return righe;
     };
@@ -567,7 +717,7 @@
       // finche' il servizio non e' scelto non si conosce il numero di passi
       const noto = !!servizio();
       if (barra) barra.style.width = noto ? `${Math.round(((i + 1) / totale) * 100)}%` : '6%';
-      if (etichetta) etichetta.textContent = noto ? `Passo ${i + 1} di ${totale}` : 'Scegli il servizio';
+      if (etichetta) etichetta.textContent = noto ? tr('stepOf', i + 1, totale) : tr('chooseService');
       if (servizioLabel) servizioLabel.textContent = servizio() ? servizio().label : '';
 
       if (p.kind === 'final') {
@@ -596,7 +746,7 @@
         stage.dataset.kind = p.kind;
         stage.dataset.question = p.kind === 'question' ? p.q.id : '';
         btnBack.hidden = i === 0;
-        btnNext.textContent = lista[i + 1] && lista[i + 1].kind === 'final' ? 'Vai ai tuoi dati' : 'Continua';
+        btnNext.textContent = lista[i + 1] && lista[i + 1].kind === 'final' ? tr('goToDetails') : tr('continueBtn');
         btnNext.disabled = !passoCompleto(p);
       }
 
@@ -767,15 +917,15 @@
       const nome = form.nome.value.trim();
       const quando =
         state.modalita === 'prenota'
-          ? `per ${state.giornoLabel} alle ${state.ora}`
-          : 'e la richiamata che ci hai chiesto';
-      if (lead) lead.textContent = `Grazie, ${nome}. Abbiamo ricevuto la tua richiesta ${quando}.`;
+          ? tr('whenFor', state.giornoLabel, state.ora)
+          : tr('whenCallback');
+      if (lead) lead.textContent = tr('thanksFor', nome, quando);
       if (nota) {
         nota.textContent = demo
-          ? 'Modalità dimostrativa: nessuna email è stata inviata e nessun appuntamento è stato registrato.'
+          ? tr('demoNote')
           : emailSent
-            ? 'Ti abbiamo inviato una email con il riepilogo. Il nostro team ti contatterà per confermare definitivamente la disponibilità.'
-            : "Non siamo riusciti a inviarti l'email di riepilogo, ma la richiesta è registrata. Il nostro team ti contatterà per confermare la disponibilità.";
+            ? tr('emailSentNote')
+            : tr('emailFailedNote');
       }
       if (code) code.textContent = bookingId || '—';
       form.hidden = true;
@@ -797,7 +947,7 @@
       btn.classList.add('is-busy');
       btn.disabled = true;
       const testo = btn.textContent;
-      btn.textContent = 'Invio in corso';
+      btn.textContent = tr('sendingBtn');
 
       const payload = {
         nome: form.nome.value,
@@ -856,19 +1006,19 @@
               if (e2) e2.textContent = msg;
             }
           });
-          errore(data.message || 'Alcuni dati non sono validi.');
+          errore(data.message || tr('invalidFields'));
           return;
         }
         if (!res.ok || !data.ok) {
           ripristina();
-          errore(data.message || 'Non siamo riusciti a inviare la richiesta. Riprova oppure contatta direttamente lo studio.');
+          errore(data.message || tr('submitFailed'));
           return;
         }
         ripristina();
         mostraConferma({ bookingId: data.bookingId, emailSent: data.emailSent !== false });
       } catch {
         ripristina();
-        errore('Non siamo riusciti a inviare la richiesta. Controlla la connessione, riprova oppure contatta direttamente lo studio.');
+        errore(tr('networkFailed'));
       }
     });
   };
@@ -907,14 +1057,11 @@
       return chiusuraIn.periodi.some((p) => iso >= p.da && iso <= p.a);
     };
 
-    const contatti = () => `<p class="body mt-3">
-        Chiamaci al <a class="link-inline" href="tel:${telefonoHref}">${telefono}</a>
-        oppure scrivici a <a class="link-inline" href="mailto:${email}">${email}</a>.
-      </p>`;
+    const contatti = () => `<p class="body mt-3">${tr('contatti', telefonoHref, telefono, email)}</p>`;
 
     const erroreGenerico = () => {
-      box.innerHTML = `<h2 class="h3">Non riusciamo a caricare la prenotazione</h2>
-        <p class="body mt-2">Il link potrebbe non essere più valido. Se hai bisogno di annullare o spostare il tuo appuntamento, contattaci direttamente.</p>
+      box.innerHTML = `<h2 class="h3">${tr('manageLoadError')}</h2>
+        <p class="body mt-2">${tr('manageLoadErrorBody')}</p>
         ${contatti()}`;
     };
 
@@ -935,10 +1082,10 @@
         if (giornoChiuso(iso, d.getDay())) continue;
         out.push({
           iso,
-          gs: d.toLocaleDateString('it-IT', { weekday: 'short' }),
+          gs: d.toLocaleDateString(LOCALE, { weekday: 'short' }),
           n: d.getDate(),
-          ms: d.toLocaleDateString('it-IT', { month: 'short' }),
-          full: d.toLocaleDateString('it-IT', { weekday: 'long', day: 'numeric', month: 'long' })
+          ms: d.toLocaleDateString(LOCALE, { month: 'short' }),
+          full: d.toLocaleDateString(LOCALE, { weekday: 'long', day: 'numeric', month: 'long' })
         });
       }
       return out;
@@ -946,7 +1093,7 @@
 
     const dataEstesa = (iso) => {
       if (!/^\d{4}-\d{2}-\d{2}$/.test(iso)) return iso;
-      return new Date(iso + 'T12:00:00').toLocaleDateString('it-IT', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+      return new Date(iso + 'T12:00:00').toLocaleDateString(LOCALE, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
     };
 
     const caricaDisponibilita = async (iso) => {
@@ -973,21 +1120,21 @@
 
     const schedaAppuntamento = (s) => `
       <p class="label">${s.tipo_visita}</p>
-      <h2 class="h3 mt-1">${dataEstesa(s.data)}<br>alle ${s.ora}</h2>
-      <p class="small mt-2" style="color:var(--stone-light)">Codice ${s.booking_id}</p>`;
+      <h2 class="h3 mt-1">${dataEstesa(s.data)}<br>${tr('atHour', s.ora)}</h2>
+      <p class="small mt-2" style="color:var(--stone-light)">${tr('code', s.booking_id)}</p>`;
 
     const disegnaFuoriFinestra = (s) => {
       box.innerHTML = `${schedaAppuntamento(s)}
         <div class="form-note mt-4">
-          <p class="body">Mancano meno di 24 ore a questo appuntamento: la modifica online non è più disponibile. Se hai un imprevisto, contattaci il prima possibile.</p>
+          <p class="body">${tr('outOfWindow')}</p>
           ${contatti()}
         </div>`;
     };
 
     const disegnaNonGestibile = (s) => {
-      const etichetta = { CANCELLED: 'annullato', COMPLETED: 'concluso' }[s.status] || s.status.toLowerCase();
+      const etichetta = { CANCELLED: tr('statusCancelled'), COMPLETED: tr('statusCompleted') }[s.status] || s.status.toLowerCase();
       box.innerHTML = `${schedaAppuntamento(s)}
-        <p class="body mt-4">Questo appuntamento risulta ${etichetta}: non ci sono ulteriori azioni disponibili.</p>`;
+        <p class="body mt-4">${tr('notManageable', etichetta)}</p>`;
     };
 
     const disegnaEsito = (titolo, messaggio) => {
@@ -997,15 +1144,15 @@
     const disegnaGestibile = (s) => {
       box.innerHTML = `${schedaAppuntamento(s)}
         <div class="row mt-4">
-          <button class="btn btn--ghost" type="button" data-azione="sposta">Sposta appuntamento</button>
-          <button class="btn btn--ghost" type="button" data-azione="annulla">Annulla appuntamento</button>
+          <button class="btn btn--ghost" type="button" data-azione="sposta">${tr('rescheduleBtn')}</button>
+          <button class="btn btn--ghost" type="button" data-azione="annulla">${tr('cancelBtn')}</button>
         </div>
         <div class="mt-5" data-pannello hidden></div>`;
 
       const pannello = $('[data-pannello]', box);
 
       $('[data-azione="annulla"]', box).addEventListener('click', async () => {
-        if (!window.confirm('Confermi di voler annullare questo appuntamento? Lo slot verrà liberato.')) return;
+        if (!window.confirm(tr('confirmCancel'))) return;
         box.querySelectorAll('button').forEach((btn) => (btn.disabled = true));
         try {
           const res = await fetch(`${base}prenotazione-cancella`, {
@@ -1015,7 +1162,7 @@
           });
           const data = await res.json().catch(() => ({}));
           if (res.ok && data.ok) {
-            disegnaEsito('Appuntamento annullato', "Ti abbiamo inviato una email di conferma. Puoi prenotare un nuovo appuntamento quando vuoi.");
+            disegnaEsito(tr('cancelledTitle'), tr('cancelledBody'));
           } else if (data.error === 'fuori_finestra') {
             disegnaFuoriFinestra(s);
           } else {
@@ -1030,7 +1177,7 @@
         pannello.hidden = false;
         const giorni = giorniDisponibili();
         pannello.innerHTML = `
-          <p class="label">Nuovo giorno</p>
+          <p class="label">${tr('newDay')}</p>
           <div class="daypick mt-2">
             ${giorni
               .map(
@@ -1040,10 +1187,10 @@
               )
               .join('')}
           </div>
-          <p class="label mt-4">Nuovo orario</p>
-          <div class="slots mt-2" data-manage-slots-box><p class="small" style="color:var(--stone-light)">Scegli prima un giorno.</p></div>
+          <p class="label mt-4">${tr('newTime')}</p>
+          <div class="slots mt-2" data-manage-slots-box><p class="small" style="color:var(--stone-light)">${tr('chooseDayFirst')}</p></div>
           <div class="row mt-4">
-            <button class="btn" type="button" data-conferma-sposta disabled>Conferma nuovo orario</button>
+            <button class="btn" type="button" data-conferma-sposta disabled>${tr('confirmNewTime')}</button>
           </div>
           <p class="form-error mt-3" data-errore-sposta hidden></p>`;
 
@@ -1068,7 +1215,7 @@
             stato.ora = null;
             btnConferma.disabled = true;
             $$('[data-day]', pannello).forEach((x) => x.setAttribute('aria-pressed', String(x === dayBtn)));
-            slotsBox.innerHTML = '<p class="small" style="color:var(--stone-light)">Verifica disponibilità…</p>';
+            slotsBox.innerHTML = `<p class="small" style="color:var(--stone-light)">${tr('checkingAvailability')}</p>`;
             stato.occupati = await caricaDisponibilita(stato.data);
             disegnaSlots();
             return;
@@ -1094,22 +1241,19 @@
             });
             const data = await res.json().catch(() => ({}));
             if (res.ok && data.ok) {
-              disegnaEsito('Appuntamento spostato', `Il nuovo appuntamento è per ${dataEstesa(data.data)} alle ${data.ora}. Ti abbiamo inviato una email di conferma con il calendario aggiornato.`);
+              disegnaEsito(tr('rescheduledTitle'), tr('rescheduledBody', dataEstesa(data.data), data.ora));
               return;
             }
             if (data.error === 'fuori_finestra') {
               disegnaFuoriFinestra(s);
               return;
             }
-            erroreSposta.textContent =
-              data.error === 'slot_occupato'
-                ? "Questo orario è appena stato occupato: scegline un altro."
-                : 'Non siamo riusciti a completare lo spostamento. Riprova.';
+            erroreSposta.textContent = data.error === 'slot_occupato' ? tr('slotTaken') : tr('rescheduleFailed');
             erroreSposta.hidden = false;
             stato.occupati = await caricaDisponibilita(stato.data);
             disegnaSlots();
           } catch {
-            erroreSposta.textContent = 'Errore di rete: riprova tra poco.';
+            erroreSposta.textContent = tr('networkRetry');
             erroreSposta.hidden = false;
           } finally {
             stato.inviando = false;

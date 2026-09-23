@@ -484,7 +484,7 @@ export const bookingPage = () => {
 
   const main = `
 ${pageHero({
-    label: 'Prenota',
+    label: t('nav.bookShort'),
     title: lines([t('book.title1'), `<em class="serif-italic">${t('book.title2')}</em>`]),
     lead: t('book.lead'),
     crumbs: [{ label: t('nav.home'), path: '' }, { label: t('nav.bookShort') }],
@@ -535,12 +535,12 @@ ${pageHero({
               <label class="check mt-4">
                 <input type="checkbox" name="privacy" required>
                 <span class="check__box" aria-hidden="true"></span>
-                <span>Ho letto l'<a class="link-inline" href="${base}${PATH.privacy}">informativa privacy</a> e acconsento al trattamento dei miei dati per la gestione dell'appuntamento. *</span>
+                <span>${t('form.privacy', { link: `<a class="link-inline" href="${base}${PATH.privacy}">${esc(t('form.privacyLink'))}</a>` })}</span>
               </label>
               <label class="check mt-3">
                 <input type="checkbox" name="comunicazioni">
                 <span class="check__box" aria-hidden="true"></span>
-                <span>Accetto di ricevere comunicazioni relative al mio appuntamento (promemoria e variazioni).</span>
+                <span>${esc(t('form.marketing'))}</span>
               </label>
 
               <p class="form-error mt-3" data-form-error hidden role="alert"></p>
@@ -582,7 +582,7 @@ ${pageHero({
           <div class="sidebar-card">
             <span class="label">${esc(t('book.preferPhone'))}</span>
             <p class="h4 mt-2"><a class="link-inline" href="tel:${attr(site.phoneHref)}">${esc(site.phone)}</a></p>
-            <p class="small mt-2" style="color:var(--stone)">Lun — Ven 08:30 — 19:30<br>Sab 09:00 — 13:00</p>
+            <p class="small mt-2" style="color:var(--stone)">${site.hours.slice(0, 2).map((h) => `${esc(h.d)} ${esc(h.h)}`).join('<br>')}</p>
             <p class="mt-3"><a class="link-u" href="https://wa.me/${attr(site.whatsappHref)}" target="_blank" rel="noopener">${esc(t('common.whatsapp'))} ${arrow}</a></p>
           </div>
           <div class="sidebar-card">
@@ -596,12 +596,11 @@ ${pageHero({
 </section>
 
 <script type="application/json" data-flows>${JSON.stringify(clientConfig(getLang())).replace(/</g, '\\u003c')}</script>
-<script type="application/json" data-slots>${JSON.stringify({ orari, chiusure, dottori: ['Nessuna preferenza', ...docs.map((p) => personName(p))] })}</script>`;
+<script type="application/json" data-slots>${JSON.stringify({ orari, chiusure, dottori: [t('book.noPreference'), ...docs.map((p) => personName(p))] })}</script>`;
 
   return layout({
     title: t('meta.book.title'),
-    description:
-      'Prenota online la tua visita allo Studio Liddi di Milano: scegli il servizio, rispondi a poche domande e indica quando preferisci.',
+    description: t('meta.book.desc'),
     path: PATH.book,
     depth: 1,
     current: PATH.book,

@@ -301,8 +301,8 @@ const UI = {
   'form.invalidEmail': ['Inserisci un indirizzo email valido', 'Enter a valid email address'],
   'form.invalidPhone': ['Inserisci un numero valido', 'Enter a valid phone number'],
   'form.privacy': [
-    "Ho letto l'informativa privacy e acconsento al trattamento dei miei dati per la gestione dell'appuntamento. *",
-    'I have read the privacy notice and consent to my data being processed to manage the appointment. *'
+    "Ho letto l'{link} e acconsento al trattamento dei miei dati per la gestione dell'appuntamento. *",
+    'I have read the {link} and consent to my data being processed to manage the appointment. *'
   ],
   'form.privacyLink': ['informativa privacy', 'privacy notice'],
   'form.marketing': [

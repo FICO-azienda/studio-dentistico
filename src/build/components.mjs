@@ -126,7 +126,9 @@ export const faqLd = (items) => ({
 });
 
 /* -- testimonianze -------------------------------------------------------- */
-export const testimonials = (base) => `
+export const testimonials = (base) => {
+  if (!reviews.length) return '';
+  return `
 <section class="section">
   <div class="wrap">
     ${sectionHead({
@@ -157,6 +159,7 @@ export const testimonials = (base) => `
     </div>
   </div>
 </section>`;
+};
 
 /* -- journal preview ------------------------------------------------------ */
 export const journalPreview = (base, compact = false) => {

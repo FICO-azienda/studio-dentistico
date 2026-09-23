@@ -61,9 +61,8 @@ const LEGAL_IT = [
       { h: 'Comunicazione sanitaria', p: [
         `Le informazioni pubblicate rispettano i requisiti di trasparenza previsti dall'art. 9-bis del D.L. 145/2013 e successive modificazioni. Direttore sanitario: ${site.director}.`
       ] },
-      { h: 'Casi clinici e testimonianze', p: [
-        'Le immagini dei casi clinici hanno valore esemplificativo e sono pubblicate previo consenso informato scritto. I risultati mostrati si riferiscono a situazioni individuali e non sono estendibili ad altri pazienti.',
-        'Le recensioni riportate provengono da piattaforme pubbliche e sono pubblicate nella forma originale, senza selezione a fini promozionali.'
+      { h: 'Casi clinici', p: [
+        'Le immagini dei casi clinici hanno valore esemplificativo e sono pubblicate previo consenso informato scritto. I risultati mostrati si riferiscono a situazioni individuali e non sono estendibili ad altri pazienti.'
       ] },
       { h: 'Proprietà intellettuale', p: ['Testi, immagini e progetto grafico sono protetti dalle norme sul diritto d\'autore. Ne è vietata la riproduzione senza autorizzazione scritta.'] },
       { h: 'Prenotazioni online', p: [
@@ -175,10 +174,9 @@ const LEGAL_EN = [
         ]
       },
       {
-        h: 'Case studies and testimonials',
+        h: 'Case studies',
         p: [
-          'Case images are illustrative and published with written informed consent. The results shown relate to individual situations and cannot be extended to other patients.',
-          'The reviews shown come from public platforms and are published in their original form, without selection for promotional purposes.'
+          'Case images are illustrative and published with written informed consent. The results shown relate to individual situations and cannot be extended to other patients.'
         ]
       },
       {

@@ -68,6 +68,7 @@ function normalizza(raw) {
     tag: s.tag,
     note: s.note || '',
     priority: s.priority || 'normal',
+    slotCount: s.slotCount || 1,
     questions: s.questions.map(normQuestion)
   }));
   return {
@@ -242,6 +243,7 @@ export const clientConfig = (lang = 'it') => {
     label: s.label,
     hint: s.hint,
     note: s.note,
+    slotCount: s.slotCount,
     questions: s.questions.map((q) => ({
       id: q.id,
       q: q.q,

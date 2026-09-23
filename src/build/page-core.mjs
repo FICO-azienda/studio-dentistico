@@ -1,4 +1,4 @@
-import { site, team, technologies, faqs, treatments, esc, attr, arrow, imgTag, figure, lines, personName, byTreatment, byPerson, metaTitle, treatmentPath, PATH, teamPath } from './utils.mjs';
+import { site, team, technologies, faqs, treatments, orari, esc, attr, arrow, imgTag, figure, lines, personName, byTreatment, byPerson, metaTitle, treatmentPath, PATH, teamPath } from './utils.mjs';
 import { t, getLang } from './i18n.mjs';
 import { clientConfig } from '../../api/_lib/flows.mjs';
 import { layout, dentistLd } from './layout.mjs';
@@ -482,7 +482,6 @@ const VISIT_TYPES = [
 export const bookingPage = () => {
   const base = '../';
   const docs = team.filter((p) => p.featured || p.treatments.length);
-  const orari = ['08:30', '09:15', '10:00', '11:30', '12:15', '14:00', '15:00', '16:30', '17:15', '18:30'];
 
   const main = `
 ${pageHero({

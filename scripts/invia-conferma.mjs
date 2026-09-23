@@ -18,6 +18,8 @@ import { emailConferma } from '../api/_lib/templates.mjs';
 import { sendMail } from '../api/_lib/mail.mjs';
 import { mittente, studio } from '../api/_lib/studio.mjs';
 import { icsAttachment } from '../api/_lib/ics.mjs';
+import { reserveSlots } from '../api/_lib/availability.mjs';
+import { byService } from '../api/_lib/flows.mjs';
 
 const argv = process.argv.slice(2);
 const file = argv.find((a) => !a.startsWith('--'));
@@ -57,6 +59,19 @@ if (anteprima) {
   fs.writeFileSync(anteprima.replace(/\.html?$/, '') + '.ics', invito.content);
   console.log('anteprima scritta:', anteprima, '+ invito .ics');
   process.exit(0);
+}
+
+// occupa gli slot PRIMA di inviare: se sono gia' presi non si manda una
+// conferma doppia. Un servizio con slotCount > 1 occupa piu' orari consecutivi.
+const slotCount = byService[record.tipo_visita_slug]?.slotCount || 1;
+const prenotato = await reserveSlots(record.data_richiesta, record.ora_richiesta, slotCount, record.booking_id);
+if (!prenotato.ok) {
+  console.error(
+    prenotato.motivo === 'occupato'
+      ? `slot gia' occupato (${prenotato.orario}): scegli un altro orario con --ora, oppure verifica manualmente.`
+      : `orario non valido per ${slotCount} slot da ${record.data_richiesta} ${record.ora_richiesta}: non c'e' spazio prima della chiusura.`
+  );
+  process.exit(3);
 }
 
 const esito = await sendMail(

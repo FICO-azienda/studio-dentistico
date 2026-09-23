@@ -286,6 +286,41 @@
     const cfg = JSON.parse(cfgEl.textContent);
     const slots = slotEl ? JSON.parse(slotEl.textContent) : { orari: [], dottori: [] };
 
+    /* -- disponibilita' reale: quali orari sono gia' confermati in un giorno --
+       Uno slot occupato blocca anche gli orari successivi richiesti da un
+       servizio piu' lungo (slotCount > 1), con la stessa logica del server
+       (vedi api/_lib/availability.mjs). Si interroga solo in modalita' live:
+       in demo tutti gli orari restano selezionabili. */
+    const dispEndpoint = wz.dataset.endpoint ? wz.dataset.endpoint.replace(/prenotazioni\/?$/, 'disponibilita') : '';
+    const occupatiCache = new Map();
+    let occupatiGiorno = new Set();
+
+    const caricaDisponibilita = async (iso) => {
+      if (!dispEndpoint || wz.dataset.mode !== 'live') return new Set();
+      if (occupatiCache.has(iso)) return occupatiCache.get(iso);
+      try {
+        const res = await fetch(`${dispEndpoint}?giorno=${encodeURIComponent(iso)}`);
+        const data = await res.json();
+        const set = new Set(Array.isArray(data?.occupati) ? data.occupati : []);
+        occupatiCache.set(iso, set);
+        return set;
+      } catch {
+        return new Set(); // rete assente: meglio mostrare tutto che bloccare la prenotazione
+      }
+    };
+
+    /** Orari da disabilitare per il servizio corrente, dato cio' che e' gia' occupato nel giorno scelto. */
+    const orariBloccati = (slotCount) => {
+      if (!occupatiGiorno.size) return new Set();
+      const bloccati = new Set();
+      slots.orari.forEach((h, i) => {
+        const richiesti = slots.orari.slice(i, i + slotCount);
+        const stanzaSufficiente = richiesti.length === slotCount;
+        if (!stanzaSufficiente || richiesti.some((o) => occupatiGiorno.has(o))) bloccati.add(h);
+      });
+      return bloccati;
+    };
+
     const stage = $('[data-stage]', wz);
     const finale = $('[data-final]', wz);
     const nav = $('[data-nav]', wz);
@@ -421,6 +456,16 @@
         </div>`;
     };
 
+    const slotsHtml = () => {
+      const bloccati = orariBloccati(servizio()?.slotCount || 1);
+      return slots.orari
+        .map((h) => {
+          const off = bloccati.has(h);
+          return `<button class="slot${off ? ' is-off' : ''}" type="button" data-hour="${h}" aria-pressed="${state.ora === h}"${off ? ' disabled aria-disabled="true"' : ''}>${h}</button>`;
+        })
+        .join('');
+    };
+
     const disegnaQuando = () => {
       const giorni = giorniDisponibili();
       return `${titolo('Quando ti è comodo?', 'Gli orari mostrati sono indicativi: la segreteria conferma la disponibilità effettiva.')}
@@ -435,9 +480,7 @@
             .join('')}
         </div>
         <p class="label mt-4">Orario</p>
-        <div class="slots mt-2">
-          ${slots.orari.map((h) => `<button class="slot" type="button" data-hour="${h}" aria-pressed="${state.ora === h}">${h}</button>`).join('')}
-        </div>
+        <div class="slots mt-2" data-slots-box>${slotsHtml()}</div>
         <p class="label mt-4">Seconda preferenza <span style="text-transform:none;letter-spacing:0;color:var(--stone-light)">— facoltativa</span></p>
         <div class="form-grid mt-2">
           <label class="field"><span class="field__label label">Giorno alternativo</span>
@@ -580,6 +623,26 @@
         state.giorno = b.dataset.day;
         state.giornoLabel = b.dataset.label;
         $$('[data-day]', stage).forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+
+        const box = $('[data-slots-box]', stage);
+        if (box) box.setAttribute('aria-busy', 'true');
+        const iso = state.giorno;
+        caricaDisponibilita(iso).then((occupati) => {
+          if (state.giorno !== iso) return; // l'utente ha gia' cambiato giorno
+          occupatiGiorno = occupati;
+          if (occupatiGiorno.size && orariBloccati(servizio()?.slotCount || 1).has(state.ora)) {
+            state.ora = ''; // l'orario scelto prima non e' piu' disponibile in questo giorno
+          }
+          // si aggiorna solo il box degli orari: un render() intero
+          // farebbe scorrere di nuovo la pagina sotto l'utente
+          const box2 = $('[data-slots-box]', stage);
+          if (box2) {
+            box2.innerHTML = slotsHtml();
+            box2.removeAttribute('aria-busy');
+          }
+          aggiornaAvanti();
+        });
+
         aggiornaAvanti();
         return;
       }

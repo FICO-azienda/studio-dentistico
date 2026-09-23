@@ -16,8 +16,8 @@
   --navy: #1c4569;           /* navy del marchio */
   --navy-900: #0b2440;       /* dark navy, footer e menu */
   --navy-800: #1c4569;       /* sezioni navy */
-  --navy-700: #1b4068;
-  --navy-500: #2c5d8f;       /* hover dei titoli */
+  --navy-700: #25527c;
+  --navy-500: #366fa3;       /* hover dei titoli */
   --navy-soft: #9dbada;      /* accento tenue su fondo navy */
 
   /* testo */
@@ -795,6 +795,8 @@ a.card-feature:hover h3, a.article-card:hover h3 { color: var(--navy-500); trans
 .slot { padding: 0.75rem 0.5rem; border: 1px solid var(--line); text-align: center; font-size: 0.9rem; transition: all 0.3s var(--ease); font-variant-numeric: tabular-nums; }
 .slot:hover { border-color: var(--ink); }
 .slot[aria-pressed="true"] { background: var(--ink); color: var(--ivory); border-color: var(--ink); }
+.slot.is-off { opacity: 0.4; text-decoration: line-through; cursor: not-allowed; pointer-events: none; }
+.slots[aria-busy="true"] { opacity: 0.5; }
 .daypick { display: flex; gap: 0.5rem; overflow-x: auto; padding-bottom: 0.5rem; scrollbar-width: none; }
 .daypick::-webkit-scrollbar { display: none; }
 .day { flex: 0 0 84px; border: 1px solid var(--line); padding: 0.9rem 0.4rem; text-align: center; transition: all 0.3s var(--ease); }

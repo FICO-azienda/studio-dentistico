@@ -5,3 +5,6 @@ _preview/
 # output del generatore: si ricostruisce con `npm run build`
 dist/
 anteprime-email/
+
+# archivio locale di disponibilita' (fallback senza KV, solo per sviluppo)
+.data/

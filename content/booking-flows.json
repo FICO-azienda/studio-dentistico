@@ -51,6 +51,7 @@
       "group": "visite",
       "label": "Prima visita",
       "hint": "Esame completo, radiografie e piano di trattamento.",
+      "slotCount": 2,
       "tag": "SERVICE_FIRST_VISIT",
       "questions": [
         { "id": "prima-volta", "q": "È la prima volta che vieni nel nostro studio?", "options": ["Sì", "No"] },
@@ -93,6 +94,7 @@
       "group": "visite",
       "label": "Controllo generale",
       "hint": "Controllo periodico di denti, gengive e restauri.",
+      "slotCount": 1,
       "tag": "SERVICE_CHECKUP",
       "questions": [
         {
@@ -122,6 +124,7 @@
       "group": "visite",
       "label": "Igiene dentale",
       "hint": "Seduta di igiene professionale e istruzioni personalizzate.",
+      "slotCount": 1,
       "tag": "SERVICE_HYGIENE",
       "questions": [
         {
@@ -148,6 +151,7 @@
       "group": "estetica",
       "label": "Sbiancamento dentale",
       "hint": "Sbiancamento professionale in studio o domiciliare.",
+      "slotCount": 2,
       "tag": "SERVICE_WHITENING",
       "questions": [
         { "id": "gia-fatto", "q": "Hai già effettuato uno sbiancamento?", "options": ["Mai", "Sì, una volta", "Sì, più volte"] },
@@ -176,6 +180,7 @@
       "group": "ortodonzia",
       "label": "Ortodonzia",
       "hint": "Valutazione ortodontica per adulti e ragazzi.",
+      "slotCount": 1,
       "tag": "SERVICE_ORTHODONTICS",
       "questions": [
         { "id": "per-chi", "q": "Per chi è la visita?", "options": [{ "l": "Per me", "v": "me" }, { "l": "Per mio figlio/a", "v": "figlio", "tag": "SERVICE_PEDIATRIC" }] },
@@ -211,6 +216,7 @@
       "group": "ortodonzia",
       "label": "Allineatori trasparenti",
       "hint": "Mascherine rimovibili su misura.",
+      "slotCount": 1,
       "tag": "SERVICE_ALIGNERS",
       "questions": [
         { "id": "valutazione", "q": "Hai già fatto una valutazione ortodontica?", "options": ["Sì", "No"] },
@@ -240,6 +246,7 @@
       "group": "mancanti",
       "label": "Implantologia",
       "hint": "Sostituzione di denti mancanti con impianti.",
+      "slotCount": 2,
       "tag": "SERVICE_IMPLANTOLOGY",
       "questions": [
         {
@@ -264,6 +271,7 @@
       "group": "estetica",
       "label": "Faccette dentali",
       "hint": "Lamine in ceramica per forma, colore e proporzioni.",
+      "slotCount": 1,
       "tag": "SERVICE_ESTHETIC",
       "questions": [
         {
@@ -293,6 +301,7 @@
       "group": "estetica",
       "label": "Estetica dentale",
       "hint": "Non sai da dove partire: ti orientiamo noi.",
+      "slotCount": 1,
       "tag": "SERVICE_ESTHETIC",
       "questions": [
         {
@@ -319,6 +328,7 @@
       "group": "cure",
       "label": "Otturazioni / Conservativa",
       "hint": "Cura della carie e restauri.",
+      "slotCount": 2,
       "tag": "SERVICE_CONSERVATIVE",
       "questions": [
         {
@@ -356,6 +366,7 @@
       "group": "cure",
       "label": "Devitalizzazione / Endodonzia",
       "hint": "Cure canalari e ritrattamenti al microscopio.",
+      "slotCount": 2,
       "tag": "SERVICE_ENDODONTICS",
       "questions": [
         { "id": "consigliata", "q": "Ti è già stata consigliata una devitalizzazione?", "options": ["Sì", "No", "Non so"] },
@@ -379,6 +390,7 @@
       "group": "cure",
       "label": "Gengive / Parodontologia",
       "hint": "Sanguinamento, gengive gonfie, mobilità dentale.",
+      "slotCount": 1,
       "tag": "SERVICE_PERIODONTOLOGY",
       "questions": [
         {
@@ -410,6 +422,7 @@
       "group": "mancanti",
       "label": "Protesi dentale",
       "hint": "Non sai quale soluzione fa al caso tuo.",
+      "slotCount": 1,
       "tag": "SERVICE_PROSTHETICS",
       "questions": [
         {
@@ -444,6 +457,7 @@
       "group": "mancanti",
       "label": "Corona / Capsula",
       "hint": "Ricostruzione di un dente compromesso.",
+      "slotCount": 1,
       "tag": "SERVICE_PROSTHETICS",
       "questions": [
         {
@@ -472,6 +486,7 @@
       "group": "mancanti",
       "label": "Ponte dentale",
       "hint": "Sostituzione di uno o più denti mancanti.",
+      "slotCount": 1,
       "tag": "SERVICE_PROSTHETICS",
       "questions": [
         { "id": "quanti", "q": "Quanti denti mancano?", "options": ["1", "2", "3 o più", "Non lo so"] },
@@ -489,6 +504,7 @@
       "group": "mancanti",
       "label": "Dentiera / Protesi mobile",
       "hint": "Protesi rimovibile: nuova, da rifare o da stabilizzare.",
+      "slotCount": 1,
       "tag": "SERVICE_PROSTHETICS",
       "questions": [
         { "id": "usa-protesi", "q": "Utilizzi già una protesi mobile?", "options": ["Sì", "No"] },
@@ -517,6 +533,7 @@
       "group": "chirurgia",
       "label": "Chirurgia orale",
       "hint": "Estrazioni, denti inclusi, interventi ambulatoriali.",
+      "slotCount": 3,
       "tag": "SERVICE_SURGERY",
       "questions": [
         {
@@ -543,6 +560,7 @@
       "group": "chirurgia",
       "label": "Dente del giudizio",
       "hint": "Valutazione o estrazione del terzo molare.",
+      "slotCount": 2,
       "tag": "SERVICE_SURGERY",
       "questions": [
         {
@@ -571,6 +589,7 @@
       "group": "ortodonzia",
       "label": "Odontoiatria pediatrica",
       "hint": "Visite e cure per bambini e ragazzi.",
+      "slotCount": 1,
       "tag": "SERVICE_PEDIATRIC",
       "questions": [
         { "id": "eta", "q": "Quanti anni ha il bambino?", "options": ["0-5", "6-10", "11-14", "15-17"] },
@@ -602,6 +621,7 @@
       "group": "cure",
       "label": "Bruxismo / Bite",
       "hint": "Digrignamento, serramento, bite su misura.",
+      "slotCount": 1,
       "tag": "SERVICE_BRUXISM",
       "questions": [
         {
@@ -624,6 +644,7 @@
       "group": "urgenze",
       "label": "Dolore / Urgenza",
       "hint": "Percorso breve: quattro domande e ti richiamiamo.",
+      "slotCount": 1,
       "tag": "SERVICE_EMERGENCY",
       "priority": "high",
       "questions": [
@@ -660,6 +681,7 @@
       "group": "urgenze",
       "label": "Dente rotto",
       "hint": "Frattura o scheggiatura di un dente.",
+      "slotCount": 1,
       "tag": "SERVICE_EMERGENCY",
       "priority": "high",
       "questions": [
@@ -682,6 +704,7 @@
       "group": "urgenze",
       "label": "Trauma dentale",
       "hint": "Colpo, caduta, dente spostato o uscito.",
+      "slotCount": 1,
       "tag": "SERVICE_EMERGENCY",
       "priority": "urgent",
       "note": "Se il dente è uscito completamente conservalo nel latte e chiama subito lo studio: i tempi contano.",
@@ -705,6 +728,7 @@
       "group": "informazioni",
       "label": "Secondo parere",
       "hint": "Valutazione di un piano di cura ricevuto altrove.",
+      "slotCount": 1,
       "tag": "SERVICE_SECOND_OPINION",
       "questions": [
         {
@@ -728,6 +752,7 @@
       "group": "informazioni",
       "label": "Richiesta preventivo",
       "hint": "Informazioni sui costi di un trattamento.",
+      "slotCount": 1,
       "tag": "SERVICE_QUOTE",
       "note": "I prezzi pubblicati sono indicativi. Il preventivo definitivo richiede una valutazione clinica: non possiamo calcolarlo da un modulo.",
       "questions": [
@@ -759,6 +784,7 @@
       "group": "visite",
       "label": "Controllo post-trattamento",
       "hint": "Controllo dopo una cura già effettuata.",
+      "slotCount": 1,
       "tag": "SERVICE_FOLLOWUP",
       "questions": [
         {
@@ -792,6 +818,7 @@
       "group": "informazioni",
       "label": "Altro",
       "hint": "La tua richiesta non rientra nelle categorie.",
+      "slotCount": 1,
       "tag": "SERVICE_OTHER",
       "questions": [
         {

@@ -9,8 +9,10 @@
  */
 import http from 'node:http';
 import { handleBooking, corsHeaders } from '../api/_lib/handler.mjs';
+import { getDayOccupied } from '../api/_lib/availability.mjs';
 
 const PORT = Number(process.env.PORT || 4174);
+const GIORNO_RE = /^\d{4}-\d{2}-\d{2}$/;
 
 const server = http.createServer(async (req, res) => {
   const origin = req.headers.origin || '';
@@ -21,7 +23,20 @@ const server = http.createServer(async (req, res) => {
     res.writeHead(204).end();
     return;
   }
-  if (req.method !== 'POST' || !req.url.startsWith('/api/prenotazioni')) {
+
+  const url = new URL(req.url, 'http://localhost');
+  if (req.method === 'GET' && url.pathname === '/api/disponibilita') {
+    const giorno = url.searchParams.get('giorno') || '';
+    if (!GIORNO_RE.test(giorno)) {
+      res.writeHead(400, { 'Content-Type': 'application/json' }).end(JSON.stringify({ ok: false, error: 'giorno_non_valido' }));
+      return;
+    }
+    const occupato = await getDayOccupied(giorno);
+    res.writeHead(200, { 'Content-Type': 'application/json' }).end(JSON.stringify({ ok: true, giorno, occupati: Object.keys(occupato) }));
+    return;
+  }
+
+  if (req.method !== 'POST' || url.pathname !== '/api/prenotazioni') {
     res.writeHead(404, { 'Content-Type': 'application/json' }).end(JSON.stringify({ ok: false, error: 'not_found' }));
     return;
   }
@@ -51,5 +66,6 @@ const server = http.createServer(async (req, res) => {
 
 server.listen(PORT, () => {
   console.log(`API di prenotazione su http://localhost:${PORT}/api/prenotazioni`);
+  console.log(`API di disponibilita' su http://localhost:${PORT}/api/disponibilita?giorno=AAAA-MM-GG`);
   console.log(`provider email: ${process.env.MAIL_PROVIDER || 'console'}`);
 });

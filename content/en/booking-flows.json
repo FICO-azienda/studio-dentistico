@@ -2,7 +2,7 @@
   "_nota": "Traduzione inglese dei percorsi di prenotazione. I VALORI delle opzioni restano quelli italiani: sono identificatori stabili, non testo. Qui si traducono solo le etichette. 'common' copre le risposte che ricorrono in piu' servizi; 'services' contiene le specifiche.",
 
   "chooseLabel": "What do you need?",
-  "chooseHint": "Choose the service: the questions change accordingly. There are never more than five.",
+  "chooseHint": "The next questions change based on the service you choose.",
   "searchPlaceholder": "Search for a service…",
 
   "groups": {

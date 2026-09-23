@@ -400,7 +400,6 @@ ${pageHero({
     label: t('nav.contact'),
     title: lines([t('home.contact.t1')]),
     lead: 'Zona Fiera, a sei minuti a piedi dalla metropolitana. Rispondiamo al telefono negli orari di apertura e via email entro un giorno lavorativo.',
-    aside: `${esc(site.address.street)}<br>${esc(site.address.zip)} ${esc(site.address.city)}`,
     crumbs: [{ label: t('nav.home'), path: '' }, { label: t('nav.contact') }],
     base
   })}
@@ -488,7 +487,6 @@ ${pageHero({
     label: 'Prenota',
     title: lines([t('book.title1'), `<em class="serif-italic">${t('book.title2')}</em>`]),
     lead: t('book.lead'),
-    aside: `${t('book.preferPhone')}<br><a class="link-inline" href="tel:${attr(site.phoneHref)}">${esc(site.phone)}</a>`,
     crumbs: [{ label: t('nav.home'), path: '' }, { label: t('nav.bookShort') }],
     base
   })}

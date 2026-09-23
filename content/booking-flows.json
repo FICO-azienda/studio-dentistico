@@ -2,7 +2,7 @@
   "_nota": "Configurazione dei percorsi di prenotazione. Il motore (front-end e backend) e' generico: per aggiungere un servizio basta un oggetto qui, senza toccare il codice. Le domande raccolgono informazioni preliminari: non sono una diagnosi e non suggeriscono terapie.",
 
   "chooseLabel": "Di cosa hai bisogno?",
-  "chooseHint": "Scegli il servizio: le domande successive cambiano di conseguenza. Sono al massimo cinque.",
+  "chooseHint": "Le domande successive cambiano in base al servizio scelto.",
   "searchPlaceholder": "Cerca un servizio…",
 
   "priorityLabels": {

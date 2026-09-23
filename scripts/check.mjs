@@ -21,8 +21,8 @@ for (const file of pages) {
   const dir = path.dirname(file);
   const rel = path.relative(DIST, file);
 
-  // link interni
-  for (const m of html.matchAll(/href="([^"]+)"/g)) {
+  // link interni (esclude attributi come data-phone-href, che finiscono per "href" ma non lo sono)
+  for (const m of html.matchAll(/(?<![\w-])href="([^"]+)"/g)) {
     const href = m[1];
     if (/^(https?:|mailto:|tel:|#|data:)/.test(href)) continue;
     let clean = href.split('#')[0] || '.';

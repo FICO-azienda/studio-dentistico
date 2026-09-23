@@ -16,7 +16,9 @@ export const staffPage = () => {
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Area riservata — ${esc(site.name)}</title>
+<meta name="description" content="Area riservata allo staff di ${esc(site.name)} per gestire le prenotazioni: conferma, sposta o annulla gli appuntamenti dei pazienti.">
 <meta name="robots" content="noindex, nofollow">
+<link rel="canonical" href="${esc(site.url)}/staff/">
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -28,7 +30,7 @@ export const staffPage = () => {
   data-endpoint="${attr(site.booking?.endpoint || '')}"
   data-mode="${attr(site.booking?.mode || 'demo')}"
   data-phone="${attr(site.phone)}"
-></div>
+><h1 class="sr-only">Area riservata — ${esc(site.name)}</h1></div>
 <script type="application/json" data-staff-config>${JSON.stringify({ orari, chiusure, dottori }).replace(/</g, '\\u003c')}</script>
 <script src="../scripts/staff.js" defer></script>
 </body>

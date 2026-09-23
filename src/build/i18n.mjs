@@ -327,8 +327,8 @@ const UI = {
   ],
   'form.errorFields': ['Alcuni dati non sono validi.', 'Some details are not valid.'],
   'form.noDiagnosis': [
-    'Le informazioni raccolte servono alla segreteria per capire la richiesta: non sono una diagnosi. La richiesta non è una conferma, ti ricontattiamo noi.',
-    'The information collected helps our front desk understand your request: it is not a diagnosis. A request is not a confirmation — we will get back to you.'
+    'Le informazioni raccolte servono alla segreteria per capire la richiesta: non sono una diagnosi. Se l\'orario scelto è libero l\'appuntamento è confermato subito; altrimenti ti ricontattiamo noi.',
+    "The information collected helps our front desk understand your request: it is not a diagnosis. If the chosen time is free your appointment is confirmed right away; otherwise we'll get back to you."
   ],
   'form.noscript': [
     'Per prenotare online serve JavaScript attivo. In alternativa chiamaci allo',

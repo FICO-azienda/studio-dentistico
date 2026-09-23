@@ -6,15 +6,32 @@
  * Ordine delle operazioni, scelto apposta:
  *   1. anti-spam e limite di frequenza  (scarta presto cio' che non serve)
  *   2. validazione lato server          (non ci si fida del browser)
- *   3. salvataggio della richiesta      (PRIMA delle email: non si perde nulla)
- *   4. invio delle due email            (se fallisce, la richiesta resta salva)
+ *   3. conferma automatica dello slot   (se e' davvero libero, subito: vedi sotto)
+ *   4. salvataggio della richiesta      (PRIMA delle email: non si perde nulla)
+ *   5. invio delle due email            (se fallisce, la richiesta resta salva)
+ *
+ * Conferma automatica. Una prenotazione con data e ora (non una richiamata,
+ * che non ha uno slot) viene confermata subito se lo slot risulta libero in
+ * quel momento: il paziente non resta in attesa di una verifica manuale.
+ * Se lo slot e' occupato o il giorno e' chiuso — raro, dato che il
+ * calendario del wizard mostra gia' solo cio' che sembra libero, ma puo'
+ * succedere per una richiesta quasi simultanea — resta PENDING come prima,
+ * e lo staff la gestisce a mano. La verifica dello staff dopo la conferma
+ * automatica resta comunque utile (numero corretto di slot, professionista
+ * giusto, casi che meritano attenzione): per questo l'archivio distingue
+ * "confermata" da "vista dallo staff" (staff_reviewed), e la dashboard la
+ * mostra finche' non viene spuntata — senza bloccare il paziente nel
+ * frattempo.
  */
 import { validateBooking, looksLikeSpam } from './validate.mjs';
 import { rateLimit } from './ratelimit.mjs';
 import { buildBookingId, buildRecord, saveBooking, nextProgressivo } from './store.mjs';
-import { emailPaziente, emailStudio } from './templates.mjs';
+import { emailPaziente, emailStudio, emailConferma } from './templates.mjs';
 import { sendMail } from './mail.mjs';
 import { studio, destinatarioStudio, mittente } from './studio.mjs';
+import { reserveSlots } from './availability.mjs';
+import { byService } from './flows.mjs';
+import { icsAttachment } from './ics.mjs';
 
 /**
  * Doppio invio della stessa richiesta: si risponde con lo stesso codice.
@@ -75,7 +92,7 @@ export async function handleBooking(body, ctx = {}) {
   // reinvio ravvicinato: stesso codice, nessuna prenotazione duplicata
   const gia = dedupe(data, now);
   if (gia) {
-    return { status: 200, body: { ok: true, bookingId: gia.bookingId, emailSent: gia.emailSent, duplicate: true } };
+    return { status: 200, body: { ok: true, bookingId: gia.bookingId, emailSent: gia.emailSent, status: gia.status, duplicate: true } };
   }
 
   // invio simultaneo (doppio click): ci si aggancia all'elaborazione in corso
@@ -95,20 +112,39 @@ export async function handleBooking(body, ctx = {}) {
   }
 }
 
-/** Codice richiesta, salvataggio e invio delle email. */
+/** Codice richiesta, conferma automatica se possibile, salvataggio e invio delle email. */
 async function elabora(data, { ip, userAgent, env, now, k }) {
-  // 4. codice richiesta e salvataggio, prima di qualunque email
   const progressivo = await nextProgressivo(env).catch(() => null);
   const bookingId = buildBookingId(progressivo, { year: new Date(now).getFullYear() });
   const record = buildRecord(data, { bookingId, ip, userAgent, now: new Date(now) });
+
+  // 3. conferma automatica: solo per prenotazioni con data/ora (non le
+  // richiamate, che non hanno uno slot da verificare)
+  let confermataSubito = false;
+  if (record.modalita === 'prenota') {
+    const slotCount = byService[record.tipo_visita_slug]?.slotCount || 1;
+    const esitoSlot = await reserveSlots(record.data_richiesta, record.ora_richiesta, slotCount, bookingId, env);
+    if (esitoSlot.ok) {
+      confermataSubito = true;
+      record.status = 'CONFIRMED';
+      record.confirmed_at = new Date(now).toISOString();
+      record.ics_sequence = 0;
+      record.staff_reviewed = false; // lo staff la spunta come vista dalla dashboard, non e' un blocco per il paziente
+    }
+  }
+
+  // 4. salvataggio, prima di qualunque email
   const salvataggio = await saveBooking(record, env);
 
-  // 5. email: al paziente e allo studio, in parallelo
-  const alPaziente = emailPaziente(record);
+  // 5. email: al paziente (conferma, o richiesta ricevuta se non si e' potuto confermare) e allo studio
+  const alPaziente = confermataSubito ? emailConferma(record) : emailPaziente(record);
   const alloStudio = emailStudio(record);
+  const allegati = confermataSubito
+    ? [icsAttachment(record, studio, { professionista: record.professionista, sequence: 0 })]
+    : [];
 
   const [esitoPaziente, esitoStudio] = await Promise.all([
-    sendMail({ from: mittente, to: record.email, replyTo: studio.email || undefined, ...alPaziente }, env),
+    sendMail({ from: mittente, to: record.email, replyTo: studio.email || undefined, ...alPaziente, attachments: allegati }, env),
     destinatarioStudio
       ? sendMail({ from: mittente, to: destinatarioStudio, replyTo: record.email, ...alloStudio }, env)
       : Promise.resolve({ ok: false, error: 'destinatario studio non configurato' })
@@ -125,7 +161,7 @@ async function elabora(data, { ip, userAgent, env, now, k }) {
     );
   }
 
-  recenti.set(k, { at: now, bookingId, emailSent: esitoPaziente.ok });
+  recenti.set(k, { at: now, bookingId, emailSent: esitoPaziente.ok, status: record.status });
 
   return {
     status: 201,

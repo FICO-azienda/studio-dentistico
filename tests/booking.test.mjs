@@ -7,6 +7,8 @@
  */
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import path from 'node:path';
 
 import { handleBooking } from '../api/_lib/handler.mjs';
 import { validateBooking, looksLikeSpam, checkDate } from '../api/_lib/validate.mjs';
@@ -28,12 +30,37 @@ import { staffTokenValido, estraiToken } from '../api/_lib/staff-auth.mjs';
 const ENV = { MAIL_PROVIDER: 'console', BOOKING_STORE: 'log', BOOKING_NOTIFY_EMAIL: 'studio@example.it' };
 const ENV_MAIL_ROTTA = { ...ENV, MAIL_PROVIDER: 'resend' }; // senza chiave: fallisce
 
+// la modalita' 'log' persiste su disco (.data/): un residuo di una sessione
+// manuale precedente (es. il dev-api.mjs usato per una prova a mano) potrebbe
+// occupare uno degli slot che i test si aspettano liberi. Si riparte puliti.
+test.before(() => fs.rmSync(path.resolve(process.cwd(), '.data'), { recursive: true, force: true }));
+
 /** Domani, saltando la domenica (lo studio e' chiuso). */
 function domani(from = new Date()) {
   const d = new Date(from);
   d.setDate(d.getDate() + 1);
   if (d.getDay() === 0) d.setDate(d.getDate() + 1);
   return d.toISOString().slice(0, 10);
+}
+
+/**
+ * Un giorno diverso a ogni chiamata (cursore che avanza sempre in avanti,
+ * saltando chiusure e domeniche). Da quando la conferma occupa davvero lo
+ * slot (vedi handler.mjs), test diversi che usassero lo stesso giorno/ora
+ * di default si contenderebbero lo stesso slot e il risultato dipenderebbe
+ * dall'ordine di esecuzione: base() usa questo invece di domani() fisso
+ * proprio per evitarlo.
+ */
+let cursoreGiorno = null;
+function giornoUnico() {
+  if (!cursoreGiorno) {
+    cursoreGiorno = new Date();
+    cursoreGiorno.setHours(12, 0, 0, 0);
+  }
+  do {
+    cursoreGiorno.setDate(cursoreGiorno.getDate() + 1);
+  } while (giornoChiuso(cursoreGiorno.toISOString().slice(0, 10), cursoreGiorno.getDay()));
+  return cursoreGiorno.toISOString().slice(0, 10);
 }
 
 const base = () => ({
@@ -49,7 +76,7 @@ const base = () => ({
     'ultima-visita': 'meno-di-6-mesi-fa'
   },
   modalita: 'prenota',
-  dataRichiesta: domani(),
+  dataRichiesta: giornoUnico(),
   oraRichiesta: '11:30',
   privacy: true
 });
@@ -60,14 +87,31 @@ const ctx = (extra = {}) => ({ ip: 'test-' + ++ipSeq, userAgent: 'node-test', en
 test.beforeEach(() => _reset());
 
 /* -- 1. prenotazione normale --------------------------------------------- */
-test('prenotazione valida: 201, codice richiesta, stato PENDING', async () => {
+test('prenotazione valida: 201, codice richiesta, confermata subito (lo slot e\' libero)', async () => {
   const r = await handleBooking(base(), ctx());
   assert.equal(r.status, 201);
   assert.equal(r.body.ok, true);
   assert.match(r.body.bookingId, /^APT-\d{4}-\d{6}$/);
-  assert.equal(r.body.status, 'PENDING');
+  assert.equal(r.body.status, 'CONFIRMED');
   assert.equal(r.body.emailSent, true);
   assert.equal(r.body.studioNotified, true);
+});
+
+test('se lo slot e\' gia\' occupato la prenotazione resta PENDING invece di essere confermata', async () => {
+  const dati = base();
+  const occupato = await reserveSlots(dati.dataRichiesta, dati.oraRichiesta, 1, 'GIA-OCCUPATO', ENV);
+  assert.equal(occupato.ok, true);
+
+  const r = await handleBooking(dati, ctx());
+  assert.equal(r.body.status, 'PENDING');
+
+  await releaseSlots(dati.dataRichiesta, 'GIA-OCCUPATO', ENV);
+});
+
+test('una richiamata (senza data/ora) resta PENDING: non c\'e\' uno slot da confermare', async () => {
+  const dati = { ...base(), modalita: 'ricontatto', canale: 'telefono', fascia: 'mattina' };
+  const r = await handleBooking(dati, ctx());
+  assert.equal(r.body.status, 'PENDING');
 });
 
 /* -- 2. con messaggio ----------------------------------------------------- */

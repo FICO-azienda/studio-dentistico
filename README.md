@@ -231,11 +231,20 @@ validazione lato server      api/_lib/validate.mjs
         v
 codice richiesta APT-2026-000124
         v
-SALVATAGGIO                  api/_lib/store.mjs    <- prima delle email
+CONFERMA AUTOMATICA          api/_lib/availability.mjs   <- solo se e' una
+        v                                                   prenotazione con
+   slot libero?                                             data/ora, non una
+   /         \                                               richiamata
+ si            no
+  v              v
+CONFIRMED      PENDING  <- raro: slot appena occupato o giorno chiuso
+  v              v
+SALVATAGGIO   api/_lib/store.mjs    <- prima delle email, in entrambi i casi
         v
-email al paziente + email allo studio              <- se falliscono, la
-        v                                             richiesta resta salva
-schermata di conferma con il codice
+email al paziente (conferma+.ics, oppure richiesta ricevuta) + email allo
+studio                                <- se falliscono, la richiesta resta salva
+        v
+schermata finale, diversa nei due casi
 ```
 
 L'ordine non e' casuale: la richiesta viene archiviata **prima** di tentare
@@ -244,12 +253,33 @@ perdono e l'errore finisce nei log.
 
 ### Cosa dice al paziente, e cosa non dice
 
-La richiesta non e' mai presentata come confermata, perche' nessun calendario
-verifica la disponibilita' in tempo reale. L'email e la schermata finale dicono
-"abbiamo ricevuto la tua richiesta" e annunciano che la segreteria ricontattera'
-il paziente. Se l'email non parte, la schermata lo dice invece di promettere un
-riepilogo mai spedito. Se l'invio fallisce del tutto, compare un errore con i
-recapiti dello studio, mai una falsa conferma.
+Se lo slot richiesto e' libero, la prenotazione viene **confermata subito**:
+il paziente riceve l'email di conferma con l'invito per il calendario nello
+stesso momento in cui invia il form, senza restare in attesa di un controllo
+manuale. E' un compromesso deliberato: lo studio conosce solo le prenotazioni
+fatte attraverso il sito, quindi in rarissimi casi (una richiesta quasi
+simultanea sullo stesso orario, o l'archivio che non riesce a occupare lo
+slot) la conferma automatica puo' rivelarsi sbagliata — a quel punto tocca
+allo staff spostare o annullare dalla dashboard, come per qualunque altra
+modifica. Il compromesso e' esplicito: certezza immediata per il paziente,
+a fronte di un'eccezione rara che lo staff puo' sempre correggere dopo.
+
+Se lo slot non e' libero (o non c'e' uno slot, come per una richiamata), la
+richiesta resta `PENDING`: l'email e la schermata finale dicono "abbiamo
+ricevuto la tua richiesta" e annunciano che la segreteria ricontattera' il
+paziente — mai "confermato" quando non lo e' davvero.
+
+In entrambi i casi, se l'email non parte, la schermata lo dice invece di
+promettere un riepilogo mai spedito. Se l'invio fallisce del tutto, compare
+un errore con i recapiti dello studio, mai una falsa conferma.
+
+**Verifica interna.** Una prenotazione confermata automaticamente non e'
+comunque stata guardata da nessuno: l'interfaccia staff (`/staff/`) la mostra
+nella scheda "Da rivedere" finche' qualcuno non la spunta con "Segna come
+vista" — un controllo leggero, non un'approvazione: non blocca il paziente,
+serve solo a dare allo staff visibilita' su cosa e' arrivato. Le prenotazioni
+confermate a mano (da staff, sempre da `/staff/` o da
+`scripts/invia-conferma.mjs`) sono gia' considerate viste.
 
 ### Distribuzione su Vercel con Resend
 
@@ -428,11 +458,17 @@ e, in forma breve, allo studio) e aggiornano l'archivio.
 
 Alternativa agli script da riga di comando sopra: la pagina `/staff/`
 (non collegata dal sito pubblico, esclusa da sitemap e `robots.txt`) mostra
-l'elenco delle prenotazioni — da confermare, confermate, annullate o
-concluse — con un pulsante per ciascuna azione: **Conferma** (occupa lo slot,
-salva lo stato e invia l'email con l'invito .ics, come
-`scripts/invia-conferma.mjs`), **Sposta** e **Annulla** (come l'autogestione
-del paziente, ma senza il vincolo delle 24 ore: lo staff puo' sempre agire).
+l'elenco delle prenotazioni, divise in schede: **Da rivedere** (confermate
+automaticamente, non ancora spuntate dallo staff — la scheda di apertura),
+**Da confermare** (`PENDING`: slot occupato o chiuso al momento dell'invio,
+serve una decisione umana), **Confermate**, **Annullate / concluse**, **Tutte**.
+
+Ogni prenotazione ha i pulsanti utili al suo stato: **Segna come vista**
+(solo scheda "Da rivedere": non cambia nulla, toglie solo il promemoria),
+**Conferma** (solo `PENDING`: occupa lo slot, salva lo stato e invia l'email
+con l'invito .ics, come `scripts/invia-conferma.mjs`), **Sposta** e
+**Annulla** (come l'autogestione del paziente, ma senza il vincolo delle 24
+ore: lo staff puo' sempre agire).
 
 L'accesso e' protetto da un'unica password condivisa, `STAFF_TOKEN`: niente
 account, la si digita una volta e resta salvata nel browser di quel

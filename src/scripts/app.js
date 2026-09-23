@@ -24,7 +24,7 @@
       modeBookHint: 'Scegli giorno e orario dal calendario.',
       modeCallHint: 'Ti richiamiamo noi quando preferisci.',
       whenTitle: 'Quando ti è comodo?',
-      whenSub: 'Gli orari mostrati sono indicativi: la segreteria conferma la disponibilità effettiva.',
+      whenSub: 'Gli orari mostrati riflettono la disponibilità reale: se lo slot è libero, l\'appuntamento viene confermato subito.',
       day: 'Giorno',
       time: 'Orario',
       secondChoice: 'Seconda preferenza',
@@ -57,6 +57,10 @@
         'Ti abbiamo inviato una email con il riepilogo. Il nostro team ti contatterà per confermare definitivamente la disponibilità.',
       emailFailedNote:
         "Non siamo riusciti a inviarti l'email di riepilogo, ma la richiesta è registrata. Il nostro team ti contatterà per confermare la disponibilità.",
+      confirmedTitle: 'Appuntamento confermato.',
+      confirmedNote: "Il tuo appuntamento è confermato: ti abbiamo inviato l'email con l'invito al calendario.",
+      confirmedFailedNote:
+        "Il tuo appuntamento è confermato, ma non siamo riusciti a inviarti l'email di conferma. Salva il codice qui sotto e contattaci se hai dubbi.",
       invalidFields: 'Alcuni dati non sono validi.',
       submitFailed: 'Non siamo riusciti a inviare la richiesta. Riprova oppure contatta direttamente lo studio.',
       networkFailed: 'Non siamo riusciti a inviare la richiesta. Controlla la connessione, riprova oppure contatta direttamente lo studio.',
@@ -93,7 +97,7 @@
       modeBookHint: 'Pick a day and time from the calendar.',
       modeCallHint: "We'll call you back whenever suits you.",
       whenTitle: 'When suits you best?',
-      whenSub: 'The times shown are indicative: our front desk confirms actual availability.',
+      whenSub: 'The times shown reflect real availability: if the slot is free, your appointment is confirmed right away.',
       day: 'Day',
       time: 'Time',
       secondChoice: 'Second choice',
@@ -125,6 +129,10 @@
       emailSentNote: "We've sent you a summary email. Our team will contact you to confirm final availability.",
       emailFailedNote:
         "We couldn't send you the summary email, but your request has been recorded. Our team will contact you to confirm availability.",
+      confirmedTitle: 'Appointment confirmed.',
+      confirmedNote: "Your appointment is confirmed: we've sent you the email with the calendar invite.",
+      confirmedFailedNote:
+        "Your appointment is confirmed, but we couldn't send you the confirmation email. Save the code below and contact us if in doubt.",
       invalidFields: 'Some information is not valid.',
       submitFailed: "We couldn't send your request. Please try again or contact the practice directly.",
       networkFailed: "We couldn't send your request. Check your connection, try again, or contact the practice directly.",
@@ -910,7 +918,8 @@
       box.scrollIntoView({ behavior: reduced() ? 'auto' : 'smooth', block: 'center' });
     };
 
-    const mostraConferma = ({ bookingId, emailSent }) => {
+    const mostraConferma = ({ bookingId, emailSent, status }) => {
+      const titolo = $('[data-done-title]', done);
       const lead = $('[data-done-lead]', done);
       const nota = $('[data-done-note]', done);
       const code = $('[data-done-code]', done);
@@ -920,12 +929,14 @@
           ? tr('whenFor', state.giornoLabel, state.ora)
           : tr('whenCallback');
       if (lead) lead.textContent = tr('thanksFor', nome, quando);
+      const confermata = status === 'CONFIRMED';
+      if (titolo && confermata && !demo) titolo.textContent = tr('confirmedTitle');
       if (nota) {
         nota.textContent = demo
           ? tr('demoNote')
-          : emailSent
-            ? tr('emailSentNote')
-            : tr('emailFailedNote');
+          : confermata
+            ? (emailSent ? tr('confirmedNote') : tr('confirmedFailedNote'))
+            : (emailSent ? tr('emailSentNote') : tr('emailFailedNote'));
       }
       if (code) code.textContent = bookingId || '—';
       form.hidden = true;
@@ -1015,7 +1026,7 @@
           return;
         }
         ripristina();
-        mostraConferma({ bookingId: data.bookingId, emailSent: data.emailSent !== false });
+        mostraConferma({ bookingId: data.bookingId, emailSent: data.emailSent !== false, status: data.status });
       } catch {
         ripristina();
         errore(tr('networkFailed'));

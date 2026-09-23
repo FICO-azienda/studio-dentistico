@@ -554,7 +554,7 @@ ${pageHero({
             </form>
 
             <div class="form-success" id="booking-done" hidden tabindex="-1">
-              <h2 class="h2">${esc(t('book.received'))}</h2>
+              <h2 class="h2" data-done-title>${esc(t('book.received'))}</h2>
               <p class="lead mt-2 measure-sm" style="margin-inline:auto" data-done-lead></p>
               <p class="body mt-2 measure-sm" style="margin-inline:auto" data-done-note></p>
               <p class="mt-4"><span class="label">${esc(t('book.code'))}</span><br>

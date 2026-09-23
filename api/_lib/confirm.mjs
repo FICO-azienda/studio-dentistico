@@ -44,7 +44,8 @@ export async function confermaPrenotazione(
       ora_richiesta: nuovaOra,
       professionista: professionista || r.professionista,
       ics_sequence: 0,
-      confirmed_at: now.toISOString()
+      confirmed_at: now.toISOString(),
+      staff_reviewed: true // confermata a mano dallo staff: e' gia' stata vista
     },
     env
   );

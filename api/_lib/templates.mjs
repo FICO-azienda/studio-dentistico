@@ -340,9 +340,11 @@ ${button(contatto, T.contactCta)}
 export function emailStudio(r) {
   const tel = r.telefono.replace(/\s/g, '');
   const wa = tel.replace(/[^\d]/g, '').replace(/^00/, '');
+  const confermata = r.status === 'CONFIRMED';
+  const staffUrl = studio.sito ? `${studio.sito.replace(/\/$/, '')}/staff/` : '';
 
   const html = shell(
-    'Nuova richiesta di appuntamento',
+    confermata ? 'Nuovo appuntamento confermato' : 'Nuova richiesta di appuntamento',
     `
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:0 0 22px">
   <tr><td bgcolor="${NAVY_DARK}" style="padding:16px 20px">
@@ -362,23 +364,31 @@ ${riepilogo(r, { perStudio: true })}
 ${button('tel:' + tel, 'Chiama il cliente')}
 ${button('mailto:' + r.email, 'Invia email', { light: true })}
 ${wa ? button('https://wa.me/' + wa, 'WhatsApp', { light: true }) : ''}
+${staffUrl ? button(staffUrl, confermata ? 'Segna come vista' : 'Apri nell’area riservata', { light: true }) : ''}
 <p style="margin:20px 0 0;font:400 13px/1.7 Helvetica,Arial,sans-serif;color:${MUTED}">
   Tag: <strong style="color:${INK}">${escapeHtml((r.tags || []).join(' · ') || '—')}</strong><br>
-  Stato attuale della richiesta: <strong style="color:${INK}">PENDING</strong>.
-  Va confermata contattando il paziente: l&#39;email che ha ricevuto non conferma giorno e orario.
+  ${
+    confermata
+      ? `Stato attuale della richiesta: <strong style="color:${INK}">CONFERMATA automaticamente</strong> — lo slot era libero, il paziente ha già ricevuto l&#39;email di conferma con l&#39;invito calendario. Vale comunque la pena darci un&#39;occhiata dall&#39;area riservata: professionista giusto, orario corretto, nulla che salti all&#39;occhio.`
+      : `Stato attuale della richiesta: <strong style="color:${INK}">PENDING</strong> — lo slot richiesto non era libero al momento dell&#39;invio.
+    Va gestita a mano contattando il paziente: l&#39;email che ha ricevuto non conferma giorno e orario.`
+  }
 </p>`,
     { preheader: `${r.nome} ${r.cognome} — ${r.tipo_visita} — ${dateIt(r.data_richiesta)} ${r.ora_richiesta}` }
   );
 
   const text = [
-    'NUOVA RICHIESTA DI APPUNTAMENTO',
+    confermata ? 'NUOVO APPUNTAMENTO CONFERMATO' : 'NUOVA RICHIESTA DI APPUNTAMENTO',
     'Servizio: ' + r.tipo_visita,
     'Priorità interna: ' + (PRIORITA[r.priority] || 'Normale') + (r.modalita === 'ricontatto' ? ' - richiamata' : ''),
     'Tag: ' + ((r.tags || []).join(' ') || '-'),
     '',
     riepilogoTesto(r, { perStudio: true }),
     '',
-    'Stato: PENDING — da confermare contattando il paziente.',
+    confermata
+      ? 'Stato: CONFERMATA automaticamente — slot libero, il paziente ha già ricevuto la conferma. Dai un\'occhiata quando puoi.'
+      : 'Stato: PENDING — slot non libero al momento dell\'invio, va gestita a mano contattando il paziente.',
+    staffUrl ? 'Area riservata: ' + staffUrl : '',
     '',
     'Chiama: ' + r.telefono,
     'Email: ' + r.email,
@@ -389,9 +399,10 @@ ${wa ? button('https://wa.me/' + wa, 'WhatsApp', { light: true }) : ''}
 
   const quando = r.modalita === 'ricontatto' ? 'richiamata' : dateIt(r.data_richiesta);
   const urgente = r.priority === 'urgent' ? '[URGENTE] ' : r.priority === 'high' ? '[PRIORITA ALTA] ' : '';
+  const prefisso = confermata ? 'Confermato automaticamente: ' : 'Nuova richiesta ';
 
   return {
-    subject: `${urgente}Nuova richiesta ${r.tipo_visita} — ${r.nome} ${r.cognome} — ${quando}`,
+    subject: `${urgente}${prefisso}${r.tipo_visita} — ${r.nome} ${r.cognome} — ${quando}`,
     html,
     text
   };

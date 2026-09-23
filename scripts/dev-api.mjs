@@ -12,7 +12,7 @@ import { handleBooking, corsHeaders } from '../api/_lib/handler.mjs';
 import { getDayOccupied } from '../api/_lib/availability.mjs';
 import { giornoChiuso } from '../api/_lib/chiusure.mjs';
 import { verifyToken } from '../api/_lib/token.mjs';
-import { listBookings } from '../api/_lib/store.mjs';
+import { listBookings, updateBooking } from '../api/_lib/store.mjs';
 import { statoPrenotazione, cancella, sposta } from '../api/_lib/manage.mjs';
 import { notificaAnnullamento, notificaSpostamento } from '../api/_lib/notify.mjs';
 import { staffTokenValido, estraiToken } from '../api/_lib/staff-auth.mjs';
@@ -145,6 +145,16 @@ const route = async (req, res) => {
       }
       await notificaSpostamento(esito.record, esito.precedente).catch((e) => console.error('STAFF_SPOSTAMENTO_MAIL_ERRORE', e));
       return json(res, 200, { ok: true, data: esito.record.data_richiesta, ora: esito.record.ora_richiesta });
+    }
+
+    if (req.method === 'POST' && url.pathname === '/api/staff/vista') {
+      const body = await leggiCorpo(req);
+      if (body === null) return json(res, 400, { ok: false, error: 'bad_json' });
+      const bookingId = String(body.bookingId || '');
+      if (!bookingId) return json(res, 400, { ok: false, error: 'bookingId_mancante' });
+      const aggiornato = await updateBooking(bookingId, { staff_reviewed: true });
+      if (!aggiornato) return json(res, 404, { ok: false, error: 'non_trovata' });
+      return json(res, 200, { ok: true });
     }
 
     return json(res, 404, { ok: false, error: 'not_found' });

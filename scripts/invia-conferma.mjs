@@ -86,7 +86,8 @@ const aggiornato = await updateBooking(record.booking_id, {
   ora_richiesta: record.ora_richiesta,
   professionista: opt('professionista') || record.professionista,
   ics_sequence: revisione,
-  confirmed_at: new Date().toISOString()
+  confirmed_at: new Date().toISOString(),
+  staff_reviewed: true // confermata a mano dallo staff: e' gia' stata vista
 });
 if (!aggiornato) {
   console.warn(

@@ -66,7 +66,7 @@ const LEGAL_IT = [
       ] },
       { h: 'Proprietà intellettuale', p: ['Testi, immagini e progetto grafico sono protetti dalle norme sul diritto d\'autore. Ne è vietata la riproduzione senza autorizzazione scritta.'] },
       { h: 'Prenotazioni online', p: [
-        'La richiesta di appuntamento inviata attraverso il sito non costituisce conferma: la segreteria ricontatta il paziente per verificare la disponibilità effettiva e confermare data e orario.'
+        'Se lo slot richiesto risulta libero, la richiesta viene confermata automaticamente al momento dell\'invio: il paziente riceve subito l\'email di conferma con l\'invito per il calendario. Se lo slot non è più disponibile, la richiesta resta in attesa e la segreteria ricontatta il paziente per concordare data e orario.'
       ] }
     ]
   }
@@ -186,7 +186,7 @@ const LEGAL_EN = [
       {
         h: 'Online booking',
         p: [
-          'An appointment request sent through this website is not a confirmation: our front desk contacts the patient to check actual availability and confirm the date and time.'
+          'If the requested slot is available, the request is confirmed automatically as soon as it is sent, and the patient immediately receives a confirmation email with a calendar invite. If the slot is no longer available, the request remains pending and our front desk contacts the patient to arrange a date and time.'
         ]
       }
     ]

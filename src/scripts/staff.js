@@ -104,24 +104,35 @@
   const ETICHETTA_STATO = { PENDING: 'In attesa', CONFIRMED: 'Confermata', RESCHEDULED: 'Spostata', CANCELLED: 'Annullata', COMPLETED: 'Conclusa' };
   const CLASSE_BADGE = { PENDING: 'staff-badge--pending', CONFIRMED: 'staff-badge--confirmed', RESCHEDULED: 'staff-badge--confirmed', CANCELLED: 'staff-badge--cancelled', COMPLETED: 'staff-badge--done' };
 
+  // "confermata subito" (vedi handler.mjs) ma senza che lo staff l'abbia
+  // ancora spuntata: non blocca il paziente, e' solo un promemoria interno
+  const daRivedere = (r) => (r.status === 'CONFIRMED' || r.status === 'RESCHEDULED') && r.staff_reviewed === false;
+
   const TAB = [
+    { id: 'rivedere', label: 'Da rivedere', filtro: daRivedere },
     { id: 'pending', label: 'Da confermare', filtro: (r) => r.status === 'PENDING' },
     { id: 'confermate', label: 'Confermate', filtro: (r) => r.status === 'CONFIRMED' || r.status === 'RESCHEDULED' },
     { id: 'chiuse', label: 'Annullate / concluse', filtro: (r) => r.status === 'CANCELLED' || r.status === 'COMPLETED' },
     { id: 'tutte', label: 'Tutte', filtro: () => true }
   ];
 
-  const stato = { prenotazioni: [], tab: 'pending', nota: '' };
+  const stato = { prenotazioni: [], tab: 'rivedere', nota: '' };
 
   const attr = (s) => esc(s).replace(/"/g, '&quot;');
 
   const cardAzioni = (r) => {
-    if (r.status === 'PENDING') return `<button class="btn btn--sm" type="button" data-azione="conferma" data-id="${attr(r.booking_id)}">Conferma</button>`;
-    if (r.status === 'CONFIRMED' || r.status === 'RESCHEDULED') {
-      return `<button class="btn btn--ghost btn--sm" type="button" data-azione="sposta" data-id="${attr(r.booking_id)}">Sposta</button>
-        <button class="btn btn--ghost btn--sm" type="button" data-azione="annulla" data-id="${attr(r.booking_id)}">Annulla</button>`;
+    const azioni = [];
+    if (r.status === 'PENDING') {
+      azioni.push(`<button class="btn btn--sm" type="button" data-azione="conferma" data-id="${attr(r.booking_id)}">Conferma</button>`);
     }
-    return '';
+    if (r.status === 'CONFIRMED' || r.status === 'RESCHEDULED') {
+      if (daRivedere(r)) {
+        azioni.push(`<button class="btn btn--sm" type="button" data-azione="vista" data-id="${attr(r.booking_id)}">Segna come vista</button>`);
+      }
+      azioni.push(`<button class="btn btn--ghost btn--sm" type="button" data-azione="sposta" data-id="${attr(r.booking_id)}">Sposta</button>`);
+      azioni.push(`<button class="btn btn--ghost btn--sm" type="button" data-azione="annulla" data-id="${attr(r.booking_id)}">Annulla</button>`);
+    }
+    return azioni.join('\n        ');
   };
 
   const card = (r) => `
@@ -133,7 +144,10 @@
           <p class="staff-card__meta">${esc(r.tipo_visita)} — ${esc(dataEstesa(r.data_richiesta))} alle ${esc(r.ora_richiesta)}</p>
           <p class="staff-card__meta">${esc(r.telefono)} · ${esc(r.email)}</p>
         </div>
-        <span class="staff-badge ${CLASSE_BADGE[r.status] || ''}">${esc(ETICHETTA_STATO[r.status] || r.status)}</span>
+        <span class="row" style="gap:.4rem">
+          ${daRivedere(r) ? '<span class="staff-badge staff-badge--pending">Da rivedere</span>' : ''}
+          <span class="staff-badge ${CLASSE_BADGE[r.status] || ''}">${esc(ETICHETTA_STATO[r.status] || r.status)}</span>
+        </span>
       </div>
       <div class="staff-card__actions">${cardAzioni(r)}</div>
       <div class="staff-panel" data-panel hidden></div>
@@ -196,6 +210,7 @@
       if (b.dataset.azione === 'conferma') apriPannelloConferma(record, panel);
       else if (b.dataset.azione === 'sposta') apriPannelloSposta(record, panel);
       else if (b.dataset.azione === 'annulla') eseguiAnnulla(record, panel);
+      else if (b.dataset.azione === 'vista') eseguiVista(record, b);
     });
   };
 
@@ -358,6 +373,28 @@
       panel.innerHTML = `<p class="form-error">${esc(messaggioErrore(data.error))}</p>`;
     } catch {
       panel.innerHTML = '<p class="form-error">Errore di rete: riprova tra poco.</p>';
+    }
+  };
+
+  const eseguiVista = async (r, btn) => {
+    btn.disabled = true;
+    btn.textContent = '…';
+    try {
+      const { res, data } = await chiamata('staff/vista', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ bookingId: r.booking_id })
+      });
+      if (res.ok && data.ok) {
+        r.staff_reviewed = true;
+        disegnaLista();
+        return;
+      }
+      btn.disabled = false;
+      btn.textContent = 'Segna come vista';
+    } catch {
+      btn.disabled = false;
+      btn.textContent = 'Segna come vista';
     }
   };
 

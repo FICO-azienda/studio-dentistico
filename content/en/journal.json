@@ -110,5 +110,68 @@
         { "text": "«Effect of Different Frequencies of Dental Visits on Dental Caries and Periodontal Disease: A Scoping Review», International Journal of Environmental Research and Public Health, 2023", "url": "https://www.mdpi.com/1660-4601/20/19/6858" }
       ] }
     ]
+  },
+  "devitalizzazione-quando-serve": {
+    "title": "Root canal treatment: when it's needed and what to expect",
+    "excerpt": "It's the most feared treatment in dentistry, and one of the most effective. What actually happens inside the tooth, and why working under a microscope changes the outcome.",
+    "category": "Endodontics",
+    "body": [
+      { "t": "p", "v": "Root canal treatment has a reputation it no longer deserves. With modern anaesthesia the procedure is no more uncomfortable than a deep filling: the pain that makes people dread it is usually the pain that came before, caused by the inflammation that made treatment necessary." },
+      { "t": "h2", "v": "What happens inside the tooth" },
+      { "t": "p", "v": "At the centre of every tooth is the pulp: living tissue, with nerves and blood vessels, running through a canal from the crown down to the root. When deep decay, a fracture or trauma reaches it, the pulp becomes inflamed and, left untreated, dies. Root canal treatment removes this tissue, disinfects the canal and seals it: the tooth stays in place, but is no longer vital." },
+      { "t": "h2", "v": "Why we work at 20x magnification" },
+      { "t": "p", "v": "Root canals aren't straight tubes: they branch, curve, and sometimes merge into isthmuses that are hard to see with the naked eye. The operating microscope isn't an accessory: it lets us find accessory canals that would otherwise go untreated — the most common cause of failure years later. It's the difference between cleaning a canal and cleaning all of them." },
+      { "t": "h2", "v": "The numbers, honestly" },
+      { "t": "p", "v": "Long-term studies show 97% tooth survival at ten years, declining gradually over subsequent decades — a sign that a treated tooth can last a lifetime, but isn't immune to other problems (new decay, a fracture). For retreatment — when a first attempt, perhaps done elsewhere without a microscope, didn't succeed — success rates are lower, around 77%: one more reason to get it right the first time." },
+      { "t": "h2", "v": "When extraction is worth considering" },
+      { "t": "p", "v": "Root canal treatment isn't always the right choice. A vertically fractured root, a tooth structure too compromised to support a restoration, or insufficient periodontal support can make an implant the more predictable solution. It's a case-by-case judgement, made with an X-ray in hand, not a rule." },
+      { "t": "quote", "v": "A well-treated root canal isn't felt at all: that's the very definition of success." },
+      { "t": "sources", "v": [
+        { "text": "Ng YL et al., «Outcomes of primary root canal therapy: an updated systematic review of longitudinal clinical studies published between 2003 and 2020», International Endodontic Journal", "url": "https://pubmed.ncbi.nlm.nih.gov/35334111/" },
+        { "text": "«Long-term tooth survival and success following primary root canal treatment: a 5- to 37-year retrospective observation», Clinical Oral Investigations, 2023", "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10264502/" }
+      ] }
+    ]
+  },
+  "faccette-dentali-quanto-durano": {
+    "title": "Dental veneers: how long do they really last",
+    "excerpt": "Not all veneers are equal, and the difference shows up ten years later, not on the day they're fitted. What actually determines how long a veneer lasts.",
+    "category": "Aesthetics",
+    "body": [
+      { "t": "p", "v": "Most people evaluating veneers look almost entirely at the immediate aesthetic result: shape, colour, symmetry. Understandable, but it's only half the right question. The other half is: will they still be there in ten years?" },
+      { "t": "h2", "v": "What happens beneath the ceramic" },
+      { "t": "p", "v": "A veneer is a thin layer of ceramic bonded to the visible surface of the tooth, after minimal preparation that in many cases stays within the enamel. The bond that holds it in place isn't mechanical like a crown: it's a chemical adhesion between ceramic and tooth, and the quality of that bond largely determines how long it lasts." },
+      { "t": "h2", "v": "Materials aren't all equal" },
+      { "t": "p", "v": "Feldspathic ceramics, the most traditional, give excellent aesthetics but lower strength than lithium disilicate or zirconia, now more commonly used for their combination of looks and durability. Design matters too: veneers that slightly cover the incisal edge of the tooth have proven more fracture-resistant than those that stop short of it." },
+      { "t": "h2", "v": "What makes a veneer fail" },
+      { "t": "ul", "v": ["Fracture of the margin or the whole veneer, usually from excessive load (unmanaged bruxism)", "Debonding, when the adhesive bond weakens", "Secondary decay at the margin, if daily hygiene isn't thorough", "Gum recession exposing the preparation margin, an aesthetic rather than functional issue"] },
+      { "t": "h2", "v": "The numbers" },
+      { "t": "p", "v": "The most recent systematic reviews report a cumulative survival rate around 95-97% at ten years for modern ceramics, dropping to roughly 85% at fifteen years. Those numbers only hold if bruxism, when present, is managed with a night guard: it's the most frequent cause of fracture, and entirely avoidable." },
+      { "t": "quote", "v": "The best veneer is the one nobody notices — not on day one, and not ten years later." },
+      { "t": "sources", "v": [
+        { "text": "«Long-Term Survival and Complication Rates of Porcelain Laminate Veneers in Clinical Studies: A Systematic Review», Journal of Esthetic and Restorative Dentistry, 2021", "url": "https://pubmed.ncbi.nlm.nih.gov/33807504/" },
+        { "text": "«Survival and Complication Rates of Feldspathic, Leucite-Reinforced, Lithium Disilicate and Zirconia Ceramic Laminate Veneers: A Systematic Review and Meta-Analysis», PMC", "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12076113/" }
+      ] }
+    ]
+  },
+  "parodontite-non-solo-gengive": {
+    "title": "Periodontitis: not just a gum problem",
+    "excerpt": "Untreated gum disease doesn't stop at the teeth: research links it to cardiovascular risk and diabetes control. What the evidence actually says.",
+    "category": "Periodontics",
+    "body": [
+      { "t": "p", "v": "Periodontitis is a chronic inflammation that progressively destroys the bone around the teeth. It doesn't hurt until it's advanced, which makes it easy to ignore — but research in recent years has made clear that its consequences don't stop at the mouth." },
+      { "t": "h2", "v": "How it's treated, first of all" },
+      { "t": "p", "v": "The baseline treatment isn't surgical: it's scaling and root planing, a thorough mechanical clean below the gumline that removes bacterial biofilm and calculus from the root surfaces. It remains the most effective treatment for most cases, with measurable improvements in pocket depth and bleeding. Surgery only comes into play for the deepest pockets, when scaling alone isn't enough." },
+      { "t": "h2", "v": "The link with diabetes" },
+      { "t": "p", "v": "The relationship runs both ways: chronic high blood sugar worsens periodontal inflammation, and untreated periodontitis in turn worsens glycaemic control. Diabetic patients with periodontitis have up to six times the risk of poor glycaemic control compared with those with healthy gums. Treating the gums, in a diabetic patient, is also a measure of metabolic control." },
+      { "t": "h2", "v": "The link with the heart" },
+      { "t": "p", "v": "Chronic inflammation and the presence of periodontal bacteria in the bloodstream are associated with increased cardiovascular risk, estimated at two to three times higher in the most severe forms. This doesn't mean periodontitis causes a heart attack: it means it's an additional risk factor, of the same order as others already routinely monitored." },
+      { "t": "h2", "v": "What this means in practice" },
+      { "t": "p", "v": "It isn't a reason for alarm, it's one more reason not to put off a periodontal check-up — especially with a family history of diabetes or cardiovascular disease. Periodontitis is detected with a simple, painless probing that should be part of every routine check-up." },
+      { "t": "quote", "v": "Bleeding gums aren't a cosmetic detail: they're a signal worth listening to." },
+      { "t": "sources", "v": [
+        { "text": "Sanz M et al., «Association between periodontal diseases and cardiovascular diseases, diabetes and respiratory diseases: consensus report EFP/WONCA Europe», Journal of Clinical Periodontology, 2023", "url": "https://onlinelibrary.wiley.com/doi/full/10.1111/jcpe.13807" },
+        { "text": "«Dental Scaling and Root Planing for Periodontal Health: A Review of the Clinical Effectiveness, Cost-effectiveness, and Guidelines», CADTH / NCBI Bookshelf", "url": "https://www.ncbi.nlm.nih.gov/books/NBK401538/" }
+      ] }
+    ]
   }
 }

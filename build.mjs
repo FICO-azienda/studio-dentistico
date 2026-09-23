@@ -15,6 +15,7 @@ import { homePage } from './src/build/page-home.mjs';
 import { studioPage, teamPage, personPage, techPage, firstVisitPage, contactPage, bookingPage, manageBookingPage } from './src/build/page-core.mjs';
 import { treatmentsIndex, categoryPage, treatmentPage, casesPage, journalIndex, articlePage, legalPage, notFoundPage } from './src/build/page-catalog.mjs';
 import { legalPages } from './src/build/legal.mjs';
+import { staffPage } from './src/build/page-staff.mjs';
 
 const OUT = path.join(ROOT, 'dist');
 
@@ -28,6 +29,7 @@ fs.mkdirSync(path.join(OUT, 'styles'), { recursive: true });
 fs.mkdirSync(path.join(OUT, 'scripts'), { recursive: true });
 fs.copyFileSync(path.join(ROOT, 'src/styles/main.css'), path.join(OUT, 'styles/main.css'));
 fs.copyFileSync(path.join(ROOT, 'src/scripts/app.js'), path.join(OUT, 'scripts/app.js'));
+fs.copyFileSync(path.join(ROOT, 'src/scripts/staff.js'), path.join(OUT, 'scripts/staff.js'));
 fs.rmSync(path.join(OUT, 'images', 'credits.json'), { force: true });
 
 /* -- pagine, una lingua alla volta ----------------------------------------- */
@@ -63,6 +65,9 @@ for (const lang of LANGS) {
 /* -- 404 e ingresso senza lingua ------------------------------------------- */
 applyLang(DEFAULT_LANG);
 fs.writeFileSync(path.join(OUT, '404.html'), notFoundPage());
+
+/* -- interfaccia staff: pagina unica, non bilingue, fuori da sitemap/indici */
+write(OUT, 'staff', staffPage());
 
 /**
  * La radice non e' una pagina: smista verso la lingua del browser.
@@ -129,7 +134,7 @@ const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 ${LANGS.flatMap((l) => pagine[l].map((p) => url(l, p))).join('\n')}
 </urlset>`;
 fs.writeFileSync(path.join(OUT, 'sitemap.xml'), sitemap);
-fs.writeFileSync(path.join(OUT, 'robots.txt'), `User-agent: *\nAllow: /\n\nSitemap: ${site.url}/sitemap.xml\n`);
+fs.writeFileSync(path.join(OUT, 'robots.txt'), `User-agent: *\nAllow: /\nDisallow: /staff/\n\nSitemap: ${site.url}/sitemap.xml\n`);
 
 const totale = LANGS.reduce((n, l) => n + pagine[l].length, 0) + 2;
 console.log(`✓ ${totale} pagine generate in dist/ (${LANGS.map((l) => `${l}: ${pagine[l].length}`).join(', ')})`);

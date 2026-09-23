@@ -18,9 +18,11 @@ import { rateLimit, _reset } from '../api/_lib/ratelimit.mjs';
 import { byService, visibleQuestions, computePriority, computeTags, buildSummary, validateAnswers } from '../api/_lib/flows.mjs';
 import { giornoChiuso } from '../api/_lib/chiusure.mjs';
 import { reserveSlots, releaseSlots, getDayOccupied } from '../api/_lib/availability.mjs';
-import { saveBooking, getBooking } from '../api/_lib/store.mjs';
+import { saveBooking, getBooking, listBookings } from '../api/_lib/store.mjs';
 import { sposta } from '../api/_lib/manage.mjs';
 import { kvCredenziali, assertArchivioAffidabile } from '../api/_lib/kv-config.mjs';
+import { confermaPrenotazione } from '../api/_lib/confirm.mjs';
+import { staffTokenValido, estraiToken } from '../api/_lib/staff-auth.mjs';
 
 // niente email vere durante i test
 const ENV = { MAIL_PROVIDER: 'console', BOOKING_STORE: 'log', BOOKING_NOTIFY_EMAIL: 'studio@example.it' };
@@ -471,4 +473,79 @@ test('assertArchivioAffidabile blocca la modalità "log" su un vero deployment V
   assert.doesNotThrow(() => assertArchivioAffidabile('log', { VERCEL_ENV: 'development' }));
   assert.doesNotThrow(() => assertArchivioAffidabile('log', {})); // sviluppo locale senza Vercel
   assert.doesNotThrow(() => assertArchivioAffidabile('kv', { VERCEL_ENV: 'production' })); // non riguarda kv/http
+});
+
+/* -- interfaccia staff -------------------------------------------------------- */
+test('listBookings elenca le prenotazioni salvate, più recenti prima', async () => {
+  const bookingId1 = buildBookingId(999101);
+  const bookingId2 = buildBookingId(999102);
+  const r1 = buildRecord(base(), { bookingId: bookingId1, now: new Date('2026-09-01T10:00:00Z') });
+  const r2 = buildRecord(base(), { bookingId: bookingId2, now: new Date('2026-09-02T10:00:00Z') });
+  await saveBooking(r1, ENV);
+  await saveBooking(r2, ENV);
+
+  const elenco = await listBookings(ENV);
+  const ids = elenco.map((r) => r.booking_id);
+  assert.ok(ids.includes(bookingId1) && ids.includes(bookingId2));
+  assert.ok(ids.indexOf(bookingId2) < ids.indexOf(bookingId1), 'la più recente viene prima');
+});
+
+test('confermaPrenotazione occupa lo slot, salva CONFIRMED e prova a inviare l\'email', async () => {
+  const bookingId = buildBookingId(999103);
+  const record = buildRecord(base(), { bookingId });
+  await saveBooking(record, ENV);
+
+  const esito = await confermaPrenotazione(bookingId, { professionista: 'Dr. Andrea Vitali', env: ENV });
+  assert.equal(esito.ok, true);
+  assert.equal(esito.record.status, 'CONFIRMED');
+  assert.equal(esito.record.professionista, 'Dr. Andrea Vitali');
+  assert.equal(esito.emailSent, true);
+
+  const occupati = await getDayOccupied(record.data_richiesta, ENV);
+  assert.equal(occupati[record.ora_richiesta], bookingId);
+
+  await releaseSlots(record.data_richiesta, bookingId, ENV);
+});
+
+test('confermaPrenotazione rifiuta una richiesta già non più PENDING', async () => {
+  const bookingId = buildBookingId(999104);
+  const record = buildRecord(base(), { bookingId });
+  record.status = 'CANCELLED';
+  await saveBooking(record, ENV);
+
+  const esito = await confermaPrenotazione(bookingId, { env: ENV });
+  assert.equal(esito.ok, false);
+  assert.equal(esito.error, 'stato_non_confermabile');
+});
+
+test('confermaPrenotazione rifiuta uno slot già occupato e non tocca lo stato della richiesta', async () => {
+  const giorno = domani();
+  const bookingId1 = buildBookingId(999105);
+  const bookingId2 = buildBookingId(999106);
+  const record1 = buildRecord({ ...base(), dataRichiesta: giorno, oraRichiesta: '09:15' }, { bookingId: bookingId1 });
+  const record2 = buildRecord({ ...base(), dataRichiesta: giorno, oraRichiesta: '09:15' }, { bookingId: bookingId2 });
+  await saveBooking(record1, ENV);
+  await saveBooking(record2, ENV);
+
+  const primo = await confermaPrenotazione(bookingId1, { env: ENV });
+  assert.equal(primo.ok, true);
+
+  const secondo = await confermaPrenotazione(bookingId2, { env: ENV });
+  assert.equal(secondo.ok, false);
+  assert.equal(secondo.error, 'occupato');
+  const ripreso = await getBooking(bookingId2, ENV);
+  assert.equal(ripreso.status, 'PENDING', 'la seconda richiesta resta PENDING: nessuna conferma a metà');
+
+  await releaseSlots(giorno, bookingId1, ENV);
+});
+
+test('staffTokenValido accetta solo il token esatto, ed estraiToken legge l\'header Bearer', () => {
+  const envStaff = { STAFF_TOKEN: 'segreto-lungo-a-caso' };
+  assert.equal(staffTokenValido('segreto-lungo-a-caso', envStaff), true);
+  assert.equal(staffTokenValido('sbagliato', envStaff), false);
+  assert.equal(staffTokenValido('', envStaff), false);
+  assert.equal(staffTokenValido('segreto-lungo-a-caso', {}), false, 'senza STAFF_TOKEN configurato, sempre negato');
+
+  assert.equal(estraiToken({ headers: { authorization: 'Bearer abc123' } }), 'abc123');
+  assert.equal(estraiToken({ headers: {} }), '');
 });

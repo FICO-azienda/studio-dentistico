@@ -132,7 +132,7 @@ al colore all'hover.
 content/           i dati (il CMS)
 public/            immagini, favicon, manifest — copiati in dist così come sono
 src/styles/        main.css (design system completo, ~800 righe commentate)
-src/scripts/       app.js (interazioni, vanilla, zero dipendenze)
+src/scripts/       app.js (interazioni, vanilla, zero dipendenze) + staff.js (area riservata)
 src/build/         il generatore: utils, layout, componenti, pagine
 scripts/           fetch-images, make-icons, check
 build.mjs          orchestratore
@@ -268,6 +268,7 @@ recapiti dello studio, mai una falsa conferma.
 | `BOOKING_STORE` | `log` | `kv` o `http` per archiviare altrove |
 | `RATELIMIT_MAX` | `5` | richieste per IP ogni 10 minuti |
 | `BOOKING_TOKEN_SECRET` | stringa lunga e casuale | firma i link di autogestione (annulla/sposta). Senza questa variabile viene usato un valore di sviluppo, **non sicuro in produzione** |
+| `STAFF_TOKEN` | stringa lunga e casuale | password dell'interfaccia web per lo staff (`/staff/`). Senza questa variabile l'accesso resta sempre negato |
 
 4. In `content/site.json` imposta:
 
@@ -422,6 +423,27 @@ node scripts/gestisci-prenotazione.mjs APT-2026-000124 --sposta --data 2026-11-2
 
 Entrambi i comandi inviano automaticamente le email di conferma (al paziente
 e, in forma breve, allo studio) e aggiornano l'archivio.
+
+### Interfaccia web per lo staff
+
+Alternativa agli script da riga di comando sopra: la pagina `/staff/`
+(non collegata dal sito pubblico, esclusa da sitemap e `robots.txt`) mostra
+l'elenco delle prenotazioni — da confermare, confermate, annullate o
+concluse — con un pulsante per ciascuna azione: **Conferma** (occupa lo slot,
+salva lo stato e invia l'email con l'invito .ics, come
+`scripts/invia-conferma.mjs`), **Sposta** e **Annulla** (come l'autogestione
+del paziente, ma senza il vincolo delle 24 ore: lo staff puo' sempre agire).
+
+L'accesso e' protetto da un'unica password condivisa, `STAFF_TOKEN`: niente
+account, la si digita una volta e resta salvata nel browser di quel
+computer. Senza questa variabile configurata, l'accesso e' sempre negato.
+Come per l'autogestione, non e' disponibile in modalita' `BOOKING_STORE=http`
+(sola scrittura: non si puo' leggere l'elenco delle prenotazioni da li').
+
+In sviluppo locale, con `node scripts/dev-api.mjs` e `BOOKING_STORE=log` (o
+`kv`), la pagina e' raggiungibile con `node build.mjs` seguito da un server
+statico su `dist/`, con `STAFF_TOKEN` impostata nello stesso ambiente del
+server API.
 
 ### Sicurezza e privacy
 

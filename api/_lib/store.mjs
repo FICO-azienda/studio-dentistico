@@ -204,3 +204,31 @@ export async function updateBooking(bookingId, patch, env = process.env) {
   else fileScrivi(aggiornato);
   return aggiornato;
 }
+
+/**
+ * Tutte le prenotazioni, piu' recenti prima — per l'interfaccia web dello
+ * staff. Non disponibile in modalita' 'http' (sola scrittura, vedi sopra).
+ *
+ * In modalita' 'kv' l'indice 'bookings' puo' contenere lo stesso booking_id
+ * piu' volte (ogni salvataggio lo aggiunge di nuovo, anche i successivi
+ * aggiornamenti): si deduplica prima di leggere i record uno per uno.
+ */
+export async function listBookings(env = process.env) {
+  const kind = env.BOOKING_STORE || 'log';
+  if (kind === 'http') return [];
+
+  const ordina = (elenco) => elenco.sort((a, b) => (b.created_at || '').localeCompare(a.created_at || ''));
+
+  if (kind === 'kv') {
+    const { url, token } = kvCredenziali(env);
+    const res = await fetch(url + '/lrange/bookings/0/-1', { headers: { Authorization: 'Bearer ' + token } });
+    if (!res.ok) throw new Error('KV lrange ' + res.status);
+    const j = await res.json();
+    const ids = [...new Set(Array.isArray(j.result) ? j.result : [])];
+    const record = await Promise.all(ids.map((id) => kvGet(id, env)));
+    return ordina(record.filter(Boolean));
+  }
+
+  assertArchivioAffidabile(kind, env);
+  return ordina(Object.values(fileLeggiTutto()));
+}

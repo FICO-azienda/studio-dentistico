@@ -12,8 +12,11 @@ import { handleBooking, corsHeaders } from '../api/_lib/handler.mjs';
 import { getDayOccupied } from '../api/_lib/availability.mjs';
 import { giornoChiuso } from '../api/_lib/chiusure.mjs';
 import { verifyToken } from '../api/_lib/token.mjs';
+import { listBookings } from '../api/_lib/store.mjs';
 import { statoPrenotazione, cancella, sposta } from '../api/_lib/manage.mjs';
 import { notificaAnnullamento, notificaSpostamento } from '../api/_lib/notify.mjs';
+import { staffTokenValido, estraiToken } from '../api/_lib/staff-auth.mjs';
+import { confermaPrenotazione } from '../api/_lib/confirm.mjs';
 
 const PORT = Number(process.env.PORT || 4174);
 const GIORNO_RE = /^\d{4}-\d{2}-\d{2}$/;
@@ -81,6 +84,70 @@ const route = async (req, res) => {
     }
     await notificaSpostamento(esito.record, esito.precedente).catch((e) => console.error('SPOSTAMENTO_MAIL_ERRORE', e));
     return json(res, 200, { ok: true, data: esito.record.data_richiesta, ora: esito.record.ora_richiesta });
+  }
+
+  if (url.pathname.startsWith('/api/staff/')) {
+    if (!staffTokenValido(estraiToken(req))) return json(res, 401, { ok: false, error: 'non_autorizzato' });
+
+    if (req.method === 'GET' && url.pathname === '/api/staff/prenotazioni') {
+      const kind = process.env.BOOKING_STORE || 'log';
+      if (kind === 'http') return json(res, 200, { ok: true, prenotazioni: [], nota: 'BOOKING_STORE=http non supporta la lettura: elenco non disponibile.' });
+      const prenotazioni = await listBookings();
+      return json(res, 200, { ok: true, prenotazioni });
+    }
+
+    if (req.method === 'POST' && url.pathname === '/api/staff/conferma') {
+      const body = await leggiCorpo(req);
+      if (body === null) return json(res, 400, { ok: false, error: 'bad_json' });
+      const bookingId = String(body.bookingId || '');
+      if (!bookingId) return json(res, 400, { ok: false, error: 'bookingId_mancante' });
+      const data = body.data ? String(body.data) : undefined;
+      const ora = body.ora ? String(body.ora) : undefined;
+      if ((data && !GIORNO_RE.test(data)) || (ora && !ORA_RE.test(ora))) return json(res, 400, { ok: false, error: 'dati_non_validi' });
+      const esito = await confermaPrenotazione(bookingId, { professionista: String(body.professionista || ''), nota: String(body.nota || ''), data, ora });
+      if (!esito.ok) {
+        const status =
+          esito.error === 'non_trovata'
+            ? 404
+            : ['occupato', 'giorno_chiuso'].includes(esito.error)
+              ? 409
+              : esito.error === 'stato_non_confermabile'
+                ? 422
+                : 400;
+        return json(res, status, esito);
+      }
+      return json(res, 200, { ok: true, record: esito.record, emailSent: esito.emailSent });
+    }
+
+    if (req.method === 'POST' && url.pathname === '/api/staff/cancella') {
+      const body = await leggiCorpo(req);
+      if (body === null) return json(res, 400, { ok: false, error: 'bad_json' });
+      const bookingId = String(body.bookingId || '');
+      if (!bookingId) return json(res, 400, { ok: false, error: 'bookingId_mancante' });
+      const esito = await cancella(bookingId, { forza: true });
+      if (!esito.ok) return json(res, esito.error === 'non_trovata' ? 404 : 422, esito);
+      await notificaAnnullamento(esito.record).catch((e) => console.error('STAFF_CANCELLAZIONE_MAIL_ERRORE', e));
+      return json(res, 200, { ok: true });
+    }
+
+    if (req.method === 'POST' && url.pathname === '/api/staff/sposta') {
+      const body = await leggiCorpo(req);
+      if (body === null) return json(res, 400, { ok: false, error: 'bad_json' });
+      const bookingId = String(body.bookingId || '');
+      const data = String(body.data || '');
+      const ora = String(body.ora || '');
+      if (!bookingId) return json(res, 400, { ok: false, error: 'bookingId_mancante' });
+      if (!GIORNO_RE.test(data) || !ORA_RE.test(ora)) return json(res, 400, { ok: false, error: 'dati_non_validi' });
+      const esito = await sposta(bookingId, data, ora, { forza: true });
+      if (!esito.ok) {
+        const status = esito.error === 'non_trovata' ? 404 : ['slot_occupato', 'giorno_chiuso'].includes(esito.error) ? 409 : 422;
+        return json(res, status, esito);
+      }
+      await notificaSpostamento(esito.record, esito.precedente).catch((e) => console.error('STAFF_SPOSTAMENTO_MAIL_ERRORE', e));
+      return json(res, 200, { ok: true, data: esito.record.data_richiesta, ora: esito.record.ora_richiesta });
+    }
+
+    return json(res, 404, { ok: false, error: 'not_found' });
   }
 
   if (req.method !== 'POST' || url.pathname !== '/api/prenotazioni') {

@@ -166,7 +166,7 @@
     "date": "2026-07-18",
     "category": "Estetica",
     "reading": 5,
-    "image": "sorriso-04",
+    "image": "cat-estetica",
     "author": "sofia-ranieri",
     "body": [
       { "t": "p", "v": "Chi valuta le faccette guarda quasi sempre il risultato estetico immediato: forma, colore, simmetria. È comprensibile, ma è la metà della domanda giusta. L'altra metà è: fra dieci anni, saranno ancora lì?" },
@@ -192,7 +192,7 @@
     "date": "2026-08-02",
     "category": "Parodontologia",
     "reading": 6,
-    "image": "trattamento-cura",
+    "image": "strumenti-macro",
     "author": "elena-moretti",
     "body": [
       { "t": "p", "v": "La parodontite è un'infiammazione cronica che distrugge progressivamente l'osso attorno ai denti. Non fa male finché non è avanzata, e questo la rende facile da ignorare: ma la ricerca degli ultimi anni ha chiarito che le sue conseguenze non si fermano alla bocca." },

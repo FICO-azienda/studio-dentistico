@@ -11,19 +11,18 @@
   const $$ = (s, c = document) => Array.from(c.querySelectorAll(s));
   const clamp = (v, a, b) => Math.min(Math.max(v, a), b);
 
-  /* -- Reveal --------------------------------------------------------------*/
+  /* -- Contatori numerici: partono quando entrano nello schermo ------------*/
   const reveals = () => {
-    const items = $$('.reveal, .img-mask, .line-mask, .step, [data-count]');
+    const items = $$('[data-count]');
     if (!items.length) return;
     if (reduced() || !('IntersectionObserver' in window)) {
-      items.forEach((el) => { el.classList.add('is-in'); if (el.dataset.count) el.textContent = el.dataset.countFormatted || el.dataset.count; });
+      items.forEach((el) => { el.textContent = el.dataset.countFormatted || el.dataset.count; });
       return;
     }
     const io = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (!entry.isIntersecting) return;
-        entry.target.classList.add('is-in');
-        if (entry.target.hasAttribute('data-count')) countUp(entry.target);
+        countUp(entry.target);
         io.unobserve(entry.target);
       });
     }, { rootMargin: '0px 0px -12% 0px', threshold: 0.08 });
@@ -110,28 +109,6 @@
       if (t) setTimeout(() => scrollToTarget(t), 60);
     }
 
-  };
-
-  /* -- Parallax ------------------------------------------------------------*/
-  const parallax = () => {
-    const items = $$('[data-parallax]');
-    if (!items.length || reduced()) return;
-    let ticking = false;
-    const run = () => {
-      const vh = window.innerHeight;
-      items.forEach((el) => {
-        const r = el.getBoundingClientRect();
-        if (r.bottom < -200 || r.top > vh + 200) return;
-        const amt = parseFloat(el.dataset.parallax) || 8;
-        const p = (r.top + r.height / 2 - vh / 2) / vh; // -1 .. 1
-        el.style.transform = `translate3d(0, ${(-p * amt).toFixed(2)}%, 0)`;
-      });
-      ticking = false;
-    };
-    const onScroll = () => { if (!ticking) { ticking = true; requestAnimationFrame(run); } };
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll);
-    run();
   };
 
   /* -- Rail (slider orizzontale) ------------------------------------------*/
@@ -900,7 +877,7 @@
 
   /* -- Avvio ---------------------------------------------------------------*/
   const init = () => {
-    year(); header(); sectionNav(); reveals(); parallax(); rails();
+    year(); header(); sectionNav(); reveals(); rails();
     faq(); beforeAfter(); filters(); forms(); wizard(); transitions();
   };
 

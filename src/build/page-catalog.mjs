@@ -476,7 +476,12 @@ const renderBlock = (b) => {
   if (b.t === 'h2') return `<h2>${esc(b.v)}</h2>`;
   if (b.t === 'ul') return `<ul>${b.v.map((x) => `<li>${esc(x)}</li>`).join('')}</ul>`;
   if (b.t === 'quote')
-    return `<blockquote style="font-family:var(--font-display);font-size:1.5rem;line-height:1.35;border-left:1px solid var(--sage);padding-left:1.4rem;margin:2.4rem 0">&ldquo;${esc(b.v)}&rdquo;</blockquote>`;
+    return `<blockquote style="font-family:var(--font-display);font-size:1.5rem;line-height:1.35;border-left:1px solid var(--navy);padding-left:1.4rem;margin:2.4rem 0">&ldquo;${esc(b.v)}&rdquo;</blockquote>`;
+  if (b.t === 'sources')
+    return `<div class="sources">
+      <p class="label">${esc(t('journal.sources'))}</p>
+      <ol>${b.v.map((s) => `<li><a class="link-inline" href="${attr(s.url)}" target="_blank" rel="noopener noreferrer">${esc(s.text)}</a></li>`).join('')}</ol>
+    </div>`;
   return '';
 };
 

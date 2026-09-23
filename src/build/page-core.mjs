@@ -83,7 +83,7 @@ ${pageHero({
       ]
         .map(
           ([t, d], i) => `<div class="col-6 reveal" data-delay="${i % 2}">
-        <div class="value-item"><span class="num value-item__num" style="color:var(--sage)">0${i + 1}</span><div><h3 class="h4">${esc(t)}</h3><p>${esc(d)}</p></div></div>
+        <div class="value-item"><span class="num value-item__num" style="color:var(--navy)">0${i + 1}</span><div><h3 class="h4">${esc(t)}</h3><p>${esc(d)}</p></div></div>
       </div>`
         )
         .join('')}
@@ -169,7 +169,7 @@ export const personPage = (p) => {
         <span class="label label--accent reveal">${esc(p.role)}</span>
         <h1 class="h1 mt-2">${lines([esc(personName(p))])}</h1>
         <p class="lead mt-3 reveal" data-delay="1">${esc(p.short)}</p>
-        <blockquote class="mt-4 reveal" data-delay="2" style="font-family:var(--font-display);font-size:1.4rem;line-height:1.35;border-left:1px solid var(--sage);padding-left:1.4rem">&ldquo;${esc(p.quote)}&rdquo;</blockquote>
+        <blockquote class="mt-4 reveal" data-delay="2" style="font-family:var(--font-display);font-size:1.4rem;line-height:1.35;border-left:1px solid var(--navy);padding-left:1.4rem">&ldquo;${esc(p.quote)}&rdquo;</blockquote>
         <div class="row mt-4 reveal" data-delay="3">
           <a class="btn" href="${base}${PATH.book}">${esc(t('team.bookWith'))} ${esc(p.title || '')} ${esc(p.name.split(' ')[0])}</a>
         </div>

@@ -22,7 +22,11 @@
       { "t": "h2", "v": "5. Il richiamo non è un rituale commerciale" },
       { "t": "p", "v": "La carie interprossimale e la parodontite iniziale non danno sintomi. Quando cominciano a darne, il trattamento necessario è già di un ordine di grandezza più complesso. Il richiamo periodico serve a intercettarle quando sono ancora piccole, e il suo intervallo va calibrato sul rischio individuale: non tutti hanno bisogno della stessa frequenza." },
       { "t": "quote", "v": "Il miglior trattamento è quello che non è stato necessario fare." },
-      { "t": "p", "v": "Se sono passati più di dodici mesi dal tuo ultimo controllo, è il momento di prenotarne uno. Non perché sicuramente c'è qualcosa, ma perché è l'unico modo per saperlo." }
+      { "t": "p", "v": "Se sono passati più di dodici mesi dal tuo ultimo controllo, è il momento di prenotarne uno. Non perché sicuramente c'è qualcosa, ma perché è l'unico modo per saperlo." },
+      { "t": "sources", "v": [
+        { "text": "Worthington HV et al., «Home use of interdental cleaning devices, in addition to toothbrushing, for preventing and controlling periodontal diseases and dental caries», Cochrane Database of Systematic Reviews, 2019", "url": "https://www.cochranelibrary.com/cdsr/doi/10.1002/14651858.CD012018.pub2/full" },
+        { "text": "Fee PA et al., «Recall intervals for oral health in primary care patients», Cochrane Database of Systematic Reviews, 2020", "url": "https://www.cochranelibrary.com/cdsr/doi/10.1002/14651858.CD004346.pub5/full" }
+      ] }
     ]
   },
   {
@@ -44,7 +48,11 @@
       { "t": "p", "v": "Un allineatore funziona se è in bocca. Ventidue ore al giorno non è un suggerimento, è il presupposto del piano digitale: ogni mascherina è calcolata su un tempo di applicazione della forza. Chi lo toglie spesso non rallenta soltanto, esce dal piano — e le mascherine successive non calzano più." },
       { "t": "h2", "v": "Come si decide" },
       { "t": "p", "v": "In prima visita facciamo una scansione e costruiamo la simulazione del tuo caso specifico. Vedere il piano di movimento, la durata stimata e il risultato atteso prima di impegnarsi trasforma una scelta fatta su una brochure in una decisione informata." },
-      { "t": "p", "v": "E se dalla simulazione emerge che la tecnica fissa è più adatta, te lo diciamo. Un trattamento invisibile che non arriva al risultato non è un buon affare per nessuno dei due." }
+      { "t": "p", "v": "E se dalla simulazione emerge che la tecnica fissa è più adatta, te lo diciamo. Un trattamento invisibile che non arriva al risultato non è un buon affare per nessuno dei due." },
+      { "t": "sources", "v": [
+        { "text": "«Comparative impact of clear aligners versus fixed orthodontic appliances on periodontal health, pain, and quality of life», systematic review and meta-analysis, PMC", "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC13253859/" },
+        { "text": "Yavuz MC et al., «Effect of electronic reminders on patients’ compliance during clear aligner treatment», Scientific Reports, 2022", "url": "https://www.nature.com/articles/s41598-022-20820-5" }
+      ] }
     ]
   },
   {
@@ -67,7 +75,12 @@
       { "t": "h2", "v": "Le domande giuste da fare" },
       { "t": "ul", "v": ["La pianificazione viene fatta su TC e con dima chirurgica?", "Chi realizza la protesi e con quale flusso di lavoro?", "Qual è il piano di mantenimento dopo la consegna, e con che frequenza?", "Cosa succede, concretamente, se l'impianto non si integra?"] },
       { "t": "p", "v": "Uno studio che ha risposte precise a queste quattro domande ha molto probabilmente un protocollo. Ed è il protocollo, più della marca dell'impianto, a determinare il risultato a dieci anni." },
-      { "t": "quote", "v": "Un impianto non finisce quando si avvita la corona: comincia lì." }
+      { "t": "quote", "v": "Un impianto non finisce quando si avvita la corona: comincia lì." },
+      { "t": "sources", "v": [
+        { "text": "Chrcanovic BR et al., «Long-term (10-year) dental implant survival: a systematic review and sensitivity meta-analysis», Journal of Dentistry, 2019", "url": "https://pubmed.ncbi.nlm.nih.gov/30904559/" },
+        { "text": "Dagassan-Berndt D et al., «Implant treatment planning regarding augmentation procedures: panoramic radiographs vs. cone beam computed tomography images», Clinical Oral Implants Research, 2016", "url": "https://pubmed.ncbi.nlm.nih.gov/26227397/" },
+        { "text": "«Risk factors for peri-implantitis: an umbrella review of meta-analyses of observational studies», Journal of Dentistry, 2024", "url": "https://www.sciencedirect.com/science/article/abs/pii/S0300571224002343" }
+      ] }
     ]
   },
   {
@@ -89,7 +102,11 @@
       { "t": "p", "v": "Ogni dente ha un colore di base determinato dalla dentina, e lo sbiancamento lavora dentro quel limite. Due persone con lo stesso trattamento ottengono risultati diversi. Le discromie giallo-brune rispondono bene; quelle grigiastre, spesso di origine farmacologica, molto meno." },
       { "t": "h2", "v": "Quanto dura" },
       { "t": "p", "v": "Da uno a tre anni, con grande variabilità legata a caffè, tè, vino rosso e fumo. Un richiamo domiciliare di due o tre notti una volta l'anno mantiene il risultato senza ripetere il ciclo completo." },
-      { "t": "p", "v": "Una nota pratica: se hai otturazioni o corone nei settori visibili, ricordati che non sbiancano. Dopo il trattamento potrebbero risultare più scure e richiedere una sostituzione, che va messa in conto fin dall'inizio." }
+      { "t": "p", "v": "Una nota pratica: se hai otturazioni o corone nei settori visibili, ricordati che non sbiancano. Dopo il trattamento potrebbero risultare più scure e richiedere una sostituzione, che va messa in conto fin dall'inizio." },
+      { "t": "sources", "v": [
+        { "text": "American Dental Association, «Whitening», ADA Oral Health Topics", "url": "https://www.ada.org/resources/ada-library/oral-health-topics/whitening" },
+        { "text": "«Transenamel and transdentinal penetration of hydrogen peroxide applied to cracked or microabrasioned enamel», Journal of Dentistry, PubMed", "url": "https://pubmed.ncbi.nlm.nih.gov/23802644/" }
+      ] }
     ]
   },
   {
@@ -109,7 +126,11 @@
       { "t": "p", "v": "Sei mesi è una media, non una regola. Chi ha avuto parodontite, chi ha impianti, chi ha una saliva poco protettiva o una dieta acida ha bisogno di richiami più ravvicinati. Chi ha una bocca stabile da anni può permettersi intervalli più lunghi. La personalizzazione dell'intervallo è, di fatto, la parte clinica del richiamo." },
       { "t": "h2", "v": "Una questione di ordini di grandezza" },
       { "t": "p", "v": "Una carie intercettata precocemente si tratta con un restauro adesivo in una seduta. La stessa carie, due anni dopo, può richiedere una cura canalare e una corona: cinque volte il tempo, un impegno economico diverso e un dente strutturalmente più fragile per sempre." },
-      { "t": "p", "v": "La prevenzione non è un servizio accessorio dello studio. È il lavoro principale, e tutto il resto è ciò che facciamo quando la prevenzione è arrivata tardi." }
+      { "t": "p", "v": "La prevenzione non è un servizio accessorio dello studio. È il lavoro principale, e tutto il resto è ciò che facciamo quando la prevenzione è arrivata tardi." },
+      { "t": "sources", "v": [
+        { "text": "Fee PA et al., «Recall intervals for oral health in primary care patients», Cochrane Database of Systematic Reviews, 2020", "url": "https://www.cochranelibrary.com/cdsr/doi/10.1002/14651858.CD004346.pub5/full" },
+        { "text": "«Effect of Different Frequencies of Dental Visits on Dental Caries and Periodontal Disease: A Scoping Review», International Journal of Environmental Research and Public Health, 2023", "url": "https://www.mdpi.com/1660-4601/20/19/6858" }
+      ] }
     ]
   }
 ]

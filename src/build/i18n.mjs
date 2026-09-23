@@ -252,6 +252,7 @@ const UI = {
     'Clinical insight written by the practice team. No unnecessary jargon, no misplaced promises.'
   ],
   'journal.count': ['articoli', 'articles'],
+  'journal.sources': ['Fonti', 'Sources'],
   'journal.question': ['Hai una domanda?', 'Have a question?'],
   'journal.questionText': [
     'Prenota una prima visita o scrivici: rispondiamo entro un giorno lavorativo.',

@@ -16,7 +16,11 @@
       { "t": "h2", "v": "5. Recall is not a commercial ritual" },
       { "t": "p", "v": "Interproximal decay and early periodontitis give no symptoms. By the time they do, the treatment needed is an order of magnitude more complex. Regular recall exists to catch them while they are still small, and the interval should be calibrated to individual risk: not everyone needs the same frequency." },
       { "t": "quote", "v": "The best treatment is the one that never had to happen." },
-      { "t": "p", "v": "If it has been more than twelve months since your last check-up, it is time to book one. Not because there is certainly something wrong, but because that is the only way to know." }
+      { "t": "p", "v": "If it has been more than twelve months since your last check-up, it is time to book one. Not because there is certainly something wrong, but because that is the only way to know." },
+      { "t": "sources", "v": [
+        { "text": "Worthington HV et al., «Home use of interdental cleaning devices, in addition to toothbrushing, for preventing and controlling periodontal diseases and dental caries», Cochrane Database of Systematic Reviews, 2019", "url": "https://www.cochranelibrary.com/cdsr/doi/10.1002/14651858.CD012018.pub2/full" },
+        { "text": "Fee PA et al., «Recall intervals for oral health in primary care patients», Cochrane Database of Systematic Reviews, 2020", "url": "https://www.cochranelibrary.com/cdsr/doi/10.1002/14651858.CD004346.pub5/full" }
+      ] }
     ]
   },
 
@@ -34,7 +38,11 @@
       { "t": "p", "v": "An aligner works if it is in the mouth. Twenty-two hours a day is not a suggestion, it is the premise of the digital plan: each tray is calculated on a given duration of force. Someone who removes them often does not simply slow down, they leave the plan — and the following trays no longer fit." },
       { "t": "h2", "v": "How the decision is made" },
       { "t": "p", "v": "At the first visit we take a scan and build a simulation of your specific case. Seeing the movement plan, the estimated duration and the expected result before committing turns a decision made from a brochure into an informed one." },
-      { "t": "p", "v": "And if the simulation shows that fixed appliances are more appropriate, we say so. Invisible treatment that does not reach the result is a bad deal for both of us." }
+      { "t": "p", "v": "And if the simulation shows that fixed appliances are more appropriate, we say so. Invisible treatment that does not reach the result is a bad deal for both of us." },
+      { "t": "sources", "v": [
+        { "text": "«Comparative impact of clear aligners versus fixed orthodontic appliances on periodontal health, pain, and quality of life», systematic review and meta-analysis, PMC", "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC13253859/" },
+        { "text": "Yavuz MC et al., «Effect of electronic reminders on patients’ compliance during clear aligner treatment», Scientific Reports, 2022", "url": "https://www.nature.com/articles/s41598-022-20820-5" }
+      ] }
     ]
   },
 
@@ -53,7 +61,12 @@
       { "t": "h2", "v": "The right questions to ask" },
       { "t": "ul", "v": ["Is planning carried out on a CT scan and with a surgical guide?", "Who makes the restoration, and with what workflow?", "What is the maintenance plan after fitting, and how often?", "What happens, in practical terms, if the implant does not integrate?"] },
       { "t": "p", "v": "A practice with precise answers to those four questions very probably has a protocol. And it is the protocol, more than the brand of implant, that determines the result at ten years." },
-      { "t": "quote", "v": "An implant does not end when the crown is fitted: that is where it begins." }
+      { "t": "quote", "v": "An implant does not end when the crown is fitted: that is where it begins." },
+      { "t": "sources", "v": [
+        { "text": "Chrcanovic BR et al., «Long-term (10-year) dental implant survival: a systematic review and sensitivity meta-analysis», Journal of Dentistry, 2019", "url": "https://pubmed.ncbi.nlm.nih.gov/30904559/" },
+        { "text": "Dagassan-Berndt D et al., «Implant treatment planning regarding augmentation procedures: panoramic radiographs vs. cone beam computed tomography images», Clinical Oral Implants Research, 2016", "url": "https://pubmed.ncbi.nlm.nih.gov/26227397/" },
+        { "text": "«Risk factors for peri-implantitis: an umbrella review of meta-analyses of observational studies», Journal of Dentistry, 2024", "url": "https://www.sciencedirect.com/science/article/abs/pii/S0300571224002343" }
+      ] }
     ]
   },
 
@@ -71,7 +84,11 @@
       { "t": "p", "v": "Every tooth has a base colour determined by the dentine, and whitening works within that limit. Two people having the same treatment get different results. Yellow-brown discolouration responds well; greyish shades, often from medication, much less so." },
       { "t": "h2", "v": "How long it lasts" },
       { "t": "p", "v": "From one to three years, with wide variation linked to coffee, tea, red wine and smoking. A home top-up of two or three nights once a year maintains the result without repeating the full cycle." },
-      { "t": "p", "v": "One practical note: if you have fillings or crowns among the visible teeth, remember that they do not whiten. After treatment they may look darker and need replacing, which should be accounted for from the start." }
+      { "t": "p", "v": "One practical note: if you have fillings or crowns among the visible teeth, remember that they do not whiten. After treatment they may look darker and need replacing, which should be accounted for from the start." },
+      { "t": "sources", "v": [
+        { "text": "American Dental Association, «Whitening», ADA Oral Health Topics", "url": "https://www.ada.org/resources/ada-library/oral-health-topics/whitening" },
+        { "text": "«Transenamel and transdentinal penetration of hydrogen peroxide applied to cracked or microabrasioned enamel», Journal of Dentistry, PubMed", "url": "https://pubmed.ncbi.nlm.nih.gov/23802644/" }
+      ] }
     ]
   },
 
@@ -87,7 +104,11 @@
       { "t": "p", "v": "Six months is an average, not a rule. Anyone who has had periodontitis, who has implants, whose saliva is less protective or whose diet is acidic needs closer recall. Someone whose mouth has been stable for years can afford longer intervals. Personalising the interval is, in fact, the clinical part of recall." },
       { "t": "h2", "v": "A question of orders of magnitude" },
       { "t": "p", "v": "Decay caught early is treated with an adhesive restoration in a single appointment. The same decay, two years later, may require root canal treatment and a crown: five times the chair time, a different financial commitment, and a tooth that is structurally weaker for good." },
-      { "t": "p", "v": "Prevention is not an add-on service. It is the main work, and everything else is what we do when prevention arrived too late." }
+      { "t": "p", "v": "Prevention is not an add-on service. It is the main work, and everything else is what we do when prevention arrived too late." },
+      { "t": "sources", "v": [
+        { "text": "Fee PA et al., «Recall intervals for oral health in primary care patients», Cochrane Database of Systematic Reviews, 2020", "url": "https://www.cochranelibrary.com/cdsr/doi/10.1002/14651858.CD004346.pub5/full" },
+        { "text": "«Effect of Different Frequencies of Dental Visits on Dental Caries and Periodontal Disease: A Scoping Review», International Journal of Environmental Research and Public Health, 2023", "url": "https://www.mdpi.com/1660-4601/20/19/6858" }
+      ] }
     ]
   }
 }

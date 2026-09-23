@@ -28,6 +28,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { orari } from './orari.mjs';
+import { giornoChiuso } from './chiusure.mjs';
 
 const FILE_STORE = path.resolve(process.cwd(), '.data', 'disponibilita.json');
 
@@ -89,11 +90,12 @@ export function slotsRichiesti(oraInizio, slotCount = 1) {
 
 /**
  * Verifica e, se libero, occupa lo slot per una prenotazione confermata.
- * Ritorna { ok: true } oppure { ok: false, motivo: 'orario_non_valido' | 'occupato' }.
+ * Ritorna { ok: true } oppure { ok: false, motivo: 'orario_non_valido' | 'occupato' | 'giorno_chiuso' }.
  * In modalita' 'http' non fa nulla e restituisce sempre ok (nessuna
  * disponibilita' gestita qui, vedi commento in cima al file).
  */
 export async function reserveSlots(dataIso, oraInizio, slotCount, bookingId, env = process.env) {
+  if (giornoChiuso(dataIso)) return { ok: false, motivo: 'giorno_chiuso' };
   const richiesti = slotsRichiesti(oraInizio, slotCount);
   if (!richiesti) return { ok: false, motivo: 'orario_non_valido' };
 

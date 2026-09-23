@@ -10,6 +10,7 @@
 import http from 'node:http';
 import { handleBooking, corsHeaders } from '../api/_lib/handler.mjs';
 import { getDayOccupied } from '../api/_lib/availability.mjs';
+import { giornoChiuso } from '../api/_lib/chiusure.mjs';
 import { verifyToken } from '../api/_lib/token.mjs';
 import { statoPrenotazione, cancella, sposta } from '../api/_lib/manage.mjs';
 import { notificaAnnullamento, notificaSpostamento } from '../api/_lib/notify.mjs';
@@ -44,8 +45,9 @@ const server = http.createServer(async (req, res) => {
   if (req.method === 'GET' && url.pathname === '/api/disponibilita') {
     const giorno = url.searchParams.get('giorno') || '';
     if (!GIORNO_RE.test(giorno)) return json(res, 400, { ok: false, error: 'giorno_non_valido' });
-    const occupato = await getDayOccupied(giorno);
-    return json(res, 200, { ok: true, giorno, occupati: Object.keys(occupato) });
+    const chiuso = giornoChiuso(giorno);
+    const occupato = chiuso ? {} : await getDayOccupied(giorno);
+    return json(res, 200, { ok: true, giorno, chiuso, occupati: Object.keys(occupato) });
   }
 
   if (req.method === 'GET' && url.pathname === '/api/prenotazione') {
@@ -79,7 +81,11 @@ const server = http.createServer(async (req, res) => {
     const esito = await sposta(b, data, ora);
     if (!esito.ok) {
       const status =
-        esito.error === 'non_trovata' ? 404 : esito.error === 'fuori_finestra' || esito.error === 'slot_occupato' ? 409 : 422;
+        esito.error === 'non_trovata'
+          ? 404
+          : ['fuori_finestra', 'slot_occupato', 'giorno_chiuso'].includes(esito.error)
+            ? 409
+            : 422;
       return json(res, status, esito);
     }
     await notificaSpostamento(esito.record, esito.precedente).catch((e) => console.error('SPOSTAMENTO_MAIL_ERRORE', e));

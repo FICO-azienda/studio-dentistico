@@ -27,8 +27,9 @@ const BASE = {
   reviews: leggi('reviews.json')
 };
 
-/* -- orari di prenotazione: stessa fonte per sito e API -------------------- */
+/* -- orari e chiusure di prenotazione: stessa fonte per sito e API --------- */
 export const orari = leggi('orari.json').orari;
+export const chiusure = leggi('chiusure.json');
 
 /* -- traduzioni ------------------------------------------------------------ */
 const EN = {

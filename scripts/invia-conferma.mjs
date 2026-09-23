@@ -70,7 +70,9 @@ if (!prenotato.ok) {
   console.error(
     prenotato.motivo === 'occupato'
       ? `slot già occupato (${prenotato.orario}): scegli un altro orario con --ora, oppure verifica manualmente.`
-      : `orario non valido per ${slotCount} slot da ${record.data_richiesta} ${record.ora_richiesta}: non c'è spazio prima della chiusura.`
+      : prenotato.motivo === 'giorno_chiuso'
+        ? `${record.data_richiesta} è un giorno di chiusura dello studio (vedi content/chiusure.json): scegli un'altra data con --data.`
+        : `orario non valido per ${slotCount} slot da ${record.data_richiesta} ${record.ora_richiesta}: non c'è spazio prima della chiusura.`
   );
   process.exit(3);
 }

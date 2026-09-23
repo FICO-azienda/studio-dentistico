@@ -8,6 +8,7 @@
  * appuntamento (scripts/invia-conferma.mjs), non da qui.
  */
 import { getDayOccupied } from './_lib/availability.mjs';
+import { giornoChiuso } from './_lib/chiusure.mjs';
 import { corsHeaders } from './_lib/handler.mjs';
 
 export const config = { runtime: 'nodejs' };
@@ -31,8 +32,9 @@ export default async function handler(req, res) {
   }
 
   try {
-    const occupato = await getDayOccupied(giorno);
-    return res.status(200).json({ ok: true, giorno, occupati: Object.keys(occupato) });
+    const chiuso = giornoChiuso(giorno);
+    const occupato = chiuso ? {} : await getDayOccupied(giorno);
+    return res.status(200).json({ ok: true, giorno, chiuso, occupati: Object.keys(occupato) });
   } catch (e) {
     console.error('DISPONIBILITA_FATAL ' + JSON.stringify({ giorno, error: String(e?.stack || e) }));
     return res.status(500).json({ ok: false, error: 'server_error' });

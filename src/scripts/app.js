@@ -278,7 +278,10 @@
       try {
         const res = await fetch(`${dispEndpoint}?giorno=${encodeURIComponent(iso)}`);
         const data = await res.json();
-        const set = new Set(Array.isArray(data?.occupati) ? data.occupati : []);
+        // il server e' la fonte di verita' sulle chiusure: se dice che il
+        // giorno e' chiuso (es. content/chiusure.json aggiornato dopo che il
+        // browser ha messo in cache questa pagina), si blocca tutto l'orario
+        const set = data?.chiuso ? new Set(slots.orari) : new Set(Array.isArray(data?.occupati) ? data.occupati : []);
         occupatiCache.set(iso, set);
         return set;
       } catch {
@@ -360,15 +363,30 @@
     const titolo = (t, sub) =>
       `<h2 class="h3">${t}</h2>${sub ? `<p class="body mt-1 measure-sm">${sub}</p>` : ''}`;
 
+    const chiusuraIn = { date: [], periodi: [] };
+    if (slots.chiusure) {
+      if (Array.isArray(slots.chiusure.date)) chiusuraIn.date = slots.chiusure.date;
+      if (Array.isArray(slots.chiusure.periodi)) chiusuraIn.periodi = slots.chiusure.periodi;
+    }
+    /** Stessa regola del server (api/_lib/chiusure.mjs): domenica, festivi ed eventuali periodi di ferie. */
+    const giornoChiuso = (iso, day) => {
+      if (day === 0) return true; // domenica
+      if (chiusuraIn.date.includes(iso)) return true;
+      return chiusuraIn.periodi.some((p) => iso >= p.da && iso <= p.a);
+    };
+
     const giorniDisponibili = () => {
       const out = [];
       const d = new Date();
       d.setHours(12, 0, 0, 0);
-      while (out.length < 12) {
+      let sicurezza = 0;
+      while (out.length < 12 && sicurezza < 400) {
         d.setDate(d.getDate() + 1);
-        if (d.getDay() === 0) continue; // domenica chiuso
+        sicurezza++;
+        const iso = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+        if (giornoChiuso(iso, d.getDay())) continue;
         out.push({
-          iso: `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`,
+          iso,
           gs: d.toLocaleDateString('it-IT', { weekday: 'short' }),
           n: d.getDate(),
           ms: d.toLocaleDateString('it-IT', { month: 'short' }),
@@ -875,7 +893,19 @@
     const email = box.dataset.email || '';
 
     const slotsEl = $('script[data-manage-slots]');
-    const orari = slotsEl ? JSON.parse(slotsEl.textContent).orari : [];
+    const slotsData = slotsEl ? JSON.parse(slotsEl.textContent) : {};
+    const orari = slotsData.orari || [];
+    const chiusuraIn = { date: [], periodi: [] };
+    if (slotsData.chiusure) {
+      if (Array.isArray(slotsData.chiusure.date)) chiusuraIn.date = slotsData.chiusure.date;
+      if (Array.isArray(slotsData.chiusure.periodi)) chiusuraIn.periodi = slotsData.chiusure.periodi;
+    }
+    /** Stessa regola del server (api/_lib/chiusure.mjs): domenica, festivi ed eventuali periodi di ferie. */
+    const giornoChiuso = (iso, day) => {
+      if (day === 0) return true;
+      if (chiusuraIn.date.includes(iso)) return true;
+      return chiusuraIn.periodi.some((p) => iso >= p.da && iso <= p.a);
+    };
 
     const contatti = () => `<p class="body mt-3">
         Chiamaci al <a class="link-inline" href="tel:${telefonoHref}">${telefono}</a>
@@ -897,11 +927,14 @@
       const out = [];
       const d = new Date();
       d.setHours(12, 0, 0, 0);
-      while (out.length < 12) {
+      let sicurezza = 0;
+      while (out.length < 12 && sicurezza < 400) {
         d.setDate(d.getDate() + 1);
-        if (d.getDay() === 0) continue;
+        sicurezza++;
+        const iso = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+        if (giornoChiuso(iso, d.getDay())) continue;
         out.push({
-          iso: `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`,
+          iso,
           gs: d.toLocaleDateString('it-IT', { weekday: 'short' }),
           n: d.getDate(),
           ms: d.toLocaleDateString('it-IT', { month: 'short' }),
@@ -920,6 +953,7 @@
       try {
         const res = await fetch(`${base}disponibilita?giorno=${encodeURIComponent(iso)}`);
         const data = await res.json();
+        if (data?.chiuso) return new Set(orari);
         return new Set(Array.isArray(data?.occupati) ? data.occupati : []);
       } catch {
         return new Set();

@@ -85,7 +85,8 @@ export async function sposta(bookingId, nuovaData, nuovaOra, { forza = false, en
   const esito = await reserveSlots(nuovaData, nuovaOra, slotCount, r.booking_id, env);
   if (!esito.ok) {
     await reserveSlots(r.data_richiesta, r.ora_richiesta, slotCount, r.booking_id, env); // ripristina: non si lascia un buco senza motivo
-    return { ok: false, error: esito.motivo === 'occupato' ? 'slot_occupato' : 'orario_non_valido', record: r };
+    const error = esito.motivo === 'occupato' ? 'slot_occupato' : esito.motivo === 'giorno_chiuso' ? 'giorno_chiuso' : 'orario_non_valido';
+    return { ok: false, error, record: r };
   }
 
   const aggiornato = await updateBooking(

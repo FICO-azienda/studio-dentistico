@@ -1,4 +1,4 @@
-import { site, team, technologies, faqs, treatments, orari, esc, attr, arrow, imgTag, figure, lines, personName, byTreatment, byPerson, metaTitle, treatmentPath, PATH, teamPath } from './utils.mjs';
+import { site, team, technologies, faqs, treatments, orari, chiusure, esc, attr, arrow, imgTag, figure, lines, personName, byTreatment, byPerson, metaTitle, treatmentPath, PATH, teamPath } from './utils.mjs';
 import { t, getLang } from './i18n.mjs';
 import { clientConfig } from '../../api/_lib/flows.mjs';
 import { layout, dentistLd } from './layout.mjs';
@@ -596,7 +596,7 @@ ${pageHero({
 </section>
 
 <script type="application/json" data-flows>${JSON.stringify(clientConfig(getLang())).replace(/</g, '\\u003c')}</script>
-<script type="application/json" data-slots>${JSON.stringify({ orari, dottori: ['Nessuna preferenza', ...docs.map((p) => personName(p))] })}</script>`;
+<script type="application/json" data-slots>${JSON.stringify({ orari, chiusure, dottori: ['Nessuna preferenza', ...docs.map((p) => personName(p))] })}</script>`;
 
   return layout({
     title: t('meta.book.title'),
@@ -637,7 +637,7 @@ ${pageHero({
   </div>
 </section>
 
-<script type="application/json" data-manage-slots>${JSON.stringify({ orari })}</script>`;
+<script type="application/json" data-manage-slots>${JSON.stringify({ orari, chiusure })}</script>`;
 
   return layout({
     title: metaTitle(t('manage.title1') + ' ' + t('manage.title2')),

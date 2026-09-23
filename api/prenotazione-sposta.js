@@ -57,7 +57,11 @@ export default async function handler(req, res) {
     const esito = await sposta(bookingId, nuovaData, nuovaOra);
     if (!esito.ok) {
       const status =
-        esito.error === 'non_trovata' ? 404 : esito.error === 'fuori_finestra' ? 409 : esito.error === 'slot_occupato' ? 409 : 422;
+        esito.error === 'non_trovata'
+          ? 404
+          : ['fuori_finestra', 'slot_occupato', 'giorno_chiuso'].includes(esito.error)
+            ? 409
+            : 422;
       return res.status(status).json(esito);
     }
     await notificaSpostamento(esito.record, esito.precedente).catch((e) =>

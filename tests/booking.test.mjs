@@ -16,6 +16,10 @@ import { buildIcs, localeToUtc } from '../api/_lib/ics.mjs';
 import { studio } from '../api/_lib/studio.mjs';
 import { rateLimit, _reset } from '../api/_lib/ratelimit.mjs';
 import { byService, visibleQuestions, computePriority, computeTags, buildSummary, validateAnswers } from '../api/_lib/flows.mjs';
+import { giornoChiuso } from '../api/_lib/chiusure.mjs';
+import { reserveSlots, releaseSlots, getDayOccupied } from '../api/_lib/availability.mjs';
+import { saveBooking } from '../api/_lib/store.mjs';
+import { sposta } from '../api/_lib/manage.mjs';
 
 // niente email vere durante i test
 const ENV = { MAIL_PROVIDER: 'console', BOOKING_STORE: 'log', BOOKING_NOTIFY_EMAIL: 'studio@example.it' };
@@ -415,4 +419,36 @@ test('ogni email ha anche la versione in testo semplice', () => {
     assert.ok(mail.text.length > 120);
     assert.ok(!mail.text.includes('<'), 'il testo semplice non contiene marcatura');
   }
+});
+
+/* -- giornate di chiusura ---------------------------------------------------- */
+test('giornoChiuso riconosce domenica, un festivo esplicito e un periodo di ferie', () => {
+  assert.equal(giornoChiuso('2026-09-27'), true, 'domenica');
+  assert.equal(giornoChiuso('2026-12-25'), true, 'festivo in content/chiusure.json');
+  assert.equal(giornoChiuso('2026-08-15'), true, 'dentro il periodo di ferie estive');
+  assert.equal(giornoChiuso('2026-09-28'), false, 'lunedì normale');
+});
+
+test('reserveSlots rifiuta un giorno di chiusura e non occupa nulla', async () => {
+  const esito = await reserveSlots('2026-12-25', '10:00', 1, 'TEST-CHIUSO-1', ENV);
+  assert.equal(esito.ok, false);
+  assert.equal(esito.motivo, 'giorno_chiuso');
+  assert.deepEqual(await getDayOccupied('2026-12-25', ENV), {});
+});
+
+test('sposta() rifiuta lo spostamento su un giorno di chiusura, anche forzato dallo staff, e lascia intatto lo slot originale', async () => {
+  const bookingId = buildBookingId(999001);
+  const record = buildRecord(base(), { bookingId });
+  record.status = 'CONFIRMED';
+  await saveBooking(record, ENV);
+  await reserveSlots(record.data_richiesta, record.ora_richiesta, 1, bookingId, ENV);
+
+  const esito = await sposta(bookingId, '2026-12-25', '10:00', { forza: true, env: ENV });
+  assert.equal(esito.ok, false);
+  assert.equal(esito.error, 'giorno_chiuso');
+
+  const occupatiOriginale = await getDayOccupied(record.data_richiesta, ENV);
+  assert.equal(occupatiOriginale[record.ora_richiesta], bookingId);
+
+  await releaseSlots(record.data_richiesta, bookingId, ENV);
 });

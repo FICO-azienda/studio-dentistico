@@ -13,7 +13,7 @@ import path from 'node:path';
 import { handleBooking } from '../api/_lib/handler.mjs';
 import { validateBooking, looksLikeSpam, checkDate } from '../api/_lib/validate.mjs';
 import { buildBookingId, buildRecord } from '../api/_lib/store.mjs';
-import { emailPaziente, emailStudio, emailConferma } from '../api/_lib/templates.mjs';
+import { emailPaziente, emailStudio, emailConferma, emailAnnullamento, escapeHtml } from '../api/_lib/templates.mjs';
 import { buildIcs, localeToUtc } from '../api/_lib/ics.mjs';
 import { studio } from '../api/_lib/studio.mjs';
 import { rateLimit, _reset } from '../api/_lib/ratelimit.mjs';
@@ -21,7 +21,8 @@ import { byService, visibleQuestions, computePriority, computeTags, buildSummary
 import { giornoChiuso } from '../api/_lib/chiusure.mjs';
 import { reserveSlots, releaseSlots, getDayOccupied } from '../api/_lib/availability.mjs';
 import { saveBooking, getBooking, listBookings } from '../api/_lib/store.mjs';
-import { sposta } from '../api/_lib/manage.mjs';
+import { sposta, statoPrenotazione } from '../api/_lib/manage.mjs';
+import { mintToken, rebookUrl } from '../api/_lib/token.mjs';
 import { kvCredenziali, assertArchivioAffidabile } from '../api/_lib/kv-config.mjs';
 import { confermaPrenotazione } from '../api/_lib/confirm.mjs';
 import { staffTokenValido, estraiToken } from '../api/_lib/staff-auth.mjs';
@@ -592,4 +593,46 @@ test('staffTokenValido accetta solo il token esatto, ed estraiToken legge l\'hea
 
   assert.equal(estraiToken({ headers: { authorization: 'Bearer abc123' } }), 'abc123');
   assert.equal(estraiToken({ headers: {} }), '');
+});
+
+/* -- prenota di nuovo: link con i dati gia' pronti -------------------------- */
+test('rebookUrl punta al wizard di prenotazione con booking_id e token, nella lingua giusta', () => {
+  const url = rebookUrl('APT-2026-000123', 'it', ENV);
+  assert.match(url, /\/it\/prenota\/\?b=APT-2026-000123&t=/);
+  const token = new URL(url).searchParams.get('t');
+  assert.equal(token, mintToken('APT-2026-000123', ENV));
+
+  const urlEn = rebookUrl('APT-2026-000123', 'en', ENV);
+  assert.match(urlEn, /\/en\/book\/\?b=APT-2026-000123&t=/);
+});
+
+test('statoPrenotazione include i dati di contatto, per la precompilazione del form', async () => {
+  const bookingId = buildBookingId(999107);
+  const record = buildRecord(base(), { bookingId });
+  await saveBooking(record, ENV);
+
+  const stato = await statoPrenotazione(bookingId, ENV);
+  assert.equal(stato.nome, record.nome);
+  assert.equal(stato.cognome, record.cognome);
+  assert.equal(stato.email, record.email);
+  assert.equal(stato.telefono, record.telefono);
+});
+
+test('email di conferma include il link per prenotare di nuovo con i dati gia\' pronti', () => {
+  const v = validateBooking(base());
+  const rec = buildRecord(v.data, { bookingId: 'APT-2026-000010' });
+  rec.status = 'CONFIRMED';
+  const c = emailConferma(rec);
+  const link = rebookUrl(rec.booking_id, 'it', process.env);
+  assert.ok(c.html.includes(escapeHtml(link)), 'il link compare nell\'HTML');
+  assert.ok(c.text.includes(link), 'il link compare anche nella versione testo');
+});
+
+test('email di annullamento invita a prenotare di nuovo con lo stesso link, non la semplice home', () => {
+  const v = validateBooking(base());
+  const rec = buildRecord(v.data, { bookingId: 'APT-2026-000011' });
+  const a = emailAnnullamento(rec);
+  const link = rebookUrl(rec.booking_id, 'it', process.env);
+  assert.ok(a.html.includes(escapeHtml(link)));
+  assert.ok(a.text.includes(link));
 });

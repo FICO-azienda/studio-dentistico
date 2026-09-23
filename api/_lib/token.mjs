@@ -37,3 +37,16 @@ export function manageUrl(bookingId, lang = 'it', env = process.env) {
   const token = mintToken(bookingId, env);
   return `${base}/${lang}/${r.manage}/?b=${encodeURIComponent(bookingId)}&t=${encodeURIComponent(token)}`;
 }
+
+/**
+ * URL del wizard di prenotazione con i dati di contatto gia' pronti da
+ * compilare (nome, cognome, email, telefono), per chi prenota di nuovo dopo
+ * un appuntamento gia' fatto o annullato. Stesso token dell'autogestione:
+ * e' gia' legato al booking_id, non serve firmarne uno diverso.
+ */
+export function rebookUrl(bookingId, lang = 'it', env = process.env) {
+  const base = studio.sito.replace(/\/$/, '');
+  const r = ROUTES[lang] || ROUTES.it;
+  const token = mintToken(bookingId, env);
+  return `${base}/${lang}/${r.book}/?b=${encodeURIComponent(bookingId)}&t=${encodeURIComponent(token)}`;
+}

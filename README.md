@@ -369,15 +369,18 @@ perdere le risposte gia' date, ricerca fra i 27 servizi.
 | 2 | Paziente | subito, automatica | `Richiesta di appuntamento ricevuta — <studio>` |
 | 3 | Paziente | quando lo studio accetta | `Appuntamento confermato — <data> alle <ora> — <studio>` |
 
-Le prime due partono da sole e **non confermano nulla**: dicono che la richiesta
-e' arrivata. La terza e' l'unica in cui compare la parola "confermato", perche'
-la segreteria ha verificato la disponibilita'. Contiene data e ora in evidenza,
-trattamento, professionista, indirizzo, codice richiesta, eventuale nota dello
-studio, cosa portare, un pulsante per aggiungere l'appuntamento al calendario,
-le indicazioni stradali e il promemoria della disdetta con 24 ore di anticipo.
+La terza e' l'unica in cui compare la parola "confermato". Contiene data e ora
+in evidenza, trattamento, professionista, indirizzo, codice richiesta,
+eventuale nota dello studio, cosa portare, un pulsante per aggiungere
+l'appuntamento al calendario, le indicazioni stradali, il promemoria della
+disdetta con 24 ore di anticipo e un link per prenotare di nuovo con nome,
+cognome, email e telefono gia' pronti (vedi sotto).
 
-La conferma non e' automatica per scelta: si invia quando la richiesta passa da
-`PENDING` a `CONFIRMED`.
+Parte **subito, automaticamente**, se lo slot richiesto e' libero (vedi
+"Come funziona" piu' sopra): in quel caso la richiesta passa direttamente a
+`CONFIRMED` senza intervento dello staff. Se lo slot non e' libero, la
+richiesta resta `PENDING` e la terza email parte solo quando lo staff la
+conferma (dashboard `/staff/` o da riga di comando):
 
 ```bash
 npm run email:preview                       # anteprime in dist/_email
@@ -453,6 +456,17 @@ node scripts/gestisci-prenotazione.mjs APT-2026-000124 --sposta --data 2026-11-2
 
 Entrambi i comandi inviano automaticamente le email di conferma (al paziente
 e, in forma breve, allo studio) e aggiornano l'archivio.
+
+### Prenota di nuovo con un click
+
+Le email di conferma e di annullamento contengono un link che riapre il
+wizard con nome, cognome, email e telefono gia' compilati: il paziente
+sceglie solo di nuovo servizio, domande e orario, senza ridigitare i propri
+dati. Stesso meccanismo del link di autogestione (`api/_lib/token.mjs`,
+`rebookUrl`): un token HMAC legato al `booking_id`, niente account. Il
+wizard legge `?b=&t=` dall'URL, chiede i dati a `/api/prenotazione` (lo
+stesso endpoint della pagina di autogestione) e ripulisce l'URL una volta
+compilato il form.
 
 ### Interfaccia web per lo staff
 

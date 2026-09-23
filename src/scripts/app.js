@@ -470,6 +470,30 @@
     const form = $('form[data-booking]', wz);
     const apertoIl = Date.now();
 
+    /* -- prenota di nuovo: dati di contatto gia' pronti da un link ricevuto
+       via email (vedi api/_lib/token.mjs, rebookUrl). Stesso meccanismo del
+       link di autogestione: un token firmato, niente account. -------------- */
+    (async () => {
+      const qs = new URLSearchParams(location.search);
+      const b = qs.get('b');
+      const t = qs.get('t');
+      if (!b || !t || wz.dataset.mode !== 'live' || !wz.dataset.endpoint) return;
+      const prenotazioneEndpoint = wz.dataset.endpoint.replace(/prenotazioni\/?$/, 'prenotazione');
+      try {
+        const res = await fetch(`${prenotazioneEndpoint}?b=${encodeURIComponent(b)}&t=${encodeURIComponent(t)}`);
+        const data = await res.json();
+        if (!res.ok || !data.ok) return;
+        if (form.nome) form.nome.value = data.nome || '';
+        if (form.cognome) form.cognome.value = data.cognome || '';
+        if (form.email) form.email.value = data.email || '';
+        if (form.telefono) form.telefono.value = data.telefono || '';
+        // il token ha fatto il suo lavoro: non serve lasciarlo nell'URL
+        history.replaceState(null, '', location.pathname);
+      } catch {
+        // link scaduto/non valido: il form resta semplicemente vuoto
+      }
+    })();
+
     const state = {
       servizio: '',
       servizioOrigine: '',

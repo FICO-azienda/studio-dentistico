@@ -13,7 +13,7 @@
  */
 import { studio } from './studio.mjs';
 import { dateIt } from './validate.mjs';
-import { manageUrl } from './token.mjs';
+import { manageUrl, rebookUrl } from './token.mjs';
 
 const NAVY = '#1c4569';
 const NAVY_DARK = '#0b2440';
@@ -139,7 +139,9 @@ const L = {
     subjCancelled: (d, o, n) => `Appuntamento annullato — ${d} alle ${o} — ${n}`,
     preheaderCancelled: (d, o) => `Appuntamento del ${d} alle ${o} annullato.`,
     bookAgainCta: 'Prenota un nuovo appuntamento',
-    wasNote: (d, o) => `In precedenza era fissato per ${d} alle ${o}.`
+    wasNote: (d, o) => `In precedenza era fissato per ${d} alle ${o}.`,
+    rebookIntro: 'La prossima volta salta la parte noiosa: con questo link i tuoi dati sono già pronti.',
+    rebookCta: 'Prenota di nuovo'
   },
   en: {
     subjReceived: (n) => `Appointment request received — ${n}`,
@@ -197,7 +199,9 @@ const L = {
     subjCancelled: (d, o, n) => `Appointment cancelled — ${d} at ${o} — ${n}`,
     preheaderCancelled: (d, o) => `Appointment on ${d} at ${o} cancelled.`,
     bookAgainCta: 'Book a new appointment',
-    wasNote: (d, o) => `It was previously scheduled for ${d} at ${o}.`
+    wasNote: (d, o) => `It was previously scheduled for ${d} at ${o}.`,
+    rebookIntro: 'Next time skip the boring part: this link has your details already filled in.',
+    rebookCta: 'Book again'
   }
 };
 
@@ -481,7 +485,12 @@ ${button(mappa, T.directionsCta, { light: true })}
       )}
     </p>
   </td></tr>
-</table>`,
+</table>
+
+<p style="margin:22px 0 0;font:400 13px/1.7 Helvetica,Arial,sans-serif;color:${MUTED}">
+  ${escapeHtml(T.rebookIntro)}
+  <a href="${escapeHtml(rebookUrl(r.booking_id, r.lingua === 'en' ? 'en' : 'it'))}" style="color:${NAVY}">${escapeHtml(T.rebookCta)}</a>
+</p>`,
     { preheader: T.preheaderConfirmed(dataLoc(r, r.data_richiesta), r.ora_richiesta) }
   );
 
@@ -503,6 +512,8 @@ ${button(mappa, T.directionsCta, { light: true })}
     '',
     T.manageIntro.replace(/&#39;/g, "'") + ' ' + manageUrl(r.booking_id, r.lingua === 'en' ? 'en' : 'it'),
     T.lateNote(studio.telefono, studio.email).replace(/<[^>]+>/g, ''),
+    '',
+    T.rebookIntro + ' ' + rebookUrl(r.booking_id, r.lingua === 'en' ? 'en' : 'it'),
     '',
     studio.nome,
     studio.indirizzo,
@@ -536,7 +547,7 @@ export function emailAnnullamento(r) {
   ${row(T.rows.code, `<span style="font-family:'SFMono-Regular',Menlo,Consolas,monospace;letter-spacing:.04em">${escapeHtml(r.booking_id)}</span>`, { mono: true })}
 </table>
 
-${button(studio.sito ? `${studio.sito}/${r.lingua === 'en' ? 'en' : 'it'}/` : '#', T.bookAgainCta)}`,
+${button(rebookUrl(r.booking_id, r.lingua === 'en' ? 'en' : 'it'), T.bookAgainCta)}`,
     { preheader: T.preheaderCancelled(dataLoc(r, r.data_richiesta), r.ora_richiesta) }
   );
 
@@ -548,6 +559,8 @@ ${button(studio.sito ? `${studio.sito}/${r.lingua === 'en' ? 'en' : 'it'}/` : '#
     T.wasNote(dataLoc(r, r.data_richiesta), r.ora_richiesta),
     T.rows.treatment + ': ' + r.tipo_visita,
     T.rows.code + ': ' + r.booking_id,
+    '',
+    T.bookAgainCta + ': ' + rebookUrl(r.booking_id, r.lingua === 'en' ? 'en' : 'it'),
     '',
     studio.nome,
     studio.indirizzo,

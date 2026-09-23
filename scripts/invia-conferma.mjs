@@ -69,8 +69,8 @@ const prenotato = await reserveSlots(record.data_richiesta, record.ora_richiesta
 if (!prenotato.ok) {
   console.error(
     prenotato.motivo === 'occupato'
-      ? `slot gia' occupato (${prenotato.orario}): scegli un altro orario con --ora, oppure verifica manualmente.`
-      : `orario non valido per ${slotCount} slot da ${record.data_richiesta} ${record.ora_richiesta}: non c'e' spazio prima della chiusura.`
+      ? `slot già occupato (${prenotato.orario}): scegli un altro orario con --ora, oppure verifica manualmente.`
+      : `orario non valido per ${slotCount} slot da ${record.data_richiesta} ${record.ora_richiesta}: non c'è spazio prima della chiusura.`
   );
   process.exit(3);
 }
@@ -88,7 +88,7 @@ const aggiornato = await updateBooking(record.booking_id, {
 });
 if (!aggiornato) {
   console.warn(
-    "attenzione: la conferma non e' stata scritta nell'archivio (record non trovato, o BOOKING_STORE=http). " +
+    "attenzione: la conferma non è stata scritta nell'archivio (record non trovato, o BOOKING_STORE=http). " +
       "L'email parte comunque, ma l'autogestione online potrebbe non trovare questa prenotazione."
   );
 }

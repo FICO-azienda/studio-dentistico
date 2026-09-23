@@ -884,7 +884,7 @@
 
     const erroreGenerico = () => {
       box.innerHTML = `<h2 class="h3">Non riusciamo a caricare la prenotazione</h2>
-        <p class="body mt-2">Il link potrebbe non essere piu' valido. Se hai bisogno di annullare o spostare il tuo appuntamento, contattaci direttamente.</p>
+        <p class="body mt-2">Il link potrebbe non essere più valido. Se hai bisogno di annullare o spostare il tuo appuntamento, contattaci direttamente.</p>
         ${contatti()}`;
     };
 

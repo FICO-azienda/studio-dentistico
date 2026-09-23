@@ -105,7 +105,7 @@ const server = http.createServer(async (req, res) => {
 
 server.listen(PORT, () => {
   console.log(`API di prenotazione su http://localhost:${PORT}/api/prenotazioni`);
-  console.log(`API di disponibilita' su http://localhost:${PORT}/api/disponibilita?giorno=AAAA-MM-GG`);
+  console.log(`API di disponibilità su http://localhost:${PORT}/api/disponibilita?giorno=AAAA-MM-GG`);
   console.log(`API di autogestione su http://localhost:${PORT}/api/prenotazione?b=...&t=...`);
   console.log(`provider email: ${process.env.MAIL_PROVIDER || 'console'}`);
 });

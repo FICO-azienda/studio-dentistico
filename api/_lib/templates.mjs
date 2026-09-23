@@ -13,8 +13,9 @@
  */
 import { studio } from './studio.mjs';
 import { dateIt } from './validate.mjs';
+import { manageUrl } from './token.mjs';
 
-const NAVY = '#123355';
+const NAVY = '#1c4569';
 const NAVY_DARK = '#0b2440';
 const LINE = '#d7dce2';
 const INK = '#343434';
@@ -126,7 +127,19 @@ const L = {
       'Porta un documento d&#39;identità, la tessera sanitaria, eventuali radiografie precedenti e l&#39;elenco dei farmaci che assumi. Arriva cinque minuti prima: servono per l&#39;accettazione.',
     cancelNote: (tel) =>
       `Se non puoi presentarti, avvisaci con almeno 24 ore di anticipo chiamando ${tel}: quel posto viene offerto a un altro paziente.`,
-    preheaderConfirmed: (d, o) => `Appuntamento confermato per ${d} alle ${o}.`
+    preheaderConfirmed: (d, o) => `Appuntamento confermato per ${d} alle ${o}.`,
+    manageCta: 'Gestisci la tua prenotazione',
+    manageIntro:
+      'Hai bisogno di annullare o spostare? Puoi farlo online, gratuitamente, fino a 24 ore prima dell&#39;appuntamento.',
+    lateNote: (tel, email) =>
+      `Se mancano meno di 24 ore, la modifica online non è più disponibile: chiamaci al ${tel} oppure scrivici a ${email} e valutiamo insieme se è possibile.`,
+    cancelLabel: 'Appuntamento annullato',
+    cancelTitle: (n) => `Appuntamento annullato, ${n}.`,
+    cancelIntro: 'Come richiesto, il tuo appuntamento è stato annullato e lo slot è stato liberato.',
+    subjCancelled: (d, o, n) => `Appuntamento annullato — ${d} alle ${o} — ${n}`,
+    preheaderCancelled: (d, o) => `Appuntamento del ${d} alle ${o} annullato.`,
+    bookAgainCta: 'Prenota un nuovo appuntamento',
+    wasNote: (d, o) => `In precedenza era fissato per ${d} alle ${o}.`
   },
   en: {
     subjReceived: (n) => `Appointment request received — ${n}`,
@@ -173,7 +186,18 @@ const L = {
       'Please bring photo ID, your health card, any previous radiographs and a list of the medicines you take. Arrive five minutes early for check-in.',
     cancelNote: (tel) =>
       `If you cannot attend, please let us know at least 24 hours in advance by calling ${tel}: the slot is offered to another patient.`,
-    preheaderConfirmed: (d, o) => `Appointment confirmed for ${d} at ${o}.`
+    preheaderConfirmed: (d, o) => `Appointment confirmed for ${d} at ${o}.`,
+    manageCta: 'Manage your appointment',
+    manageIntro: 'Need to cancel or reschedule? You can do it online, free of charge, up to 24 hours before your appointment.',
+    lateNote: (tel, email) =>
+      `If less than 24 hours remain, the online change is no longer available: call us on ${tel} or write to ${email} and we will see what is possible.`,
+    cancelLabel: 'Appointment cancelled',
+    cancelTitle: (n) => `Appointment cancelled, ${n}.`,
+    cancelIntro: 'As requested, your appointment has been cancelled and the slot has been freed.',
+    subjCancelled: (d, o, n) => `Appointment cancelled — ${d} at ${o} — ${n}`,
+    preheaderCancelled: (d, o) => `Appointment on ${d} at ${o} cancelled.`,
+    bookAgainCta: 'Book a new appointment',
+    wasNote: (d, o) => `It was previously scheduled for ${d} at ${o}.`
   }
 };
 
@@ -431,13 +455,22 @@ export function emailConferma(r, { professionista = '', note = '' } = {}) {
 ${button(calendario, T.calendarCta)}
 ${button(mappa, T.directionsCta, { light: true })}
 
-<p style="margin:20px 0 0;font:400 13px/1.7 Helvetica,Arial,sans-serif;color:${MUTED}">
-  ${T.cancelNote(
-    studio.telefono
-      ? `<a href="tel:${escapeHtml(studio.telefonoHref)}" style="color:${NAVY}">${escapeHtml(studio.telefono)}</a>`
-      : studio.nome
-  )}
-</p>`,
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:28px 0 0">
+  <tr><td style="padding:20px 22px;border:1px solid ${LINE}">
+    <p style="margin:0 0 10px;font:400 14px/1.6 Helvetica,Arial,sans-serif;color:${INK}">${T.manageIntro}</p>
+    ${button(manageUrl(r.booking_id, r.lingua === 'en' ? 'en' : 'it'), T.manageCta, { light: true })}
+    <p style="margin:14px 0 0;font:400 13px/1.7 Helvetica,Arial,sans-serif;color:${MUTED}">
+      ${T.lateNote(
+        studio.telefono
+          ? `<a href="tel:${escapeHtml(studio.telefonoHref)}" style="color:${NAVY}">${escapeHtml(studio.telefono)}</a>`
+          : studio.nome,
+        studio.email
+          ? `<a href="mailto:${escapeHtml(studio.email)}" style="color:${NAVY}">${escapeHtml(studio.email)}</a>`
+          : ''
+      )}
+    </p>
+  </td></tr>
+</table>`,
     { preheader: T.preheaderConfirmed(dataLoc(r, r.data_richiesta), r.ora_richiesta) }
   );
 
@@ -457,7 +490,8 @@ ${button(mappa, T.directionsCta, { light: true })}
     '',
     T.before.replace(/&#39;/g, "'").replace(/&agrave;/g, 'a'),
     '',
-    T.cancelNote(studio.telefono).replace(/<[^>]+>/g, ''),
+    T.manageIntro.replace(/&#39;/g, "'") + ' ' + manageUrl(r.booking_id, r.lingua === 'en' ? 'en' : 'it'),
+    T.lateNote(studio.telefono, studio.email).replace(/<[^>]+>/g, ''),
     '',
     studio.nome,
     studio.indirizzo,
@@ -471,4 +505,68 @@ ${button(mappa, T.directionsCta, { light: true })}
     html,
     text
   };
+}
+
+/* ------------------------------------------------------------------ */
+/* Email 4 — annullamento, su richiesta del paziente o dello studio    */
+/* ------------------------------------------------------------------ */
+export function emailAnnullamento(r) {
+  const T = tr(r);
+  const html = shell(
+    T.cancelLabel,
+    `
+<p style="margin:0 0 6px;font:500 11px/1 Helvetica,Arial,sans-serif;letter-spacing:.18em;text-transform:uppercase;color:${MUTED}">${escapeHtml(T.cancelLabel)}</p>
+<h1 style="margin:0 0 18px;font:400 30px/1.15 Georgia,'Times New Roman',serif;color:${NAVY}">${escapeHtml(T.cancelTitle(r.nome))}</h1>
+<p style="margin:0 0 22px;font:400 16px/1.65 Helvetica,Arial,sans-serif;color:${INK}">${escapeHtml(T.cancelIntro)}</p>
+
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-top:1px solid ${LINE}">
+  ${row(T.when, escapeHtml(dataLoc(r, r.data_richiesta)) + ' ' + escapeHtml(T.at) + ' ' + escapeHtml(r.ora_richiesta))}
+  ${row(T.rows.treatment, escapeHtml(r.tipo_visita))}
+  ${row(T.rows.code, `<span style="font-family:'SFMono-Regular',Menlo,Consolas,monospace;letter-spacing:.04em">${escapeHtml(r.booking_id)}</span>`, { mono: true })}
+</table>
+
+${button(studio.sito ? `${studio.sito}/${r.lingua === 'en' ? 'en' : 'it'}/` : '#', T.bookAgainCta)}`,
+    { preheader: T.preheaderCancelled(dataLoc(r, r.data_richiesta), r.ora_richiesta) }
+  );
+
+  const text = [
+    T.cancelTitle(r.nome),
+    '',
+    T.cancelIntro,
+    '',
+    T.wasNote(dataLoc(r, r.data_richiesta), r.ora_richiesta),
+    T.rows.treatment + ': ' + r.tipo_visita,
+    T.rows.code + ': ' + r.booking_id,
+    '',
+    studio.nome,
+    studio.indirizzo,
+    [studio.telefono, studio.email].filter(Boolean).join(' - ')
+  ]
+    .filter((l) => l !== '')
+    .join('\n');
+
+  return {
+    subject: T.subjCancelled(dataLoc(r, r.data_richiesta), r.ora_richiesta, studio.nome),
+    html,
+    text
+  };
+}
+
+/* ------------------------------------------------------------------ */
+/* Notifica interna breve per lo studio: conferme, spostamenti e       */
+/* annullamenti. Sempre in italiano: e' per lo staff, non per il       */
+/* paziente, e la lingua del paziente non c'entra.                     */
+/* ------------------------------------------------------------------ */
+export function emailInternaBreve(titolo, righe) {
+  const html = shell(
+    titolo,
+    `
+<h1 style="margin:0 0 18px;font:400 26px/1.2 Georgia,'Times New Roman',serif;color:${NAVY}">${escapeHtml(titolo)}</h1>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-top:1px solid ${LINE}">
+  ${righe.map(([k, v]) => row(k, escapeHtml(String(v)))).join('')}
+</table>`,
+    { preheader: titolo }
+  );
+  const text = [titolo, '', ...righe.map(([k, v]) => `${k}: ${v}`)].join('\n');
+  return { subject: `[${studio.nome}] ${titolo}`, html, text };
 }

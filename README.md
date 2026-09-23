@@ -267,6 +267,7 @@ recapiti dello studio, mai una falsa conferma.
 | `ALLOWED_ORIGINS` | `https://fico-azienda.github.io` | separati da virgola |
 | `BOOKING_STORE` | `log` | `kv` o `http` per archiviare altrove |
 | `RATELIMIT_MAX` | `5` | richieste per IP ogni 10 minuti |
+| `BOOKING_TOKEN_SECRET` | stringa lunga e casuale | firma i link di autogestione (annulla/sposta). Senza questa variabile viene usato un valore di sviluppo, **non sicuro in produzione** |
 
 4. In `content/site.json` imposta:
 
@@ -367,6 +368,46 @@ visita, data e ora richieste, seconda preferenza, messaggio, `status`
 Senza database configurato il record viene comunque scritto come riga JSON nei
 log della piattaforma, recuperabile in qualsiasi momento. Con `BOOKING_STORE=kv`
 finisce su Vercel KV / Upstash; con `http` viene inoltrato a un endpoint tuo.
+In modalita' `log`, in aggiunta ai log, il record viene scritto anche in un
+file locale (`.data/prenotazioni.json`): serve a rendere `getBooking` e
+`updateBooking` utilizzabili in sviluppo, senza un vero KV configurato.
+
+**Nota:** l'autogestione descritta di seguito (annulla/sposta) richiede di
+poter rileggere un record esistente per `booking_id`. In modalita' `http`
+questo non e' possibile — il webhook e' scrittura sola verso un sistema
+esterno — quindi in produzione serve `BOOKING_STORE=kv`.
+
+### Autogestione: annullare o spostare con un click
+
+Il paziente puo' annullare o spostare l'appuntamento da solo, senza
+telefonare, finche' mancano **almeno 24 ore** all'orario prenotato. Il link
+compare nell'email di conferma ("Gestisci la tua prenotazione") e porta alla
+pagina `/gestisci/`, dove sceglie un nuovo giorno/orario o annulla con un
+click. Sotto le 24 ore l'azione online si disattiva da sola e la pagina
+mostra telefono ed email dello studio: da quel punto serve una decisione
+umana, perche' liberare uno slot all'ultimo momento ha un costo reale.
+
+Il link e' firmato (HMAC, `BOOKING_TOKEN_SECRET`): non serve un account, ma
+solo chi ha ricevuto l'email puo' usarlo. La regola delle 24 ore e' applicata
+**dal server** (`api/_lib/manage.mjs`), non dal browser, e si basa sempre
+sull'appuntamento originale — anche quando si sta valutando dove spostarlo.
+
+Uno spostamento libera gli slot vecchi e occupa quelli nuovi rispettando lo
+stesso numero di slot del servizio prenotato (`slotCount`, vedi sopra); se il
+nuovo orario nel frattempo e' stato preso da un'altra prenotazione, non
+cambia nulla e la pagina lo segnala.
+
+**Casi fuori dalla finestra delle 24 ore.** Il paziente chiama o scrive; se lo
+studio approva la modifica, la esegue da riga di comando, bypassando la
+regola (il paziente non puo' farlo da solo, ma lo studio si':
+
+```bash
+node scripts/gestisci-prenotazione.mjs APT-2026-000124 --annulla
+node scripts/gestisci-prenotazione.mjs APT-2026-000124 --sposta --data 2026-11-26 --ora 15:00
+```
+
+Entrambi i comandi inviano automaticamente le email di conferma (al paziente
+e, in forma breve, allo studio) e aggiornano l'archivio.
 
 ### Sicurezza e privacy
 

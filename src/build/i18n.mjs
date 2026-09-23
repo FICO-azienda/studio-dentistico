@@ -38,6 +38,7 @@ export const ROUTES = {
     journal: 'journal',
     contact: 'contatti',
     book: 'prenota',
+    manage: 'gestisci',
     privacy: 'privacy',
     cookie: 'cookie-policy',
     terms: 'termini'
@@ -52,6 +53,7 @@ export const ROUTES = {
     journal: 'journal',
     contact: 'contact',
     book: 'book',
+    manage: 'manage',
     privacy: 'privacy',
     cookie: 'cookie-policy',
     terms: 'terms'
@@ -604,7 +606,17 @@ const UI = {
   'book.professional': ['Professionista', 'Practitioner'],
   'book.multiHint': ['Puoi scegliere più di una risposta.', 'You can choose more than one answer.'],
   'book.bookOption': ['Scegli giorno e orario dal calendario.', 'Pick a day and time from the calendar.'],
-  'book.callbackOption': ['Ti richiamiamo noi quando preferisci.', 'We call you back when it suits you.']
+  'book.callbackOption': ['Ti richiamiamo noi quando preferisci.', 'We call you back when it suits you.'],
+
+  /* autogestione prenotazione */
+  'manage.label': ['Gestisci', 'Manage'],
+  'manage.title1': ['Gestisci la tua', 'Manage your'],
+  'manage.title2': ['prenotazione.', 'booking.'],
+  'manage.lead': [
+    'Annulla o sposta il tuo appuntamento, gratuitamente, fino a 24 ore prima.',
+    'Cancel or reschedule your appointment, free of charge, up to 24 hours before.'
+  ],
+  'manage.loading': ['Caricamento…', 'Loading…']
 };
 
 const IDX = { it: 0, en: 1 };

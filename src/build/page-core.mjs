@@ -609,3 +609,43 @@ ${pageHero({
     main
   });
 };
+
+/* ======================================================== /gestisci ====== */
+export const manageBookingPage = () => {
+  const base = '../';
+  const main = `
+${pageHero({
+    label: t('manage.label'),
+    title: lines([t('manage.title1'), t('manage.title2')]),
+    lead: t('manage.lead'),
+    crumbs: [{ label: t('nav.home'), path: '' }, { label: t('manage.label') }],
+    base
+  })}
+
+<section class="section section--flush-top">
+  <div class="wrap">
+    <div class="grid">
+      <div class="col-7 start-3" data-manage
+        data-endpoint="${attr(site.booking?.endpoint || '')}"
+        data-mode="${attr(site.booking?.mode || 'demo')}"
+        data-phone="${attr(site.phone)}"
+        data-phone-href="${attr(site.phoneHref)}"
+        data-email="${attr(site.email)}">
+        <p class="body">${esc(t('manage.loading'))}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script type="application/json" data-manage-slots>${JSON.stringify({ orari })}</script>`;
+
+  return layout({
+    title: metaTitle(t('manage.title1') + ' ' + t('manage.title2')),
+    description: t('manage.lead'),
+    path: PATH.manage,
+    depth: 1,
+    current: PATH.manage,
+    crumbs: [{ label: t('nav.home'), path: '' }, { label: t('manage.label'), path: PATH.manage }],
+    main
+  });
+};

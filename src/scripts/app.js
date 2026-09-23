@@ -856,6 +856,249 @@
   };
 
 
+  /* -- Autogestione prenotazione: annulla o sposta con un click -----------
+     La regola delle 24 ore la applica il server (e' l'unica fonte di
+     verita': un orologio del browser non e' affidabile). Qui si mostra
+     semplicemente cio' che il server dice di poter fare.               */
+  const gestisciPrenotazione = () => {
+    const box = $('[data-manage]');
+    if (!box) return;
+
+    const qs = new URLSearchParams(location.search);
+    const b = qs.get('b') || '';
+    const tk = qs.get('t') || '';
+    const endpoint = box.dataset.endpoint || '';
+    const demo = !endpoint || box.dataset.mode !== 'live';
+    const base = endpoint.replace(/prenotazioni\/?$/, '');
+    const telefono = box.dataset.phone || '';
+    const telefonoHref = box.dataset.phoneHref || '';
+    const email = box.dataset.email || '';
+
+    const slotsEl = $('script[data-manage-slots]');
+    const orari = slotsEl ? JSON.parse(slotsEl.textContent).orari : [];
+
+    const contatti = () => `<p class="body mt-3">
+        Chiamaci al <a class="link-inline" href="tel:${telefonoHref}">${telefono}</a>
+        oppure scrivici a <a class="link-inline" href="mailto:${email}">${email}</a>.
+      </p>`;
+
+    const erroreGenerico = () => {
+      box.innerHTML = `<h2 class="h3">Non riusciamo a caricare la prenotazione</h2>
+        <p class="body mt-2">Il link potrebbe non essere piu' valido. Se hai bisogno di annullare o spostare il tuo appuntamento, contattaci direttamente.</p>
+        ${contatti()}`;
+    };
+
+    if (!b || !tk || demo) {
+      erroreGenerico();
+      return;
+    }
+
+    const giorniDisponibili = () => {
+      const out = [];
+      const d = new Date();
+      d.setHours(12, 0, 0, 0);
+      while (out.length < 12) {
+        d.setDate(d.getDate() + 1);
+        if (d.getDay() === 0) continue;
+        out.push({
+          iso: `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`,
+          gs: d.toLocaleDateString('it-IT', { weekday: 'short' }),
+          n: d.getDate(),
+          ms: d.toLocaleDateString('it-IT', { month: 'short' }),
+          full: d.toLocaleDateString('it-IT', { weekday: 'long', day: 'numeric', month: 'long' })
+        });
+      }
+      return out;
+    };
+
+    const dataEstesa = (iso) => {
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(iso)) return iso;
+      return new Date(iso + 'T12:00:00').toLocaleDateString('it-IT', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+    };
+
+    const caricaDisponibilita = async (iso) => {
+      try {
+        const res = await fetch(`${base}disponibilita?giorno=${encodeURIComponent(iso)}`);
+        const data = await res.json();
+        return new Set(Array.isArray(data?.occupati) ? data.occupati : []);
+      } catch {
+        return new Set();
+      }
+    };
+
+    const orariBloccati = (occupati, slotCount) => {
+      const bloccati = new Set();
+      orari.forEach((h, i) => {
+        const richiesti = orari.slice(i, i + slotCount);
+        if (richiesti.length !== slotCount || richiesti.some((o) => occupati.has(o))) bloccati.add(h);
+      });
+      return bloccati;
+    };
+
+    const stato = { data: null, ora: null, giornoScelto: '', occupati: new Set(), inviando: false };
+
+    const schedaAppuntamento = (s) => `
+      <p class="label">${s.tipo_visita}</p>
+      <h2 class="h3 mt-1">${dataEstesa(s.data)}<br>alle ${s.ora}</h2>
+      <p class="small mt-2" style="color:var(--stone-light)">Codice ${s.booking_id}</p>`;
+
+    const disegnaFuoriFinestra = (s) => {
+      box.innerHTML = `${schedaAppuntamento(s)}
+        <div class="form-note mt-4">
+          <p class="body">Mancano meno di 24 ore a questo appuntamento: la modifica online non è più disponibile. Se hai un imprevisto, contattaci il prima possibile.</p>
+          ${contatti()}
+        </div>`;
+    };
+
+    const disegnaNonGestibile = (s) => {
+      const etichetta = { CANCELLED: 'annullato', COMPLETED: 'concluso' }[s.status] || s.status.toLowerCase();
+      box.innerHTML = `${schedaAppuntamento(s)}
+        <p class="body mt-4">Questo appuntamento risulta ${etichetta}: non ci sono ulteriori azioni disponibili.</p>`;
+    };
+
+    const disegnaEsito = (titolo, messaggio) => {
+      box.innerHTML = `<h2 class="h3">${titolo}</h2><p class="body mt-2">${messaggio}</p>`;
+    };
+
+    const disegnaGestibile = (s) => {
+      box.innerHTML = `${schedaAppuntamento(s)}
+        <div class="row mt-4">
+          <button class="btn btn--ghost" type="button" data-azione="sposta">Sposta appuntamento</button>
+          <button class="btn btn--ghost" type="button" data-azione="annulla">Annulla appuntamento</button>
+        </div>
+        <div class="mt-5" data-pannello hidden></div>`;
+
+      const pannello = $('[data-pannello]', box);
+
+      $('[data-azione="annulla"]', box).addEventListener('click', async () => {
+        if (!window.confirm('Confermi di voler annullare questo appuntamento? Lo slot verrà liberato.')) return;
+        box.querySelectorAll('button').forEach((btn) => (btn.disabled = true));
+        try {
+          const res = await fetch(`${base}prenotazione-cancella`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ b, t: tk })
+          });
+          const data = await res.json().catch(() => ({}));
+          if (res.ok && data.ok) {
+            disegnaEsito('Appuntamento annullato', "Ti abbiamo inviato una email di conferma. Puoi prenotare un nuovo appuntamento quando vuoi.");
+          } else if (data.error === 'fuori_finestra') {
+            disegnaFuoriFinestra(s);
+          } else {
+            erroreGenerico();
+          }
+        } catch {
+          erroreGenerico();
+        }
+      });
+
+      $('[data-azione="sposta"]', box).addEventListener('click', () => {
+        pannello.hidden = false;
+        const giorni = giorniDisponibili();
+        pannello.innerHTML = `
+          <p class="label">Nuovo giorno</p>
+          <div class="daypick mt-2">
+            ${giorni
+              .map(
+                (g) => `<button class="day" type="button" data-day="${g.iso}" aria-pressed="false">
+              <span>${g.gs}</span><strong>${g.n}</strong><span>${g.ms}</span>
+            </button>`
+              )
+              .join('')}
+          </div>
+          <p class="label mt-4">Nuovo orario</p>
+          <div class="slots mt-2" data-manage-slots-box><p class="small" style="color:var(--stone-light)">Scegli prima un giorno.</p></div>
+          <div class="row mt-4">
+            <button class="btn" type="button" data-conferma-sposta disabled>Conferma nuovo orario</button>
+          </div>
+          <p class="form-error mt-3" data-errore-sposta hidden></p>`;
+
+        const slotsBox = $('[data-manage-slots-box]', pannello);
+        const btnConferma = $('[data-conferma-sposta]', pannello);
+        const erroreSposta = $('[data-errore-sposta]', pannello);
+
+        const disegnaSlots = () => {
+          const bloccati = orariBloccati(stato.occupati, s.slotCount || 1);
+          slotsBox.innerHTML = orari
+            .map((h) => {
+              const off = bloccati.has(h);
+              return `<button class="slot${off ? ' is-off' : ''}" type="button" data-hour="${h}" aria-pressed="${stato.ora === h}"${off ? ' disabled' : ''}>${h}</button>`;
+            })
+            .join('');
+        };
+
+        pannello.addEventListener('click', async (e) => {
+          const dayBtn = e.target.closest('[data-day]');
+          if (dayBtn) {
+            stato.data = dayBtn.dataset.day;
+            stato.ora = null;
+            btnConferma.disabled = true;
+            $$('[data-day]', pannello).forEach((x) => x.setAttribute('aria-pressed', String(x === dayBtn)));
+            slotsBox.innerHTML = '<p class="small" style="color:var(--stone-light)">Verifica disponibilità…</p>';
+            stato.occupati = await caricaDisponibilita(stato.data);
+            disegnaSlots();
+            return;
+          }
+          const hourBtn = e.target.closest('[data-hour]');
+          if (hourBtn && !hourBtn.disabled) {
+            stato.ora = hourBtn.dataset.hour;
+            $$('[data-hour]', pannello).forEach((x) => x.setAttribute('aria-pressed', String(x === hourBtn)));
+            btnConferma.disabled = false;
+          }
+        });
+
+        btnConferma.addEventListener('click', async () => {
+          if (!stato.data || !stato.ora || stato.inviando) return;
+          stato.inviando = true;
+          btnConferma.disabled = true;
+          erroreSposta.hidden = true;
+          try {
+            const res = await fetch(`${base}prenotazione-sposta`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ b, t: tk, data: stato.data, ora: stato.ora })
+            });
+            const data = await res.json().catch(() => ({}));
+            if (res.ok && data.ok) {
+              disegnaEsito('Appuntamento spostato', `Il nuovo appuntamento è per ${dataEstesa(data.data)} alle ${data.ora}. Ti abbiamo inviato una email di conferma con il calendario aggiornato.`);
+              return;
+            }
+            if (data.error === 'fuori_finestra') {
+              disegnaFuoriFinestra(s);
+              return;
+            }
+            erroreSposta.textContent =
+              data.error === 'slot_occupato'
+                ? "Questo orario è appena stato occupato: scegline un altro."
+                : 'Non siamo riusciti a completare lo spostamento. Riprova.';
+            erroreSposta.hidden = false;
+            stato.occupati = await caricaDisponibilita(stato.data);
+            disegnaSlots();
+          } catch {
+            erroreSposta.textContent = 'Errore di rete: riprova tra poco.';
+            erroreSposta.hidden = false;
+          } finally {
+            stato.inviando = false;
+            btnConferma.disabled = !(stato.data && stato.ora);
+          }
+        });
+      });
+    };
+
+    fetch(`${base}prenotazione?b=${encodeURIComponent(b)}&t=${encodeURIComponent(tk)}`)
+      .then((res) => res.json().then((data) => ({ res, data })))
+      .then(({ res, data }) => {
+        if (!res.ok || !data.ok) {
+          erroreGenerico();
+          return;
+        }
+        if (!data.gestibile) disegnaNonGestibile(data);
+        else if (!data.selfService) disegnaFuoriFinestra(data);
+        else disegnaGestibile(data);
+      })
+      .catch(erroreGenerico);
+  };
+
   /* -- Transizione di pagina ----------------------------------------------*/
   const transitions = () => {
     requestAnimationFrame(() => document.body.classList.add('is-ready'));
@@ -878,7 +1121,7 @@
   /* -- Avvio ---------------------------------------------------------------*/
   const init = () => {
     year(); header(); sectionNav(); reveals(); rails();
-    faq(); beforeAfter(); filters(); forms(); wizard(); transitions();
+    faq(); beforeAfter(); filters(); forms(); wizard(); gestisciPrenotazione(); transitions();
   };
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);

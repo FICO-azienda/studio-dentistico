@@ -20,6 +20,7 @@ import { mittente, studio } from '../api/_lib/studio.mjs';
 import { icsAttachment } from '../api/_lib/ics.mjs';
 import { reserveSlots } from '../api/_lib/availability.mjs';
 import { byService } from '../api/_lib/flows.mjs';
+import { updateBooking } from '../api/_lib/store.mjs';
 
 const argv = process.argv.slice(2);
 const file = argv.find((a) => !a.startsWith('--'));
@@ -72,6 +73,24 @@ if (!prenotato.ok) {
       : `orario non valido per ${slotCount} slot da ${record.data_richiesta} ${record.ora_richiesta}: non c'e' spazio prima della chiusura.`
   );
   process.exit(3);
+}
+
+// scrive la conferma nell'archivio: senza questo passaggio l'autogestione
+// online (annulla/sposta) vedrebbe ancora lo stato PENDING della richiesta.
+const revisione = Number(opt('revisione', '0'));
+const aggiornato = await updateBooking(record.booking_id, {
+  status: 'CONFIRMED',
+  data_richiesta: record.data_richiesta,
+  ora_richiesta: record.ora_richiesta,
+  professionista: opt('professionista') || record.professionista,
+  ics_sequence: revisione,
+  confirmed_at: new Date().toISOString()
+});
+if (!aggiornato) {
+  console.warn(
+    "attenzione: la conferma non e' stata scritta nell'archivio (record non trovato, o BOOKING_STORE=http). " +
+      "L'email parte comunque, ma l'autogestione online potrebbe non trovare questa prenotazione."
+  );
 }
 
 const esito = await sendMail(

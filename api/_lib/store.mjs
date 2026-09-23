@@ -6,15 +6,39 @@
  *
  * Adattatori disponibili, scelti con la variabile d'ambiente BOOKING_STORE:
  *   log   (predefinito) una riga JSON su stdout, recuperabile dai log della
- *         piattaforma. Sempre attivo come rete di sicurezza.
+ *         piattaforma, PIU' un file locale (.data/prenotazioni.json) usato
+ *         come archivio interrogabile in sviluppo, dove non c'e' un vero KV.
  *   kv    Vercel KV / Upstash Redis via REST (KV_REST_API_URL, KV_REST_API_TOKEN)
- *   http  POST a un endpoint proprio (BOOKING_WEBHOOK_URL, BOOKING_WEBHOOK_TOKEN)
+ *   http  POST a un endpoint proprio (BOOKING_WEBHOOK_URL, BOOKING_WEBHOOK_TOKEN).
+ *         Sola scrittura: getBooking/updateBooking non sono disponibili in
+ *         questa modalita' (il webhook e' un sistema esterno, non lo si
+ *         puo' interrogare da qui) — l'autogestione (annulla/sposta) resta
+ *         quindi non disponibile finche' non si passa a 'kv'.
  *
  * Schema del record:
  *   booking_id, nome, cognome, email, telefono, tipo_visita, riepilogo_servizio,
  *   priority, tags, modalita, canale_contatto, fascia_contatto, data_richiesta,
  *   ora_richiesta, seconda_preferenza, messaggio, status, created_at
  */
+import fs from 'node:fs';
+import path from 'node:path';
+
+const FILE_STORE = path.resolve(process.cwd(), '.data', 'prenotazioni.json');
+
+function fileLeggiTutto() {
+  try {
+    return JSON.parse(fs.readFileSync(FILE_STORE, 'utf8'));
+  } catch {
+    return {};
+  }
+}
+
+function fileScrivi(record) {
+  const db = fileLeggiTutto();
+  db[record.booking_id] = record;
+  fs.mkdirSync(path.dirname(FILE_STORE), { recursive: true });
+  fs.writeFileSync(FILE_STORE, JSON.stringify(db, null, 2));
+}
 
 export const STATI = ['PENDING', 'CONFIRMED', 'RESCHEDULED', 'CANCELLED', 'COMPLETED'];
 
@@ -88,6 +112,23 @@ async function kvSave(record, env) {
   await fetch(url + '/lpush/bookings/' + encodeURIComponent(record.booking_id), { method: 'POST', headers }).catch(() => {});
 }
 
+async function kvGet(bookingId, env) {
+  const url = env.KV_REST_API_URL;
+  const token = env.KV_REST_API_TOKEN;
+  if (!url || !token) return null;
+  const res = await fetch(url + '/get/' + encodeURIComponent('booking:' + bookingId), {
+    headers: { Authorization: 'Bearer ' + token }
+  });
+  if (!res.ok) return null;
+  const j = await res.json();
+  if (!j.result) return null;
+  try {
+    return JSON.parse(j.result);
+  } catch {
+    return null;
+  }
+}
+
 async function kvNextId(env) {
   const url = env.KV_REST_API_URL;
   const token = env.KV_REST_API_TOKEN;
@@ -127,7 +168,10 @@ export async function nextProgressivo(env = process.env) {
 export async function saveBooking(record, env = process.env) {
   logRecord(record);
   const kind = env.BOOKING_STORE || 'log';
-  if (kind === 'log') return { saved: true, store: 'log' };
+  if (kind === 'log') {
+    fileScrivi(record);
+    return { saved: true, store: 'log' };
+  }
   try {
     if (kind === 'kv') await kvSave(record, env);
     else if (kind === 'http') await httpSave(record, env);
@@ -137,4 +181,28 @@ export async function saveBooking(record, env = process.env) {
     console.error('BOOKING_STORE_ERROR ' + JSON.stringify({ booking_id: record.booking_id, store: kind, error: String(e.message || e) }));
     return { saved: false, store: kind, error: String(e.message || e) };
   }
+}
+
+/** Legge un record esistente per booking_id. Ritorna null se non trovato o non leggibile (modalita' 'http'). */
+export async function getBooking(bookingId, env = process.env) {
+  const kind = env.BOOKING_STORE || 'log';
+  if (kind === 'kv') return kvGet(bookingId, env);
+  if (kind === 'http') return null;
+  return fileLeggiTutto()[bookingId] || null;
+}
+
+/**
+ * Applica una modifica a un record esistente (es. cancellazione, spostamento)
+ * e lo riscrive. Ritorna il record aggiornato, o null se non trovato o se
+ * l'archivio non supporta la lettura (modalita' 'http').
+ */
+export async function updateBooking(bookingId, patch, env = process.env) {
+  const attuale = await getBooking(bookingId, env);
+  if (!attuale) return null;
+  const aggiornato = { ...attuale, ...patch };
+  logRecord({ ...aggiornato, evento: 'AGGIORNAMENTO' });
+  const kind = env.BOOKING_STORE || 'log';
+  if (kind === 'kv') await kvSave(aggiornato, env);
+  else fileScrivi(aggiornato);
+  return aggiornato;
 }

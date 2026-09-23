@@ -12,7 +12,7 @@ import path from 'node:path';
 import { ROOT, site, team, treatments, journal, write, applyLang, PATH } from './src/build/utils.mjs';
 import { LANGS, DEFAULT_LANG, ROUTES, altPath, setLang } from './src/build/i18n.mjs';
 import { homePage } from './src/build/page-home.mjs';
-import { studioPage, teamPage, personPage, techPage, firstVisitPage, contactPage, bookingPage } from './src/build/page-core.mjs';
+import { studioPage, teamPage, personPage, techPage, firstVisitPage, contactPage, bookingPage, manageBookingPage } from './src/build/page-core.mjs';
 import { treatmentsIndex, categoryPage, treatmentPage, casesPage, journalIndex, articlePage, legalPage, notFoundPage } from './src/build/page-catalog.mjs';
 import { legalPages } from './src/build/legal.mjs';
 
@@ -56,6 +56,7 @@ for (const lang of LANGS) {
   add(R.firstVisit, firstVisitPage());
   add(R.contact, contactPage());
   add(R.book, bookingPage());
+  add(R.manage, manageBookingPage());
   legalPages().forEach((l) => add(R[l.routeKey], legalPage(l)));
 }
 

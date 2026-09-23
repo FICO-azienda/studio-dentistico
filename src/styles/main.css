@@ -13,9 +13,9 @@
   --sand-deep: #e8e8e8;      /* light grey */
 
   /* navy: il colore del marchio */
-  --navy: #123355;           /* navy del marchio */
+  --navy: #1c4569;           /* navy del marchio */
   --navy-900: #0b2440;       /* dark navy, footer e menu */
-  --navy-800: #123355;       /* sezioni navy */
+  --navy-800: #1c4569;       /* sezioni navy */
   --navy-700: #1b4068;
   --navy-500: #2c5d8f;       /* hover dei titoli */
   --navy-soft: #9dbada;      /* accento tenue su fondo navy */
@@ -43,7 +43,7 @@
   --font-display: "Newsreader", "Iowan Old Style", Georgia, serif;
   --font-sans: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
 
-  --t-display: clamp(2.4rem, 5vw, 5.4rem);
+  --t-display: clamp(2.1rem, 4vw, 4.2rem);
   --t-h1: clamp(2.5rem, 5.6vw, 5.4rem);
   --t-h2: clamp(2.05rem, 4.8vw, 4.3rem);
   --t-h3: clamp(1.45rem, 2.5vw, 2.3rem);

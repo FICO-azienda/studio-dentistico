@@ -22,6 +22,7 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
+import { kvCredenziali, assertArchivioAffidabile } from './kv-config.mjs';
 
 const FILE_STORE = path.resolve(process.cwd(), '.data', 'prenotazioni.json');
 
@@ -97,9 +98,7 @@ function logRecord(record) {
 }
 
 async function kvSave(record, env) {
-  const url = env.KV_REST_API_URL;
-  const token = env.KV_REST_API_TOKEN;
-  if (!url || !token) throw new Error('KV non configurato');
+  const { url, token } = kvCredenziali(env);
   const headers = { Authorization: 'Bearer ' + token, 'Content-Type': 'application/json' };
   // contatore progressivo + record + indice cronologico, in tre chiamate
   const key = 'booking:' + record.booking_id;
@@ -113,9 +112,7 @@ async function kvSave(record, env) {
 }
 
 async function kvGet(bookingId, env) {
-  const url = env.KV_REST_API_URL;
-  const token = env.KV_REST_API_TOKEN;
-  if (!url || !token) return null;
+  const { url, token } = kvCredenziali(env);
   const res = await fetch(url + '/get/' + encodeURIComponent('booking:' + bookingId), {
     headers: { Authorization: 'Bearer ' + token }
   });
@@ -166,18 +163,18 @@ export async function nextProgressivo(env = process.env) {
  * { saved: false, error } ma la riga di log e' comunque stata scritta.
  */
 export async function saveBooking(record, env = process.env) {
-  logRecord(record);
+  logRecord(record); // scritto per primo e sempre: e' la vera ultima rete, vedi commento sopra
   const kind = env.BOOKING_STORE || 'log';
-  if (kind === 'log') {
-    fileScrivi(record);
-    return { saved: true, store: 'log' };
-  }
   try {
-    if (kind === 'kv') await kvSave(record, env);
+    if (kind === 'log') fileScrivi(record);
+    else if (kind === 'kv') await kvSave(record, env);
     else if (kind === 'http') await httpSave(record, env);
     else throw new Error('archivio sconosciuto: ' + kind);
     return { saved: true, store: kind };
   } catch (e) {
+    // un fallimento qui (es. filesystem non scrivibile su un deployment
+    // serverless) non deve far fallire la richiesta: il record e' comunque
+    // nei log della piattaforma, recuperabile a mano se serve
     console.error('BOOKING_STORE_ERROR ' + JSON.stringify({ booking_id: record.booking_id, store: kind, error: String(e.message || e) }));
     return { saved: false, store: kind, error: String(e.message || e) };
   }
@@ -188,6 +185,7 @@ export async function getBooking(bookingId, env = process.env) {
   const kind = env.BOOKING_STORE || 'log';
   if (kind === 'kv') return kvGet(bookingId, env);
   if (kind === 'http') return null;
+  assertArchivioAffidabile(kind, env);
   return fileLeggiTutto()[bookingId] || null;
 }
 

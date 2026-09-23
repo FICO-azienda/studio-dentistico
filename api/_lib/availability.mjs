@@ -29,6 +29,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { orari } from './orari.mjs';
 import { giornoChiuso } from './chiusure.mjs';
+import { kvCredenziali, assertArchivioAffidabile } from './kv-config.mjs';
 
 const FILE_STORE = path.resolve(process.cwd(), '.data', 'disponibilita.json');
 
@@ -46,9 +47,7 @@ function fileScriviTutto(db) {
 }
 
 async function kvGetDay(dataIso, env) {
-  const url = env.KV_REST_API_URL;
-  const token = env.KV_REST_API_TOKEN;
-  if (!url || !token) return {};
+  const { url, token } = kvCredenziali(env);
   const res = await fetch(url + '/get/' + encodeURIComponent('day:' + dataIso), {
     headers: { Authorization: 'Bearer ' + token }
   });
@@ -63,8 +62,7 @@ async function kvGetDay(dataIso, env) {
 }
 
 async function kvSetDay(dataIso, giorno, env) {
-  const url = env.KV_REST_API_URL;
-  const token = env.KV_REST_API_TOKEN;
+  const { url, token } = kvCredenziali(env);
   const res = await fetch(url + '/set/' + encodeURIComponent('day:' + dataIso), {
     method: 'POST',
     headers: { Authorization: 'Bearer ' + token, 'Content-Type': 'application/json' },
@@ -78,6 +76,7 @@ export async function getDayOccupied(dataIso, env = process.env) {
   const kind = env.BOOKING_STORE || 'log';
   if (kind === 'kv') return kvGetDay(dataIso, env);
   if (kind === 'http') return {}; // sola scrittura: nessuna disponibilita' da leggere qui
+  assertArchivioAffidabile(kind, env);
   return fileLeggiTutto()[dataIso] || {};
 }
 
@@ -101,6 +100,7 @@ export async function reserveSlots(dataIso, oraInizio, slotCount, bookingId, env
 
   const kind = env.BOOKING_STORE || 'log';
   if (kind === 'http') return { ok: true, skip: true };
+  assertArchivioAffidabile(kind, env);
 
   const giorno = kind === 'kv' ? await kvGetDay(dataIso, env) : fileLeggiTutto()[dataIso] || {};
   for (const o of richiesti) {
@@ -122,6 +122,7 @@ export async function reserveSlots(dataIso, oraInizio, slotCount, bookingId, env
 export async function releaseSlots(dataIso, bookingId, env = process.env) {
   const kind = env.BOOKING_STORE || 'log';
   if (kind === 'http') return;
+  assertArchivioAffidabile(kind, env);
 
   const giorno = kind === 'kv' ? await kvGetDay(dataIso, env) : fileLeggiTutto()[dataIso] || {};
   let cambiato = false;

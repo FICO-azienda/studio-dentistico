@@ -30,16 +30,7 @@ const leggiCorpo = async (req) => {
   }
 };
 
-const server = http.createServer(async (req, res) => {
-  const origin = req.headers.origin || '';
-  const cors = corsHeaders(origin);
-  for (const [k, v] of Object.entries(cors)) res.setHeader(k, v);
-
-  if (req.method === 'OPTIONS') {
-    res.writeHead(204).end();
-    return;
-  }
-
+const route = async (req, res) => {
   const url = new URL(req.url, 'http://localhost');
 
   if (req.method === 'GET' && url.pathname === '/api/disponibilita') {
@@ -100,12 +91,25 @@ const server = http.createServer(async (req, res) => {
   if (body === null) return json(res, 400, { ok: false, error: 'bad_json' });
 
   const ip = (req.headers['x-forwarded-for'] || '').split(',')[0].trim() || req.socket.remoteAddress || 'locale';
+  const out = await handleBooking(body, { ip, userAgent: req.headers['user-agent'] || '' });
+  return json(res, out.status, out.body);
+};
+
+const server = http.createServer(async (req, res) => {
+  const origin = req.headers.origin || '';
+  const cors = corsHeaders(origin);
+  for (const [k, v] of Object.entries(cors)) res.setHeader(k, v);
+
+  if (req.method === 'OPTIONS') {
+    res.writeHead(204).end();
+    return;
+  }
+
   try {
-    const out = await handleBooking(body, { ip, userAgent: req.headers['user-agent'] || '' });
-    return json(res, out.status, out.body);
+    await route(req, res);
   } catch (e) {
-    console.error('BOOKING_FATAL', e);
-    return json(res, 500, { ok: false, error: 'server_error', message: 'Errore imprevisto.' });
+    console.error('API_FATAL', e);
+    if (!res.headersSent) json(res, 500, { ok: false, error: 'server_error', message: 'Errore imprevisto.' });
   }
 });
 

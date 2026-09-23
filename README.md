@@ -377,6 +377,20 @@ poter rileggere un record esistente per `booking_id`. In modalita' `http`
 questo non e' possibile — il webhook e' scrittura sola verso un sistema
 esterno — quindi in produzione serve `BOOKING_STORE=kv`.
 
+**Configurazione mancante = errore, non archivio "vuoto".** Il file locale
+della modalita' `log` funziona solo perche' in sviluppo il processo Node
+resta acceso: su un vero deployment Vercel il filesystem della funzione non
+e' persistente tra un'invocazione e l'altra. Se il sito e' online (`VERCEL_ENV`
+e' `production` o `preview`) e `BOOKING_STORE` e' rimasto `log`, oppure e'
+`kv` ma mancano `KV_REST_API_URL`/`KV_REST_API_TOKEN`, le funzioni che
+leggono l'archivio (`/api/disponibilita`, `/api/prenotazione*`) rispondono
+con un errore 500 esplicito invece di sembrare funzionanti mentre in realta'
+l'autogestione non troverebbe le prenotazioni e il calendario mostrerebbe
+libero cio' che non lo e'. Il log della funzione dice esattamente cosa
+manca. La richiesta iniziale (`POST /api/prenotazioni`) resta invece sempre
+accettata anche senza KV: il record e' comunque scritto nei log della
+piattaforma, l'ultima rete di sicurezza.
+
 ### Autogestione: annullare o spostare con un click
 
 Il paziente puo' annullare o spostare l'appuntamento da solo, senza

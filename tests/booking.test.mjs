@@ -18,8 +18,9 @@ import { rateLimit, _reset } from '../api/_lib/ratelimit.mjs';
 import { byService, visibleQuestions, computePriority, computeTags, buildSummary, validateAnswers } from '../api/_lib/flows.mjs';
 import { giornoChiuso } from '../api/_lib/chiusure.mjs';
 import { reserveSlots, releaseSlots, getDayOccupied } from '../api/_lib/availability.mjs';
-import { saveBooking } from '../api/_lib/store.mjs';
+import { saveBooking, getBooking } from '../api/_lib/store.mjs';
 import { sposta } from '../api/_lib/manage.mjs';
+import { kvCredenziali, assertArchivioAffidabile } from '../api/_lib/kv-config.mjs';
 
 // niente email vere durante i test
 const ENV = { MAIL_PROVIDER: 'console', BOOKING_STORE: 'log', BOOKING_NOTIFY_EMAIL: 'studio@example.it' };
@@ -451,4 +452,23 @@ test('sposta() rifiuta lo spostamento su un giorno di chiusura, anche forzato da
   assert.equal(occupatiOriginale[record.ora_richiesta], bookingId);
 
   await releaseSlots(record.data_richiesta, bookingId, ENV);
+});
+
+/* -- configurazione dell'archivio: fallire in modo rumoroso, non in silenzio - */
+test('BOOKING_STORE=kv senza credenziali: errore chiaro, non un archivio che sembra vuoto', () => {
+  assert.throws(() => kvCredenziali({}), /KV_REST_API_URL/);
+});
+
+test('getDayOccupied e getBooking rifiutano BOOKING_STORE=kv senza credenziali invece di rispondere "niente trovato"', async () => {
+  const envRotto = { ...ENV, BOOKING_STORE: 'kv' };
+  await assert.rejects(() => getDayOccupied('2026-09-28', envRotto), /KV_REST_API_URL/);
+  await assert.rejects(() => getBooking('APT-2026-000001', envRotto), /KV_REST_API_URL/);
+});
+
+test('assertArchivioAffidabile blocca la modalità "log" su un vero deployment Vercel, non in sviluppo locale', () => {
+  assert.throws(() => assertArchivioAffidabile('log', { VERCEL_ENV: 'production' }), /BOOKING_STORE/);
+  assert.throws(() => assertArchivioAffidabile('log', { VERCEL_ENV: 'preview' }), /BOOKING_STORE/);
+  assert.doesNotThrow(() => assertArchivioAffidabile('log', { VERCEL_ENV: 'development' }));
+  assert.doesNotThrow(() => assertArchivioAffidabile('log', {})); // sviluppo locale senza Vercel
+  assert.doesNotThrow(() => assertArchivioAffidabile('kv', { VERCEL_ENV: 'production' })); // non riguarda kv/http
 });

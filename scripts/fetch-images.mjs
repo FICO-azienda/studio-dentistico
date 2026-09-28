@@ -1,6 +1,7 @@
 /**
  * Scarica in locale le fotografie dichiarate in content/images.json.
  * Fonte: Unsplash (licenza gratuita, uso commerciale consentito, no attribuzione obbligatoria).
+ * Le voci con "origine": "studio" sono fotografie dello studio, gia' presenti in public/images: vengono saltate.
  * Output: public/images/<nome>-<larghezza>.webp  +  public/images/credits.json
  *
  *   node scripts/fetch-images.mjs [--force]
@@ -35,6 +36,8 @@ async function base(id) {
 }
 
 for (const [name, cfg] of Object.entries(manifest)) {
+  // fotografie dello studio: file gia' in public/images, niente da scaricare (e niente crediti Unsplash)
+  if (cfg.origine === 'studio') { skipped++; continue; }
   try {
     const info = await base(cfg.id);
     credits[name] = { id: cfg.id, author: info.author, authorUrl: info.authorUrl, link: info.link, color: info.color };

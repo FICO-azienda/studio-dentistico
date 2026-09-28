@@ -33,8 +33,8 @@ ${pageHero({
       </div>
     </div>
     <div class="grid mt-5">
-      ${figure('studio-corridoio', { base, ar: '4/5', className: 'col-4 media__zoom', sizes: '32vw' })}
-      ${figure('studio-attesa', { base, ar: '4/5', className: 'col-4 media__zoom', sizes: '32vw' })}
+      ${figure('liddi-corridoio', { base, ar: '4/5', className: 'col-4 media__zoom', sizes: '32vw' })}
+      ${figure('liddi-attesa', { base, ar: '4/5', className: 'col-4 media__zoom', sizes: '32vw' })}
       ${figure('studio-dettaglio', { base, ar: '4/5', className: 'col-4 media__zoom', sizes: '32vw' })}
     </div>
   </div>
@@ -333,7 +333,7 @@ ${pageHero({
       <div class="col-5">
         <span class="label reveal">${esc(t('fv.bring'))}</span>
         <h2 class="h2 mt-2 reveal">${lines([t('fv.bringT1'), `<em class="serif-italic">${t('fv.bringT2')}</em>`])}</h2>
-        ${figure('strumenti-set', { base, ar: '4/3', className: 'mt-4 media__zoom', sizes: '40vw' })}
+        ${figure('liddi-sala-glicine', { base, ar: '4/3', className: 'mt-4 media__zoom', sizes: '40vw' })}
       </div>
       <div class="col-6 start-7 prose reveal">
         <h2 style="margin-top:0">${esc(t('fv.quoteH'))}</h2>

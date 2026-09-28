@@ -27,26 +27,12 @@
     "link": "https://unsplash.com/photos/two-cream-sofas-flank-a-potted-plant-in-a-corner-Um6FLceJexg",
     "color": "#737359"
   },
-  "studio-reception": {
-    "id": "b3pjauNTbMw",
-    "author": "mahmoud azmy",
-    "authorUrl": "https://unsplash.com/@mahmoud_azmy",
-    "link": "https://unsplash.com/photos/a-room-with-a-desk-and-a-chair-in-it-b3pjauNTbMw",
-    "color": "#737373"
-  },
   "studio-dettaglio": {
     "id": "1ptwQdf0N8s",
     "author": "lost voyager",
     "authorUrl": "https://unsplash.com/@lostvoyager",
     "link": "https://unsplash.com/photos/geometric-shadows-cast-by-pillars-in-a-bright-hall-1ptwQdf0N8s",
     "color": "#262626"
-  },
-  "cat-generale": {
-    "id": "Bg81yWKZlMg",
-    "author": "Harold Hisona",
-    "authorUrl": "https://unsplash.com/@harold_angus",
-    "link": "https://unsplash.com/photos/dentist-talking-to-patient-in-a-modern-dental-office-Bg81yWKZlMg",
-    "color": "#c0c0c0"
   },
   "cat-estetica": {
     "id": "1AhGNGKuhR0",

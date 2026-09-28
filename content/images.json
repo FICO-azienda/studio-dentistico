@@ -20,8 +20,8 @@
     "ar": "3/2"
   },
   "studio-reception": {
-    "id": "b3pjauNTbMw",
-    "alt": "Bancone di accoglienza chiaro e minimale",
+    "origine": "studio",
+    "alt": "Reception dello studio con bancone in vetro, lampade a sospensione e parete color terracotta",
     "ar": "3/2"
   },
   "studio-dettaglio": {
@@ -30,8 +30,8 @@
     "ar": "3/2"
   },
   "cat-generale": {
-    "id": "Bg81yWKZlMg",
-    "alt": "Colloquio fra odontoiatra e paziente in studio",
+    "origine": "studio",
+    "alt": "Sala operativa con poltrona odontoiatrica beige, lampada e mobile lavabo, illuminata dalla luce naturale",
     "ar": "3/2"
   },
   "cat-estetica": {
@@ -213,5 +213,20 @@
     "id": "HIB5kZNkVjo",
     "alt": "Corridoio dello studio in legno scuro",
     "ar": "3/2"
+  },
+  "liddi-corridoio": {
+    "origine": "studio",
+    "alt": "Corridoio luminoso dello studio con vetrata satinata e pavimento in pietra chiara",
+    "ar": "4/5"
+  },
+  "liddi-attesa": {
+    "origine": "studio",
+    "alt": "Sala d'attesa con sedute trasparenti dietro al bancone della reception in vetro e lampade a sospensione",
+    "ar": "4/5"
+  },
+  "liddi-sala-glicine": {
+    "origine": "studio",
+    "alt": "Sala operativa con poltrona odontoiatrica e un glicine dipinto sulla parete accanto al televisore",
+    "ar": "4/3"
   }
 }

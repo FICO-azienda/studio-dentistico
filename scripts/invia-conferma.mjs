@@ -6,7 +6,7 @@
  * automatiche della richiesta dicono soltanto che e' stata ricevuta.
  *
  *   node scripts/invia-conferma.mjs richiesta.json
- *   node scripts/invia-conferma.mjs richiesta.json --professionista "Dr. Andrea Vitali" \
+ *   node scripts/invia-conferma.mjs richiesta.json --professionista "Dott. Arturo Liddi" \
  *        --nota "Porta la panoramica che hai fatto a marzo." --data 2026-11-24 --ora 15:30
  *   node scripts/invia-conferma.mjs richiesta.json --anteprima conferma.html
  *

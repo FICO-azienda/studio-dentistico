@@ -386,7 +386,7 @@ conferma (dashboard `/staff/` o da riga di comando):
 npm run email:preview                       # anteprime in dist/_email
 node scripts/invia-conferma.mjs richiesta.json \
   --data 2026-11-24 --ora 15:30 \
-  --professionista "Dr. Andrea Vitali" --nota "Porta la TC di marzo."
+  --professionista "Dott. Arturo Liddi" --nota "Porta la TC di marzo."
 ```
 
 Il file `richiesta.json` e' il record dell'archivio (una riga `BOOKING` dei log).

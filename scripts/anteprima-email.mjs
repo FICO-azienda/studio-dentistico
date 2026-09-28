@@ -32,7 +32,7 @@ const v = validateBooking(
       'preventivo-ricevuto': 'no'
     },
     modalita: 'prenota',
-    dottore: 'Dr. Andrea Vitali',
+    dottore: 'Dott. Arturo Liddi',
     dataRichiesta: '2026-11-24',
     oraRichiesta: '15:30',
     secondaData: '2026-11-26',
@@ -60,7 +60,7 @@ const pezzi = [
 const confermato = { ...record, status: 'CONFIRMED' };
 pezzi.push([
   '3-paziente-conferma',
-  emailConferma(confermato, { professionista: 'Dr. Andrea Vitali', note: 'Porta la TC che hai fatto a marzo.' })
+  emailConferma(confermato, { professionista: 'Dott. Arturo Liddi', note: 'Porta la TC che hai fatto a marzo.' })
 ]);
 
 for (const [nome, mail] of pezzi) {

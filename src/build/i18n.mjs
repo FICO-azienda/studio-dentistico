@@ -185,7 +185,7 @@ const UI = {
   'home.firstVisit.t1': ['La prima visita.', 'The first visit.'],
   'home.firstVisit.aside': ["Un percorso in quattro passaggi: prenotazione, prima visita, preventivo e pagamento.", "Four steps: booking, first visit, quote and payment."],
   'home.firstVisit.cta': ['Prenota la tua prima visita', 'Book your first visit'],
-  'home.firstVisit.what': ['Cosa portare con te', 'What to bring with you'],
+  'home.firstVisit.what': ['Preventivi e pagamenti', 'Quotes and payment'],
 
   'home.cases.label': ['Risultati', 'Results'],
   'home.cases.t1': ['Casi clinici.', 'Case studies.'],

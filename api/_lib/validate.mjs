@@ -4,6 +4,7 @@
  */
 
 import { byService, validateAnswers, computePriority, computeTags, buildSummary, flows } from './flows.mjs';
+import { orariDelGiorno } from './orari.mjs';
 
 /** L'elenco dei servizi arriva dalla configurazione, non da una copia qui. */
 export const VISIT_TYPES = flows.services.map((s) => ({ value: s.id, label: s.label }));
@@ -47,7 +48,7 @@ const PHONE_RE = /^[+(\d][\d\s()./-]{5,}$/;
 const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
 const TIME_RE = /^([01]\d|2[0-3]):[0-5]\d$/;
 
-/** La data deve essere valida, non nel passato, non oltre un anno, non di domenica. */
+/** La data deve essere valida, non nel passato, non oltre un anno, in un giorno di apertura dello studio. */
 export function checkDate(value, { today = new Date() } = {}) {
   if (!DATE_RE.test(value)) return 'formato non valido';
   const d = new Date(value + 'T12:00:00Z');
@@ -60,6 +61,7 @@ export function checkDate(value, { today = new Date() } = {}) {
   max.setFullYear(max.getFullYear() + 1);
   if (d > max) return 'data troppo lontana';
   if (d.getUTCDay() === 0) return 'la domenica lo studio e\' chiuso';
+  if (!orariDelGiorno(value).length) return 'in quel giorno lo studio e\' chiuso';
   return null;
 }
 

@@ -28,7 +28,10 @@ const BASE = {
 };
 
 /* -- orari e chiusure di prenotazione: stessa fonte per sito e API --------- */
-export const orari = leggi('orari.json').orari;
+const orariCfg = leggi('orari.json');
+export const orari = orariCfg.orari;
+export const giorniOrari = orariCfg.giorni;
+export const passoMinuti = orariCfg.passoMinuti || 60;
 export const chiusure = leggi('chiusure.json');
 
 /* -- traduzioni ------------------------------------------------------------ */

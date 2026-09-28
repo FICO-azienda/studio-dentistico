@@ -4,7 +4,7 @@
  * sito pubblico: pagina unica (non bilingue), esclusa da sitemap e indici,
  * protetta da password condivisa (STAFF_TOKEN, vedi api/_lib/staff-auth.mjs).
  */
-import { site, team, orari, chiusure, esc, attr, personName } from './utils.mjs';
+import { site, team, orari, giorniOrari, passoMinuti, chiusure, esc, attr, personName } from './utils.mjs';
 
 export const staffPage = () => {
   const docs = team.filter((p) => p.featured || p.treatments.length);
@@ -31,7 +31,7 @@ export const staffPage = () => {
   data-mode="${attr(site.booking?.mode || 'demo')}"
   data-phone="${attr(site.phone)}"
 ><h1 class="sr-only">Area riservata — ${esc(site.name)}</h1></div>
-<script type="application/json" data-staff-config>${JSON.stringify({ orari, chiusure, dottori }).replace(/</g, '\\u003c')}</script>
+<script type="application/json" data-staff-config>${JSON.stringify({ orari, giorni: giorniOrari, passoMinuti, chiusure, dottori }).replace(/</g, '\\u003c')}</script>
 <script src="../scripts/staff.js" defer></script>
 </body>
 </html>`;

@@ -1,4 +1,12 @@
 {
-  "_nota": "Orari di inizio disponibili per una visita. Unica fonte per generatore del sito e API: cambiarli qui li cambia ovunque.",
-  "orari": ["08:30", "09:15", "10:00", "11:30", "12:15", "14:00", "15:00", "16:30", "17:15", "18:30"]
+  "_nota": "Orari di inizio prenotabili, ricavati dagli orari di apertura dello studio (uno slot ogni ora, che termina entro l'orario di chiusura). Unica fonte per generatore del sito e API: cambiarli qui li cambia ovunque. 'giorni' usa i numeri del giorno della settimana (1 = lunedì ... 5 = venerdì); un giorno assente è di chiusura. 'orari' è l'elenco completo e 'passoMinuti' la distanza fra due slot contigui.",
+  "passoMinuti": 60,
+  "orari": ["09:00", "10:00", "11:00", "14:00", "15:00", "16:00", "17:00", "18:00"],
+  "giorni": {
+    "1": ["10:00", "11:00", "14:00", "15:00", "16:00", "17:00", "18:00"],
+    "2": ["09:00", "10:00", "11:00", "14:00", "15:00", "16:00", "17:00", "18:00"],
+    "3": ["14:00", "15:00", "16:00", "17:00", "18:00"],
+    "4": ["09:00", "10:00", "11:00", "14:00", "15:00", "16:00", "17:00", "18:00"],
+    "5": ["10:00", "11:00", "14:00", "15:00", "16:00", "17:00", "18:00"]
+  }
 }

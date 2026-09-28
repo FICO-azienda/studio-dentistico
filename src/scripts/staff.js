@@ -26,8 +26,9 @@
     if (Array.isArray(cfg.chiusure.date)) chiusuraIn.date = cfg.chiusure.date;
     if (Array.isArray(cfg.chiusure.periodi)) chiusuraIn.periodi = cfg.chiusure.periodi;
   }
+  const orariDi = (iso) => (cfg.giorni ? cfg.giorni[new Date(iso + 'T12:00:00').getDay()] || [] : cfg.orari);
   const giornoChiuso = (iso, day) => {
-    if (day === 0) return true;
+    if (day === 0 || (cfg.giorni && !(cfg.giorni[day] || []).length)) return true;
     if (chiusuraIn.date.includes(iso)) return true;
     return chiusuraIn.periodi.some((p) => iso >= p.da && iso <= p.a);
   };
@@ -299,7 +300,7 @@
     const errore = $('[data-errore]', panel);
 
     const disegnaSlots = (occupati) => {
-      slotsBox.innerHTML = cfg.orari
+      slotsBox.innerHTML = orariDi(scelta.data)
         .map((h) => {
           const off = occupati.has(h);
           return `<button class="slot${off ? ' is-off' : ''}" type="button" data-hour="${h}" aria-pressed="${scelta.ora === h}"${off ? ' disabled' : ''}>${h}</button>`;
@@ -316,7 +317,7 @@
         $$('[data-day]', panel).forEach((x) => x.setAttribute('aria-pressed', String(x === dayBtn)));
         slotsBox.innerHTML = '<p class="small" style="color:var(--stone-light)">Verifica disponibilità…</p>';
         const { data } = await chiamata(`disponibilita?giorno=${encodeURIComponent(scelta.data)}`);
-        const occupati = data?.chiuso ? new Set(cfg.orari) : new Set(Array.isArray(data?.occupati) ? data.occupati : []);
+        const occupati = data?.chiuso ? new Set(orariDi(scelta.data)) : new Set(Array.isArray(data?.occupati) ? data.occupati : []);
         disegnaSlots(occupati);
         return;
       }

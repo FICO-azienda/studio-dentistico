@@ -19,7 +19,7 @@ import { studio } from '../api/_lib/studio.mjs';
 import { rateLimit, _reset } from '../api/_lib/ratelimit.mjs';
 import { byService, visibleQuestions, computePriority, computeTags, buildSummary, validateAnswers } from '../api/_lib/flows.mjs';
 import { giornoChiuso, chiusure } from '../api/_lib/chiusure.mjs';
-import { reserveSlots, releaseSlots, getDayOccupied } from '../api/_lib/availability.mjs';
+import { reserveSlots, releaseSlots, getDayOccupied, slotsRichiesti } from '../api/_lib/availability.mjs';
 import { saveBooking, getBooking, listBookings } from '../api/_lib/store.mjs';
 import { sposta, statoPrenotazione } from '../api/_lib/manage.mjs';
 import { mintToken, rebookUrl } from '../api/_lib/token.mjs';
@@ -36,11 +36,13 @@ const ENV_MAIL_ROTTA = { ...ENV, MAIL_PROVIDER: 'resend' }; // senza chiave: fal
 // occupare uno degli slot che i test si aspettano liberi. Si riparte puliti.
 test.before(() => fs.rmSync(path.resolve(process.cwd(), '.data'), { recursive: true, force: true }));
 
-/** Domani, saltando la domenica (lo studio e' chiuso). */
+/** Domani, saltando i giorni di chiusura (domenica, sabato e festivi). */
 function domani(from = new Date()) {
   const d = new Date(from);
-  d.setDate(d.getDate() + 1);
-  if (d.getDay() === 0) d.setDate(d.getDate() + 1);
+  d.setHours(12, 0, 0, 0);
+  do {
+    d.setDate(d.getDate() + 1);
+  } while (giornoChiuso(d.toISOString().slice(0, 10)));
   return d.toISOString().slice(0, 10);
 }
 
@@ -78,7 +80,7 @@ const base = () => ({
   },
   modalita: 'prenota',
   dataRichiesta: giornoUnico(),
-  oraRichiesta: '11:30',
+  oraRichiesta: '15:00', // il pomeriggio e' aperto tutti i giorni feriali
   privacy: true
 });
 
@@ -477,12 +479,26 @@ test('giornoChiuso riconosce domenica, un festivo esplicito e un periodo di feri
   const periodo = { da: '2026-08-10', a: '2026-08-23', etichetta: 'periodo di prova' };
   chiusure.periodi.push(periodo);
   try {
-    assert.equal(giornoChiuso('2026-08-15'), true, 'dentro un periodo di ferie');
+    assert.equal(giornoChiuso('2026-08-12'), true, 'dentro un periodo di ferie');
   } finally {
     chiusure.periodi.splice(chiusure.periodi.indexOf(periodo), 1);
   }
-  assert.equal(giornoChiuso('2026-08-15'), false, 'fuori dai periodi configurati');
+  assert.equal(giornoChiuso('2026-08-12'), false, 'fuori dai periodi configurati (mercoledì)');
+  assert.equal(giornoChiuso('2026-09-26'), true, 'sabato: lo studio non ha orari di apertura');
   assert.equal(giornoChiuso('2026-09-28'), false, 'lunedì normale');
+});
+
+test('orari per giorno: mercoledì solo di pomeriggio, sabato chiuso', () => {
+  // 30 settembre 2026 è un mercoledì, 3 ottobre un sabato
+  assert.equal(slotsRichiesti('10:00', 1, '2026-09-30'), null, 'mercoledì mattina: lo studio è chiuso');
+  assert.deepEqual(slotsRichiesti('14:00', 2, '2026-09-30'), ['14:00', '15:00']);
+  assert.equal(giornoChiuso('2026-10-03'), true, 'sabato');
+});
+
+test('un servizio lungo non scavalca la pausa di metà giornata', () => {
+  // 5 ottobre 2026 è un lunedì: mattina 10-12, poi pausa fino alle 14
+  assert.deepEqual(slotsRichiesti('10:00', 2, '2026-10-05'), ['10:00', '11:00']);
+  assert.equal(slotsRichiesti('11:00', 2, '2026-10-05'), null, '11:00 + 14:00 non sono consecutivi');
 });
 
 test('reserveSlots rifiuta un giorno di chiusura e non occupa nulla', async () => {
@@ -572,11 +588,11 @@ test('confermaPrenotazione rifiuta una richiesta già non più PENDING', async (
 });
 
 test('confermaPrenotazione rifiuta uno slot già occupato e non tocca lo stato della richiesta', async () => {
-  const giorno = domani();
+  const giorno = giornoUnico();
   const bookingId1 = buildBookingId(999105);
   const bookingId2 = buildBookingId(999106);
-  const record1 = buildRecord({ ...base(), dataRichiesta: giorno, oraRichiesta: '09:15' }, { bookingId: bookingId1 });
-  const record2 = buildRecord({ ...base(), dataRichiesta: giorno, oraRichiesta: '09:15' }, { bookingId: bookingId2 });
+  const record1 = buildRecord({ ...base(), dataRichiesta: giorno, oraRichiesta: '15:00' }, { bookingId: bookingId1 });
+  const record2 = buildRecord({ ...base(), dataRichiesta: giorno, oraRichiesta: '15:00' }, { bookingId: bookingId2 });
   await saveBooking(record1, ENV);
   await saveBooking(record2, ENV);
 

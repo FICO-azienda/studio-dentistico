@@ -27,7 +27,7 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
-import { orari } from './orari.mjs';
+import { orari, orariDelGiorno, contigui } from './orari.mjs';
 import { giornoChiuso } from './chiusure.mjs';
 import { kvCredenziali, assertArchivioAffidabile } from './kv-config.mjs';
 
@@ -80,11 +80,17 @@ export async function getDayOccupied(dataIso, env = process.env) {
   return fileLeggiTutto()[dataIso] || {};
 }
 
-/** Gli orari consecutivi richiesti da un servizio a partire da uno di inizio, o null se non c'e' spazio. */
-export function slotsRichiesti(oraInizio, slotCount = 1) {
-  const i = orari.indexOf(oraInizio);
-  if (i === -1 || i + slotCount > orari.length) return null;
-  return orari.slice(i, i + slotCount);
+/**
+ * Gli orari consecutivi richiesti da un servizio a partire da uno di inizio, o null se non c'e' spazio.
+ * Con la data si usano gli orari di quel giorno della settimana e gli slot devono essere contigui
+ * (un servizio lungo non puo' scavalcare la pausa di meta' giornata).
+ */
+export function slotsRichiesti(oraInizio, slotCount = 1, dataIso = null) {
+  const lista = dataIso ? orariDelGiorno(dataIso) : orari;
+  const i = lista.indexOf(oraInizio);
+  if (i === -1 || i + slotCount > lista.length) return null;
+  const richiesti = lista.slice(i, i + slotCount);
+  return dataIso && !contigui(richiesti) ? null : richiesti;
 }
 
 /**
@@ -95,7 +101,7 @@ export function slotsRichiesti(oraInizio, slotCount = 1) {
  */
 export async function reserveSlots(dataIso, oraInizio, slotCount, bookingId, env = process.env) {
   if (giornoChiuso(dataIso)) return { ok: false, motivo: 'giorno_chiuso' };
-  const richiesti = slotsRichiesti(oraInizio, slotCount);
+  const richiesti = slotsRichiesti(oraInizio, slotCount, dataIso);
   if (!richiesti) return { ok: false, motivo: 'orario_non_valido' };
 
   const kind = env.BOOKING_STORE || 'log';

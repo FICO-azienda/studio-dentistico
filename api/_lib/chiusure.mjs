@@ -6,6 +6,7 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
+import { orariDelGiorno } from './orari.mjs';
 
 function carica() {
   const candidati = [
@@ -24,11 +25,11 @@ function carica() {
 
 export const chiusure = carica();
 
-/** true se lo studio e' chiuso in quella data (domenica, festivo o periodo di ferie). */
+/** true se lo studio e' chiuso in quella data (giorno senza orari di apertura, festivo o periodo di ferie). */
 export function giornoChiuso(dataIso) {
   const d = new Date(dataIso + 'T12:00:00');
   if (Number.isNaN(d.getTime())) return false;
-  if (d.getDay() === 0) return true; // domenica
+  if (!orariDelGiorno(dataIso).length) return true; // giorno della settimana senza orari (domenica, sabato)
   if (chiusure.date.includes(dataIso)) return true;
   return chiusure.periodi.some((p) => dataIso >= p.da && dataIso <= p.a);
 }

@@ -439,7 +439,7 @@
         // il server e' la fonte di verita' sulle chiusure: se dice che il
         // giorno e' chiuso (es. content/chiusure.json aggiornato dopo che il
         // browser ha messo in cache questa pagina), si blocca tutto l'orario
-        const set = data?.chiuso ? new Set(slots.orari) : new Set(Array.isArray(data?.occupati) ? data.occupati : []);
+        const set = data?.chiuso ? new Set(orariDi(iso)) : new Set(Array.isArray(data?.occupati) ? data.occupati : []);
         occupatiCache.set(iso, set);
         return set;
       } catch {
@@ -449,11 +449,12 @@
 
     /** Orari da disabilitare per il servizio corrente, dato cio' che e' gia' occupato nel giorno scelto. */
     const orariBloccati = (slotCount) => {
-      if (!occupatiGiorno.size) return new Set();
       const bloccati = new Set();
-      slots.orari.forEach((h, i) => {
-        const richiesti = slots.orari.slice(i, i + slotCount);
-        const stanzaSufficiente = richiesti.length === slotCount;
+      const lista = orariDi(state.giorno);
+      lista.forEach((h, i) => {
+        const richiesti = lista.slice(i, i + slotCount);
+        // servono slot contigui: un servizio lungo non scavalca la pausa di meta' giornata
+        const stanzaSufficiente = richiesti.length === slotCount && contigui(richiesti);
         if (!stanzaSufficiente || richiesti.some((o) => occupatiGiorno.has(o))) bloccati.add(h);
       });
       return bloccati;
@@ -550,9 +551,18 @@
       if (Array.isArray(slots.chiusure.date)) chiusuraIn.date = slots.chiusure.date;
       if (Array.isArray(slots.chiusure.periodi)) chiusuraIn.periodi = slots.chiusure.periodi;
     }
-    /** Stessa regola del server (api/_lib/chiusure.mjs): domenica, festivi ed eventuali periodi di ferie. */
+    /* orari di inizio per giorno della settimana (content/orari.json): senza orari il giorno e' di chiusura */
+    const passo = slots.passoMinuti || 60;
+    const minutiDi = (h) => Number(h.slice(0, 2)) * 60 + Number(h.slice(3, 5));
+    const contigui = (lista) => lista.every((h, i) => i === 0 || minutiDi(h) - minutiDi(lista[i - 1]) === passo);
+    const orariDi = (iso) => {
+      if (!slots.giorni) return slots.orari;
+      if (!iso) return [];
+      return slots.giorni[new Date(iso + 'T12:00:00').getDay()] || [];
+    };
+    /** Stessa regola del server (api/_lib/chiusure.mjs): giorni senza orari, festivi ed eventuali periodi di ferie. */
     const giornoChiuso = (iso, day) => {
-      if (day === 0) return true; // domenica
+      if (day === 0 || (slots.giorni && !(slots.giorni[day] || []).length)) return true;
       if (chiusuraIn.date.includes(iso)) return true;
       return chiusuraIn.periodi.some((p) => iso >= p.da && iso <= p.a);
     };
@@ -634,8 +644,9 @@
     };
 
     const slotsHtml = () => {
+      if (!state.giorno) return `<p class="small" style="color:var(--stone-light)">${tr('chooseDayFirst')}</p>`;
       const bloccati = orariBloccati(servizio()?.slotCount || 1);
-      return slots.orari
+      return orariDi(state.giorno)
         .map((h) => {
           const off = bloccati.has(h);
           return `<button class="slot${off ? ' is-off' : ''}" type="button" data-hour="${h}" aria-pressed="${state.ora === h}"${off ? ' disabled aria-disabled="true"' : ''}>${h}</button>`;
@@ -807,8 +818,8 @@
         caricaDisponibilita(iso).then((occupati) => {
           if (state.giorno !== iso) return; // l'utente ha gia' cambiato giorno
           occupatiGiorno = occupati;
-          if (occupatiGiorno.size && orariBloccati(servizio()?.slotCount || 1).has(state.ora)) {
-            state.ora = ''; // l'orario scelto prima non e' piu' disponibile in questo giorno
+          if (state.ora && (!orariDi(iso).includes(state.ora) || orariBloccati(servizio()?.slotCount || 1).has(state.ora))) {
+            state.ora = ''; // l'orario scelto prima non e' disponibile in questo giorno
           }
           // si aggiorna solo il box degli orari: un render() intero
           // farebbe scorrere di nuovo la pagina sotto l'utente
@@ -1080,6 +1091,10 @@
     const slotsEl = $('script[data-manage-slots]');
     const slotsData = slotsEl ? JSON.parse(slotsEl.textContent) : {};
     const orari = slotsData.orari || [];
+    const passo = slotsData.passoMinuti || 60;
+    const minutiDi = (h) => Number(h.slice(0, 2)) * 60 + Number(h.slice(3, 5));
+    const contigui = (lista) => lista.every((h, i) => i === 0 || minutiDi(h) - minutiDi(lista[i - 1]) === passo);
+    const orariDi = (iso) => (slotsData.giorni ? slotsData.giorni[new Date(iso + 'T12:00:00').getDay()] || [] : orari);
     const chiusuraIn = { date: [], periodi: [] };
     if (slotsData.chiusure) {
       if (Array.isArray(slotsData.chiusure.date)) chiusuraIn.date = slotsData.chiusure.date;
@@ -1087,7 +1102,7 @@
     }
     /** Stessa regola del server (api/_lib/chiusure.mjs): domenica, festivi ed eventuali periodi di ferie. */
     const giornoChiuso = (iso, day) => {
-      if (day === 0) return true;
+      if (day === 0 || (slotsData.giorni && !(slotsData.giorni[day] || []).length)) return true;
       if (chiusuraIn.date.includes(iso)) return true;
       return chiusuraIn.periodi.some((p) => iso >= p.da && iso <= p.a);
     };
@@ -1135,18 +1150,19 @@
       try {
         const res = await fetch(`${base}disponibilita?giorno=${encodeURIComponent(iso)}`);
         const data = await res.json();
-        if (data?.chiuso) return new Set(orari);
+        if (data?.chiuso) return new Set(orariDi(iso));
         return new Set(Array.isArray(data?.occupati) ? data.occupati : []);
       } catch {
         return new Set();
       }
     };
 
-    const orariBloccati = (occupati, slotCount) => {
+    const orariBloccati = (occupati, slotCount, iso) => {
       const bloccati = new Set();
-      orari.forEach((h, i) => {
-        const richiesti = orari.slice(i, i + slotCount);
-        if (richiesti.length !== slotCount || richiesti.some((o) => occupati.has(o))) bloccati.add(h);
+      const lista = orariDi(iso);
+      lista.forEach((h, i) => {
+        const richiesti = lista.slice(i, i + slotCount);
+        if (richiesti.length !== slotCount || !contigui(richiesti) || richiesti.some((o) => occupati.has(o))) bloccati.add(h);
       });
       return bloccati;
     };
@@ -1234,8 +1250,8 @@
         const erroreSposta = $('[data-errore-sposta]', pannello);
 
         const disegnaSlots = () => {
-          const bloccati = orariBloccati(stato.occupati, s.slotCount || 1);
-          slotsBox.innerHTML = orari
+          const bloccati = orariBloccati(stato.occupati, s.slotCount || 1, stato.data);
+          slotsBox.innerHTML = orariDi(stato.data)
             .map((h) => {
               const off = bloccati.has(h);
               return `<button class="slot${off ? ' is-off' : ''}" type="button" data-hour="${h}" aria-pressed="${stato.ora === h}"${off ? ' disabled' : ''}>${h}</button>`;

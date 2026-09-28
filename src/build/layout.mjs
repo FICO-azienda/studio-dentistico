@@ -1,4 +1,4 @@
-import { site, rel, esc, attr, arrow, treatments, imgTag, catPath, PATH, nav, assetRoot } from './utils.mjs';
+import { site, rel, esc, attr, arrow, treatments, cases, imgTag, catPath, PATH, nav, assetRoot } from './utils.mjs';
 import { t, getLang, LANGS, LANG_LABEL, HTML_LANG, OG_LOCALE, DEFAULT_LANG, altPath } from './i18n.mjs';
 
 /* -- dati strutturati ----------------------------------------------------- */
@@ -11,7 +11,6 @@ export const dentistLd = () => ({
   telephone: site.phone,
   email: site.email,
   image: site.url + '/images/hero-studio-1280.webp',
-  priceRange: '€€€',
   address: {
     '@type': 'PostalAddress',
     streetAddress: site.address.street,
@@ -21,13 +20,15 @@ export const dentistLd = () => ({
     addressCountry: site.address.country
   },
   geo: { '@type': 'GeoCoordinates', latitude: site.address.lat, longitude: site.address.lng },
-  openingHoursSpecification: [
-    { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'], opens: '08:30', closes: '19:30' },
-    { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Saturday'], opens: '09:00', closes: '13:00' }
-  ],
+  openingHoursSpecification: (site.openingHours || []).map((o) => ({
+    '@type': 'OpeningHoursSpecification',
+    dayOfWeek: o.day,
+    opens: o.opens,
+    closes: o.closes
+  })),
   areaServed: { '@type': 'City', name: 'Milano' },
   medicalSpecialty: 'Dentistry',
-  availableService: ['Implantologia', 'Ortodonzia invisibile', 'Igiene e prevenzione', 'Estetica dentale', 'Endodonzia']
+  availableService: treatments.items.map((x) => x.title)
 });
 
 const breadcrumbLd = (base, crumbs) => ({
@@ -116,7 +117,7 @@ const footer = (base, asset) => `
       <div class="footer__brand">
         ${logo(base)}
         <p class="small mt-2" style="color:rgba(238,236,229,.6);max-width:34ch">
-          Odontoiatria contemporanea a Milano. Tecnologia avanzata, esperienza clinica e attenzione alla persona in ogni fase del trattamento.
+          ${esc(t('footer.about'))}
         </p>
       </div>
       <nav class="footer__col" aria-label="Studio">
@@ -136,7 +137,7 @@ const footer = (base, asset) => `
           <li><a href="${base}${PATH.treatments}estetica-dentale/">Estetica dentale</a></li>
           <li><a href="${base}${PATH.treatments}implantologia/">Implantologia</a></li>
           <li><a href="${base}${PATH.treatments}ortodonzia/">Ortodonzia</a></li>
-          <li><a href="${base}${PATH.cases}">Casi clinici</a></li>
+          ${cases.items.length ? `<li><a href="${base}${PATH.cases}">Casi clinici</a></li>` : ''}
           <li><a href="${base}${PATH.journal}">Journal</a></li>
         </ul>
       </nav>

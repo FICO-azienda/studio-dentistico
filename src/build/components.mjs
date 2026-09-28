@@ -1,4 +1,4 @@
-import { site, esc, attr, arrow, imgTag, figure, lines, dateIt, personName, byPerson, journal, faqs, reviews, PATH, articlePath, teamPath } from './utils.mjs';
+import { site, esc, attr, arrow, imgTag, figure, lines, dateIt, personName, journal, faqs, reviews, PATH, articlePath, teamPath } from './utils.mjs';
 import { t } from './i18n.mjs';
 
 /* -- intestazione di sezione ---------------------------------------------- */
@@ -28,10 +28,18 @@ export const stats = () => `
 </div>`;
 
 /* -- persona -------------------------------------------------------------- */
+/** Iniziali per il monogramma mostrato quando un professionista non ha ancora una fotografia. */
+const iniziali = (p) => {
+  const parti = p.name.split(/\s+/).filter(Boolean);
+  return ((parti[0]?.[0] || '') + (parti.length > 1 ? parti[parti.length - 1][0] : '')).toUpperCase();
+};
+export const portrait = (p, base, opts = {}) =>
+  p.image ? imgTag(p.image, { base, ...opts }) : `<span class="media__monogram" aria-hidden="true">${esc(iniziali(p))}</span>`;
+
 export const personCard = (p, base) => `
 <a class="person reveal" href="${base}${teamPath(p)}">
   <div class="media media--ar media--duo media__zoom" style="--ar:3/4">
-    ${imgTag(p.image, { base, sizes: '(max-width: 560px) 100vw, (max-width: 1000px) 50vw, 25vw' })}
+    ${portrait(p, base, { sizes: '(max-width: 560px) 100vw, (max-width: 1000px) 50vw, 25vw' })}
     <div class="person__overlay">
       <p>${esc(p.short)}</p>
       <span class="link-u">${esc(t('common.discoverProfile'))} ${arrow}</span>
@@ -185,7 +193,6 @@ export const journalPreview = (base, compact = false) => {
   }
 
   const [featured, ...rest] = journal;
-  const a = byPerson[featured.author];
   return `
 <section class="section" id="journal">
   <div class="wrap">
@@ -208,7 +215,7 @@ export const journalPreview = (base, compact = false) => {
         </div>
         <h3 class="h2 mt-2 reveal">${esc(featured.title)}</h3>
         <p class="body mt-2 measure-sm">${esc(featured.excerpt)}</p>
-        <p class="small mt-2" style="color:var(--stone-light)">${esc(personName(a))} · ${featured.reading} ${esc(t('common.minRead'))}</p>
+        <p class="small mt-2" style="color:var(--stone-light)">${featured.reading} ${esc(t('common.minRead'))}</p>
         <p class="mt-3"><span class="link-u">${esc(t('common.readMore'))} ${arrow}</span></p>
       </div>
     </a>

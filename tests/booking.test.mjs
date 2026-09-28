@@ -18,7 +18,7 @@ import { buildIcs, localeToUtc } from '../api/_lib/ics.mjs';
 import { studio } from '../api/_lib/studio.mjs';
 import { rateLimit, _reset } from '../api/_lib/ratelimit.mjs';
 import { byService, visibleQuestions, computePriority, computeTags, buildSummary, validateAnswers } from '../api/_lib/flows.mjs';
-import { giornoChiuso } from '../api/_lib/chiusure.mjs';
+import { giornoChiuso, chiusure } from '../api/_lib/chiusure.mjs';
 import { reserveSlots, releaseSlots, getDayOccupied } from '../api/_lib/availability.mjs';
 import { saveBooking, getBooking, listBookings } from '../api/_lib/store.mjs';
 import { sposta, statoPrenotazione } from '../api/_lib/manage.mjs';
@@ -473,7 +473,15 @@ test('ogni email ha anche la versione in testo semplice', () => {
 test('giornoChiuso riconosce domenica, un festivo esplicito e un periodo di ferie', () => {
   assert.equal(giornoChiuso('2026-09-27'), true, 'domenica');
   assert.equal(giornoChiuso('2026-12-25'), true, 'festivo in content/chiusure.json');
-  assert.equal(giornoChiuso('2026-08-15'), true, 'dentro il periodo di ferie estive');
+  // le ferie vere non sono ancora state comunicate: il periodo si aggiunge qui solo per verificare la regola
+  const periodo = { da: '2026-08-10', a: '2026-08-23', etichetta: 'periodo di prova' };
+  chiusure.periodi.push(periodo);
+  try {
+    assert.equal(giornoChiuso('2026-08-15'), true, 'dentro un periodo di ferie');
+  } finally {
+    chiusure.periodi.splice(chiusure.periodi.indexOf(periodo), 1);
+  }
+  assert.equal(giornoChiuso('2026-08-15'), false, 'fuori dai periodi configurati');
   assert.equal(giornoChiuso('2026-09-28'), false, 'lunedì normale');
 });
 

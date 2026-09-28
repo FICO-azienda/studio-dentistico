@@ -9,7 +9,7 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
-import { ROOT, site, team, treatments, journal, write, applyLang, PATH } from './src/build/utils.mjs';
+import { ROOT, site, team, treatments, journal, cases, write, applyLang, PATH } from './src/build/utils.mjs';
 import { LANGS, DEFAULT_LANG, ROUTES, altPath, setLang } from './src/build/i18n.mjs';
 import { homePage } from './src/build/page-home.mjs';
 import { studioPage, teamPage, personPage, techPage, firstVisitPage, contactPage, bookingPage, manageBookingPage } from './src/build/page-core.mjs';
@@ -52,7 +52,8 @@ for (const lang of LANGS) {
   treatments.categories.forEach((c) => add(`${R.treatments}/${c.slug}`, categoryPage(c)));
   treatments.items.forEach((x) => add(`${R.treatments}/${x.category}/${x.slug}`, treatmentPage(x)));
   add(R.technologies, techPage());
-  add(R.cases, casesPage());
+  // senza casi clinici reali la pagina non esiste (e non compare in navigazione e sitemap)
+  if (cases.items.length) add(R.cases, casesPage());
   add(R.journal, journalIndex());
   journal.forEach((a) => add(`${R.journal}/${a.slug}`, articlePage(a)));
   add(R.firstVisit, firstVisitPage());
@@ -83,7 +84,7 @@ fs.writeFileSync(
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${site.name}</title>
-<meta name="description" content="Studio Liddi, studio odontoiatrico a Milano. Scegli la lingua del sito: italiano oppure inglese. Studio Liddi, dental practice in Milan: choose your language.">
+<meta name="description" content="Studio Liddi, studio dentistico a Milano. Scegli la lingua del sito: italiano oppure inglese. Studio Liddi, dental practice in Milan: choose your language.">
 <meta name="robots" content="noindex, follow">
 <link rel="canonical" href="${site.url}/${DEFAULT_LANG}/">
 ${LANGS.map((l) => `<link rel="alternate" hreflang="${l}" href="${site.url}/${l}/">`).join('\n')}

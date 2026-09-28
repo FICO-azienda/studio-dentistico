@@ -4,153 +4,316 @@
     "excerpt": "Five habits that make far more difference than any treatment. None of them takes more than three minutes a day.",
     "category": "Prevention",
     "body": [
-      { "t": "p", "v": "Oral health depends far less on what we do at the practice than people think, and far more on what happens during the 364 days we do not see you. The good news is that the variables that really matter are few." },
-      { "t": "h2", "v": "1. The space between the teeth is where problems start" },
-      { "t": "p", "v": "A toothbrush, however good, reaches three of the five surfaces of every tooth. The two interproximal ones — those in contact with the neighbouring teeth — stay uncovered, and that is exactly where most decay and gum inflammation begins. Floss or an interdental brush, once a day, is worth more than any toothpaste." },
-      { "t": "h2", "v": "2. Technique matters more than force" },
-      { "t": "p", "v": "Brushing hard does not clean better: it wears away enamel at the necks of the teeth and makes gums recede. The correct direction is from gum towards tooth, with short movements and soft bristles. If you use an electric brush, rest it in place and let it work without scrubbing." },
-      { "t": "h2", "v": "3. The right moment to brush" },
-      { "t": "p", "v": "After something acidic — citrus, vinegar, fizzy drinks, white wine — enamel is temporarily softened. Brushing straight away abrades it. Better to rinse with water and wait twenty or thirty minutes." },
-      { "t": "h2", "v": "4. Bleeding is not normal" },
-      { "t": "p", "v": "A healthy gum does not bleed, not even when you floss. If it bleeds, there is inflammation. The most common mistake is to stop cleaning that area because it bleeds: the result is the exact opposite of what is needed. In most cases, careful cleaning resolves the bleeding within a week." },
-      { "t": "h2", "v": "5. Recall is not a commercial ritual" },
-      { "t": "p", "v": "Interproximal decay and early periodontitis give no symptoms. By the time they do, the treatment needed is an order of magnitude more complex. Regular recall exists to catch them while they are still small, and the interval should be calibrated to individual risk: not everyone needs the same frequency." },
-      { "t": "quote", "v": "The best treatment is the one that never had to happen." },
-      { "t": "p", "v": "If it has been more than twelve months since your last check-up, it is time to book one. Not because there is certainly something wrong, but because that is the only way to know." },
-      { "t": "sources", "v": [
-        { "text": "Worthington HV et al., «Home use of interdental cleaning devices, in addition to toothbrushing, for preventing and controlling periodontal diseases and dental caries», Cochrane Database of Systematic Reviews, 2019", "url": "https://www.cochranelibrary.com/cdsr/doi/10.1002/14651858.CD012018.pub2/full" },
-        { "text": "Fee PA et al., «Recall intervals for oral health in primary care patients», Cochrane Database of Systematic Reviews, 2020", "url": "https://www.cochranelibrary.com/cdsr/doi/10.1002/14651858.CD004346.pub5/full" }
-      ] }
+      {
+        "t": "p",
+        "v": "Oral health depends far less on what we do at the practice than people think, and far more on what happens during the 364 days we do not see you. The good news is that the variables that really matter are few."
+      },
+      {
+        "t": "h2",
+        "v": "1. The space between the teeth is where problems start"
+      },
+      {
+        "t": "p",
+        "v": "A toothbrush, however good, reaches three of the five surfaces of every tooth. The two interproximal ones — those in contact with the neighbouring teeth — stay uncovered, and that is exactly where most decay and gum inflammation begins. Floss or an interdental brush, once a day, is worth more than any toothpaste."
+      },
+      {
+        "t": "h2",
+        "v": "2. Technique matters more than force"
+      },
+      {
+        "t": "p",
+        "v": "Brushing hard does not clean better: it wears away enamel at the necks of the teeth and makes gums recede. The correct direction is from gum towards tooth, with short movements and soft bristles. If you use an electric brush, rest it in place and let it work without scrubbing."
+      },
+      {
+        "t": "h2",
+        "v": "3. The right moment to brush"
+      },
+      {
+        "t": "p",
+        "v": "After something acidic — citrus, vinegar, fizzy drinks, white wine — enamel is temporarily softened. Brushing straight away abrades it. Better to rinse with water and wait twenty or thirty minutes."
+      },
+      {
+        "t": "h2",
+        "v": "4. Bleeding is not normal"
+      },
+      {
+        "t": "p",
+        "v": "A healthy gum does not bleed, not even when you floss. If it bleeds, there is inflammation. The most common mistake is to stop cleaning that area because it bleeds: the result is the exact opposite of what is needed. In most cases, careful cleaning resolves the bleeding within a week."
+      },
+      {
+        "t": "h2",
+        "v": "5. Recall is not a commercial ritual"
+      },
+      {
+        "t": "p",
+        "v": "Interproximal decay and early periodontitis give no symptoms. By the time they do, the treatment needed is an order of magnitude more complex. Regular recall exists to catch them while they are still small, and the interval should be calibrated to individual risk: not everyone needs the same frequency."
+      },
+      {
+        "t": "quote",
+        "v": "The best treatment is the one that never had to happen."
+      },
+      {
+        "t": "p",
+        "v": "If it has been more than twelve months since your last check-up, it is time to book one. Not because there is certainly something wrong, but because that is the only way to know."
+      },
+      {
+        "t": "sources",
+        "v": [
+          {
+            "text": "Worthington HV et al., «Home use of interdental cleaning devices, in addition to toothbrushing, for preventing and controlling periodontal diseases and dental caries», Cochrane Database of Systematic Reviews, 2019",
+            "url": "https://www.cochranelibrary.com/cdsr/doi/10.1002/14651858.CD012018.pub2/full"
+          },
+          {
+            "text": "Fee PA et al., «Recall intervals for oral health in primary care patients», Cochrane Database of Systematic Reviews, 2020",
+            "url": "https://www.cochranelibrary.com/cdsr/doi/10.1002/14651858.CD004346.pub5/full"
+          }
+        ]
+      }
     ]
   },
-
-  "quando-scegliere-gli-allineatori": {
-    "title": "When to choose clear aligners",
-    "excerpt": "They are not the answer to everything, but for a substantial share of adult cases they are the sensible choice. How to tell whether you are one of them.",
-    "category": "Orthodontics",
-    "body": [
-      { "t": "p", "v": "Clear aligners changed adult orthodontics, not so much for the aesthetics as for a more practical reason: they made treatment compatible with the life of someone who works, speaks in public, and does not want to change their habits for two years." },
-      { "t": "h2", "v": "What they do well" },
-      { "t": "p", "v": "They are very efficient at tipping movements and closing spaces, and therefore at mild to moderate crowding, diastemas and post-orthodontic relapse. They are also excellent preparation for aesthetic treatment: aligning before placing veneers often means placing fewer of them, and removing less enamel." },
-      { "t": "h2", "v": "Where they struggle" },
-      { "t": "p", "v": "Significant root movement, extrusion, rotation of canines and premolars, and correcting skeletal discrepancies remain the territory of fixed appliances. They can be attempted with aligners, but with more stages, more refinements and a wider margin of unpredictability. In those cases, telling you the truth at the diagnosis stage is part of the job." },
-      { "t": "h2", "v": "The variable that really decides: you" },
-      { "t": "p", "v": "An aligner works if it is in the mouth. Twenty-two hours a day is not a suggestion, it is the premise of the digital plan: each tray is calculated on a given duration of force. Someone who removes them often does not simply slow down, they leave the plan — and the following trays no longer fit." },
-      { "t": "h2", "v": "How the decision is made" },
-      { "t": "p", "v": "At the first visit we take a scan and build a simulation of your specific case. Seeing the movement plan, the estimated duration and the expected result before committing turns a decision made from a brochure into an informed one." },
-      { "t": "p", "v": "And if the simulation shows that fixed appliances are more appropriate, we say so. Invisible treatment that does not reach the result is a bad deal for both of us." },
-      { "t": "sources", "v": [
-        { "text": "«Comparative impact of clear aligners versus fixed orthodontic appliances on periodontal health, pain, and quality of life», systematic review and meta-analysis, PMC", "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC13253859/" },
-        { "text": "Yavuz MC et al., «Effect of electronic reminders on patients’ compliance during clear aligner treatment», Scientific Reports, 2022", "url": "https://www.nature.com/articles/s41598-022-20820-5" }
-      ] }
-    ]
-  },
-
   "implantologia-cosa-sapere": {
     "title": "Dental implants: what to know beforehand",
     "excerpt": "The questions patients rarely ask, and which they should always ask, before having an implant placed.",
     "category": "Implants",
     "body": [
-      { "t": "p", "v": "The dental implant is a reliable procedure, with success rates the literature places above 95% at ten years. Precisely because it has become routine, it is worth understanding what that 95% depends on." },
-      { "t": "h2", "v": "It is not the screw, it is the plan" },
-      { "t": "p", "v": "The position of the implant must be determined by the restoration it will support, not by the bone that happens to be there. This is what separates an implant that lasts decades from one that causes problems: an implant placed where it was convenient, rather than where it was needed, produces a restoration that is hard to clean — and what cannot be cleaned becomes inflamed." },
-      { "t": "h2", "v": "The CT scan is not optional" },
-      { "t": "p", "v": "A panoramic radiograph is two-dimensional and distorted. Cone beam tomography shows the real thickness of the bone, the position of the inferior alveolar nerve and of the maxillary sinus. Planning on a panoramic means discovering in theatre information that could have been had beforehand." },
-      { "t": "h2", "v": "Peri-implantitis exists, and is preventable" },
-      { "t": "p", "v": "It is the equivalent of periodontitis around the implant: inflammation and progressive bone loss. It does not hurt and often shows itself late. The main risk factors are untreated periodontitis, smoking, a restoration that cannot be cleaned, and skipped recall appointments. Three of those four depend on decisions made before surgery." },
-      { "t": "h2", "v": "The right questions to ask" },
-      { "t": "ul", "v": ["Is planning carried out on a CT scan and with a surgical guide?", "Who makes the restoration, and with what workflow?", "What is the maintenance plan after fitting, and how often?", "What happens, in practical terms, if the implant does not integrate?"] },
-      { "t": "p", "v": "A practice with precise answers to those four questions very probably has a protocol. And it is the protocol, more than the brand of implant, that determines the result at ten years." },
-      { "t": "quote", "v": "An implant does not end when the crown is fitted: that is where it begins." },
-      { "t": "sources", "v": [
-        { "text": "Chrcanovic BR et al., «Long-term (10-year) dental implant survival: a systematic review and sensitivity meta-analysis», Journal of Dentistry, 2019", "url": "https://pubmed.ncbi.nlm.nih.gov/30904559/" },
-        { "text": "Dagassan-Berndt D et al., «Implant treatment planning regarding augmentation procedures: panoramic radiographs vs. cone beam computed tomography images», Clinical Oral Implants Research, 2016", "url": "https://pubmed.ncbi.nlm.nih.gov/26227397/" },
-        { "text": "«Risk factors for peri-implantitis: an umbrella review of meta-analyses of observational studies», Journal of Dentistry, 2024", "url": "https://www.sciencedirect.com/science/article/abs/pii/S0300571224002343" }
-      ] }
+      {
+        "t": "p",
+        "v": "The dental implant is a reliable procedure, with success rates the literature places above 95% at ten years. Precisely because it has become routine, it is worth understanding what that 95% depends on."
+      },
+      {
+        "t": "h2",
+        "v": "It is not the screw, it is the plan"
+      },
+      {
+        "t": "p",
+        "v": "The position of the implant must be determined by the restoration it will support, not by the bone that happens to be there. This is what separates an implant that lasts decades from one that causes problems: an implant placed where it was convenient, rather than where it was needed, produces a restoration that is hard to clean — and what cannot be cleaned becomes inflamed."
+      },
+      {
+        "t": "h2",
+        "v": "The CT scan is not optional"
+      },
+      {
+        "t": "p",
+        "v": "A panoramic radiograph is two-dimensional and distorted. Cone beam tomography shows the real thickness of the bone, the position of the inferior alveolar nerve and of the maxillary sinus. Planning on a panoramic means discovering in theatre information that could have been had beforehand."
+      },
+      {
+        "t": "h2",
+        "v": "Peri-implantitis exists, and is preventable"
+      },
+      {
+        "t": "p",
+        "v": "It is the equivalent of periodontitis around the implant: inflammation and progressive bone loss. It does not hurt and often shows itself late. The main risk factors are untreated periodontitis, smoking, a restoration that cannot be cleaned, and skipped recall appointments. Three of those four depend on decisions made before surgery."
+      },
+      {
+        "t": "h2",
+        "v": "The right questions to ask"
+      },
+      {
+        "t": "ul",
+        "v": [
+          "Is planning carried out on a CT scan and with a surgical guide?",
+          "Who makes the restoration, and with what workflow?",
+          "What is the maintenance plan after fitting, and how often?",
+          "What happens, in practical terms, if the implant does not integrate?"
+        ]
+      },
+      {
+        "t": "p",
+        "v": "A practice with precise answers to those four questions very probably has a protocol. And it is the protocol, more than the brand of implant, that determines the result at ten years."
+      },
+      {
+        "t": "quote",
+        "v": "An implant does not end when the crown is fitted: that is where it begins."
+      },
+      {
+        "t": "sources",
+        "v": [
+          {
+            "text": "Chrcanovic BR et al., «Long-term (10-year) dental implant survival: a systematic review and sensitivity meta-analysis», Journal of Dentistry, 2019",
+            "url": "https://pubmed.ncbi.nlm.nih.gov/30904559/"
+          },
+          {
+            "text": "Dagassan-Berndt D et al., «Implant treatment planning regarding augmentation procedures: panoramic radiographs vs. cone beam computed tomography images», Clinical Oral Implants Research, 2016",
+            "url": "https://pubmed.ncbi.nlm.nih.gov/26227397/"
+          },
+          {
+            "text": "«Risk factors for peri-implantitis: an umbrella review of meta-analyses of observational studies», Journal of Dentistry, 2024",
+            "url": "https://www.sciencedirect.com/science/article/abs/pii/S0300571224002343"
+          }
+        ]
+      }
     ]
   },
-
   "sbiancamento-come-funziona": {
     "title": "Teeth whitening: how it actually works",
     "excerpt": "What happens to enamel during professional whitening, why home remedies disappoint, and how long the result lasts.",
     "category": "Cosmetic",
     "body": [
-      { "t": "p", "v": "Whitening is probably the dental treatment surrounded by the most misinformation. It is worth being clear about the mechanism, because everything else follows from it." },
-      { "t": "h2", "v": "Nothing is removed" },
-      { "t": "p", "v": "Peroxide passes through the enamel and reaches the pigmented molecules deposited over time in the dentine beneath, breaking them into smaller, colourless ones. There is no abrasion, no removal of tissue: the tooth does not become thinner or weaker." },
-      { "t": "h2", "v": "Why bicarbonate does not work" },
-      { "t": "p", "v": "Bicarbonate, activated charcoal and \"whitening\" toothpastes work by abrasion: they remove surface stains and do not touch the internal colour of the tooth. The result is modest and, with prolonged use, paid for in worn enamel." },
-      { "t": "h2", "v": "The biological limit" },
-      { "t": "p", "v": "Every tooth has a base colour determined by the dentine, and whitening works within that limit. Two people having the same treatment get different results. Yellow-brown discolouration responds well; greyish shades, often from medication, much less so." },
-      { "t": "h2", "v": "How long it lasts" },
-      { "t": "p", "v": "From one to three years, with wide variation linked to coffee, tea, red wine and smoking. A home top-up of two or three nights once a year maintains the result without repeating the full cycle." },
-      { "t": "p", "v": "One practical note: if you have fillings or crowns among the visible teeth, remember that they do not whiten. After treatment they may look darker and need replacing, which should be accounted for from the start." },
-      { "t": "sources", "v": [
-        { "text": "American Dental Association, «Whitening», ADA Oral Health Topics", "url": "https://www.ada.org/resources/ada-library/oral-health-topics/whitening" },
-        { "text": "«Transenamel and transdentinal penetration of hydrogen peroxide applied to cracked or microabrasioned enamel», Journal of Dentistry, PubMed", "url": "https://pubmed.ncbi.nlm.nih.gov/23802644/" }
-      ] }
+      {
+        "t": "p",
+        "v": "Whitening is probably the dental treatment surrounded by the most misinformation. It is worth being clear about the mechanism, because everything else follows from it."
+      },
+      {
+        "t": "h2",
+        "v": "Nothing is removed"
+      },
+      {
+        "t": "p",
+        "v": "Peroxide passes through the enamel and reaches the pigmented molecules deposited over time in the dentine beneath, breaking them into smaller, colourless ones. There is no abrasion, no removal of tissue: the tooth does not become thinner or weaker."
+      },
+      {
+        "t": "h2",
+        "v": "Why bicarbonate does not work"
+      },
+      {
+        "t": "p",
+        "v": "Bicarbonate, activated charcoal and \"whitening\" toothpastes work by abrasion: they remove surface stains and do not touch the internal colour of the tooth. The result is modest and, with prolonged use, paid for in worn enamel."
+      },
+      {
+        "t": "h2",
+        "v": "The biological limit"
+      },
+      {
+        "t": "p",
+        "v": "Every tooth has a base colour determined by the dentine, and whitening works within that limit. Two people having the same treatment get different results. Yellow-brown discolouration responds well; greyish shades, often from medication, much less so."
+      },
+      {
+        "t": "h2",
+        "v": "How long it lasts"
+      },
+      {
+        "t": "p",
+        "v": "From one to three years, with wide variation linked to coffee, tea, red wine and smoking. A home top-up of two or three nights once a year maintains the result without repeating the full cycle."
+      },
+      {
+        "t": "p",
+        "v": "One practical note: if you have fillings or crowns among the visible teeth, remember that they do not whiten. After treatment they may look darker and need replacing, which should be accounted for from the start."
+      },
+      {
+        "t": "sources",
+        "v": [
+          {
+            "text": "American Dental Association, «Whitening», ADA Oral Health Topics",
+            "url": "https://www.ada.org/resources/ada-library/oral-health-topics/whitening"
+          },
+          {
+            "text": "«Transenamel and transdentinal penetration of hydrogen peroxide applied to cracked or microabrasioned enamel», Journal of Dentistry, PubMed",
+            "url": "https://pubmed.ncbi.nlm.nih.gov/23802644/"
+          }
+        ]
+      }
     ]
   },
-
   "prevenzione-controlli-periodici": {
     "title": "Prevention: why regular check-ups matter",
     "excerpt": "The two most common diseases of the mouth do not hurt until it is late. That is the whole point of recall.",
     "category": "Prevention",
     "body": [
-      { "t": "p", "v": "Decay and periodontitis share a characteristic that makes them insidious: in the phase when they are easily treated, they give no symptoms at all. Pain arrives when decay has reached the pulp, mobility when the bone already lost is considerable." },
-      { "t": "h2", "v": "What we look for at a check-up" },
-      { "t": "p", "v": "Not only decay. Periodontal probing measures pocket depth and bleeding; examination of the soft tissues looks for mucosal lesions; checking the bite identifies signs of bruxism before the teeth wear down. Bitewing radiographs, every twelve to twenty-four months, show the interproximal decay the eye cannot see." },
-      { "t": "h2", "v": "The right interval is not the same for everyone" },
-      { "t": "p", "v": "Six months is an average, not a rule. Anyone who has had periodontitis, who has implants, whose saliva is less protective or whose diet is acidic needs closer recall. Someone whose mouth has been stable for years can afford longer intervals. Personalising the interval is, in fact, the clinical part of recall." },
-      { "t": "h2", "v": "A question of orders of magnitude" },
-      { "t": "p", "v": "Decay caught early is treated with an adhesive restoration in a single appointment. The same decay, two years later, may require root canal treatment and a crown: five times the chair time, a different financial commitment, and a tooth that is structurally weaker for good." },
-      { "t": "p", "v": "Prevention is not an add-on service. It is the main work, and everything else is what we do when prevention arrived too late." },
-      { "t": "sources", "v": [
-        { "text": "Fee PA et al., «Recall intervals for oral health in primary care patients», Cochrane Database of Systematic Reviews, 2020", "url": "https://www.cochranelibrary.com/cdsr/doi/10.1002/14651858.CD004346.pub5/full" },
-        { "text": "«Effect of Different Frequencies of Dental Visits on Dental Caries and Periodontal Disease: A Scoping Review», International Journal of Environmental Research and Public Health, 2023", "url": "https://www.mdpi.com/1660-4601/20/19/6858" }
-      ] }
+      {
+        "t": "p",
+        "v": "Decay and periodontitis share a characteristic that makes them insidious: in the phase when they are easily treated, they give no symptoms at all. Pain arrives when decay has reached the pulp, mobility when the bone already lost is considerable."
+      },
+      {
+        "t": "h2",
+        "v": "What we look for at a check-up"
+      },
+      {
+        "t": "p",
+        "v": "Not only decay. Periodontal probing measures pocket depth and bleeding; examination of the soft tissues looks for mucosal lesions; checking the bite identifies signs of bruxism before the teeth wear down. Bitewing radiographs, every twelve to twenty-four months, show the interproximal decay the eye cannot see."
+      },
+      {
+        "t": "h2",
+        "v": "The right interval is not the same for everyone"
+      },
+      {
+        "t": "p",
+        "v": "Six months is an average, not a rule. Anyone who has had periodontitis, who has implants, whose saliva is less protective or whose diet is acidic needs closer recall. Someone whose mouth has been stable for years can afford longer intervals. Personalising the interval is, in fact, the clinical part of recall."
+      },
+      {
+        "t": "h2",
+        "v": "A question of orders of magnitude"
+      },
+      {
+        "t": "p",
+        "v": "Decay caught early is treated with an adhesive restoration in a single appointment. The same decay, two years later, may require root canal treatment and a crown: five times the chair time, a different financial commitment, and a tooth that is structurally weaker for good."
+      },
+      {
+        "t": "p",
+        "v": "Prevention is not an add-on service. It is the main work, and everything else is what we do when prevention arrived too late."
+      },
+      {
+        "t": "sources",
+        "v": [
+          {
+            "text": "Fee PA et al., «Recall intervals for oral health in primary care patients», Cochrane Database of Systematic Reviews, 2020",
+            "url": "https://www.cochranelibrary.com/cdsr/doi/10.1002/14651858.CD004346.pub5/full"
+          },
+          {
+            "text": "«Effect of Different Frequencies of Dental Visits on Dental Caries and Periodontal Disease: A Scoping Review», International Journal of Environmental Research and Public Health, 2023",
+            "url": "https://www.mdpi.com/1660-4601/20/19/6858"
+          }
+        ]
+      }
     ]
   },
   "devitalizzazione-quando-serve": {
     "title": "Root canal treatment: when it's needed and what to expect",
-    "excerpt": "It's the most feared treatment in dentistry, and one of the most effective. What actually happens inside the tooth, and why working under a microscope changes the outcome.",
+    "excerpt": "What really happens inside the tooth, when root canal treatment is needed and what to expect.",
     "category": "Endodontics",
     "body": [
-      { "t": "p", "v": "Root canal treatment has a reputation it no longer deserves. With modern anaesthesia the procedure is no more uncomfortable than a deep filling: the pain that makes people dread it is usually the pain that came before, caused by the inflammation that made treatment necessary." },
-      { "t": "h2", "v": "What happens inside the tooth" },
-      { "t": "p", "v": "At the centre of every tooth is the pulp: living tissue, with nerves and blood vessels, running through a canal from the crown down to the root. When deep decay, a fracture or trauma reaches it, the pulp becomes inflamed and, left untreated, dies. Root canal treatment removes this tissue, disinfects the canal and seals it: the tooth stays in place, but is no longer vital." },
-      { "t": "h2", "v": "Why we work at 20x magnification" },
-      { "t": "p", "v": "Root canals aren't straight tubes: they branch, curve, and sometimes merge into isthmuses that are hard to see with the naked eye. The operating microscope isn't an accessory: it lets us find accessory canals that would otherwise go untreated — the most common cause of failure years later. It's the difference between cleaning a canal and cleaning all of them." },
-      { "t": "h2", "v": "The numbers, honestly" },
-      { "t": "p", "v": "Long-term studies show 97% tooth survival at ten years, declining gradually over subsequent decades — a sign that a treated tooth can last a lifetime, but isn't immune to other problems (new decay, a fracture). For retreatment — when a first attempt, perhaps done elsewhere without a microscope, didn't succeed — success rates are lower, around 77%: one more reason to get it right the first time." },
-      { "t": "h2", "v": "When extraction is worth considering" },
-      { "t": "p", "v": "Root canal treatment isn't always the right choice. A vertically fractured root, a tooth structure too compromised to support a restoration, or insufficient periodontal support can make an implant the more predictable solution. It's a case-by-case judgement, made with an X-ray in hand, not a rule." },
-      { "t": "quote", "v": "A well-treated root canal isn't felt at all: that's the very definition of success." },
-      { "t": "sources", "v": [
-        { "text": "Ng YL et al., «Outcomes of primary root canal therapy: an updated systematic review of longitudinal clinical studies published between 2003 and 2020», International Endodontic Journal", "url": "https://pubmed.ncbi.nlm.nih.gov/35334111/" },
-        { "text": "«Long-term tooth survival and success following primary root canal treatment: a 5- to 37-year retrospective observation», Clinical Oral Investigations, 2023", "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10264502/" }
-      ] }
-    ]
-  },
-  "faccette-dentali-quanto-durano": {
-    "title": "Dental veneers: how long do they really last",
-    "excerpt": "Not all veneers are equal, and the difference shows up ten years later, not on the day they're fitted. What actually determines how long a veneer lasts.",
-    "category": "Aesthetics",
-    "body": [
-      { "t": "p", "v": "Most people evaluating veneers look almost entirely at the immediate aesthetic result: shape, colour, symmetry. Understandable, but it's only half the right question. The other half is: will they still be there in ten years?" },
-      { "t": "h2", "v": "What happens beneath the ceramic" },
-      { "t": "p", "v": "A veneer is a thin layer of ceramic bonded to the visible surface of the tooth, after minimal preparation that in many cases stays within the enamel. The bond that holds it in place isn't mechanical like a crown: it's a chemical adhesion between ceramic and tooth, and the quality of that bond largely determines how long it lasts." },
-      { "t": "h2", "v": "Materials aren't all equal" },
-      { "t": "p", "v": "Feldspathic ceramics, the most traditional, give excellent aesthetics but lower strength than lithium disilicate or zirconia, now more commonly used for their combination of looks and durability. Design matters too: veneers that slightly cover the incisal edge of the tooth have proven more fracture-resistant than those that stop short of it." },
-      { "t": "h2", "v": "What makes a veneer fail" },
-      { "t": "ul", "v": ["Fracture of the margin or the whole veneer, usually from excessive load (unmanaged bruxism)", "Debonding, when the adhesive bond weakens", "Secondary decay at the margin, if daily hygiene isn't thorough", "Gum recession exposing the preparation margin, an aesthetic rather than functional issue"] },
-      { "t": "h2", "v": "The numbers" },
-      { "t": "p", "v": "The most recent systematic reviews report a cumulative survival rate around 95-97% at ten years for modern ceramics, dropping to roughly 85% at fifteen years. Those numbers only hold if bruxism, when present, is managed with a night guard: it's the most frequent cause of fracture, and entirely avoidable." },
-      { "t": "quote", "v": "The best veneer is the one nobody notices — not on day one, and not ten years later." },
-      { "t": "sources", "v": [
-        { "text": "«Long-Term Survival and Complication Rates of Porcelain Laminate Veneers in Clinical Studies: A Systematic Review», Journal of Esthetic and Restorative Dentistry, 2021", "url": "https://pubmed.ncbi.nlm.nih.gov/33807504/" },
-        { "text": "«Survival and Complication Rates of Feldspathic, Leucite-Reinforced, Lithium Disilicate and Zirconia Ceramic Laminate Veneers: A Systematic Review and Meta-Analysis», PMC", "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12076113/" }
-      ] }
+      {
+        "t": "p",
+        "v": "Root canal treatment has a reputation it no longer deserves. With modern anaesthesia the procedure is no more uncomfortable than a deep filling: the pain that makes people dread it is usually the pain that came before, caused by the inflammation that made treatment necessary."
+      },
+      {
+        "t": "h2",
+        "v": "What happens inside the tooth"
+      },
+      {
+        "t": "p",
+        "v": "At the centre of every tooth is the pulp: living tissue, with nerves and blood vessels, running through a canal from the crown down to the root. When deep decay, a fracture or trauma reaches it, the pulp becomes inflamed and, left untreated, dies. Root canal treatment removes this tissue, disinfects the canal and seals it: the tooth stays in place, but is no longer vital."
+      },
+      {
+        "t": "h2",
+        "v": "Why we work at 20x magnification"
+      },
+      {
+        "t": "p",
+        "v": "Root canals aren't straight tubes: they branch, curve, and sometimes merge into isthmuses that are hard to see with the naked eye. The operating microscope isn't an accessory: it lets us find accessory canals that would otherwise go untreated — the most common cause of failure years later. It's the difference between cleaning a canal and cleaning all of them."
+      },
+      {
+        "t": "h2",
+        "v": "The numbers, honestly"
+      },
+      {
+        "t": "p",
+        "v": "Long-term studies show 97% tooth survival at ten years, declining gradually over subsequent decades — a sign that a treated tooth can last a lifetime, but isn't immune to other problems (new decay, a fracture). For retreatment — when a first attempt, perhaps done elsewhere without a microscope, didn't succeed — success rates are lower, around 77%: one more reason to get it right the first time."
+      },
+      {
+        "t": "h2",
+        "v": "When extraction is worth considering"
+      },
+      {
+        "t": "p",
+        "v": "Root canal treatment isn't always the right choice. A vertically fractured root, a tooth structure too compromised to support a restoration, or insufficient periodontal support can make an implant the more predictable solution. It's a case-by-case judgement, made with an X-ray in hand, not a rule."
+      },
+      {
+        "t": "quote",
+        "v": "A well-treated root canal isn't felt at all: that's the very definition of success."
+      },
+      {
+        "t": "sources",
+        "v": [
+          {
+            "text": "Ng YL et al., «Outcomes of primary root canal therapy: an updated systematic review of longitudinal clinical studies published between 2003 and 2020», International Endodontic Journal",
+            "url": "https://pubmed.ncbi.nlm.nih.gov/35334111/"
+          },
+          {
+            "text": "«Long-term tooth survival and success following primary root canal treatment: a 5- to 37-year retrospective observation», Clinical Oral Investigations, 2023",
+            "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10264502/"
+          }
+        ]
+      }
     ]
   },
   "parodontite-non-solo-gengive": {
@@ -158,20 +321,59 @@
     "excerpt": "Untreated gum disease doesn't stop at the teeth: research links it to cardiovascular risk and diabetes control. What the evidence actually says.",
     "category": "Periodontics",
     "body": [
-      { "t": "p", "v": "Periodontitis is a chronic inflammation that progressively destroys the bone around the teeth. It doesn't hurt until it's advanced, which makes it easy to ignore — but research in recent years has made clear that its consequences don't stop at the mouth." },
-      { "t": "h2", "v": "How it's treated, first of all" },
-      { "t": "p", "v": "The baseline treatment isn't surgical: it's scaling and root planing, a thorough mechanical clean below the gumline that removes bacterial biofilm and calculus from the root surfaces. It remains the most effective treatment for most cases, with measurable improvements in pocket depth and bleeding. Surgery only comes into play for the deepest pockets, when scaling alone isn't enough." },
-      { "t": "h2", "v": "The link with diabetes" },
-      { "t": "p", "v": "The relationship runs both ways: chronic high blood sugar worsens periodontal inflammation, and untreated periodontitis in turn worsens glycaemic control. Diabetic patients with periodontitis have up to six times the risk of poor glycaemic control compared with those with healthy gums. Treating the gums, in a diabetic patient, is also a measure of metabolic control." },
-      { "t": "h2", "v": "The link with the heart" },
-      { "t": "p", "v": "Chronic inflammation and the presence of periodontal bacteria in the bloodstream are associated with increased cardiovascular risk, estimated at two to three times higher in the most severe forms. This doesn't mean periodontitis causes a heart attack: it means it's an additional risk factor, of the same order as others already routinely monitored." },
-      { "t": "h2", "v": "What this means in practice" },
-      { "t": "p", "v": "It isn't a reason for alarm, it's one more reason not to put off a periodontal check-up — especially with a family history of diabetes or cardiovascular disease. Periodontitis is detected with a simple, painless probing that should be part of every routine check-up." },
-      { "t": "quote", "v": "Bleeding gums aren't a cosmetic detail: they're a signal worth listening to." },
-      { "t": "sources", "v": [
-        { "text": "Sanz M et al., «Association between periodontal diseases and cardiovascular diseases, diabetes and respiratory diseases: consensus report EFP/WONCA Europe», Journal of Clinical Periodontology, 2023", "url": "https://onlinelibrary.wiley.com/doi/full/10.1111/jcpe.13807" },
-        { "text": "«Dental Scaling and Root Planing for Periodontal Health: A Review of the Clinical Effectiveness, Cost-effectiveness, and Guidelines», CADTH / NCBI Bookshelf", "url": "https://www.ncbi.nlm.nih.gov/books/NBK401538/" }
-      ] }
+      {
+        "t": "p",
+        "v": "Periodontitis is a chronic inflammation that progressively destroys the bone around the teeth. It doesn't hurt until it's advanced, which makes it easy to ignore — but research in recent years has made clear that its consequences don't stop at the mouth."
+      },
+      {
+        "t": "h2",
+        "v": "How it's treated, first of all"
+      },
+      {
+        "t": "p",
+        "v": "The baseline treatment isn't surgical: it's scaling and root planing, a thorough mechanical clean below the gumline that removes bacterial biofilm and calculus from the root surfaces. It remains the most effective treatment for most cases, with measurable improvements in pocket depth and bleeding. Surgery only comes into play for the deepest pockets, when scaling alone isn't enough."
+      },
+      {
+        "t": "h2",
+        "v": "The link with diabetes"
+      },
+      {
+        "t": "p",
+        "v": "The relationship runs both ways: chronic high blood sugar worsens periodontal inflammation, and untreated periodontitis in turn worsens glycaemic control. Diabetic patients with periodontitis have up to six times the risk of poor glycaemic control compared with those with healthy gums. Treating the gums, in a diabetic patient, is also a measure of metabolic control."
+      },
+      {
+        "t": "h2",
+        "v": "The link with the heart"
+      },
+      {
+        "t": "p",
+        "v": "Chronic inflammation and the presence of periodontal bacteria in the bloodstream are associated with increased cardiovascular risk, estimated at two to three times higher in the most severe forms. This doesn't mean periodontitis causes a heart attack: it means it's an additional risk factor, of the same order as others already routinely monitored."
+      },
+      {
+        "t": "h2",
+        "v": "What this means in practice"
+      },
+      {
+        "t": "p",
+        "v": "It isn't a reason for alarm, it's one more reason not to put off a periodontal check-up — especially with a family history of diabetes or cardiovascular disease. Periodontitis is detected with a simple, painless probing that should be part of every routine check-up."
+      },
+      {
+        "t": "quote",
+        "v": "Bleeding gums aren't a cosmetic detail: they're a signal worth listening to."
+      },
+      {
+        "t": "sources",
+        "v": [
+          {
+            "text": "Sanz M et al., «Association between periodontal diseases and cardiovascular diseases, diabetes and respiratory diseases: consensus report EFP/WONCA Europe», Journal of Clinical Periodontology, 2023",
+            "url": "https://onlinelibrary.wiley.com/doi/full/10.1111/jcpe.13807"
+          },
+          {
+            "text": "«Dental Scaling and Root Planing for Periodontal Health: A Review of the Clinical Effectiveness, Cost-effectiveness, and Guidelines», CADTH / NCBI Bookshelf",
+            "url": "https://www.ncbi.nlm.nih.gov/books/NBK401538/"
+          }
+        ]
+      }
     ]
   }
 }

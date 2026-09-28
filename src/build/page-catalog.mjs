@@ -1,7 +1,7 @@
 import { site, treatments, cases, journal, team, esc, attr, arrow, imgTag, figure, lines, dateIt, personName, byTreatment, byPerson, byTech, metaTitle, byCategory, catPath, treatmentPath, specialistsOf, techOf, PATH, teamPath, articlePath } from './utils.mjs';
 import { layout, dentistLd } from './layout.mjs';
 import { getLang, t } from './i18n.mjs';
-import { sectionHead, bookingBand, faqList, faqLd, pageHero, articleCard, personCard } from './components.mjs';
+import { sectionHead, bookingBand, faqList, faqLd, pageHero, articleCard, personCard, portrait } from './components.mjs';
 
 /* ==================================================== /trattamenti ======= */
 /** Indice: solo i quattro gruppi, con ingresso alle pagine dedicate. */
@@ -11,8 +11,8 @@ export const treatmentsIndex = () => {
 ${pageHero({
     label: `01 — ${t('nav.treatments')}`,
     title: lines([t('home.treatments.t1'), `<em class="serif-italic">${t('home.treatments.t2')}</em>`]),
-    lead: t('tr.indexLead'),
-    aside: t('tr.indexAside'),
+    lead: t('tr.indexLead', { n: treatments.items.length }),
+    aside: t('tr.indexAside', { n: treatments.items.length }),
     crumbs: [{ label: t('nav.home'), path: '' }, { label: t('nav.treatments') }],
     base
   })}
@@ -59,14 +59,14 @@ export const categoryPage = (c) => {
   const items = c.items.map((s) => byTreatment[s]).filter(Boolean);
   const techs = techOf(c);
   const docs = specialistsOf(c);
-  const faq = items.map((x) => x.faq[0]).filter(Boolean);
+  const faq = items.map((x) => (x.faq || [])[0]).filter(Boolean);
 
   const main = `
 ${pageHero({
     label: `${c.num} — ${t('cat.areaLabel')}`,
     title: lines([esc(c.title)]),
     lead: esc(c.lead),
-    aside: `${items.length} ${t('cat.treatmentsCount')}<br>${docs.length} ${t('cat.specialistsCount')}`,
+    aside: `${items.length} ${t('cat.treatmentsCount')}${docs.length ? `<br>${docs.length} ${t('cat.specialistsCount')}` : ''}`,
     crumbs: [{ label: t('nav.home'), path: '' }, { label: t('nav.treatments'), path: PATH.treatments }, { label: c.title }],
     base,
     media: c.image,
@@ -109,7 +109,9 @@ ${pageHero({
   </div>
 </section>
 
-<section class="section dark">
+${
+  techs.length
+    ? `<section class="section dark">
   <div class="wrap">
     ${sectionHead({
       label: t('common.technologyUsed'),
@@ -134,21 +136,29 @@ ${pageHero({
         .join('')}
     </div>
   </div>
-</section>
+</section>`
+    : ''
+}
 
-<section class="section">
+${
+  docs.length
+    ? `<section class="section">
   <div class="wrap">
     ${sectionHead({
       label: t('common.specialists'),
       title: lines([t('cat.whoT1'), `<em class="serif-italic">${t('cat.whoT2')}</em>`]),
-      link: { href: PATH.team, label: 'Tutto il team' },
+      link: { href: PATH.team, label: t('common.allTeam') },
       base
     })}
     <div class="team-grid">${docs.map((p) => personCard(p, base)).join('')}</div>
   </div>
-</section>
+</section>`
+    : ''
+}
 
-<section class="section section--flush-top">
+${
+  faq.length
+    ? `<section class="section section--flush-top">
   <div class="wrap">
     <div class="grid">
       <div class="col-4">
@@ -160,7 +170,9 @@ ${pageHero({
       <div class="col-7 start-7">${faqList(faq, 'cat')}</div>
     </div>
   </div>
-</section>
+</section>`
+    : ''
+}
 ${bookingBand(base)}`;
 
   return layout({
@@ -182,7 +194,7 @@ ${bookingBand(base)}`;
         description: c.lead,
         url: `${site.url}/${catPath(c)}`
       },
-      faqLd(faq)
+      ...(faq.length ? [faqLd(faq)] : [])
     ],
     main
   });
@@ -192,8 +204,8 @@ ${bookingBand(base)}`;
 export const treatmentPage = (tr) => {
   const base = '../../../';
   const cat = byCategory[tr.category];
-  const doc = byPerson[tr.doctor];
-  const related = tr.related.map((s) => byTreatment[s]).filter(Boolean);
+  const doc = tr.doctor ? byPerson[tr.doctor] : null;
+  const related = (tr.related || []).map((s) => byTreatment[s]).filter(Boolean);
   const techs = (tr.tech || []).map((s) => byTech[s]).filter(Boolean);
 
   const main = `
@@ -201,7 +213,7 @@ ${pageHero({
     label: `${cat.num} — ${cat.title}`,
     title: lines([esc(tr.title)]),
     lead: esc(tr.lead),
-    aside: `Responsabile clinico<br><a class="link-inline" href="${base}${teamPath(doc)}">${esc(personName(doc))}</a>`,
+    aside: doc ? `Responsabile clinico<br><a class="link-inline" href="${base}${teamPath(doc)}">${esc(personName(doc))}</a>` : '',
     crumbs: [
       { label: t('nav.home'), path: '' },
       { label: t('nav.treatments'), path: PATH.treatments },
@@ -225,31 +237,43 @@ ${pageHero({
           <h2>${esc(t('tr.indicated'))}</h2>
           <ul>${tr.indicated.map((i) => `<li>${esc(i)}</li>`).join('')}</ul>
         </div>
-        <div class="reveal">
+        ${
+          (tr.how || []).length
+            ? `<div class="reveal">
           <h2>${esc(t('tr.howWorks'))}</h2>
           ${tr.how.map((p) => `<p>${esc(p)}</p>`).join('')}
-        </div>
+        </div>`
+            : ''
+        }
       </div>
       <aside class="col-4 start-8">
         <div class="sticky">
           <div class="sidebar-card reveal">
-            <span class="label">${esc(t('common.summary'))}</span>
+            ${
+              (tr.specs || []).length
+                ? `<span class="label">${esc(t('common.summary'))}</span>
             <dl class="summary-list mt-3">
               ${tr.specs.map((s) => `<div><dt>${esc(s.label)}</dt><dd>${esc(s.value)}</dd></div>`).join('')}
-            </dl>
+            </dl>`
+                : `<span class="label">${esc(t('nav.bookShort'))}</span>`
+            }
             <p class="mt-4"><a class="btn btn--block btn--sm" href="${base}${PATH.book}">${esc(t('nav.book'))}</a></p>
           </div>
-          <div class="sidebar-card reveal">
+          ${
+            doc
+              ? `<div class="sidebar-card reveal">
             <span class="label">${esc(t('common.leadDoctor'))}</span>
             <a class="row mt-3" href="${base}${teamPath(doc)}" style="gap:1rem;flex-wrap:nowrap">
-              <span class="media media--duo" style="width:72px;height:90px;flex:none">${imgTag(doc.image, { base, sizes: '72px' })}</span>
+              <span class="media media--duo" style="width:72px;height:90px;flex:none">${portrait(doc, base, { sizes: '72px' })}</span>
               <span>
                 <strong style="font-weight:500">${esc(personName(doc))}</strong>
                 <span class="small" style="display:block;color:var(--stone)">${esc(doc.role)}</span>
                 <span class="link-u" style="margin-top:.6rem">Profilo ${arrow}</span>
               </span>
             </a>
-          </div>
+          </div>`
+              : ''
+          }
           <div class="sidebar-card reveal">
             <span class="label">${esc(t('common.clinicalArea'))}</span>
             <p class="h4 mt-2"><a class="link-inline" href="${base}${catPath(cat)}">${esc(cat.title)}</a></p>
@@ -261,7 +285,9 @@ ${pageHero({
   </div>
 </section>
 
-<section class="section section--sm bg-sand">
+${
+  (tr.phases || []).length
+    ? `<section class="section section--sm bg-sand">
   <div class="wrap">
     <div class="grid">
       <div class="col-4">
@@ -275,7 +301,9 @@ ${pageHero({
       </div>
     </div>
   </div>
-</section>
+</section>`
+    : ''
+}
 
 ${
   techs.length
@@ -305,7 +333,9 @@ ${
     : ''
 }
 
-<section class="section">
+${
+  (tr.faq || []).length
+    ? `<section class="section">
   <div class="wrap">
     <div class="grid">
       <div class="col-4"><span class="label reveal">${esc(t('common.faqTitle'))}</span><h2 class="h2 mt-2 reveal">${lines([esc(tr.title) + '.'])}</h2>
@@ -315,7 +345,9 @@ ${
       <div class="col-7 start-7">${faqList(tr.faq, 'tf')}</div>
     </div>
   </div>
-</section>
+</section>`
+    : ''
+}
 
 <section class="section section--flush-top">
   <div class="wrap">
@@ -354,11 +386,11 @@ ${bookingBand(base)}`;
         '@type': 'MedicalProcedure',
         name: tr.title,
         description: tr.lead,
-        howPerformed: tr.how.join(' '),
-        url: `${site.url}/${treatmentPath(t)}`,
+        ...((tr.how || []).length ? { howPerformed: tr.how.join(' ') } : {}),
+        url: `${site.url}/${treatmentPath(tr)}`,
         provider: { '@id': site.url + '/#studio' }
       },
-      faqLd(tr.faq)
+      ...((tr.faq || []).length ? [faqLd(tr.faq)] : [])
     ],
     main
   });
@@ -451,7 +483,7 @@ ${pageHero({
         <div class="row"><span class="label label--accent">${esc(f.category)}</span><span class="label">${dateIt(f.date)}</span></div>
         <h2 class="h2 mt-2 reveal">${esc(f.title)}</h2>
         <p class="body mt-2 measure-sm">${esc(f.excerpt)}</p>
-        <p class="small mt-2" style="color:var(--stone-light)">${esc(personName(byPerson[f.author]))} · ${f.reading} ${esc(t('common.minRead'))}</p>
+        <p class="small mt-2" style="color:var(--stone-light)">${f.reading} ${esc(t('common.minRead'))}</p>
         <p class="mt-3"><span class="link-u">${esc(t('common.readMore'))} ${arrow}</span></p>
       </div>
     </a>
@@ -487,7 +519,6 @@ const renderBlock = (b) => {
 
 export const articlePage = (a) => {
   const base = '../../';
-  const author = byPerson[a.author];
   const others = journal.filter((x) => x.slug !== a.slug).slice(0, 3);
   const plain = a.body.filter((b) => b.t === 'p').map((b) => b.v).join(' ');
 
@@ -511,13 +542,6 @@ ${pageHero({
       </div>
       <aside class="col-3" style="grid-column:10 / span 3">
         <div class="sticky">
-          <div class="sidebar-card">
-            <span class="label">${esc(t('common.author'))}</span>
-            <a class="row mt-3" href="${base}${teamPath(author)}" style="gap:1rem;flex-wrap:nowrap">
-              <span class="media media--duo" style="width:64px;height:80px;flex:none">${imgTag(author.image, { base, sizes: '64px' })}</span>
-              <span><strong style="font-weight:500">${esc(personName(author))}</strong><span class="small" style="display:block;color:var(--stone)">${esc(author.role)}</span></span>
-            </a>
-          </div>
           <div class="sidebar-card">
             <span class="label">${esc(t('journal.question'))}</span>
             <p class="small mt-2" style="color:var(--stone)">${esc(t('journal.questionText'))}</p>
@@ -558,7 +582,6 @@ ${bookingBand(base)}`;
         dateModified: a.date,
         articleBody: plain.slice(0, 900),
         image: `${site.url}/images/${a.image}-1280.webp`,
-        author: { '@type': 'Person', name: personName(author) },
         publisher: { '@id': site.url + '/#studio' },
         mainEntityOfPage: `${site.url}/journal/${a.slug}/`
       }

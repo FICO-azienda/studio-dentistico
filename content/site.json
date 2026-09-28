@@ -1,110 +1,147 @@
 {
   "name": "Studio Liddi",
   "wordmark": "Liddi",
-  "legalName": "Studio Odontoiatrico Liddi S.r.l.",
+  "legalName": "Studio Dentistico Liddi Dott. Arturo",
   "tagline": "Odontoiatria contemporanea",
   "claim": "Your smile.\nOur commitment.",
   "url": "https://fico-azienda.github.io/studio-dentistico",
   "lang": "it-IT",
   "city": "Milano",
   "address": {
-    "street": "Via Antonio Canova 14",
-    "zip": "20145",
+    "street": "Via Rovigo 9",
+    "zip": "20132",
     "city": "Milano",
     "region": "MI",
     "country": "IT",
-    "lat": 45.4788,
-    "lng": 9.1682
+    "lat": 45.5066974,
+    "lng": 9.2455745
   },
-  "phone": "+39 02 4700 1188",
-  "phoneHref": "+390247001188",
-  "whatsapp": "+39 340 118 4477",
-  "whatsappHref": "393401184477",
-  "email": "info@studioliddi.it",
-  "vat": "IT 09 8741 2209 6",
-  "director": "Dr. Andrea Vitali — Direttore Sanitario, Albo degli Odontoiatri di Milano n. 7412",
+  "phone": "02 25 92 764",
+  "phoneHref": "+39022592764",
+  "whatsapp": "335 448 0936",
+  "whatsappHref": "393354480936",
+  "email": "studioliddi@gmail.com",
+  "vat": "02369820135",
+  "director": "Titolare: Dott. Arturo Liddi",
   "hours": [
     {
-      "d": "Lunedì — Venerdì",
-      "h": "08:30 — 19:30"
+      "d": "Lunedì",
+      "h": "10:00 — 12:00 · 14:00 — 19:00"
     },
     {
-      "d": "Sabato",
-      "h": "09:00 — 13:00 (su appuntamento)"
+      "d": "Martedì",
+      "h": "09:00 — 12:00 · 14:00 — 19:00"
     },
     {
-      "d": "Domenica",
-      "h": "Chiuso"
+      "d": "Mercoledì",
+      "h": "14:00 — 19:00"
+    },
+    {
+      "d": "Giovedì",
+      "h": "09:00 — 12:30 · 14:00 — 19:00"
+    },
+    {
+      "d": "Venerdì",
+      "h": "10:00 — 12:30 · 14:00 — 19:00"
     }
   ],
   "directions": [
     {
       "label": "Metro",
-      "value": "M5 Domodossola · M1 Amendola Fiera — 6 minuti a piedi"
-    },
-    {
-      "label": "Parcheggio",
-      "value": "Posti riservati ai pazienti in cortile interno"
-    },
-    {
-      "label": "Superficie",
-      "value": "Tram 1 e 19 · Bus 57, fermata Liddi"
+      "value": "Nelle vicinanze della fermata MM Crescenzago"
     }
   ],
-  "social": [
-    {
-      "label": "Instagram",
-      "url": "https://instagram.com"
-    },
-    {
-      "label": "LinkedIn",
-      "url": "https://linkedin.com"
-    }
-  ],
+  "social": [],
   "stats": [
     {
-      "value": 20,
+      "value": 30,
       "suffix": "+",
-      "label": "anni di esperienza clinica"
+      "label": "anni di attività del Dott. Liddi"
     },
     {
-      "value": 8000,
+      "value": 25,
       "suffix": "+",
-      "label": "pazienti seguiti"
+      "label": "anni di attività del Dott. Novi"
     },
     {
-      "value": 12,
+      "value": 4,
       "suffix": "",
       "label": "professionisti in studio"
     },
     {
-      "value": 4.9,
-      "suffix": "/5",
-      "label": "valutazione dei pazienti",
-      "decimals": 1
+      "value": 80,
+      "suffix": "%",
+      "label": "dei casi senza impronta tradizionale, grazie allo scanner orale"
     }
   ],
   "values": [
     {
-      "title": "Precisione",
-      "text": "Ogni fase è misurata, pianificata e verificata. La tecnologia digitale ci permette di lavorare su margini di errore minimi."
+      "title": "Esperienza",
+      "text": "Oltre trent'anni di attività del Dott. Liddi e oltre venticinque del Dott. Novi, in tutte le specialità dell'odontoiatria."
     },
     {
       "title": "Ascolto",
-      "text": "La diagnosi comincia da una conversazione. Prima di guardare i denti, guardiamo la persona che li porta."
+      "text": "Alla prima visita il paziente riferisce le proprie problematiche e insieme cerchiamo di soddisfare le sue esigenze, che si tratti di un'urgenza o di una visita programmata."
+    },
+    {
+      "title": "Aggiornamento",
+      "text": "Il Dott. Liddi e il Dott. Novi seguono corsi e convegni per un aggiornamento continuo."
     },
     {
       "title": "Tecnologia",
-      "text": "Strumenti scelti per ridurre l'invasività, i tempi e il numero di sedute necessarie."
-    },
-    {
-      "title": "Prevenzione",
-      "text": "Il trattamento migliore è quello che non serve. Costruiamo percorsi di mantenimento su misura."
+      "text": "Lo scanner orale permette di acquisire le impronte in digitale ed evita, nell'80% dei casi, l'impronta tradizionale con paste, alginati e siliconi."
     }
   ],
   "basePath": "/studio-dentistico/",
   "booking": {
     "endpoint": "",
     "mode": "demo"
-  }
+  },
+  "openingHours": [
+    {
+      "day": "Monday",
+      "opens": "10:00",
+      "closes": "12:00"
+    },
+    {
+      "day": "Monday",
+      "opens": "14:00",
+      "closes": "19:00"
+    },
+    {
+      "day": "Tuesday",
+      "opens": "09:00",
+      "closes": "12:00"
+    },
+    {
+      "day": "Tuesday",
+      "opens": "14:00",
+      "closes": "19:00"
+    },
+    {
+      "day": "Wednesday",
+      "opens": "14:00",
+      "closes": "19:00"
+    },
+    {
+      "day": "Thursday",
+      "opens": "09:00",
+      "closes": "12:30"
+    },
+    {
+      "day": "Thursday",
+      "opens": "14:00",
+      "closes": "19:00"
+    },
+    {
+      "day": "Friday",
+      "opens": "10:00",
+      "closes": "12:30"
+    },
+    {
+      "day": "Friday",
+      "opens": "14:00",
+      "closes": "19:00"
+    }
+  ]
 }

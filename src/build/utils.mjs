@@ -122,7 +122,8 @@ export const attr = (s = '') => esc(s).replace(/'/g, '&#39;');
 
 /* -- navigazione ----------------------------------------------------------- */
 export const NAV_KEYS = ['studio', 'treatments', 'technologies', 'team', 'firstVisit', 'cases', 'journal', 'contact'];
-export const nav = () => NAV_KEYS.map((k) => ({ key: k, label: t('nav.' + k), href: PATH[k] }));
+// senza casi clinici reali la voce (e la pagina) non esistono: come le recensioni
+export const nav = () => NAV_KEYS.filter((k) => k !== 'cases' || cases.items.length).map((k) => ({ key: k, label: t('nav.' + k), href: PATH[k] }));
 
 /** prefisso relativo per una pagina a una certa profondita' ( '', '../', '../../' ) */
 export const rel = (depth) => '../'.repeat(depth);

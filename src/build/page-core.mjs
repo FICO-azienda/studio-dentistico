@@ -1,8 +1,8 @@
 import { site, team, technologies, faqs, treatments, orari, chiusure, esc, attr, arrow, imgTag, figure, lines, personName, byTreatment, byPerson, metaTitle, treatmentPath, PATH, teamPath } from './utils.mjs';
-import { t, getLang } from './i18n.mjs';
+import { t, t as tt, getLang } from './i18n.mjs';
 import { clientConfig } from '../../api/_lib/flows.mjs';
 import { layout, dentistLd } from './layout.mjs';
-import { sectionHead, stats, personCard, bookingBand, faqList, faqLd, pageHero, testimonials } from './components.mjs';
+import { sectionHead, stats, personCard, portrait, bookingBand, faqList, faqLd, pageHero, testimonials } from './components.mjs';
 
 /* ========================================================== /studio ====== */
 export const studioPage = () => {
@@ -12,7 +12,7 @@ ${pageHero({
     label: t('studio.label'),
     title: lines([t('home.studio.t1'), `<em class="serif-italic">${t('home.studio.t2')}</em>`]),
     lead: t('studio.lead'),
-    aside: 'Via Antonio Canova 14<br>Milano',
+    aside: `${esc(site.address.street)}<br>${esc(site.address.city)}`,
     crumbs: [{ label: t('nav.home'), path: '' }, { label: t('home.studio.label') }],
     base,
     media: 'studio-interno',
@@ -27,9 +27,9 @@ ${pageHero({
         <h2 class="h2 mt-2 reveal">${lines([t('studio.phT1'), `<em class="serif-italic">${t('studio.phT2')}</em>`])}</h2>
       </div>
       <div class="col-6 start-7 prose reveal">
-        <p>Lo studio nasce nel 2004 dall'idea che l'odontoiatria di qualità non dipenda dai materiali ma dal metodo: una diagnosi completa, un progetto discusso e un'esecuzione verificata passaggio per passaggio.</p>
-        <p>Vent'anni dopo, il principio è rimasto lo stesso. Quello che è cambiato è la tecnologia a disposizione, che oggi permette di pianificare al computer ciò che un tempo si decideva in poltrona.</p>
-        <p>Non accettiamo più di due nuovi pazienti al giorno per professionista. È una scelta che limita i numeri e allunga le agende, ma è l'unico modo per dedicare a ciascuno il tempo che una diagnosi seria richiede.</p>
+        <p>${esc(t('studio.p1'))}</p>
+        <p>${esc(t('studio.p2'))}</p>
+        <p>${esc(t('studio.p3'))}</p>
       </div>
     </div>
     <div class="grid mt-5">
@@ -76,14 +76,12 @@ ${pageHero({
     })}
     <div class="grid">
       ${[
-        ['Accoglienza', 'Sala d\'attesa separata dalle aree cliniche, con connessione e postazione di lavoro.'],
-        ['Sale operative', 'Cinque riuniti identici per strumentazione e protocolli di sterilizzazione.'],
-        ['Sala chirurgica', 'Ambiente dedicato agli interventi implantari, con monitoraggio e sedazione disponibile.'],
-        ['Sterilizzazione', 'Ciclo tracciato per ogni strumento, con registro digitale consultabile.']
+        [t('studio.space1.t'), t('studio.space1.d')],
+        [t('studio.space2.t'), t('studio.space2.d')]
       ]
         .map(
-          ([t, d], i) => `<div class="col-6 reveal" data-delay="${i % 2}">
-        <div class="value-item"><span class="num value-item__num" style="color:var(--navy)">0${i + 1}</span><div><h3 class="h4">${esc(t)}</h3><p>${esc(d)}</p></div></div>
+          ([tit, d], i) => `<div class="col-6 reveal" data-delay="${i % 2}">
+        <div class="value-item"><span class="num value-item__num" style="color:var(--navy)">0${i + 1}</span><div><h3 class="h4">${esc(tit)}</h3><p>${esc(d)}</p></div></div>
       </div>`
         )
         .join('')}
@@ -133,7 +131,7 @@ ${pageHero({
 <section class="section section--flush-top">
   <div class="wrap">
     <div class="team-grid">${team.map((p) => personCard(p, base)).join('')}</div>
-    <p class="disclaimer mt-5 reveal">${esc(t('team.note'))}</p>
+    ${t('team.note') ? `<p class="disclaimer mt-5 reveal">${esc(t('team.note'))}</p>` : ''}
   </div>
 </section>
 ${bookingBand(base)}`;
@@ -163,13 +161,15 @@ export const personPage = (p) => {
     </nav>
     <div class="grid">
       <div class="col-5">
-        ${figure(p.image, { base, ar: '3/4', className: 'media--duo', sizes: '(max-width:1000px) 100vw, 40vw', eager: true })}
+        ${p.image
+          ? figure(p.image, { base, ar: '3/4', className: 'media--duo', sizes: '(max-width:1000px) 100vw, 40vw', eager: true })
+          : `<figure class="media media--ar media--duo" style="--ar:3/4">${portrait(p, base)}</figure>`}
       </div>
       <div class="col-6 start-7">
         <span class="label label--accent reveal">${esc(p.role)}</span>
         <h1 class="h1 mt-2">${lines([esc(personName(p))])}</h1>
         <p class="lead mt-3 reveal" data-delay="1">${esc(p.short)}</p>
-        <blockquote class="mt-4 reveal" data-delay="2" style="font-family:var(--font-display);font-size:1.4rem;line-height:1.35;border-left:1px solid var(--navy);padding-left:1.4rem">&ldquo;${esc(p.quote)}&rdquo;</blockquote>
+        ${p.quote ? `<blockquote class="mt-4 reveal" data-delay="2" style="font-family:var(--font-display);font-size:1.4rem;line-height:1.35;border-left:1px solid var(--navy);padding-left:1.4rem">&ldquo;${esc(p.quote)}&rdquo;</blockquote>` : ''}
         <div class="row mt-4 reveal" data-delay="3">
           <a class="btn" href="${base}${PATH.book}">${esc(t('team.bookWith'))} ${esc(p.title || '')} ${esc(p.name.split(' ')[0])}</a>
         </div>
@@ -184,15 +184,17 @@ export const personPage = (p) => {
       <div class="col-7 prose reveal">
         <h2>${esc(t('team.profile'))}</h2>
         <p>${esc(p.bio)}</p>
-        ${p.education.length ? `<h2>${esc(t('team.education'))}</h2><ul>${p.education.map((e) => `<li>${esc(e)}</li>`).join('')}</ul>` : ''}
+        ${(p.education || []).length ? `<h2>${esc(t('team.education'))}</h2><ul>${p.education.map((e) => `<li>${esc(e)}</li>`).join('')}</ul>` : ''}
         ${p.member ? `<h2>${esc(t('team.associations'))}</h2><p>${esc(p.member)}</p>` : ''}
       </div>
       <aside class="col-4 start-8">
         <div class="sticky">
-          <div class="sidebar-card reveal">
+          ${(p.focus || []).length
+            ? `<div class="sidebar-card reveal">
             <span class="label">${esc(t('team.interests'))}</span>
             <ul class="mt-2 flow flow-sm">${p.focus.map((f) => `<li class="body">${esc(f)}</li>`).join('')}</ul>
-          </div>
+          </div>`
+            : ''}
           ${
             trats.length
               ? `<div class="sidebar-card reveal">
@@ -219,11 +221,11 @@ ${bookingBand(base)}`;
 
   return layout({
     title: metaTitle(`${personName(p)} — ${p.role.split('·')[0].trim()}`),
-    description: `${personName(p)}, ${p.role} allo Studio Liddi di Milano. ${p.short}`,
+    description: t('meta.person.desc', { name: personName(p), role: p.role, short: p.short }),
     path: `team/${p.slug}/`,
     depth: 2,
     current: PATH.team,
-    preload: [p.image],
+    preload: p.image ? [p.image] : [],
     crumbs: [{ label: t('nav.home'), path: '' }, { label: t('nav.team'), path: PATH.team }, { label: p.name, path: `team/${p.slug}/` }],
     jsonLd: [
       {
@@ -231,7 +233,7 @@ ${bookingBand(base)}`;
         name: personName(p),
         jobTitle: p.role,
         description: p.bio,
-        image: `${site.url}/images/${p.image}-1280.webp`,
+        ...(p.image ? { image: `${site.url}/images/${p.image}-1280.webp` } : {}),
         worksFor: { '@id': site.url + '/#studio' },
         url: `${site.url}/team/${p.slug}/`
       }
@@ -265,9 +267,10 @@ ${pageHero({
         <p class="body mt-2 measure-sm">${esc(t.text)}</p>
         <div class="spec-grid mt-4" style="grid-template-columns:repeat(2,1fr)">
           ${[
-            ['Impiego', TECH_DETAIL[t.slug].use],
-            ['Vantaggio', TECH_DETAIL[t.slug].gain]
+            [tt('tech.use'), t.use],
+            [tt('tech.gain'), t.gain]
           ]
+            .filter(([, v]) => v)
             .map(([l, v]) => `<div class="spec"><span class="label">${esc(l)}</span><p class="body mt-1" style="font-size:.95rem">${esc(v)}</p></div>`)
             .join('')}
         </div>
@@ -290,31 +293,14 @@ ${bookingBand(base)}`;
   });
 };
 
-const TECH_DETAIL = {
-  'scanner-intraorale': { use: 'Protesi, ortodonzia, allineatori, impronte di precisione.', gain: 'Nessuna impronta tradizionale, archivio digitale confrontabile nel tempo.' },
-  'radiologia-digitale': { use: 'Diagnosi di carie, parodontite, lesioni apicali e pianificazione implantare.', gain: 'Dose ridotta fino all\'80% e immagine disponibile in pochi secondi.' },
-  'implantologia-guidata': { use: 'Inserimento di impianti singoli e riabilitazioni complete.', gain: 'Posizione progettata sulla protesi finale, non sull\'osso disponibile.' },
-  microscopia: { use: 'Endodonzia, ritrattamenti, conservativa di precisione.', gain: 'Ingrandimenti fino a 25×: si vede ciò che a occhio nudo si intuisce soltanto.' },
-  'digital-smile-design': { use: 'Faccette, estetica del sorriso, riabilitazioni anteriori.', gain: 'Il risultato viene approvato dal paziente prima di ogni preparazione.' },
-  'stampa-3d': { use: 'Dime chirurgiche, modelli, provvisori, allineatori.', gain: 'Produzione interna: meno passaggi esterni e tempi di consegna più brevi.' }
-};
 
 /* ==================================================== /prima-visita ====== */
-const VISIT_STEPS = [
-  { t: 'Ascolto', d: 'Venti minuti di colloquio, prima di qualunque strumento. Ci racconti cosa ti preoccupa, cosa hai già fatto e cosa ti aspetti dal percorso.', n: '01' },
-  { t: 'Diagnosi', d: 'Esame clinico completo di denti, gengive e tessuti molli, fotografie standardizzate, radiografie digitali e scansione intraorale quando indicata.', n: '02' },
-  { t: 'Piano di trattamento', d: 'Ti presentiamo le alternative possibili con vantaggi, limiti e tempi di ciascuna, accompagnate da un preventivo scritto voce per voce.', n: '03' },
-  { t: 'Percorso personalizzato', d: 'Concordiamo insieme sequenza, sedute e modalità di pagamento. Nessuna fase inizia senza la tua approvazione esplicita.', n: '04' }
-];
+// stessi quattro passaggi della home: testi nel dizionario, cosi' seguono la lingua
+const VISIT_STEPS = () => [1, 2, 3, 4].map((n) => ({ t: t(`steps.${n}.t`), d: t(`steps.${n}.d`), n: `0${n}` }));
 
 export const firstVisitPage = () => {
   const base = '../';
-  const localFaq = [
-    { q: 'Quanto dura la prima visita?', a: faqs[0].a },
-    { q: 'Cosa devo portare?', a: 'Documento d\'identità, tessera sanitaria, eventuali radiografie o documentazione di trattamenti precedenti e l\'elenco dei farmaci che assumi abitualmente.' },
-    { q: 'La prima visita è gratuita?', a: 'La prima visita ha un costo di 80 euro, che comprende esame clinico, fotografie, radiografie necessarie e piano di trattamento scritto. L\'importo viene scalato dal preventivo se decidi di iniziare il percorso in studio.' },
-    { q: 'Devo decidere subito?', a: 'No. Il piano di trattamento e il preventivo ti vengono consegnati per iscritto: puoi valutarli con calma, chiedere un secondo parere e tornare quando preferisci.' }
-  ];
+  const localFaq = faqs;
   const main = `
 ${pageHero({
     label: t('fv.label'),
@@ -330,7 +316,7 @@ ${pageHero({
 <section class="section">
   <div class="wrap">
     <div class="steps">
-      ${VISIT_STEPS.map(
+      ${VISIT_STEPS().map(
         (s) => `<article class="step">
         <span class="step__num">${s.n}</span>
         <h3 class="h4">${esc(s.t)}</h3>
@@ -350,16 +336,10 @@ ${pageHero({
         ${figure('strumenti-set', { base, ar: '4/3', className: 'mt-4 media__zoom', sizes: '40vw' })}
       </div>
       <div class="col-6 start-7 prose reveal">
-        <ul>
-          <li>Documento d'identità e tessera sanitaria</li>
-          <li>Radiografie o documentazione di trattamenti precedenti, anche vecchi</li>
-          <li>Elenco dei farmaci che assumi abitualmente</li>
-          <li>Eventuali referti medici rilevanti (cardiologici, terapie anticoagulanti, bifosfonati)</li>
-          <li>Il nome del tuo medico curante, se stai seguendo terapie in corso</li>
-        </ul>
-        <h2>${esc(t('fv.after'))}</h2>
-        <p>Il piano di trattamento ti viene consegnato per iscritto, con le alternative e un preventivo dettagliato. Non c'è alcuna richiesta di decidere in giornata: se vuoi confrontarti con un altro professionista, ti consegniamo anche la documentazione radiografica.</p>
-        <p>Se il percorso prevede più fasi, ti indichiamo l'ordine di priorità clinica: cosa è urgente, cosa può attendere e cosa è facoltativo.</p>
+        <h2 style="margin-top:0">${esc(t('fv.quoteH'))}</h2>
+        <p>${esc(t('fv.quoteText'))}</p>
+        <h2>${esc(t('fv.payH'))}</h2>
+        <p>${esc(t('fv.payText'))}</p>
       </div>
     </div>
   </div>
@@ -399,7 +379,7 @@ export const contactPage = () => {
 ${pageHero({
     label: t('nav.contact'),
     title: lines([t('home.contact.t1')]),
-    lead: 'Zona Fiera, a sei minuti a piedi dalla metropolitana. Rispondiamo al telefono negli orari di apertura e via email entro un giorno lavorativo.',
+    lead: t('contact.lead'),
     crumbs: [{ label: t('nav.home'), path: '' }, { label: t('nav.contact') }],
     base
   })}
@@ -424,7 +404,7 @@ ${pageHero({
       <div class="col-6 start-7">
         <div class="map reveal">
           <iframe title="Mappa dello studio" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
-            src="https://www.openstreetmap.org/export/embed.html?bbox=9.158%2C45.474%2C9.179%2C45.484&amp;layer=mapnik&amp;marker=${site.address.lat}%2C${site.address.lng}"></iframe>
+            src="https://www.openstreetmap.org/export/embed.html?bbox=${(site.address.lng - 0.01).toFixed(4)}%2C${(site.address.lat - 0.005).toFixed(4)}%2C${(site.address.lng + 0.01).toFixed(4)}%2C${(site.address.lat + 0.005).toFixed(4)}&amp;layer=mapnik&amp;marker=${site.address.lat}%2C${site.address.lng}"></iframe>
         </div>
         <h2 class="h3 mt-5 reveal">${esc(t('contact.request'))}</h2>
         <form class="mt-3" data-validate data-success="#contact-done" novalidate>
@@ -445,7 +425,7 @@ ${pageHero({
         </form>
         <div class="form-success" id="contact-done" hidden>
           <h2 class="h2">Grazie.</h2>
-          <p class="lead mt-2">Abbiamo ricevuto la tua richiesta: ti ricontattiamo entro un giorno lavorativo.</p>
+          <p class="lead mt-2">${esc(t('contact.thanksLead'))}</p>
           <p class="mt-3"><a class="btn btn--ghost" href="${base}">${esc(t('common.backHome'))}</a></p>
         </div>
       </div>
@@ -456,7 +436,7 @@ ${bookingBand(base)}`;
 
   return layout({
     title: t('meta.contact.title'),
-    description: 'Studio Liddi, Via Antonio Canova 14, Milano. Telefono, WhatsApp, email, orari di apertura e indicazioni per raggiungerci.',
+    description: t('meta.contact.desc'),
     path: PATH.contact,
     depth: 1,
     current: PATH.contact,
@@ -466,18 +446,6 @@ ${bookingBand(base)}`;
 };
 
 /* ======================================================== /prenota ======= */
-// i valori coincidono con VISIT_TYPES in api/_lib/validate.mjs
-const VISIT_TYPES = [
-  { v: 'prima-visita', l: 'Prima visita', d: 'Esame completo, radiografie e piano di trattamento. 45 minuti.' },
-  { v: 'igiene', l: 'Igiene dentale', d: 'Seduta di igiene professionale e istruzioni personalizzate.' },
-  { v: 'controllo', l: 'Controllo', d: 'Controllo periodico di denti, gengive e restauri esistenti.' },
-  { v: 'ortodonzia', l: 'Ortodonzia', d: 'Allineatori o apparecchio: valutazione e simulazione digitale.' },
-  { v: 'implantologia', l: 'Implantologia', d: 'Valutazione per impianti e riabilitazioni su impianti.' },
-  { v: 'estetica', l: 'Estetica dentale', d: 'Sbiancamento, faccette, progetto del sorriso.' },
-  { v: 'urgenza', l: 'Urgenza', d: 'Dolore, trauma o problema improvviso: ti richiamiamo entro poche ore.' },
-  { v: 'altro', l: 'Altro', d: 'Descrivi la tua necessita\' nelle note: ti richiamiamo noi.' }
-];
-
 export const bookingPage = () => {
   const base = '../';
   const docs = team.filter((p) => p.featured || p.treatments.length);
@@ -582,7 +550,7 @@ ${pageHero({
           <div class="sidebar-card">
             <span class="label">${esc(t('book.preferPhone'))}</span>
             <p class="h4 mt-2"><a class="link-inline" href="tel:${attr(site.phoneHref)}">${esc(site.phone)}</a></p>
-            <p class="small mt-2" style="color:var(--stone)">${site.hours.slice(0, 2).map((h) => `${esc(h.d)} ${esc(h.h)}`).join('<br>')}</p>
+            <p class="small mt-2" style="color:var(--stone)">${site.hours.map((h) => `${esc(h.d)} ${esc(h.h)}`).join('<br>')}</p>
             <p class="mt-3"><a class="link-u" href="https://wa.me/${attr(site.whatsappHref)}" target="_blank" rel="noopener">${esc(t('common.whatsapp'))} ${arrow}</a></p>
           </div>
           <div class="sidebar-card">

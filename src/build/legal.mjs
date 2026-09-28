@@ -59,7 +59,7 @@ const LEGAL_IT = [
         'Ogni trattamento descritto richiede una valutazione clinica individuale: indicazioni, durata, esiti e costi possono variare sensibilmente da paziente a paziente.'
       ] },
       { h: 'Comunicazione sanitaria', p: [
-        `Le informazioni pubblicate rispettano i requisiti di trasparenza previsti dall'art. 9-bis del D.L. 145/2013 e successive modificazioni. Direttore sanitario: ${site.director}.`
+        `${site.legalName} — ${site.director}. Partita IVA ${site.vat}.`
       ] },
       { h: 'Casi clinici', p: [
         'Le immagini dei casi clinici hanno valore esemplificativo e sono pubblicate previo consenso informato scritto. I risultati mostrati si riferiscono a situazioni individuali e non sono estendibili ad altri pazienti.'
@@ -170,7 +170,7 @@ const LEGAL_EN = [
       {
         h: 'Healthcare communication',
         p: [
-          `The information published complies with the transparency requirements of Article 9-bis of Italian Decree-Law 145/2013 as amended. Clinical director: ${site.director}.`
+          `${site.legalName} — ${site.director}. VAT no. ${site.vat}.`
         ]
       },
       {

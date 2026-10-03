@@ -14,7 +14,7 @@
       "q": "Come preferisci procedere?",
       "options": [
         {
-          "l": "Prenotare un appuntamento",
+          "l": "Indicare giorno e orario preferiti",
           "v": "prenota"
         },
         {
@@ -34,8 +34,7 @@
       },
       "options": [
         "Telefono",
-        "WhatsApp",
-        "Email"
+        "WhatsApp"
       ]
     },
     "windowQuestion": {
@@ -48,10 +47,14 @@
         ]
       },
       "options": [
-        "Mattina",
-        "Pausa pranzo",
-        "Pomeriggio",
-        "Sera"
+        {
+          "l": "Mattina (lun, mar, gio, ven)",
+          "v": "mattina"
+        },
+        {
+          "l": "Pomeriggio (14:00–19:00)",
+          "v": "pomeriggio"
+        }
       ]
     }
   },

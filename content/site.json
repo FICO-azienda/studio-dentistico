@@ -23,28 +23,6 @@
   "email": "studioliddi@gmail.com",
   "vat": "02369820135",
   "director": "Titolare: Dott. Arturo Liddi",
-  "hours": [
-    {
-      "d": "Lunedì",
-      "h": "10:00 — 12:00 · 14:00 — 19:00"
-    },
-    {
-      "d": "Martedì",
-      "h": "09:00 — 12:00 · 14:00 — 19:00"
-    },
-    {
-      "d": "Mercoledì",
-      "h": "14:00 — 19:00"
-    },
-    {
-      "d": "Giovedì",
-      "h": "09:00 — 12:30 · 14:00 — 19:00"
-    },
-    {
-      "d": "Venerdì",
-      "h": "10:00 — 12:30 · 14:00 — 19:00"
-    }
-  ],
   "directions": [
     {
       "label": "Metro",
@@ -94,54 +72,10 @@
   ],
   "basePath": "/studio-dentistico/",
   "booking": {
+    "_nota": "mode: 'live' invia le richieste all'API (endpoint obbligatorio); qualunque altro valore, o endpoint vuoto, prepara la richiesta come messaggio WhatsApp allo studio. confermaAutomatica: false = ogni richiesta resta da confermare dalla segreteria (lo studio gestisce l'agenda per telefono); true solo se l'agenda dello studio coincide con quella del sito. spostamentoOnline: il paziente puo' spostare da solo un appuntamento confermato.",
     "endpoint": "",
-    "mode": "demo"
-  },
-  "openingHours": [
-    {
-      "day": "Monday",
-      "opens": "10:00",
-      "closes": "12:00"
-    },
-    {
-      "day": "Monday",
-      "opens": "14:00",
-      "closes": "19:00"
-    },
-    {
-      "day": "Tuesday",
-      "opens": "09:00",
-      "closes": "12:00"
-    },
-    {
-      "day": "Tuesday",
-      "opens": "14:00",
-      "closes": "19:00"
-    },
-    {
-      "day": "Wednesday",
-      "opens": "14:00",
-      "closes": "19:00"
-    },
-    {
-      "day": "Thursday",
-      "opens": "09:00",
-      "closes": "12:30"
-    },
-    {
-      "day": "Thursday",
-      "opens": "14:00",
-      "closes": "19:00"
-    },
-    {
-      "day": "Friday",
-      "opens": "10:00",
-      "closes": "12:30"
-    },
-    {
-      "day": "Friday",
-      "opens": "14:00",
-      "closes": "19:00"
-    }
-  ]
+    "mode": "whatsapp",
+    "confermaAutomatica": false,
+    "spostamentoOnline": false
+  }
 }

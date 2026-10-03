@@ -17,7 +17,7 @@
     "modalita": {
       "q": "How would you like to proceed?",
       "o": {
-        "prenota": "Book an appointment",
+        "prenota": "Suggest a preferred day and time",
         "ricontatto": "Ask us to call you back"
       }
     },
@@ -25,17 +25,14 @@
       "q": "How would you prefer to be contacted?",
       "o": {
         "telefono": "Phone",
-        "whatsapp": "WhatsApp",
-        "email": "Email"
+        "whatsapp": "WhatsApp"
       }
     },
     "fascia": {
       "q": "When would you prefer to be contacted?",
       "o": {
-        "mattina": "Morning",
-        "pausa-pranzo": "Lunchtime",
-        "pomeriggio": "Afternoon",
-        "sera": "Evening"
+        "mattina": "Morning (Mon, Tue, Thu, Fri)",
+        "pomeriggio": "Afternoon (2pm–7pm)"
       }
     }
   },

@@ -13,6 +13,7 @@ const LEGAL_IT = [
       { h: 'Dati trattati', p: [
         'Dati di navigazione raccolti automaticamente dal sito (indirizzo IP, tipo di browser, pagine visitate) per finalità tecniche e statistiche in forma aggregata.',
         'Dati identificativi e di contatto conferiti volontariamente tramite i moduli di contatto e di prenotazione: nome, cognome, email, telefono ed eventuali note.',
+        'Se scegli di scrivere allo studio su WhatsApp, anche con i messaggi già preparati dai moduli del sito, il messaggio viene trasmesso tramite il servizio WhatsApp, secondo le condizioni e l\'informativa di quel servizio: il sito non ne conserva il contenuto.',
         'Dati relativi alla salute, trattati esclusivamente nell\'ambito della prestazione sanitaria e mai raccolti attraverso i moduli online.'
       ] },
       { h: 'Finalità e base giuridica', p: [
@@ -66,7 +67,7 @@ const LEGAL_IT = [
       ] },
       { h: 'Proprietà intellettuale', p: ['Testi, immagini e progetto grafico sono protetti dalle norme sul diritto d\'autore. Ne è vietata la riproduzione senza autorizzazione scritta.'] },
       { h: 'Prenotazioni online', p: [
-        'Se lo slot richiesto risulta libero, la richiesta viene confermata automaticamente al momento dell\'invio: il paziente riceve subito l\'email di conferma con l\'invito per il calendario. Se lo slot non è più disponibile, la richiesta resta in attesa e la segreteria ricontatta il paziente per concordare data e orario.'
+        'La richiesta inviata dal sito non è un appuntamento: giorno e orario indicati sono preferenze. La segreteria ricontatta il paziente per telefono o WhatsApp e concorda con lui data e orario; l\'appuntamento è fissato solo dopo questa conferma.'
       ] }
     ]
   }
@@ -92,6 +93,7 @@ const LEGAL_EN = [
         p: [
           'Browsing data collected automatically by the website (IP address, browser type, pages visited) for technical purposes and for statistics in aggregate form.',
           'Identification and contact data provided voluntarily through the contact and booking forms: first name, last name, email, phone and any notes.',
+          'If you choose to write to the practice on WhatsApp, including with the messages prepared by the website forms, the message is sent through the WhatsApp service, under that service\'s terms and privacy policy: the website does not store its content.',
           'Health data, processed exclusively within the provision of dental care and never collected through the online forms.'
         ]
       },
@@ -186,7 +188,7 @@ const LEGAL_EN = [
       {
         h: 'Online booking',
         p: [
-          'If the requested slot is available, the request is confirmed automatically as soon as it is sent, and the patient immediately receives a confirmation email with a calendar invite. If the slot is no longer available, the request remains pending and our front desk contacts the patient to arrange a date and time.'
+          'A request sent through the website is not an appointment: the day and time indicated are preferences. Our front desk contacts the patient by phone or WhatsApp to agree on the date and time; the appointment is only set once confirmed.'
         ]
       }
     ]

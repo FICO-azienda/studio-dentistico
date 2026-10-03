@@ -34,6 +34,20 @@ export const giorniOrari = orariCfg.giorni;
 export const passoMinuti = orariCfg.passoMinuti || 60;
 export const chiusure = leggi('chiusure.json');
 
+/* -- orari di apertura: derivati da orari.json, mai scritti a mano altrove -- */
+const NOMI_GIORNI = {
+  it: ['Domenica', 'Lunedì', 'Martedì', 'Mercoledì', 'Giovedì', 'Venerdì', 'Sabato'],
+  en: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+};
+const apertura = Object.entries(orariCfg.apertura || {}).sort(([a], [b]) => a - b);
+
+/** Orari di apertura leggibili nella lingua indicata: [{ d: 'Lunedì', h: '10:00 — 12:30 · 14:00 — 19:00' }]. */
+const orariApertura = (lang) =>
+  apertura.map(([g, fasce]) => ({ d: NOMI_GIORNI[lang][g], h: fasce.map(([da, a]) => `${da} — ${a}`).join(' · ') }));
+
+/** Stessi orari per i dati strutturati schema.org (OpeningHoursSpecification). */
+const openingHours = apertura.flatMap(([g, fasce]) => fasce.map(([opens, closes]) => ({ day: NOMI_GIORNI.en[g], opens, closes })));
+
 /* -- traduzioni ------------------------------------------------------------ */
 const EN = {
   site: leggiEn('site.json'),
@@ -82,7 +96,7 @@ export function applyLang(lang) {
   setLang(lang);
   const tr = lang === 'en' ? EN : {};
 
-  site = fondi(BASE.site, tr.site);
+  site = { ...fondi(BASE.site, tr.site), hours: orariApertura(lang), openingHours };
   if (tr.site?.address) site.address = { ...BASE.site.address, ...tr.site.address };
   images = BASE.images;
 

@@ -10,6 +10,10 @@ import { orariDelGiorno } from './orari.mjs';
 export const VISIT_TYPES = flows.services.map((s) => ({ value: s.id, label: s.label }));
 const LABELS = Object.fromEntries(flows.services.map((s) => [s.id, s.label]));
 
+/** Canali e fasce di ricontatto ammessi: gli stessi offerti dal wizard (content/booking-flows.json). */
+export const CANALI = flows.tail.channelQuestion.options.map((o) => o.v);
+export const FASCE = flows.tail.windowQuestion.options.map((o) => o.v);
+
 const LIMITS = {
   nome: 60,
   cognome: 60,
@@ -134,9 +138,9 @@ export function validateBooking(body = {}, opts = {}) {
     d.secondaData = '';
     d.secondaOra = '';
     d.canale = clean(body.canale, 20);
-    if (!['telefono', 'whatsapp', 'email'].includes(d.canale)) errors.canale = 'Scegli come preferisci essere contattato.';
+    if (!CANALI.includes(d.canale)) errors.canale = 'Scegli come preferisci essere contattato.';
     d.fascia = clean(body.fascia, 20);
-    if (!['mattina', 'pausa-pranzo', 'pomeriggio', 'sera'].includes(d.fascia)) errors.fascia = 'Scegli quando preferisci essere contattato.';
+    if (!FASCE.includes(d.fascia)) errors.fascia = 'Scegli quando preferisci essere contattato.';
   }
 
   d.dottore = clean(body.dottore, LIMITS.dottore) || 'Nessuna preferenza';

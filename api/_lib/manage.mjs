@@ -9,11 +9,16 @@
  *
  * Lo staff puo' sempre forzare l'operazione (scripts/gestisci-prenotazione.mjs),
  * 24 ore o no: e' la valvola per i casi approvati per telefono o email.
+ *
+ * Lo spostamento da parte del paziente e' disattivato di default
+ * (booking.spostamentoOnline in site.json): un nuovo orario va concordato con
+ * la segreteria, che gestisce l'agenda per telefono. L'annullamento resta.
  */
 import { getBooking, updateBooking } from './store.mjs';
 import { localeToUtc } from './ics.mjs';
 import { releaseSlots, reserveSlots } from './availability.mjs';
 import { byService } from './flows.mjs';
+import { spostamentoOnline } from './studio.mjs';
 
 const slotCountDi = (r) => byService[r.tipo_visita_slug]?.slotCount || 1;
 
@@ -51,7 +56,8 @@ export async function statoPrenotazione(bookingId, env = process.env, now = new 
     lingua: r.lingua || 'it',
     slotCount: slotCountDi(r),
     gestibile,
-    selfService: gestibile && selfServiceConsentita(r, now)
+    selfService: gestibile && selfServiceConsentita(r, now),
+    spostamento: spostamentoOnline(env)
   };
 }
 
@@ -78,6 +84,7 @@ export async function cancella(bookingId, { forza = false, env = process.env, no
  * ORIGINALE (e' quello a determinare se serve una decisione umana).
  */
 export async function sposta(bookingId, nuovaData, nuovaOra, { forza = false, env = process.env, now = new Date() } = {}) {
+  if (!forza && !spostamentoOnline(env)) return { ok: false, error: 'spostamento_non_disponibile' };
   const r = await getBooking(bookingId, env);
   if (!r) return { ok: false, error: 'non_trovata' };
   if (!STATI_GESTIBILI.includes(r.status)) return { ok: false, error: 'stato_non_gestibile', record: r };

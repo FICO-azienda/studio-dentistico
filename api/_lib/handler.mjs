@@ -6,29 +6,31 @@
  * Ordine delle operazioni, scelto apposta:
  *   1. anti-spam e limite di frequenza  (scarta presto cio' che non serve)
  *   2. validazione lato server          (non ci si fida del browser)
- *   3. conferma automatica dello slot   (se e' davvero libero, subito: vedi sotto)
+ *   3. conferma automatica dello slot   (solo se attivata: vedi sotto)
  *   4. salvataggio della richiesta      (PRIMA delle email: non si perde nulla)
  *   5. invio delle due email            (se fallisce, la richiesta resta salva)
  *
- * Conferma automatica. Una prenotazione con data e ora (non una richiamata,
- * che non ha uno slot) viene confermata subito se lo slot risulta libero in
- * quel momento: il paziente non resta in attesa di una verifica manuale.
- * Se lo slot e' occupato o il giorno e' chiuso — raro, dato che il
- * calendario del wizard mostra gia' solo cio' che sembra libero, ma puo'
- * succedere per una richiesta quasi simultanea — resta PENDING come prima,
- * e lo staff la gestisce a mano. La verifica dello staff dopo la conferma
- * automatica resta comunque utile (numero corretto di slot, professionista
+ * Richiesta, non prenotazione. Lo studio gestisce l'agenda soprattutto per
+ * telefono e il sito non la vede: per questo, di default, ogni richiesta resta
+ * PENDING, giorno e orario sono preferenze, e la segreteria ricontatta il
+ * paziente per telefono o WhatsApp e conferma da /staff/.
+ *
+ * Conferma automatica (opzionale: booking.confermaAutomatica in site.json o
+ * BOOKING_AUTO_CONFIRM=1). Da accendere solo se l'agenda dello studio e'
+ * quella del sito. Una richiesta con data e ora (non una richiamata, che non
+ * ha uno slot) viene allora confermata subito se lo slot risulta libero; se
+ * e' occupato o il giorno e' chiuso resta PENDING. La verifica dello staff
+ * resta utile anche in quel caso (numero corretto di slot, professionista
  * giusto, casi che meritano attenzione): per questo l'archivio distingue
  * "confermata" da "vista dallo staff" (staff_reviewed), e la dashboard la
- * mostra finche' non viene spuntata — senza bloccare il paziente nel
- * frattempo.
+ * mostra finche' non viene spuntata.
  */
 import { validateBooking, looksLikeSpam } from './validate.mjs';
 import { rateLimit } from './ratelimit.mjs';
 import { buildBookingId, buildRecord, saveBooking, nextProgressivo } from './store.mjs';
 import { emailPaziente, emailStudio, emailConferma } from './templates.mjs';
 import { sendMail } from './mail.mjs';
-import { studio, destinatarioStudio, mittente } from './studio.mjs';
+import { studio, destinatarioStudio, mittente, confermaAutomatica } from './studio.mjs';
 import { reserveSlots } from './availability.mjs';
 import { byService } from './flows.mjs';
 import { icsAttachment } from './ics.mjs';
@@ -112,16 +114,16 @@ export async function handleBooking(body, ctx = {}) {
   }
 }
 
-/** Codice richiesta, conferma automatica se possibile, salvataggio e invio delle email. */
+/** Codice richiesta, conferma automatica se attivata e possibile, salvataggio e invio delle email. */
 async function elabora(data, { ip, userAgent, env, now, k }) {
   const progressivo = await nextProgressivo(env).catch(() => null);
   const bookingId = buildBookingId(progressivo, { year: new Date(now).getFullYear() });
   const record = buildRecord(data, { bookingId, ip, userAgent, now: new Date(now) });
 
-  // 3. conferma automatica: solo per prenotazioni con data/ora (non le
-  // richiamate, che non hanno uno slot da verificare)
+  // 3. conferma automatica, se attivata: solo per richieste con data/ora (non
+  // le richiamate, che non hanno uno slot da verificare)
   let confermataSubito = false;
-  if (record.modalita === 'prenota') {
+  if (record.modalita === 'prenota' && confermaAutomatica(env)) {
     const slotCount = byService[record.tipo_visita_slug]?.slotCount || 1;
     const esitoSlot = await reserveSlots(record.data_richiesta, record.ora_richiesta, slotCount, bookingId, env);
     if (esitoSlot.ok) {

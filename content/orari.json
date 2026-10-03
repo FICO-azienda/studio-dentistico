@@ -1,5 +1,12 @@
 {
-  "_nota": "Orari di inizio prenotabili, ricavati dagli orari di apertura dello studio (uno slot ogni ora, che termina entro l'orario di chiusura). Unica fonte per generatore del sito e API: cambiarli qui li cambia ovunque. 'giorni' usa i numeri del giorno della settimana (1 = lunedì ... 5 = venerdì); un giorno assente è di chiusura. 'orari' è l'elenco completo e 'passoMinuti' la distanza fra due slot contigui.",
+  "_nota": "Unica fonte degli orari, per generatore del sito e API: cambiarli qui li cambia ovunque (pagina Contatti, home, sidebar di Prenota, dati strutturati, email, slot). 'apertura' sono le fasce di apertura dello studio per giorno della settimana (1 = lunedì ... 5 = venerdì); un giorno assente è di chiusura. 'giorni' sono gli orari di inizio proponibili come preferenza (uno ogni ora, che termina entro la chiusura della fascia: per questo con chiusura alle 12:30 l'ultimo inizio del mattino resta alle 11:00). 'orari' è l'elenco completo e 'passoMinuti' la distanza fra due slot contigui. Orari ricavati dagli appunti dello studio: da confermare con il titolare.",
+  "apertura": {
+    "1": [["10:00", "12:30"], ["14:00", "19:00"]],
+    "2": [["09:00", "12:30"], ["14:00", "19:00"]],
+    "3": [["14:00", "19:00"]],
+    "4": [["09:00", "12:30"], ["14:00", "19:00"]],
+    "5": [["10:00", "12:30"], ["14:00", "19:00"]]
+  },
   "passoMinuti": 60,
   "orari": ["09:00", "10:00", "11:00", "14:00", "15:00", "16:00", "17:00", "18:00"],
   "giorni": {

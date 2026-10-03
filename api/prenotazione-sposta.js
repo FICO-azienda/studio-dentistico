@@ -59,9 +59,11 @@ export default async function handler(req, res) {
       const status =
         esito.error === 'non_trovata'
           ? 404
-          : ['fuori_finestra', 'slot_occupato', 'giorno_chiuso'].includes(esito.error)
-            ? 409
-            : 422;
+          : esito.error === 'spostamento_non_disponibile'
+            ? 403
+            : ['fuori_finestra', 'slot_occupato', 'giorno_chiuso'].includes(esito.error)
+              ? 409
+              : 422;
       return res.status(status).json(esito);
     }
     await notificaSpostamento(esito.record, esito.precedente).catch((e) =>

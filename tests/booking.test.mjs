@@ -11,7 +11,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 import { handleBooking } from '../api/_lib/handler.mjs';
-import { validateBooking, looksLikeSpam, checkDate } from '../api/_lib/validate.mjs';
+import { validateBooking, looksLikeSpam, checkDate, CANALI, FASCE } from '../api/_lib/validate.mjs';
 import { buildBookingId, buildRecord } from '../api/_lib/store.mjs';
 import { emailPaziente, emailStudio, emailConferma, emailAnnullamento, escapeHtml } from '../api/_lib/templates.mjs';
 import { buildIcs, localeToUtc } from '../api/_lib/ics.mjs';
@@ -30,6 +30,7 @@ import { staffTokenValido, estraiToken } from '../api/_lib/staff-auth.mjs';
 // niente email vere durante i test
 const ENV = { MAIL_PROVIDER: 'console', BOOKING_STORE: 'log', BOOKING_NOTIFY_EMAIL: 'studio@example.it' };
 const ENV_MAIL_ROTTA = { ...ENV, MAIL_PROVIDER: 'resend' }; // senza chiave: fallisce
+const ENV_AUTO = { ...ENV, BOOKING_AUTO_CONFIRM: '1' }; // conferma automatica accesa (di default e' spenta)
 
 // la modalita' 'log' persiste su disco (.data/): un residuo di una sessione
 // manuale precedente (es. il dev-api.mjs usato per una prova a mano) potrebbe
@@ -90,14 +91,20 @@ const ctx = (extra = {}) => ({ ip: 'test-' + ++ipSeq, userAgent: 'node-test', en
 test.beforeEach(() => _reset());
 
 /* -- 1. prenotazione normale --------------------------------------------- */
-test('prenotazione valida: 201, codice richiesta, confermata subito (lo slot e\' libero)', async () => {
+test('richiesta valida: 201, codice richiesta, resta da confermare dalla segreteria', async () => {
   const r = await handleBooking(base(), ctx());
   assert.equal(r.status, 201);
   assert.equal(r.body.ok, true);
   assert.match(r.body.bookingId, /^APT-\d{4}-\d{6}$/);
-  assert.equal(r.body.status, 'CONFIRMED');
+  assert.equal(r.body.status, 'PENDING', 'lo studio gestisce l\'agenda per telefono: niente conferma automatica di default');
   assert.equal(r.body.emailSent, true);
   assert.equal(r.body.studioNotified, true);
+});
+
+test('con la conferma automatica accesa, uno slot libero viene confermato subito', async () => {
+  const r = await handleBooking(base(), ctx({ env: ENV_AUTO }));
+  assert.equal(r.status, 201);
+  assert.equal(r.body.status, 'CONFIRMED');
 });
 
 test('se lo slot e\' gia\' occupato la prenotazione resta PENDING invece di essere confermata', async () => {
@@ -105,7 +112,7 @@ test('se lo slot e\' gia\' occupato la prenotazione resta PENDING invece di esse
   const occupato = await reserveSlots(dati.dataRichiesta, dati.oraRichiesta, 1, 'GIA-OCCUPATO', ENV);
   assert.equal(occupato.ok, true);
 
-  const r = await handleBooking(dati, ctx());
+  const r = await handleBooking(dati, ctx({ env: ENV_AUTO }));
   assert.equal(r.body.status, 'PENDING');
 
   await releaseSlots(dati.dataRichiesta, 'GIA-OCCUPATO', ENV);
@@ -209,6 +216,16 @@ test('richiesta di richiamata: niente data, servono canale e fascia', async () =
   const con = await handleBooking({ ...b, canale: 'whatsapp', fascia: 'pomeriggio' }, ctx());
   assert.equal(con.status, 201);
   assert.equal(con.body.riepilogo.modalita, 'ricontatto');
+});
+
+test('richiamata: solo i canali e le fasce in cui lo studio risponde', () => {
+  assert.deepEqual(CANALI, ['telefono', 'whatsapp']);
+  assert.deepEqual(FASCE, ['mattina', 'pomeriggio']);
+  const b = { ...base(), modalita: 'ricontatto', dataRichiesta: '', oraRichiesta: '' };
+  for (const [canale, fascia] of [['email', 'mattina'], ['telefono', 'sera'], ['telefono', 'pausa-pranzo']]) {
+    const v = validateBooking({ ...b, canale, fascia });
+    assert.equal(v.ok, false, `${canale}/${fascia} non deve passare`);
+  }
 });
 
 test('email non valida: 422 e campo segnalato', async () => {
@@ -659,4 +676,39 @@ test('email di annullamento invita a prenotare di nuovo con lo stesso link, non 
   const link = rebookUrl(rec.booking_id, 'it', process.env);
   assert.ok(a.html.includes(escapeHtml(link)));
   assert.ok(a.text.includes(link));
+});
+
+/* -- coerenza fra orari, chiusure e impostazioni dello studio -------------- */
+const contenuto = (f) => JSON.parse(fs.readFileSync(path.resolve(process.cwd(), 'content', f), 'utf8'));
+const minuti = (h) => Number(h.slice(0, 2)) * 60 + Number(h.slice(3, 5));
+
+test('ogni orario prenotabile cade dentro una fascia di apertura e finisce entro la chiusura', () => {
+  const cfg = contenuto('orari.json');
+  assert.deepEqual(Object.keys(cfg.giorni).sort(), Object.keys(cfg.apertura).sort(), 'stessi giorni di apertura e di prenotazione');
+  for (const [g, inizi] of Object.entries(cfg.giorni)) {
+    for (const h of inizi) {
+      const ok = cfg.apertura[g].some(([da, a]) => minuti(h) >= minuti(da) && minuti(h) + cfg.passoMinuti <= minuti(a));
+      assert.ok(ok, `giorno ${g}, ore ${h}: fuori dagli orari di apertura`);
+    }
+  }
+});
+
+test('gli orari di apertura non sono duplicati in site.json: la fonte e\' orari.json', () => {
+  for (const f of ['site.json', 'en/site.json']) {
+    const s = contenuto(f);
+    assert.equal(s.hours, undefined, f);
+    assert.equal(s.openingHours, undefined, f);
+  }
+});
+
+test('content/chiusure.json non contiene date gia\' passate', () => {
+  const oggi = new Date().toISOString().slice(0, 10);
+  const passate = contenuto('chiusure.json').date.filter((d) => d < oggi);
+  assert.deepEqual(passate, [], 'aggiorna le chiusure: ' + passate.join(', '));
+});
+
+test('lo spostamento online e\' disattivato di default; lo staff puo\' sempre spostare', async () => {
+  const esito = await sposta('APT-2026-000001', '2026-12-01', '10:00', { env: ENV });
+  assert.equal(esito.ok, false);
+  assert.equal(esito.error, 'spostamento_non_disponibile');
 });

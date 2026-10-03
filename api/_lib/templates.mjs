@@ -11,7 +11,7 @@
  * appuntamento. Il campo messaggio e' scritto dal paziente e puo' contenere
  * dati personali: non viene mai inoltrato a terzi ne' usato altrove.
  */
-import { studio } from './studio.mjs';
+import { studio, spostamentoOnline } from './studio.mjs';
 import { dateIt } from './validate.mjs';
 import { manageUrl, rebookUrl } from './token.mjs';
 
@@ -89,7 +89,7 @@ const L = {
     hi: (n) => `Ciao ${n},`,
     intro: (n) => `abbiamo ricevuto correttamente la tua richiesta di appuntamento presso ${n}. Di seguito trovi il riepilogo.`,
     notConfirmed:
-      'La richiesta è stata inviata correttamente. Il nostro team ti contatterà per confermare definitivamente giorno e orario dell&#39;appuntamento.',
+      'La richiesta è stata inviata correttamente. La segreteria ti contatterà per telefono o WhatsApp per confermare giorno e orario dell&#39;appuntamento.',
     contactCta: 'Contatta lo studio',
     changeNote: (c) => `Se hai necessità di modificare o annullare la richiesta, rispondi a questa email indicando il codice ${c}.`,
     auto: 'Questa email è stata generata automaticamente in seguito a una richiesta effettuata tramite il nostro sito.',
@@ -129,8 +129,10 @@ const L = {
       `Se non puoi presentarti, avvisaci con almeno 24 ore di anticipo chiamando ${tel}: quel posto viene offerto a un altro paziente.`,
     preheaderConfirmed: (d, o) => `Appuntamento confermato per ${d} alle ${o}.`,
     manageCta: 'Gestisci la tua prenotazione',
-    manageIntro:
-      'Hai bisogno di annullare o spostare? Puoi farlo online, gratuitamente, fino a 24 ore prima dell&#39;appuntamento.',
+    manageIntro: (sposta) =>
+      sposta
+        ? 'Hai bisogno di annullare o spostare? Puoi farlo online, gratuitamente, fino a 24 ore prima dell&#39;appuntamento.'
+        : 'Hai bisogno di annullare? Puoi farlo online, gratuitamente, fino a 24 ore prima dell&#39;appuntamento. Per spostarlo contatta la segreteria per telefono o WhatsApp.',
     lateNote: (tel, email) =>
       `Se mancano meno di 24 ore, la modifica online non è più disponibile: chiamaci al ${tel} oppure scrivici a ${email} e valutiamo insieme se è possibile.`,
     cancelLabel: 'Appuntamento annullato',
@@ -150,7 +152,7 @@ const L = {
     hi: (n) => `Hello ${n},`,
     intro: (n) => `we have received your appointment request at ${n}. Here is a summary.`,
     notConfirmed:
-      'Your request has been sent successfully. Our team will contact you to confirm the date and time of your appointment.',
+      'Your request has been sent successfully. Our front desk will contact you by phone or WhatsApp to confirm the date and time of your appointment.',
     contactCta: 'Contact the practice',
     changeNote: (c) => `If you need to change or cancel your request, reply to this email quoting reference ${c}.`,
     auto: 'This email was generated automatically following a request made through our website.',
@@ -190,7 +192,10 @@ const L = {
       `If you cannot attend, please let us know at least 24 hours in advance by calling ${tel}: the slot is offered to another patient.`,
     preheaderConfirmed: (d, o) => `Appointment confirmed for ${d} at ${o}.`,
     manageCta: 'Manage your appointment',
-    manageIntro: 'Need to cancel or reschedule? You can do it online, free of charge, up to 24 hours before your appointment.',
+    manageIntro: (sposta) =>
+      sposta
+        ? 'Need to cancel or reschedule? You can do it online, free of charge, up to 24 hours before your appointment.'
+        : 'Need to cancel? You can do it online, free of charge, up to 24 hours before your appointment. To move it, please contact our front desk by phone or WhatsApp.',
     lateNote: (tel, email) =>
       `If less than 24 hours remain, the online change is no longer available: call us on ${tel} or write to ${email} and we will see what is possible.`,
     cancelLabel: 'Appointment cancelled',
@@ -316,8 +321,8 @@ ${button(contatto, T.contactCta)}
     '',
     riepilogoTesto(r),
     '',
-    'La richiesta è stata inviata correttamente. Il nostro team ti contatterà per',
-    "confermare definitivamente giorno e orario dell'appuntamento.",
+    'La richiesta è stata inviata correttamente. La segreteria ti contatterà per',
+    "telefono o WhatsApp per confermare giorno e orario dell'appuntamento.",
     '',
     studio.telefono ? T.contactCta + ': ' + studio.telefono : '',
     studio.whatsapp ? 'WhatsApp: ' + studio.whatsapp : '',
@@ -472,7 +477,7 @@ ${button(mappa, T.directionsCta, { light: true })}
 
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:28px 0 0">
   <tr><td style="padding:20px 22px;border:1px solid ${LINE}">
-    <p style="margin:0 0 10px;font:400 14px/1.6 Helvetica,Arial,sans-serif;color:${INK}">${T.manageIntro}</p>
+    <p style="margin:0 0 10px;font:400 14px/1.6 Helvetica,Arial,sans-serif;color:${INK}">${T.manageIntro(spostamentoOnline())}</p>
     ${button(manageUrl(r.booking_id, r.lingua === 'en' ? 'en' : 'it'), T.manageCta, { light: true })}
     <p style="margin:14px 0 0;font:400 13px/1.7 Helvetica,Arial,sans-serif;color:${MUTED}">
       ${T.lateNote(
@@ -510,7 +515,7 @@ ${button(mappa, T.directionsCta, { light: true })}
     '',
     T.before.replace(/&#39;/g, "'").replace(/&agrave;/g, 'a'),
     '',
-    T.manageIntro.replace(/&#39;/g, "'") + ' ' + manageUrl(r.booking_id, r.lingua === 'en' ? 'en' : 'it'),
+    T.manageIntro(spostamentoOnline()).replace(/&#39;/g, "'") + ' ' + manageUrl(r.booking_id, r.lingua === 'en' ? 'en' : 'it'),
     T.lateNote(studio.telefono, studio.email).replace(/<[^>]+>/g, ''),
     '',
     T.rebookIntro + ' ' + rebookUrl(r.booking_id, r.lingua === 'en' ? 'en' : 'it'),

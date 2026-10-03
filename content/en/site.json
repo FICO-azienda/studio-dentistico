@@ -7,28 +7,6 @@
     "city": "Milan"
   },
   "director": "Owner: Dr Arturo Liddi",
-  "hours": [
-    {
-      "d": "Monday",
-      "h": "10:00 — 12:00 · 14:00 — 19:00"
-    },
-    {
-      "d": "Tuesday",
-      "h": "09:00 — 12:00 · 14:00 — 19:00"
-    },
-    {
-      "d": "Wednesday",
-      "h": "14:00 — 19:00"
-    },
-    {
-      "d": "Thursday",
-      "h": "09:00 — 12:30 · 14:00 — 19:00"
-    },
-    {
-      "d": "Friday",
-      "h": "10:00 — 12:30 · 14:00 — 19:00"
-    }
-  ],
   "directions": [
     {
       "label": "Underground",

@@ -292,15 +292,28 @@ const UI = {
   'form.orWrite': ['o scrivici a', 'or write to us at'],
 
   /* contatti */
-  'contact.request': ['Richiedi informazioni', 'Request information'],
+  'contact.request': ['Scrivici su WhatsApp', 'Write to us on WhatsApp'],
+  'contact.requestLead': [
+    'Per una domanda veloce scrivi qui il tuo messaggio: si apre WhatsApp con il testo già pronto da inviare allo studio. Per chiedere un appuntamento usa la pagina {link}.',
+    'For a quick question, write your message here: WhatsApp opens with the text ready to send to the practice. To request an appointment, use the {link} page.'
+  ],
+  'contact.sendWhatsapp': ['Continua su WhatsApp', 'Continue on WhatsApp'],
+  'contact.waOpen': ['Apri WhatsApp', 'Open WhatsApp'],
+  'contact.privacy': [
+    "Ho letto l'{link} e acconsento al trattamento dei miei dati per essere ricontattato.",
+    'I have read the {link} and consent to the processing of my data in order to be contacted.'
+  ],
+  'contact.orEmail': ["Preferisci l'email? Scrivici a", 'Prefer email? Write to us at'],
+  'contact.openMaps': ['Apri in Google Maps', 'Open in Google Maps'],
+  'contact.mapTitle': ['Mappa dello studio', 'Map of the practice'],
   'contact.help': ['Come possiamo aiutarti?', 'How can we help?'],
   'contact.helpPlaceholder': ['Descrivi brevemente la tua richiesta', 'Briefly describe your request'],
   'contact.noHealthData': [
     '* Campi obbligatori. Non inserire dati relativi alla salute in questo modulo.',
     '* Required fields. Please do not enter health data in this form.'
   ],
-  'contact.thanks': ['Grazie.', 'Thank you.'],
-  'contact.thanksLead': ["Abbiamo ricevuto la tua richiesta: ti ricontattiamo appena possibile.", "We have received your request: we will get back to you as soon as possible."],
+  'contact.thanks': ['Ultimo passo.', 'Last step.'],
+  'contact.thanksLead': ["Abbiamo aperto WhatsApp con il tuo messaggio: invialo e la segreteria ti risponde appena possibile. Se non si è aperto, usa il pulsante qui sotto.", "We have opened WhatsApp with your message: send it and our front desk will reply as soon as possible. If it didn't open, use the button below."],
 
 
   /* passaggi della prima visita */
@@ -448,11 +461,16 @@ const UI = {
   'legal.updated': ['Ultimo aggiornamento<br>settembre 2026', 'Last updated<br>September 2026'],
 
   /* prenotazione */
-  'book.title1': ['Prenota', 'Book'],
-  'book.title2': ['una visita.', 'an appointment.'],
+  'book.title1': ['Richiedi', 'Request'],
+  'book.title2': ['un appuntamento.', 'an appointment.'],
   'book.lead': [
-    'Scegli il servizio: le domande cambiano di conseguenza e sono al massimo cinque. Puoi prenotare un appuntamento oppure chiedere di essere ricontattato.',
-    'Choose the service: the questions change accordingly, and there are never more than five. You can book an appointment or ask us to call you back.'
+    'Scegli il servizio e rispondi a poche domande, al massimo cinque. Puoi indicare giorno e orario che preferisci oppure chiedere di essere ricontattato: in entrambi i casi la segreteria ti contatta per telefono o WhatsApp e conferma l\'appuntamento.',
+    'Choose the service and answer a few questions, never more than five. You can suggest the day and time you prefer or ask to be contacted: either way, our front desk gets in touch by phone or WhatsApp to confirm the appointment.'
+  ],
+  'book.sendWhatsapp': ['Continua su WhatsApp', 'Continue on WhatsApp'],
+  'book.whatsappHint': [
+    'Si apre WhatsApp con la richiesta già scritta: la invii tu allo studio.',
+    'WhatsApp opens with your request already written: you send it to the practice.'
   ],
   'book.preferPhone': ['Preferisci parlare?', 'Prefer to talk?'],
   'book.step': ['Passo', 'Step'],
@@ -462,26 +480,6 @@ const UI = {
   'book.urgentText': ["In caso di urgenza chiama direttamente lo studio o scrivi su WhatsApp: cerchiamo insieme di soddisfare le tue esigenze.", "In an emergency, call the practice directly or write on WhatsApp: together we will try to meet your needs."],
   'book.received': ['Richiesta ricevuta.', 'Request received.'],
   'book.code': ['Codice richiesta', 'Request code'],
-  'book.demoNote': [
-    'Modalità dimostrativa: nessuna email è stata inviata e nessun appuntamento è stato registrato.',
-    'Demo mode: no email was sent and no appointment was recorded.'
-  ],
-  'book.emailSent': [
-    'Ti abbiamo inviato una email con il riepilogo. Il nostro team ti contatterà per confermare definitivamente la disponibilità.',
-    'We have sent you an email with the summary. Our team will contact you to confirm availability.'
-  ],
-  'book.emailFailed': [
-    "Non siamo riusciti a inviarti l'email di riepilogo, ma la richiesta è registrata. Il nostro team ti contatterà per confermare la disponibilità.",
-    'We could not send you the summary email, but your request has been recorded. Our team will contact you to confirm availability.'
-  ],
-  'book.thanksFor': ['Grazie, {nome}. Abbiamo ricevuto la tua richiesta {quando}.', 'Thank you, {nome}. We have received your request {quando}.'],
-  'book.forDate': ['per {giorno} alle {ora}', 'for {giorno} at {ora}'],
-  'book.forCallback': ['e la richiamata che ci hai chiesto', 'and the call back you asked for'],
-  'book.when': ['Quando ti è comodo?', 'When suits you?'],
-  'book.whenHint': [
-    'Gli orari mostrati sono indicativi: la segreteria conferma la disponibilità effettiva.',
-    'The times shown are indicative: our front desk confirms actual availability.'
-  ],
   'book.day': ['Giorno', 'Day'],
   'book.time': ['Orario', 'Time'],
   'book.second': ['Seconda preferenza', 'Second preference'],
@@ -491,19 +489,17 @@ const UI = {
   'book.noPreference': ['Nessuna preferenza', 'No preference'],
   'book.professional': ['Professionista', 'Practitioner'],
   'book.multiHint': ['Puoi scegliere più di una risposta.', 'You can choose more than one answer.'],
-  'book.bookOption': ['Scegli giorno e orario dal calendario.', 'Pick a day and time from the calendar.'],
-  'book.callbackOption': ['Ti richiamiamo noi quando preferisci.', 'We call you back when it suits you.'],
 
   /* autogestione prenotazione */
   'manage.label': ['Gestisci', 'Manage'],
   'manage.title1': ['Gestisci la tua', 'Manage your'],
   'manage.title2': ['prenotazione.', 'booking.'],
   'manage.lead': [
-    'Annulla o sposta il tuo appuntamento, gratuitamente, fino a 24 ore prima.',
-    'Cancel or reschedule your appointment, free of charge, up to 24 hours before.'
+    'Annulla il tuo appuntamento, gratuitamente, fino a 24 ore prima. Per spostarlo contatta la segreteria.',
+    'Cancel your appointment, free of charge, up to 24 hours before. To move it, please contact our front desk.'
   ],
   'manage.loading': ['Caricamento…', 'Loading…'],
-  'contact.lead': ["Via Rovigo 9, Milano, nelle vicinanze della MM Crescenzago. Per le prime visite ci si prenota di solito per telefono, oppure su WhatsApp per essere ricontattati appena possibile.", "Via Rovigo 9, Milan, near the Crescenzago metro station. First visits are usually booked by phone, or on WhatsApp to be contacted as soon as possible."],
+  'contact.lead': ["Via Rovigo 9, Milano, nelle vicinanze della MM Crescenzago. Gli appuntamenti si fissano di solito per telefono. In alternativa puoi scriverci su WhatsApp o inviare una richiesta dalla pagina Prenota: la segreteria ti ricontatta appena possibile e valuta con te se si tratta di un'urgenza o di una visita programmata.", "Via Rovigo 9, Milan, near the Crescenzago metro station. Appointments are usually arranged by phone. Alternatively, you can write to us on WhatsApp or send a request from the Book page: our front desk will get back to you as soon as possible and assess with you whether it is urgent or can be scheduled."],
   'meta.person.desc': ["{name}, {role} allo Studio Liddi di Milano. {short}", "{name}, {role} at Studio Liddi in Milan. {short}"],
   'studio.space1.t': ["Accoglienza", "Reception"],
   'studio.space1.d': ["Reception e sala d'attesa.", "Reception and waiting room."],

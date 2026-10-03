@@ -21,10 +21,11 @@
     it: {
       searchService: 'Cerca un servizio',
       multiHint: 'Puoi scegliere più di una risposta.',
-      modeBookHint: 'Scegli giorno e orario dal calendario.',
-      modeCallHint: 'Ti richiamiamo noi quando preferisci.',
+      modeBookHint: 'Indichi giorno e orario che preferisci: la segreteria ti ricontatta per confermare.',
+      modeCallHint: 'La segreteria ti ricontatta nella fascia che preferisci.',
       whenTitle: 'Quando ti è comodo?',
-      whenSub: 'Gli orari mostrati riflettono la disponibilità reale: se lo slot è libero, l\'appuntamento viene confermato subito.',
+      whenSub: 'Indica giorno e orario che preferisci: non è ancora un appuntamento. La segreteria ti ricontatta per telefono o WhatsApp e conferma l\'orario, valutando con te anche eventuali urgenze.',
+      whenSubAuto: 'Gli orari mostrati riflettono la disponibilità reale: se lo slot è libero, l\'appuntamento viene confermato subito.',
       day: 'Giorno',
       time: 'Orario',
       secondChoice: 'Seconda preferenza',
@@ -35,8 +36,8 @@
       professional: 'Professionista',
       sInitialRequest: 'Richiesta iniziale',
       sService: 'Servizio',
-      sDay: 'Giorno',
-      sTime: 'Orario',
+      sDay: 'Giorno preferito',
+      sTime: 'Orario preferito',
       sSecondChoice: 'Seconda preferenza',
       sAt: (h) => ` alle ${h}`,
       sProfessional: 'Professionista',
@@ -44,19 +45,28 @@
       sCallback: 'Richiamata',
       sChannel: 'Canale preferito',
       sWindow: 'Fascia oraria',
+      sName: 'Nome',
+      sPhone: 'Telefono',
+      sEmail: 'Email',
+      sNotes: 'Note',
       stepOf: (i, n) => `Passo ${i} di ${n}`,
       chooseService: 'Scegli il servizio',
       goToDetails: 'Vai ai tuoi dati',
       continueBtn: 'Continua',
       sendingBtn: 'Invio in corso',
       thanksFor: (name, when) => `Grazie, ${name}. Abbiamo ricevuto la tua richiesta ${when}.`,
-      whenFor: (day, hour) => `per ${day} alle ${hour}`,
-      whenCallback: 'e la richiamata che ci hai chiesto',
-      demoNote: 'Modalità dimostrativa: nessuna email è stata inviata e nessun appuntamento è stato registrato.',
+      whenFor: (day, hour) => `con preferenza per ${day} alle ${hour}`,
+      whenCallback: 'di essere ricontattato',
+      waIntro: (nome) => `Buongiorno, sono ${nome}. Vorrei richiedere un appuntamento dal sito dello studio.`,
+      waContactIntro: (nome) => `Buongiorno, sono ${nome}. Vi scrivo dal sito dello studio.`,
+      waTitle: 'Ultimo passo: invia il messaggio.',
+      waLead: (nome) => `${nome}, abbiamo preparato su WhatsApp il messaggio con la tua richiesta.`,
+      waNote: 'Invialo allo studio: la segreteria ti risponde per confermare giorno e orario. Se WhatsApp non si è aperto, usa il pulsante qui sotto oppure chiama lo studio.',
+      waOpen: 'Apri WhatsApp',
       emailSentNote:
-        'Ti abbiamo inviato una email con il riepilogo. Il nostro team ti contatterà per confermare definitivamente la disponibilità.',
+        'Ti abbiamo inviato una email con il riepilogo. La segreteria ti contatterà per telefono o WhatsApp per confermare giorno e orario.',
       emailFailedNote:
-        "Non siamo riusciti a inviarti l'email di riepilogo, ma la richiesta è registrata. Il nostro team ti contatterà per confermare la disponibilità.",
+        "Non siamo riusciti a inviarti l'email di riepilogo, ma la richiesta è registrata. La segreteria ti contatterà per telefono o WhatsApp per confermare giorno e orario.",
       confirmedTitle: 'Appuntamento confermato.',
       confirmedNote: "Il tuo appuntamento è confermato: ti abbiamo inviato l'email con l'invito al calendario.",
       confirmedFailedNote:
@@ -76,6 +86,7 @@
       statusCompleted: 'concluso',
       notManageable: (stato) => `Questo appuntamento risulta ${stato}: non ci sono ulteriori azioni disponibili.`,
       rescheduleBtn: 'Sposta appuntamento',
+      rescheduleByPhone: 'Per spostare l\'appuntamento contatta la segreteria: il nuovo orario si concorda insieme.',
       cancelBtn: 'Annulla appuntamento',
       confirmCancel: 'Confermi di voler annullare questo appuntamento? Lo slot verrà liberato.',
       cancelledTitle: 'Appuntamento annullato',
@@ -94,10 +105,11 @@
     en: {
       searchService: 'Search for a service',
       multiHint: 'You can choose more than one answer.',
-      modeBookHint: 'Pick a day and time from the calendar.',
-      modeCallHint: "We'll call you back whenever suits you.",
+      modeBookHint: 'Suggest the day and time you prefer: our front desk gets back to you to confirm.',
+      modeCallHint: 'Our front desk gets back to you at the time you prefer.',
       whenTitle: 'When suits you best?',
-      whenSub: 'The times shown reflect real availability: if the slot is free, your appointment is confirmed right away.',
+      whenSub: 'Suggest the day and time you prefer: this is not an appointment yet. Our front desk gets back to you by phone or WhatsApp to confirm the time, taking any urgency into account.',
+      whenSubAuto: 'The times shown reflect real availability: if the slot is free, your appointment is confirmed right away.',
       day: 'Day',
       time: 'Time',
       secondChoice: 'Second choice',
@@ -108,8 +120,8 @@
       professional: 'Practitioner',
       sInitialRequest: 'Initial request',
       sService: 'Service',
-      sDay: 'Day',
-      sTime: 'Time',
+      sDay: 'Preferred day',
+      sTime: 'Preferred time',
       sSecondChoice: 'Second choice',
       sAt: (h) => ` at ${h}`,
       sProfessional: 'Practitioner',
@@ -117,18 +129,27 @@
       sCallback: 'Call back',
       sChannel: 'Preferred channel',
       sWindow: 'Preferred time',
+      sName: 'Name',
+      sPhone: 'Phone',
+      sEmail: 'Email',
+      sNotes: 'Notes',
       stepOf: (i, n) => `Step ${i} of ${n}`,
       chooseService: 'Choose the service',
       goToDetails: 'Go to your details',
       continueBtn: 'Continue',
       sendingBtn: 'Sending',
       thanksFor: (name, when) => `Thank you, ${name}. We've received your request ${when}.`,
-      whenFor: (day, hour) => `for ${day} at ${hour}`,
-      whenCallback: 'and the call back you asked for',
-      demoNote: 'Demo mode: no email was sent and no appointment was recorded.',
-      emailSentNote: "We've sent you a summary email. Our team will contact you to confirm final availability.",
+      whenFor: (day, hour) => `with a preference for ${day} at ${hour}`,
+      whenCallback: 'to be contacted',
+      waIntro: (nome) => `Hello, my name is ${nome}. I would like to request an appointment through the practice website.`,
+      waContactIntro: (nome) => `Hello, my name is ${nome}. I am writing through the practice website.`,
+      waTitle: 'Last step: send the message.',
+      waLead: (nome) => `${nome}, we have prepared your request as a WhatsApp message.`,
+      waNote: "Send it to the practice: our front desk will reply to confirm the day and time. If WhatsApp didn't open, use the button below or call the practice.",
+      waOpen: 'Open WhatsApp',
+      emailSentNote: "We've sent you a summary email. Our front desk will contact you by phone or WhatsApp to confirm the day and time.",
       emailFailedNote:
-        "We couldn't send you the summary email, but your request has been recorded. Our team will contact you to confirm availability.",
+        "We couldn't send you the summary email, but your request has been recorded. Our front desk will contact you by phone or WhatsApp to confirm the day and time.",
       confirmedTitle: 'Appointment confirmed.',
       confirmedNote: "Your appointment is confirmed: we've sent you the email with the calendar invite.",
       confirmedFailedNote:
@@ -148,6 +169,7 @@
       statusCompleted: 'completed',
       notManageable: (stato) => `This appointment is ${stato}: there are no further actions available.`,
       rescheduleBtn: 'Reschedule appointment',
+      rescheduleByPhone: 'To move your appointment, please contact our front desk: we will agree on a new time together.',
       cancelBtn: 'Cancel appointment',
       confirmCancel: 'Are you sure you want to cancel this appointment? The slot will be released.',
       cancelledTitle: 'Appointment cancelled',
@@ -398,7 +420,16 @@
         const fields = $$('input, textarea, select', form).filter((el) => !el.disabled);
         const bad = fields.filter((el) => !validateField(el));
         if (bad.length) { bad[0].focus(); return; }
+        // il modulo Contatti non ha un server dietro: diventa un messaggio
+        // WhatsApp gia' scritto, mai una conferma di invio che non c'e' stato
+        if (!form.dataset.whatsapp) return;
+        const nome = `${form.nome.value.trim()} ${form.cognome.value.trim()}`.trim();
+        const testo = [tr('waContactIntro', nome), '', form.messaggio.value.trim()].join('\n').trim();
+        const url = `https://wa.me/${form.dataset.whatsapp}?text=${encodeURIComponent(testo)}`;
+        window.open(url, '_blank', 'noopener');
         const done = $(form.dataset.success);
+        const link = done && $('[data-wa-open]', done);
+        if (link) link.href = url;
         form.hidden = true;
         if (done) { done.hidden = false; done.scrollIntoView({ behavior: reduced() ? 'auto' : 'smooth', block: 'center' }); }
       });
@@ -425,7 +456,7 @@
        Uno slot occupato blocca anche gli orari successivi richiesti da un
        servizio piu' lungo (slotCount > 1), con la stessa logica del server
        (vedi api/_lib/availability.mjs). Si interroga solo in modalita' live:
-       in demo tutti gli orari restano selezionabili. */
+       senza API tutti gli orari restano selezionabili. */
     const dispEndpoint = wz.dataset.endpoint ? wz.dataset.endpoint.replace(/prenotazioni\/?$/, 'disponibilita') : '';
     const occupatiCache = new Map();
     let occupatiGiorno = new Set();
@@ -656,7 +687,7 @@
 
     const disegnaQuando = () => {
       const giorni = giorniDisponibili();
-      return `${titolo(tr('whenTitle'), tr('whenSub'))}
+      return `${titolo(tr('whenTitle'), tr(wz.dataset.autoConfirm === 'true' ? 'whenSubAuto' : 'whenSub'))}
         <p class="label mt-4">${tr('day')}</p>
         <div class="daypick mt-2">
           ${giorni
@@ -929,12 +960,16 @@
 
     render();
 
-    /* -- invio -------------------------------------------------------------- */
+    /* -- invio --------------------------------------------------------------
+       Con l'API attiva (mode "live" ed endpoint) la richiesta va al server.
+       Senza, non si finge mai un invio: la richiesta diventa un messaggio
+       WhatsApp gia' scritto, che il paziente manda allo studio. E' il canale
+       con cui lo studio gestisce comunque le richieste di appuntamento. */
     const done = $('#booking-done', wz);
     const box = $('[data-form-error]', form);
     const btn = $('[data-submit]', form);
     const endpoint = wz.dataset.endpoint || '';
-    const demo = !endpoint || wz.dataset.mode !== 'live';
+    const viaWhatsapp = !endpoint || wz.dataset.mode !== 'live';
     let inviando = false;
 
     form.setAttribute('novalidate', '');
@@ -953,6 +988,50 @@
       box.scrollIntoView({ behavior: reduced() ? 'auto' : 'smooth', block: 'center' });
     };
 
+    const mostra = () => {
+      form.hidden = true;
+      done.hidden = false;
+      done.focus({ preventScroll: true });
+      done.scrollIntoView({ behavior: reduced() ? 'auto' : 'smooth', block: 'center' });
+    };
+
+    /** Testo del messaggio WhatsApp: le stesse righe del riepilogo mostrato prima dell'invio. */
+    const messaggioWhatsapp = () => {
+      const nome = `${form.nome.value.trim()} ${form.cognome.value.trim()}`.trim();
+      const righe = [
+        ...riepilogo(),
+        [tr('sPhone'), form.telefono.value.trim()],
+        [tr('sEmail'), form.email.value.trim()]
+      ];
+      const note = form.messaggio?.value.trim();
+      if (note) righe.push([tr('sNotes'), note]);
+      return `${tr('waIntro', nome)}\n\n${righe.map(([k, v]) => `${k}: ${v}`).join('\n')}`;
+    };
+
+    const mostraWhatsapp = (url) => {
+      const titolo = $('[data-done-title]', done);
+      const lead = $('[data-done-lead]', done);
+      const nota = $('[data-done-note]', done);
+      const code = $('[data-done-code]', done);
+      if (titolo) titolo.textContent = tr('waTitle');
+      if (lead) lead.textContent = tr('waLead', form.nome.value.trim());
+      if (nota) nota.textContent = tr('waNote');
+      // nessun codice: la richiesta non e' passata da un archivio
+      if (code) code.closest('p').hidden = true;
+      const azioni = $('[data-done-actions]', done);
+      if (azioni && !$('[data-wa-open]', azioni)) {
+        const a = document.createElement('a');
+        a.className = 'btn';
+        a.href = url;
+        a.target = '_blank';
+        a.rel = 'noopener';
+        a.dataset.waOpen = '';
+        a.textContent = tr('waOpen');
+        azioni.prepend(a);
+      }
+      mostra();
+    };
+
     const mostraConferma = ({ bookingId, emailSent, status }) => {
       const titolo = $('[data-done-title]', done);
       const lead = $('[data-done-lead]', done);
@@ -965,19 +1044,14 @@
           : tr('whenCallback');
       if (lead) lead.textContent = tr('thanksFor', nome, quando);
       const confermata = status === 'CONFIRMED';
-      if (titolo && confermata && !demo) titolo.textContent = tr('confirmedTitle');
+      if (titolo && confermata) titolo.textContent = tr('confirmedTitle');
       if (nota) {
-        nota.textContent = demo
-          ? tr('demoNote')
-          : confermata
-            ? (emailSent ? tr('confirmedNote') : tr('confirmedFailedNote'))
-            : (emailSent ? tr('emailSentNote') : tr('emailFailedNote'));
+        nota.textContent = confermata
+          ? (emailSent ? tr('confirmedNote') : tr('confirmedFailedNote'))
+          : (emailSent ? tr('emailSentNote') : tr('emailFailedNote'));
       }
       if (code) code.textContent = bookingId || '—';
-      form.hidden = true;
-      done.hidden = false;
-      done.focus({ preventScroll: true });
-      done.scrollIntoView({ behavior: reduced() ? 'auto' : 'smooth', block: 'center' });
+      mostra();
     };
 
     form.addEventListener('submit', async (e) => {
@@ -988,6 +1062,14 @@
       const campi = $$('input, textarea, select', form).filter((el) => !el.disabled);
       const invalidi = campi.filter((el) => !validateField(el));
       if (invalidi.length) { invalidi[0].focus(); return; }
+
+      if (viaWhatsapp) {
+        // aperto dentro il gestore del submit: e' un gesto dell'utente, il browser non lo blocca
+        const url = `https://wa.me/${wz.dataset.whatsapp}?text=${encodeURIComponent(messaggioWhatsapp())}`;
+        window.open(url, '_blank', 'noopener');
+        mostraWhatsapp(url);
+        return;
+      }
 
       inviando = true;
       btn.classList.add('is-busy');
@@ -1024,14 +1106,6 @@
         btn.disabled = false;
         btn.textContent = testo;
       };
-
-      if (demo) {
-        setTimeout(() => {
-          ripristina();
-          mostraConferma({ bookingId: 'APT-DEMO-000000', emailSent: false });
-        }, 600);
-        return;
-      }
 
       try {
         const res = await fetch(endpoint, {
@@ -1195,9 +1269,10 @@
     const disegnaGestibile = (s) => {
       box.innerHTML = `${schedaAppuntamento(s)}
         <div class="row mt-4">
-          <button class="btn btn--ghost" type="button" data-azione="sposta">${tr('rescheduleBtn')}</button>
+          ${s.spostamento ? `<button class="btn btn--ghost" type="button" data-azione="sposta">${tr('rescheduleBtn')}</button>` : ''}
           <button class="btn btn--ghost" type="button" data-azione="annulla">${tr('cancelBtn')}</button>
         </div>
+        ${s.spostamento ? '' : `<p class="body mt-3">${tr('rescheduleByPhone')}</p>${contatti()}`}
         <div class="mt-5" data-pannello hidden></div>`;
 
       const pannello = $('[data-pannello]', box);
@@ -1224,7 +1299,7 @@
         }
       });
 
-      $('[data-azione="sposta"]', box).addEventListener('click', () => {
+      $('[data-azione="sposta"]', box)?.addEventListener('click', () => {
         pannello.hidden = false;
         const giorni = giorniDisponibili();
         pannello.innerHTML = `

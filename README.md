@@ -1,24 +1,16 @@
 # Studio Liddi — sito dello studio odontoiatrico
 
-> ### ⚠️ Progetto dimostrativo — contenuti fittizi
+> ### Contenuti dello studio
 >
-> **"Studio Liddi" non esiste.** È uno studio odontoiatrico inventato, creato come
-> esercizio di design e sviluppo front-end. Sono inventati, e non vanno presi per
-> veri né riutilizzati come tali:
+> Dati dello studio, orari, team e servizi vengono dagli appunti forniti dal
+> titolare (Studio Dentistico Liddi Dott. Arturo, Via Rovigo 9, Milano). Alcuni
+> punti erano segnati "da confermare" e vanno verificati con lo studio prima
+> della pubblicazione: orari del mattino, numero di cellulare/WhatsApp, nomi
+> delle due dottoresse, chiusure festive. Vedi *Prima di andare online*.
 >
-> - ragione sociale, indirizzo, telefono, email, P. IVA e nome del direttore sanitario;
-> - i nove profili del team, con biografie, titoli e appartenenze societarie;
-> - le recensioni dei pazienti e i numeri dello studio (anni, pazienti, valutazione);
-> - i casi clinici: le immagini prima/dopo sono fotografie di stock di persone diverse,
->   non documentazione clinica.
->
-> I testi clinici dei trattamenti sono scritti per essere plausibili e non contengono
-> indicazioni terapeutiche personalizzate: **non sono un parere medico**.
->
-> Chiunque volesse partire da qui per un sito reale deve sostituire tutti i contenuti
-> elencati nella sezione *Prima di andare online* in fondo a questo file. In Italia la
-> comunicazione sanitaria è regolata (art. 9-bis D.L. 145/2013) e pubblicare recensioni
-> o casi clinici non veritieri è una pratica commerciale scorretta.
+> I testi clinici dei trattamenti sono informativi e non contengono indicazioni
+> terapeutiche personalizzate: **non sono un parere medico**. In Italia la
+> comunicazione sanitaria è regolata (art. 9-bis D.L. 145/2013).
 
 Sito statico, editoriale e mobile-first per uno studio dentistico di fascia alta.
 Nessun framework, nessuna dipendenza npm: un generatore in Node legge i contenuti
@@ -214,9 +206,25 @@ JSON-LD.
 
 ## Sistema di prenotazione ed email
 
-Il sito e' statico, quindi il form di prenotazione parla con una funzione
-server-side ospitata altrove. Il codice e' gia' scritto e testato: manca solo
-la distribuzione.
+**Il principio: il sito raccoglie richieste, l'agenda resta allo studio.** Lo
+studio fissa gli appuntamenti soprattutto per telefono, valutando con il
+paziente se si tratta di un'urgenza o di una visita programmata; su WhatsApp il
+paziente puo' lasciare un messaggio ed essere ricontattato. Il sito non vede
+quell'agenda, quindi non conferma niente da solo: il paziente indica servizio,
+giorno e orario preferiti (oppure chiede di essere ricontattato) e la
+segreteria lo richiama o gli scrive per fissare l'appuntamento. Contatti, FAQ,
+pagina Prenota, email e termini descrivono tutti questo stesso processo.
+
+Due modalita', scelte in `content/site.json` -> `booking`:
+
+| `mode` | Cosa succede all'invio |
+|---|---|
+| `whatsapp` (attuale) | Nessun server: si apre WhatsApp con la richiesta gia' scritta (servizio, risposte, preferenze, contatti), che il paziente invia allo studio. Anche il modulo della pagina Contatti funziona cosi'. |
+| `live` + `endpoint` | La richiesta va all'API (sotto): archivio, codice richiesta, email al paziente e allo studio, interfaccia staff. |
+
+In nessuna delle due il sito mostra una conferma di invio che non c'e' stata.
+
+Il codice dell'API e' gia' scritto e testato: manca solo la distribuzione.
 
 ### Come funziona
 
@@ -229,22 +237,15 @@ anti-spam e limite di frequenza
         v
 validazione lato server      api/_lib/validate.mjs
         v
-codice richiesta APT-2026-000124
+codice richiesta APT-2026-000124, stato PENDING
         v
-CONFERMA AUTOMATICA          api/_lib/availability.mjs   <- solo se e' una
-        v                                                   prenotazione con
-   slot libero?                                             data/ora, non una
-   /         \                                               richiamata
- si            no
-  v              v
-CONFIRMED      PENDING  <- raro: slot appena occupato o giorno chiuso
-  v              v
-SALVATAGGIO   api/_lib/store.mjs    <- prima delle email, in entrambi i casi
+SALVATAGGIO                  api/_lib/store.mjs   <- prima delle email
         v
-email al paziente (conferma+.ics, oppure richiesta ricevuta) + email allo
+email al paziente ("richiesta ricevuta, ti ricontattiamo") + email allo
 studio                                <- se falliscono, la richiesta resta salva
         v
-schermata finale, diversa nei due casi
+la segreteria chiama o scrive al paziente, fissa l'appuntamento
+e lo conferma da /staff/  ->  CONFIRMED, email di conferma con invito .ics
 ```
 
 L'ordine non e' casuale: la richiesta viene archiviata **prima** di tentare
@@ -253,33 +254,23 @@ perdono e l'errore finisce nei log.
 
 ### Cosa dice al paziente, e cosa non dice
 
-Se lo slot richiesto e' libero, la prenotazione viene **confermata subito**:
-il paziente riceve l'email di conferma con l'invito per il calendario nello
-stesso momento in cui invia il form, senza restare in attesa di un controllo
-manuale. E' un compromesso deliberato: lo studio conosce solo le prenotazioni
-fatte attraverso il sito, quindi in rarissimi casi (una richiesta quasi
-simultanea sullo stesso orario, o l'archivio che non riesce a occupare lo
-slot) la conferma automatica puo' rivelarsi sbagliata — a quel punto tocca
-allo staff spostare o annullare dalla dashboard, come per qualunque altra
-modifica. Il compromesso e' esplicito: certezza immediata per il paziente,
-a fronte di un'eccezione rara che lo staff puo' sempre correggere dopo.
+Ogni richiesta resta `PENDING`: l'email e la schermata finale dicono "abbiamo
+ricevuto la tua richiesta" e che la segreteria contattera' il paziente per
+telefono o WhatsApp per confermare giorno e orario — mai "confermato" quando
+non lo e' davvero. L'email di conferma con l'invito per il calendario parte
+solo quando lo staff conferma da `/staff/` (o con `scripts/invia-conferma.mjs`).
 
-Se lo slot non e' libero (o non c'e' uno slot, come per una richiamata), la
-richiesta resta `PENDING`: l'email e la schermata finale dicono "abbiamo
-ricevuto la tua richiesta" e annunciano che la segreteria ricontattera' il
-paziente — mai "confermato" quando non lo e' davvero.
+Se l'email non parte, la schermata lo dice invece di promettere un riepilogo
+mai spedito. Se l'invio fallisce del tutto, compare un errore con i recapiti
+dello studio, mai una falsa conferma.
 
-In entrambi i casi, se l'email non parte, la schermata lo dice invece di
-promettere un riepilogo mai spedito. Se l'invio fallisce del tutto, compare
-un errore con i recapiti dello studio, mai una falsa conferma.
-
-**Verifica interna.** Una prenotazione confermata automaticamente non e'
-comunque stata guardata da nessuno: l'interfaccia staff (`/staff/`) la mostra
-nella scheda "Da rivedere" finche' qualcuno non la spunta con "Segna come
-vista" — un controllo leggero, non un'approvazione: non blocca il paziente,
-serve solo a dare allo staff visibilita' su cosa e' arrivato. Le prenotazioni
-confermate a mano (da staff, sempre da `/staff/` o da
-`scripts/invia-conferma.mjs`) sono gia' considerate viste.
+**Conferma automatica (spenta).** Il motore sa anche confermare subito una
+richiesta se lo slot risulta libero (`booking.confermaAutomatica: true` in
+`content/site.json`, oppure `BOOKING_AUTO_CONFIRM=1`). Va accesa solo se lo
+studio gestisce **tutta** l'agenda dal sito: altrimenti un orario preso al
+telefono risulterebbe libero online e due pazienti finirebbero sullo stesso
+slot. In quel caso le richieste confermate in automatico compaiono nella scheda
+"Da rivedere" di `/staff/` finche' qualcuno non le spunta.
 
 ### Distribuzione su Vercel con Resend
 
@@ -306,11 +297,12 @@ confermate a mano (da staff, sempre da `/staff/` o da
 "booking": { "endpoint": "https://IL-TUO-PROGETTO.vercel.app/api/prenotazioni", "mode": "live" }
 ```
 
-5. `npm run build` e push: il form inizia a inviare davvero.
+5. `npm run build` e push: il form inizia a inviare all'API.
 
-Finche' `mode` resta `"demo"` il form non invia nulla e la schermata finale lo
-dichiara apertamente. E' una scelta: mostrare una conferma finta a un paziente
-che crede di aver prenotato sarebbe peggio di un form disattivato.
+Finche' `mode` non e' `"live"` (o l'endpoint e' vuoto) il form prepara la
+richiesta come messaggio WhatsApp. Non mostra mai una conferma finta: un
+paziente che crede di aver prenotato senza che nessuno abbia ricevuto nulla
+sarebbe il caso peggiore.
 
 ### Logica condizionale per servizio
 
@@ -355,8 +347,15 @@ inserito nelle due email si costruiscono dalle domande effettivamente poste, per
 cui cambiano da servizio a servizio senza template scritti a mano.
 
 **Richiamata.** Chi sceglie "essere ricontattato" non vede il calendario: gli si
-chiede canale e fascia oraria, e data e ora smettono di essere obbligatorie
-anche lato server.
+chiede canale (telefono o WhatsApp, i canali con cui lo studio risponde) e
+fascia oraria (mattina o pomeriggio, dentro gli orari di apertura), e data e ora
+smettono di essere obbligatorie anche lato server. Il server accetta solo i
+valori previsti in `content/booking-flows.json`.
+
+**Orari.** `content/orari.json` e' l'unica fonte: fasce di apertura (pagina
+Contatti, home, sidebar di Prenota, dati strutturati) e orari proponibili come
+preferenza. Un test verifica che ogni orario proponibile cada dentro
+l'apertura e che `content/chiusure.json` non contenga date passate.
 
 **Navigazione.** Indicatore di avanzamento, ritorno al passo precedente senza
 perdere le risposte gia' date, ricerca fra i 27 servizi.
@@ -425,13 +424,17 @@ manca. La richiesta iniziale (`POST /api/prenotazioni`) resta invece sempre
 accettata anche senza KV: il record e' comunque scritto nei log della
 piattaforma, l'ultima rete di sicurezza.
 
-### Autogestione: annullare o spostare con un click
+### Autogestione: annullare con un click
 
-Il paziente puo' annullare o spostare l'appuntamento da solo, senza
-telefonare, finche' mancano **almeno 24 ore** all'orario prenotato. Il link
-compare nell'email di conferma ("Gestisci la tua prenotazione") e porta alla
-pagina `/gestisci/`, dove sceglie un nuovo giorno/orario o annulla con un
-click. Sotto le 24 ore l'azione online si disattiva da sola e la pagina
+Il paziente puo' annullare l'appuntamento da solo, senza telefonare, finche'
+mancano **almeno 24 ore** all'orario prenotato. Il link compare nell'email di
+conferma ("Gestisci la tua prenotazione") e porta alla pagina `/gestisci/`.
+Lo **spostamento online e' spento** (`booking.spostamentoOnline: false`, oppure
+`BOOKING_SELF_RESCHEDULE`): un nuovo orario va concordato con la segreteria, che
+gestisce l'agenda per telefono, quindi la pagina e l'email invitano a
+contattare lo studio. Lo staff sposta da `/staff/` o da riga di comando.
+Se un giorno l'agenda passasse tutta dal sito, basta riaccenderlo: il paziente
+sceglierebbe da solo un nuovo giorno/orario. Sotto le 24 ore l'azione online si disattiva da sola e la pagina
 mostra telefono ed email dello studio: da quel punto serve una decisione
 umana, perche' liberare uno slot all'ultimo momento ha un costo reale.
 
@@ -526,27 +529,27 @@ npm run build && node -e "…"   # vedi scripts/ oppure apri dist/_email/*.html
 
 ## Prima di andare online
 
-Il sito è completo dal punto di vista tecnico, ma i **contenuti sono di esempio** e
-vanno sostituiti. In particolare, trattandosi di comunicazione sanitaria:
+Contenuti e funzionamento seguono gli appunti dello studio. Prima della
+pubblicazione restano da verificare con il titolare (erano segnati "da confermare"
+o "da chiedere"):
 
-1. **Nome, indirizzo, telefono, P. IVA e direttore sanitario** in `site.json` sono
-   inventati. Vanno sostituiti con quelli reali: l'indicazione del direttore sanitario
-   nel footer è un obbligo di legge (art. 9-bis D.L. 145/2013).
-2. **Recensioni** (`reviews.json`): vanno sostituite con recensioni reali e
-   verificabili. Pubblicare testimonianze inventate è una pratica commerciale
-   scorretta.
-3. **Casi clinici** (`cases.json`): le immagini prima/dopo sono dimostrative e non
-   rappresentano pazienti. Vanno sostituite con documentazione clinica dello studio,
-   previo **consenso informato scritto** del paziente. Il disclaimer in pagina resta.
-4. **Numeri** (`site.stats`), **prezzi** (costo della prima visita in `page-core.mjs`)
-   e **biografie del team**: da verificare uno per uno.
-5. **Moduli**: al momento la validazione è lato client e l'invio è simulato. Vanno
-   collegati a un endpoint reale (o a un servizio come Formspree) e la prenotazione
-   va integrata con l'agenda dello studio. I dati sanitari non devono mai transitare
-   dai moduli web.
-6. **Privacy e cookie policy**: i testi sono una base corretta ma vanno validati dal
-   consulente privacy, soprattutto se verranno attivati strumenti di analisi.
-7. `site.url` in `site.json` determina canonical, Open Graph e sitemap: va impostato
+1. **Orari del mattino** in `content/orari.json`: dagli appunti lunedì 10:00–12:30,
+   martedì 09:00–12:30, giovedì 09:00–12:30, venerdì 10:00–12:30, mercoledì solo
+   pomeriggio (mattina "non indicata").
+2. **Cellulare/WhatsApp 335 448 0936**: tutte le richieste online finiscono lì
+   finche' l'API non e' attiva, quindi il numero deve essere certo.
+3. **Nomi delle due dottoresse** in `team.json` (dagli appunti poco leggibili).
+4. **Chiusure festive** in `content/chiusure.json` (es. 7 e 8 dicembre, ferie estive):
+   inserire solo le date indicate dallo studio.
+5. **Urgenze fuori orario**: se esiste un numero o una procedura, va aggiunto alla
+   sidebar di Prenota e alla pagina Contatti.
+6. **Privacy**: l'informativa va validata da un consulente, in particolare per le
+   risposte del modulo (motivo della visita, dolore) e per i messaggi via WhatsApp.
+   L'indicazione del direttore sanitario nel footer è un obbligo di legge
+   (art. 9-bis D.L. 145/2013).
+7. **Recensioni e casi clinici**: si pubblicano solo se reali, verificabili e, per i
+   casi, con consenso informato scritto del paziente.
+8. `site.url` in `site.json` determina canonical, Open Graph e sitemap: va impostato
    sul dominio reale prima della pubblicazione.
 
 ## Pubblicazione

@@ -36,7 +36,6 @@ export const studio = {
   whatsappHref: env.STUDIO_WHATSAPP_HREF || s.whatsappHref || '',
   email: env.STUDIO_EMAIL || s.email || '',
   sito: env.SITE_URL || s.url || '',
-  orari: (s.hours || []).map((h) => `${h.d}: ${h.h}`),
   direttore: s.director || ''
 };
 
@@ -45,3 +44,23 @@ export const destinatarioStudio = env.BOOKING_NOTIFY_EMAIL || studio.email;
 
 /** Mittente verificato presso il provider email. */
 export const mittente = env.MAIL_FROM || `${studio.nome} <no-reply@example.com>`;
+
+/** Interruttore booleano: la variabile d'ambiente, se impostata, vince sul valore di content/site.json. */
+const interruttore = (valoreEnv, valoreFile) =>
+  valoreEnv != null && valoreEnv !== '' ? ['1', 'true', 'si'].includes(String(valoreEnv).toLowerCase()) : valoreFile === true;
+
+/**
+ * Conferma automatica delle richieste con giorno e orario. Spenta di default:
+ * lo studio gestisce l'agenda soprattutto per telefono e il sito non la vede,
+ * quindi ogni richiesta resta da confermare dalla segreteria, che ricontatta
+ * il paziente. Si accende (site.json -> booking.confermaAutomatica, oppure
+ * BOOKING_AUTO_CONFIRM=1) solo se l'agenda dello studio e' quella del sito.
+ */
+export const confermaAutomatica = (e = env) => interruttore(e.BOOKING_AUTO_CONFIRM, s.booking?.confermaAutomatica);
+
+/**
+ * Spostamento online da parte del paziente (pagina di autogestione). Spento
+ * di default per lo stesso motivo: un nuovo orario va concordato con la
+ * segreteria. L'annullamento online resta sempre disponibile.
+ */
+export const spostamentoOnline = (e = env) => interruttore(e.BOOKING_SELF_RESCHEDULE, s.booking?.spostamentoOnline);

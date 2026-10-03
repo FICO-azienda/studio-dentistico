@@ -398,35 +398,35 @@ ${pageHero({
         <div class="info-list mt-4">
           ${site.directions.map((d) => `<div class="info-list__row"><span class="label">${esc(d.label)}</span><span>${esc(d.value)}</span></div>`).join('')}
         </div>
-        <p class="mt-4"><a class="btn btn--ghost btn--sm" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(site.address.street + ', ' + site.address.city)}" target="_blank" rel="noopener">Apri in Google Maps ${arrow}</a></p>
+        <p class="mt-4"><a class="btn btn--ghost btn--sm" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(site.address.street + ', ' + site.address.city)}" target="_blank" rel="noopener">${esc(t('contact.openMaps'))} ${arrow}</a></p>
       </div>
 
       <div class="col-6 start-7">
         <div class="map reveal">
-          <iframe title="Mappa dello studio" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+          <iframe title="${attr(t('contact.mapTitle'))}" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
             src="https://www.openstreetmap.org/export/embed.html?bbox=${(site.address.lng - 0.01).toFixed(4)}%2C${(site.address.lat - 0.005).toFixed(4)}%2C${(site.address.lng + 0.01).toFixed(4)}%2C${(site.address.lat + 0.005).toFixed(4)}&amp;layer=mapnik&amp;marker=${site.address.lat}%2C${site.address.lng}"></iframe>
         </div>
         <h2 class="h3 mt-5 reveal">${esc(t('contact.request'))}</h2>
-        <form class="mt-3" data-validate data-success="#contact-done" novalidate>
+        <p class="body mt-2">${t('contact.requestLead', { link: `<a class="link-inline" href="${base}${PATH.book}">${esc(t('nav.bookShort'))}</a>` })}</p>
+        <form class="mt-3" data-validate data-success="#contact-done" data-whatsapp="${attr(site.whatsappHref)}" novalidate>
           <div class="form-grid">
             <label class="field"><span class="field__label label">${esc(t('form.name'))} *</span><input type="text" name="nome" required autocomplete="given-name"><span class="field__error">${esc(t('form.required'))}</span></label>
             <label class="field"><span class="field__label label">${esc(t('form.surname'))} *</span><input type="text" name="cognome" required autocomplete="family-name"><span class="field__error">${esc(t('form.required'))}</span></label>
-            <label class="field"><span class="field__label label">${esc(t('form.email'))} *</span><input type="email" name="email" required autocomplete="email"><span class="field__error">${esc(t('form.invalidEmail'))}</span></label>
-            <label class="field"><span class="field__label label">${esc(t('form.phone'))} *</span><input type="tel" name="telefono" required autocomplete="tel" pattern="[0-9 +\\(\\)\\.\\-]{6,}"><span class="field__error">${esc(t('form.invalidPhone'))}</span></label>
           </div>
-          <label class="field mt-3"><span class="field__label label">Come possiamo aiutarti?</span><textarea name="messaggio" rows="4" placeholder="Descrivi brevemente la tua richiesta"></textarea></label>
+          <label class="field mt-3"><span class="field__label label">${esc(t('contact.help'))} *</span><textarea name="messaggio" rows="4" required placeholder="${attr(t('contact.helpPlaceholder'))}"></textarea><span class="field__error">${esc(t('form.required'))}</span></label>
           <label class="check mt-3">
             <input type="checkbox" name="privacy" required>
             <span class="check__box" aria-hidden="true"></span>
-            <span>Ho letto l'<a class="link-inline" href="${base}${PATH.privacy}">informativa privacy</a> e acconsento al trattamento dei miei dati per essere ricontattato. *</span>
+            <span>${t('contact.privacy', { link: `<a class="link-inline" href="${base}${PATH.privacy}">${esc(t('form.privacyLink'))}</a>` })} *</span>
           </label>
-          <div class="row mt-4"><button class="btn" type="submit">${esc(t('form.send'))}</button></div>
-          <p class="small mt-2" style="color:var(--stone-light)">* Campi obbligatori. Non inserire dati relativi alla salute in questo modulo.</p>
+          <div class="row mt-4"><button class="btn" type="submit">${esc(t('contact.sendWhatsapp'))}</button></div>
+          <p class="small mt-2" style="color:var(--stone-light)">${esc(t('contact.noHealthData'))}</p>
+          <p class="small mt-2" style="color:var(--stone-light)">${esc(t('contact.orEmail'))} <a class="link-inline" href="mailto:${attr(site.email)}">${esc(site.email)}</a>.</p>
         </form>
         <div class="form-success" id="contact-done" hidden>
-          <h2 class="h2">Grazie.</h2>
+          <h2 class="h2">${esc(t('contact.thanks'))}</h2>
           <p class="lead mt-2">${esc(t('contact.thanksLead'))}</p>
-          <p class="mt-3"><a class="btn btn--ghost" href="${base}">${esc(t('common.backHome'))}</a></p>
+          <p class="mt-3 row"><a class="btn" data-wa-open href="https://wa.me/${attr(site.whatsappHref)}" target="_blank" rel="noopener">${esc(t('contact.waOpen'))}</a><a class="btn btn--ghost" href="${base}">${esc(t('common.backHome'))}</a></p>
         </div>
       </div>
     </div>
@@ -448,6 +448,9 @@ ${bookingBand(base)}`;
 /* ======================================================== /prenota ======= */
 export const bookingPage = () => {
   const base = '../';
+  // senza un endpoint attivo la richiesta si completa su WhatsApp (vedi src/scripts/app.js)
+  const bookingLive = site.booking?.mode === 'live' && !!site.booking?.endpoint;
+  const bookingMode = bookingLive ? 'live' : 'whatsapp';
   const docs = team.filter((p) => p.featured || p.treatments.length);
 
   const main = `
@@ -463,7 +466,7 @@ ${pageHero({
   <div class="wrap">
     <div class="grid">
       <div class="col-8">
-        <div data-wizard data-endpoint="${attr(site.booking?.endpoint || '')}" data-mode="${attr(site.booking?.mode || 'demo')}">
+        <div data-wizard data-endpoint="${attr(site.booking?.endpoint || '')}" data-mode="${attr(bookingMode)}" data-auto-confirm="${site.booking?.confermaAutomatica === true}" data-whatsapp="${attr(site.whatsappHref)}">
           <div class="wizard__progress">
             <div class="row row--between">
               <span class="label" data-progress-label>${esc(t('book.chooseService'))}</span>
@@ -514,8 +517,9 @@ ${pageHero({
               <p class="form-error mt-3" data-form-error hidden role="alert"></p>
               <div class="row mt-4">
                 <button class="btn btn--ghost" type="button" data-back-final>${esc(t('form.back'))}</button>
-                <button class="btn" type="submit" data-submit>${esc(t('form.send'))}</button>
+                <button class="btn" type="submit" data-submit>${esc(t(bookingLive ? 'form.send' : 'book.sendWhatsapp'))}</button>
               </div>
+              ${bookingLive ? '' : `<p class="small mt-2" style="color:var(--stone-light)">${esc(t('book.whatsappHint'))}</p>`}
               <p class="small mt-2" style="color:var(--stone-light)">
                 ${esc(t('form.noDiagnosis'))}
               </p>
@@ -528,7 +532,7 @@ ${pageHero({
               <p class="mt-4"><span class="label">${esc(t('book.code'))}</span><br>
                 <span class="h3" style="font-family:var(--font-sans);letter-spacing:.04em" data-done-code></span>
               </p>
-              <div class="row mt-4" style="justify-content:center">
+              <div class="row mt-4" style="justify-content:center" data-done-actions>
                 <a class="btn btn--ghost" href="${base}">${esc(t('common.backHome'))}</a>
                 <a class="btn" href="tel:${attr(site.phoneHref)}">${esc(t('common.contactStudio'))}</a>
               </div>

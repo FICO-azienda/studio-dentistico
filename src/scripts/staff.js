@@ -102,7 +102,7 @@
   };
 
   /* -- dashboard -------------------------------------------------------------- */
-  const ETICHETTA_STATO = { PENDING: 'In attesa', CONFIRMED: 'Confermata', RESCHEDULED: 'Spostata', CANCELLED: 'Annullata', COMPLETED: 'Conclusa' };
+  const ETICHETTA_STATO = { PENDING: 'Da confermare', CONFIRMED: 'Confermata', RESCHEDULED: 'Spostata', CANCELLED: 'Annullata', COMPLETED: 'Conclusa' };
   const CLASSE_BADGE = { PENDING: 'staff-badge--pending', CONFIRMED: 'staff-badge--confirmed', RESCHEDULED: 'staff-badge--confirmed', CANCELLED: 'staff-badge--cancelled', COMPLETED: 'staff-badge--done' };
 
   // "confermata subito" (vedi handler.mjs) ma senza che lo staff l'abbia
@@ -117,7 +117,8 @@
     { id: 'tutte', label: 'Tutte', filtro: () => true }
   ];
 
-  const stato = { prenotazioni: [], tab: 'rivedere', nota: '' };
+  // le richieste dal sito restano da confermare finche' lo studio non le conferma (vedi handler.mjs)
+  const stato = { prenotazioni: [], tab: 'pending', nota: '' };
 
   const attr = (s) => esc(s).replace(/"/g, '&quot;');
 
@@ -125,6 +126,7 @@
     const azioni = [];
     if (r.status === 'PENDING') {
       azioni.push(`<button class="btn btn--sm" type="button" data-azione="conferma" data-id="${attr(r.booking_id)}">Conferma</button>`);
+      azioni.push(`<button class="btn btn--ghost btn--sm" type="button" data-azione="annulla" data-id="${attr(r.booking_id)}">Chiudi richiesta</button>`);
     }
     if (r.status === 'CONFIRMED' || r.status === 'RESCHEDULED') {
       if (daRivedere(r)) {
@@ -136,16 +138,33 @@
     return azioni.join('\n        ');
   };
 
+  const urgente = (r) => r.urgenza_dichiarata === true || r.priority === 'urgent';
+  const CANALE = { telefono: 'telefono', whatsapp: 'WhatsApp' };
+  const FASCIA = { mattina: 'mattina', pomeriggio: 'pomeriggio' };
+  /** Quando: giorno e ora richiesti, oppure canale e fascia scelti per la richiamata. */
+  const quando = (r) =>
+    r.modalita === 'ricontatto'
+      ? `Da richiamare — ${esc(CANALE[r.canale_contatto] || r.canale_contatto || '—')}, ${esc(FASCIA[r.fascia_contatto] || r.fascia_contatto || '—')}`
+      : `${r.status === 'PENDING' ? 'Richiesta per ' : ''}${esc(dataEstesa(r.data_richiesta))} alle ${esc(r.ora_richiesta)}`;
+  /** Il problema descritto dal paziente: e' cio' di cui lo studio ha bisogno per richiamare. */
+  const descrizione = (r) => {
+    const righe = (r.riepilogo_servizio || []).map((x) => esc(x.value));
+    if (r.messaggio) righe.push(esc(r.messaggio));
+    return righe.length ? `<p class="staff-card__meta" style="white-space:pre-line">${righe.join('\n')}</p>` : '';
+  };
+
   const card = (r) => `
     <div class="staff-card" data-card data-id="${attr(r.booking_id)}">
       <div class="staff-card__top">
         <div>
           <p class="staff-card__id">${esc(r.booking_id)}</p>
           <p class="staff-card__name">${esc(r.nome)} ${esc(r.cognome)}</p>
-          <p class="staff-card__meta">${esc(r.tipo_visita)} — ${esc(dataEstesa(r.data_richiesta))} alle ${esc(r.ora_richiesta)}</p>
+          <p class="staff-card__meta">${esc(r.tipo_visita)} — ${quando(r)}</p>
           <p class="staff-card__meta">${esc(r.telefono)} · ${esc(r.email)}</p>
+          ${descrizione(r)}
         </div>
         <span class="row" style="gap:.4rem">
+          ${urgente(r) ? '<span class="staff-badge staff-badge--cancelled">Urgenza indicata</span>' : ''}
           ${daRivedere(r) ? '<span class="staff-badge staff-badge--pending">Da rivedere</span>' : ''}
           <span class="staff-badge ${CLASSE_BADGE[r.status] || ''}">${esc(ETICHETTA_STATO[r.status] || r.status)}</span>
         </span>
@@ -358,7 +377,11 @@
 
   /* -- annulla ------------------------------------------------------------------ */
   const eseguiAnnulla = async (r, panel) => {
-    if (!window.confirm(`Annullare la prenotazione di ${r.nome} ${r.cognome} (${r.booking_id})? Lo slot verrà liberato e il paziente avvisato via email.`)) return;
+    const daConfermare = r.status === 'PENDING';
+    const domanda = daConfermare
+      ? `Chiudere la richiesta di ${r.nome} ${r.cognome} (${r.booking_id}) senza confermarla? Il paziente non riceve nessuna email: contattalo tu.`
+      : `Annullare la prenotazione di ${r.nome} ${r.cognome} (${r.booking_id})? Lo slot verrà liberato e il paziente avvisato via email.`;
+    if (!window.confirm(domanda)) return;
     panel.hidden = false;
     panel.innerHTML = '<p class="small" style="color:var(--stone-light)">Annullamento in corso…</p>';
     try {

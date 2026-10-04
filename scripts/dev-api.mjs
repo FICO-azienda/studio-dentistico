@@ -126,7 +126,10 @@ const route = async (req, res) => {
       if (!bookingId) return json(res, 400, { ok: false, error: 'bookingId_mancante' });
       const esito = await cancella(bookingId, { forza: true });
       if (!esito.ok) return json(res, esito.error === 'non_trovata' ? 404 : 422, esito);
-      await notificaAnnullamento(esito.record).catch((e) => console.error('STAFF_CANCELLAZIONE_MAIL_ERRORE', e));
+      // come api/staff/cancella.js: una richiesta ancora PENDING si chiude senza email al paziente
+      if (esito.precedente?.status !== 'PENDING') {
+        await notificaAnnullamento(esito.record).catch((e) => console.error('STAFF_CANCELLAZIONE_MAIL_ERRORE', e));
+      }
       return json(res, 200, { ok: true });
     }
 

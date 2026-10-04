@@ -1,14 +1,13 @@
 /**
  * Autogestione della prenotazione: stato, cancellazione, spostamento.
  *
- * Regola delle 24 ore: il paziente puo' annullare o spostare da solo finche'
- * mancano almeno 24 ore all'appuntamento originale. Sotto quella soglia
- * l'azione self-service e' bloccata: a quel punto liberare uno slot ha un
- * costo reale per lo studio (difficile riassegnarlo in tempo), quindi serve
- * una decisione umana — il paziente chiama o scrive, lo studio valuta.
+ * Finestra di preavviso. Il dentista non ha indicato alcuna regola di
+ * disdetta, quindi di base il paziente puo' annullare o spostare finche'
+ * l'appuntamento non e' iniziato. Se lo studio vorra' un preavviso minimo
+ * basta impostare MANAGE_WINDOW_HOURS (es. 24): sotto quella soglia
+ * l'azione online si blocca e il paziente deve contattare lo studio.
  *
- * Lo staff puo' sempre forzare l'operazione (scripts/gestisci-prenotazione.mjs),
- * 24 ore o no: e' la valvola per i casi approvati per telefono o email.
+ * Lo staff puo' sempre forzare l'operazione (scripts/gestisci-prenotazione.mjs).
  */
 import { getBooking, updateBooking } from './store.mjs';
 import { localeToUtc } from './ics.mjs';
@@ -17,7 +16,11 @@ import { byService } from './flows.mjs';
 
 const slotCountDi = (r) => byService[r.tipo_visita_slug]?.slotCount || 1;
 
-const ORE_FINESTRA = 24;
+/** Preavviso minimo in ore per la modifica online; 0 = nessuna regola (default). */
+const oreFinestra = (env = process.env) => {
+  const n = Number(env.MANAGE_WINDOW_HOURS);
+  return Number.isFinite(n) && n > 0 ? n : 0;
+};
 const STATI_GESTIBILI = ['PENDING', 'CONFIRMED', 'RESCHEDULED'];
 
 /** Ore mancanti all'inizio dell'appuntamento (puo' essere negativo se e' gia' passato). */
@@ -27,8 +30,8 @@ export function orePrimaAppuntamento(record, now = new Date()) {
   return (inizio.getTime() - now.getTime()) / (60 * 60 * 1000);
 }
 
-export function selfServiceConsentita(record, now = new Date()) {
-  return orePrimaAppuntamento(record, now) >= ORE_FINESTRA;
+export function selfServiceConsentita(record, now = new Date(), env = process.env) {
+  return orePrimaAppuntamento(record, now) >= oreFinestra(env);
 }
 
 /** Stato pubblico di una prenotazione, per la pagina di autogestione. */
@@ -51,19 +54,19 @@ export async function statoPrenotazione(bookingId, env = process.env, now = new 
     lingua: r.lingua || 'it',
     slotCount: slotCountDi(r),
     gestibile,
-    selfService: gestibile && selfServiceConsentita(r, now)
+    selfService: gestibile && selfServiceConsentita(r, now, env)
   };
 }
 
 /**
  * Cancella una prenotazione e libera i suoi slot.
- * `forza` bypassa la regola delle 24 ore (solo lato staff).
+ * `forza` bypassa la finestra di preavviso, se configurata (solo lato staff).
  */
 export async function cancella(bookingId, { forza = false, env = process.env, now = new Date() } = {}) {
   const r = await getBooking(bookingId, env);
   if (!r) return { ok: false, error: 'non_trovata' };
   if (!STATI_GESTIBILI.includes(r.status)) return { ok: false, error: 'stato_non_gestibile', record: r };
-  if (!forza && !selfServiceConsentita(r, now)) return { ok: false, error: 'fuori_finestra', record: r };
+  if (!forza && !selfServiceConsentita(r, now, env)) return { ok: false, error: 'fuori_finestra', record: r };
 
   await releaseSlots(r.data_richiesta, r.booking_id, env);
   const aggiornato = await updateBooking(bookingId, { status: 'CANCELLED', cancelled_at: now.toISOString() }, env);
@@ -74,14 +77,14 @@ export async function cancella(bookingId, { forza = false, env = process.env, no
  * Sposta una prenotazione su un nuovo giorno/orario, mantenendo lo stesso
  * numero di slot del servizio originale. Se il nuovo orario non e' libero,
  * non tocca nulla: riprende la posizione precedente e segnala il conflitto.
- * `forza` bypassa la regola delle 24 ore, calcolata sull'appuntamento
- * ORIGINALE (e' quello a determinare se serve una decisione umana).
+ * `forza` bypassa la finestra di preavviso, calcolata sull'appuntamento
+ * ORIGINALE.
  */
 export async function sposta(bookingId, nuovaData, nuovaOra, { forza = false, env = process.env, now = new Date() } = {}) {
   const r = await getBooking(bookingId, env);
   if (!r) return { ok: false, error: 'non_trovata' };
   if (!STATI_GESTIBILI.includes(r.status)) return { ok: false, error: 'stato_non_gestibile', record: r };
-  if (!forza && !selfServiceConsentita(r, now)) return { ok: false, error: 'fuori_finestra', record: r };
+  if (!forza && !selfServiceConsentita(r, now, env)) return { ok: false, error: 'fuori_finestra', record: r };
 
   const slotCount = slotCountDi(r);
   await releaseSlots(r.data_richiesta, r.booking_id, env);

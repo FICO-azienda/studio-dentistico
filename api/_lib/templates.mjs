@@ -90,10 +90,11 @@ const L = {
     intro: (n) => `abbiamo ricevuto correttamente la tua richiesta di appuntamento presso ${n}. Di seguito trovi il riepilogo.`,
     notConfirmed:
       'La richiesta è stata inviata correttamente. Il nostro team ti contatterà per confermare definitivamente giorno e orario dell&#39;appuntamento.',
+    notConfirmedCallback: 'La richiesta è stata inviata correttamente. Il nostro team ti ricontatterà appena possibile.',
     contactCta: 'Contatta lo studio',
     changeNote: (c) => `Se hai necessità di modificare o annullare la richiesta, rispondi a questa email indicando il codice ${c}.`,
     auto: 'Questa email è stata generata automaticamente in seguito a una richiesta effettuata tramite il nostro sito.',
-    preheaderReceived: (c) => `Richiesta ${c} ricevuta. Ti contatteremo per confermare giorno e orario.`,
+    preheaderReceived: (c) => `Richiesta ${c} ricevuta. Ti contatteremo noi.`,
     rows: {
       code: 'Codice richiesta',
       name: 'Nome',
@@ -108,7 +109,9 @@ const L = {
       professional: 'Professionista',
       phone: 'Telefono',
       email: 'Email',
-      message: 'Messaggio',
+      message: 'Problema / messaggio',
+      urgent: 'Urgenza indicata',
+      yes: 'Sì',
       receivedAt: 'Ricevuta il',
       where: 'Dove',
       studioNote: 'Nota dello studio'
@@ -122,17 +125,12 @@ const L = {
       'A questa email è allegato l&#39;invito per il calendario: aprilo e l&#39;appuntamento entra in agenda con i promemoria il giorno prima e due ore prima.',
     calendarCta: 'Aggiungi a Google Calendar',
     directionsCta: 'Indicazioni stradali',
-    beforeLabel: 'Prima di venire',
-    before:
-      'Porta un documento d&#39;identità, la tessera sanitaria, eventuali radiografie precedenti e l&#39;elenco dei farmaci che assumi. Arriva cinque minuti prima: servono per l&#39;accettazione.',
-    cancelNote: (tel) =>
-      `Se non puoi presentarti, avvisaci con almeno 24 ore di anticipo chiamando ${tel}: quel posto viene offerto a un altro paziente.`,
+    cancelNote: (tel) => `Se non puoi presentarti, avvisaci chiamando ${tel}.`,
     preheaderConfirmed: (d, o) => `Appuntamento confermato per ${d} alle ${o}.`,
     manageCta: 'Gestisci la tua prenotazione',
-    manageIntro:
-      'Hai bisogno di annullare o spostare? Puoi farlo online, gratuitamente, fino a 24 ore prima dell&#39;appuntamento.',
+    manageIntro: 'Hai bisogno di annullare o spostare? Puoi farlo online.',
     lateNote: (tel, email) =>
-      `Se mancano meno di 24 ore, la modifica online non è più disponibile: chiamaci al ${tel} oppure scrivici a ${email} e valutiamo insieme se è possibile.`,
+      `Se la modifica online non è disponibile, chiamaci al ${tel} oppure scrivici a ${email}.`,
     cancelLabel: 'Appuntamento annullato',
     cancelTitle: (n) => `Appuntamento annullato, ${n}.`,
     cancelIntro: 'Come richiesto, il tuo appuntamento è stato annullato e lo slot è stato liberato.',
@@ -151,10 +149,11 @@ const L = {
     intro: (n) => `we have received your appointment request at ${n}. Here is a summary.`,
     notConfirmed:
       'Your request has been sent successfully. Our team will contact you to confirm the date and time of your appointment.',
+    notConfirmedCallback: 'Your request has been sent successfully. Our team will get back to you as soon as possible.',
     contactCta: 'Contact the practice',
     changeNote: (c) => `If you need to change or cancel your request, reply to this email quoting reference ${c}.`,
     auto: 'This email was generated automatically following a request made through our website.',
-    preheaderReceived: (c) => `Request ${c} received. We will contact you to confirm the date and time.`,
+    preheaderReceived: (c) => `Request ${c} received. We will contact you.`,
     rows: {
       code: 'Request reference',
       name: 'Name',
@@ -169,7 +168,9 @@ const L = {
       professional: 'Practitioner',
       phone: 'Phone',
       email: 'Email',
-      message: 'Message',
+      message: 'Problem / message',
+      urgent: 'Marked as urgent',
+      yes: 'Yes',
       receivedAt: 'Received on',
       where: 'Where',
       studioNote: 'Note from the practice'
@@ -183,16 +184,12 @@ const L = {
       'A calendar invitation is attached to this email: open it and the appointment goes straight into your diary, with reminders the day before and two hours ahead.',
     calendarCta: 'Add to Google Calendar',
     directionsCta: 'Directions',
-    beforeLabel: 'Before you come',
-    before:
-      'Please bring photo ID, your health card, any previous radiographs and a list of the medicines you take. Arrive five minutes early for check-in.',
-    cancelNote: (tel) =>
-      `If you cannot attend, please let us know at least 24 hours in advance by calling ${tel}: the slot is offered to another patient.`,
+    cancelNote: (tel) => `If you cannot attend, please let us know by calling ${tel}.`,
     preheaderConfirmed: (d, o) => `Appointment confirmed for ${d} at ${o}.`,
     manageCta: 'Manage your appointment',
-    manageIntro: 'Need to cancel or reschedule? You can do it online, free of charge, up to 24 hours before your appointment.',
+    manageIntro: 'Need to cancel or reschedule? You can do it online.',
     lateNote: (tel, email) =>
-      `If less than 24 hours remain, the online change is no longer available: call us on ${tel} or write to ${email} and we will see what is possible.`,
+      `If the online change is not available, call us on ${tel} or write to ${email}.`,
     cancelLabel: 'Appointment cancelled',
     cancelTitle: (n) => `Appointment cancelled, ${n}.`,
     cancelIntro: 'As requested, your appointment has been cancelled and the slot has been freed.',
@@ -213,8 +210,8 @@ const dataLoc = (r, iso) => {
   });
 };
 
-const CANALE = { telefono: 'Telefono', whatsapp: 'WhatsApp', email: 'Email' };
-const FASCIA = { mattina: 'Mattina', 'pausa-pranzo': 'Pausa pranzo', pomeriggio: 'Pomeriggio', sera: 'Sera' };
+const CANALE = { telefono: 'Telefono', whatsapp: 'WhatsApp' };
+const FASCIA = { mattina: 'Mattina', pomeriggio: 'Pomeriggio' };
 const PRIORITA = { normal: 'Normale', high: 'Alta', urgent: 'Urgente' };
 
 /** Righe generate dalle domande del servizio scelto. */
@@ -248,6 +245,7 @@ function riepilogo(r, { perStudio = false } = {}) {
   ${row(R.professional, escapeHtml(r.professionista))}
   ${row(R.phone, `<a href="tel:${escapeHtml(r.telefono.replace(/\s/g, ''))}" style="color:${NAVY};text-decoration:none">${escapeHtml(r.telefono)}</a>`)}
   ${row(R.email, `<a href="mailto:${escapeHtml(r.email)}" style="color:${NAVY};text-decoration:none">${escapeHtml(r.email)}</a>`)}
+  ${r.urgenza_dichiarata ? row(R.urgent, escapeHtml(R.yes)) : ''}
   ${row(R.message, r.messaggio ? nl2br(r.messaggio) : '—')}
   ${perStudio ? row(R.receivedAt, escapeHtml(new Date(r.created_at).toLocaleString('it-IT', { timeZone: 'Europe/Rome' }))) : ''}
 </table>`;
@@ -273,7 +271,8 @@ const riepilogoTesto = (r, { perStudio = false } = {}) =>
     'Professionista: ' + r.professionista,
     'Telefono: ' + r.telefono,
     'Email: ' + r.email,
-    'Messaggio: ' + (r.messaggio || '—'),
+    r.urgenza_dichiarata ? 'Urgenza indicata: sì' : '',
+    'Problema / messaggio: ' + (r.messaggio || '—'),
     perStudio ? 'Ricevuta il: ' + new Date(r.created_at).toLocaleString('it-IT', { timeZone: 'Europe/Rome' }) : ''
   ]
     .filter(Boolean)
@@ -300,7 +299,7 @@ export function emailPaziente(r) {
 </p>
 ${riepilogo(r)}
 <p style="margin:24px 0 24px;padding:16px 18px;background:#f7f7f5;font:400 15px/1.6 Helvetica,Arial,sans-serif;color:${INK}">
-  ${T.notConfirmed}
+  ${r.modalita === 'ricontatto' ? T.notConfirmedCallback : T.notConfirmed}
 </p>
 ${button(contatto, T.contactCta)}
 <p style="margin:18px 0 0;font:400 13px/1.7 Helvetica,Arial,sans-serif;color:${MUTED}">
@@ -316,8 +315,7 @@ ${button(contatto, T.contactCta)}
     '',
     riepilogoTesto(r),
     '',
-    'La richiesta è stata inviata correttamente. Il nostro team ti contatterà per',
-    "confermare definitivamente giorno e orario dell'appuntamento.",
+    (r.modalita === 'ricontatto' ? T.notConfirmedCallback : T.notConfirmed).replace(/&#39;/g, "'"),
     '',
     studio.telefono ? T.contactCta + ': ' + studio.telefono : '',
     studio.whatsapp ? 'WhatsApp: ' + studio.whatsapp : '',
@@ -374,8 +372,8 @@ ${staffUrl ? button(staffUrl, confermata ? 'Segna come vista' : 'Apri nell’are
   ${
     confermata
       ? `Stato attuale della richiesta: <strong style="color:${INK}">CONFERMATA automaticamente</strong> — lo slot era libero, il paziente ha già ricevuto l&#39;email di conferma con l&#39;invito calendario. Vale comunque la pena darci un&#39;occhiata dall&#39;area riservata: professionista giusto, orario corretto, nulla che salti all&#39;occhio.`
-      : `Stato attuale della richiesta: <strong style="color:${INK}">PENDING</strong> — lo slot richiesto non era libero al momento dell&#39;invio.
-    Va gestita a mano contattando il paziente: l&#39;email che ha ricevuto non conferma giorno e orario.`
+      : `Stato attuale della richiesta: <strong style="color:${INK}">DA CONFERMARE</strong> — il paziente ha ricevuto solo la mail di richiesta ricevuta, non una conferma di giorno e orario.
+    Contattalo (telefono o WhatsApp), valuta insieme a lui se è un&#39;urgenza o una visita programmata, poi conferma dall&#39;area riservata.`
   }
 </p>`,
     { preheader: `${r.nome} ${r.cognome} — ${r.tipo_visita} — ${dateIt(r.data_richiesta)} ${r.ora_richiesta}` }
@@ -391,7 +389,7 @@ ${staffUrl ? button(staffUrl, confermata ? 'Segna come vista' : 'Apri nell’are
     '',
     confermata
       ? 'Stato: CONFERMATA automaticamente — slot libero, il paziente ha già ricevuto la conferma. Dai un\'occhiata quando puoi.'
-      : 'Stato: PENDING — slot non libero al momento dell\'invio, va gestita a mano contattando il paziente.',
+      : 'Stato: DA CONFERMARE — il paziente ha ricevuto solo la mail di richiesta ricevuta. Contattalo, valuta se è un\'urgenza o una visita programmata, poi conferma dall\'area riservata.',
     staffUrl ? 'Area riservata: ' + staffUrl : '',
     '',
     'Chiama: ' + r.telefono,
@@ -459,12 +457,7 @@ export function emailConferma(r, { professionista = '', note = '' } = {}) {
   ${note ? row(T.rows.studioNote, nl2br(note)) : ''}
 </table>
 
-<p style="margin:26px 0 10px;font:500 11px/1 Helvetica,Arial,sans-serif;letter-spacing:.18em;text-transform:uppercase;color:${MUTED}">${escapeHtml(T.beforeLabel)}</p>
-<p style="margin:0 0 20px;font:400 15px/1.7 Helvetica,Arial,sans-serif;color:${INK}">
-  ${T.before}
-</p>
-
-<p style="margin:0 0 14px;font:400 15px/1.7 Helvetica,Arial,sans-serif;color:${INK}">
+<p style="margin:26px 0 14px;font:400 15px/1.7 Helvetica,Arial,sans-serif;color:${INK}">
   ${T.invite}
 </p>
 ${button(calendario, T.calendarCta)}
@@ -507,8 +500,6 @@ ${button(mappa, T.directionsCta, { light: true })}
     note ? T.rows.studioNote + ': ' + note : '',
     '',
     T.invite.replace(/&#39;/g, "'"),
-    '',
-    T.before.replace(/&#39;/g, "'").replace(/&agrave;/g, 'a'),
     '',
     T.manageIntro.replace(/&#39;/g, "'") + ' ' + manageUrl(r.booking_id, r.lingua === 'en' ? 'en' : 'it'),
     T.lateNote(studio.telefono, studio.email).replace(/<[^>]+>/g, ''),

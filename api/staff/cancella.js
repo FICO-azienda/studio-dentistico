@@ -5,8 +5,8 @@
  * Header:   Authorization: Bearer <STAFF_TOKEN>
  *
  * Come l'annullamento self-service (api/prenotazione-cancella.js) ma con
- * forza:true: bypassa la regola delle 24 ore, la valvola per i casi
- * approvati per telefono o email (vedi api/_lib/manage.mjs).
+ * forza:true: bypassa l'eventuale finestra di preavviso (vedi api/_lib/manage.mjs).
+ * Una richiesta ancora PENDING viene chiusa senza email al paziente.
  */
 import { corsHeaders } from '../_lib/handler.mjs';
 import { staffTokenValido, estraiToken } from '../_lib/staff-auth.mjs';
@@ -53,9 +53,13 @@ export default async function handler(req, res) {
       const status = esito.error === 'non_trovata' ? 404 : 422;
       return res.status(status).json(esito);
     }
-    await notificaAnnullamento(esito.record).catch((e) =>
-      console.error('STAFF_CANCELLAZIONE_MAIL_ERRORE ' + JSON.stringify({ bookingId, error: String(e?.message || e) }))
-    );
+    // una richiesta ancora da confermare viene solo chiusa: il paziente non ha mai ricevuto
+    // una conferma, quindi niente "annullato"; lo studio lo contatta direttamente
+    if (esito.precedente?.status !== 'PENDING') {
+      await notificaAnnullamento(esito.record).catch((e) =>
+        console.error('STAFF_CANCELLAZIONE_MAIL_ERRORE ' + JSON.stringify({ bookingId, error: String(e?.message || e) }))
+      );
+    }
     return res.status(200).json({ ok: true });
   } catch (e) {
     console.error('STAFF_CANCELLA_FATAL ' + JSON.stringify({ bookingId, error: String(e?.stack || e) }));

@@ -6,22 +6,22 @@
  * Ordine delle operazioni, scelto apposta:
  *   1. anti-spam e limite di frequenza  (scarta presto cio' che non serve)
  *   2. validazione lato server          (non ci si fida del browser)
- *   3. conferma automatica dello slot   (se e' davvero libero, subito: vedi sotto)
+ *   3. conferma automatica dello slot   (solo se attivata: vedi sotto)
  *   4. salvataggio della richiesta      (PRIMA delle email: non si perde nulla)
  *   5. invio delle due email            (se fallisce, la richiesta resta salva)
  *
- * Conferma automatica. Una prenotazione con data e ora (non una richiamata,
- * che non ha uno slot) viene confermata subito se lo slot risulta libero in
- * quel momento: il paziente non resta in attesa di una verifica manuale.
- * Se lo slot e' occupato o il giorno e' chiuso — raro, dato che il
- * calendario del wizard mostra gia' solo cio' che sembra libero, ma puo'
- * succedere per una richiesta quasi simultanea — resta PENDING come prima,
- * e lo staff la gestisce a mano. La verifica dello staff dopo la conferma
- * automatica resta comunque utile (numero corretto di slot, professionista
- * giusto, casi che meritano attenzione): per questo l'archivio distingue
- * "confermata" da "vista dallo staff" (staff_reviewed), e la dashboard la
- * mostra finche' non viene spuntata — senza bloccare il paziente nel
- * frattempo.
+ * Richiesta, non prenotazione confermata. Lo studio prende gli appuntamenti
+ * soprattutto per telefono (o WhatsApp) e valuta con il paziente se si tratta
+ * di un'urgenza o di una visita programmata: quindi una richiesta inviata dal
+ * sito resta PENDING finche' la segreteria non la conferma dall'area staff
+ * (api/_lib/confirm.mjs), e il paziente riceve la mail "richiesta ricevuta",
+ * mai una conferma di giorno e ora.
+ *
+ * La conferma automatica dello slot libero resta disponibile ma e' SPENTA:
+ * si attiva solo con la variabile d'ambiente BOOKING_AUTOCONFIRM=1, se lo
+ * studio decidera' di volerla. In quel caso una richiesta con data e ora (non
+ * una richiamata) viene confermata subito se lo slot e' libero, e
+ * l'archivio distingue "confermata" da "vista dallo staff" (staff_reviewed).
  */
 import { validateBooking, looksLikeSpam } from './validate.mjs';
 import { rateLimit } from './ratelimit.mjs';
@@ -42,6 +42,9 @@ import { icsAttachment } from './ics.mjs';
 const recenti = new Map();
 const inCorso = new Map();
 const DEDUPE_MS = 90 * 1000;
+
+/** Conferma automatica degli slot liberi: opzionale, spenta se non richiesta esplicitamente. */
+export const confermaAutomatica = (env = process.env) => ['1', 'true', 'si', 'on'].includes(String(env.BOOKING_AUTOCONFIRM || '').toLowerCase());
 
 const chiave = (d) => [d.email, d.modalita, d.dataRichiesta, d.oraRichiesta, d.tipoVisita].join('|');
 
@@ -118,10 +121,10 @@ async function elabora(data, { ip, userAgent, env, now, k }) {
   const bookingId = buildBookingId(progressivo, { year: new Date(now).getFullYear() });
   const record = buildRecord(data, { bookingId, ip, userAgent, now: new Date(now) });
 
-  // 3. conferma automatica: solo per prenotazioni con data/ora (non le
-  // richiamate, che non hanno uno slot da verificare)
+  // 3. conferma automatica (opzionale, spenta di default): solo per richieste con
+  // data/ora, non per le richiamate, che non hanno uno slot da verificare
   let confermataSubito = false;
-  if (record.modalita === 'prenota') {
+  if (record.modalita === 'prenota' && confermaAutomatica(env)) {
     const slotCount = byService[record.tipo_visita_slug]?.slotCount || 1;
     const esitoSlot = await reserveSlots(record.data_richiesta, record.ora_richiesta, slotCount, bookingId, env);
     if (esitoSlot.ok) {
@@ -136,7 +139,7 @@ async function elabora(data, { ip, userAgent, env, now, k }) {
   // 4. salvataggio, prima di qualunque email
   const salvataggio = await saveBooking(record, env);
 
-  // 5. email: al paziente (conferma, o richiesta ricevuta se non si e' potuto confermare) e allo studio
+  // 5. email: al paziente (richiesta ricevuta, o conferma se la conferma automatica e' attiva) e allo studio
   const alPaziente = confermataSubito ? emailConferma(record) : emailPaziente(record);
   const alloStudio = emailStudio(record);
   const allegati = confermataSubito

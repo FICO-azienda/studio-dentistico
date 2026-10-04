@@ -2,8 +2,8 @@
  * Funzione serverless per lo spostamento self-service — runtime Node di Vercel.
  *
  * Endpoint: POST /api/prenotazione-sposta  { b, t, data, ora }
- * Stesse regole dell'annullamento (finestra di 24 ore sull'appuntamento
- * originale) piu' il controllo di disponibilita' del nuovo orario, con lo
+ * Stesse regole dell'annullamento (eventuale finestra di preavviso, di base
+ * nessuna, sull'appuntamento originale) piu' il controllo di disponibilita' del nuovo orario, con lo
  * stesso numero di slot del servizio prenotato.
  */
 import { corsHeaders } from './_lib/handler.mjs';

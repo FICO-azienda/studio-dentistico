@@ -73,6 +73,7 @@ export function buildRecord(data, { bookingId, ip = '', userAgent = '', now = ne
     risposte: data.risposte || {},
     // classificazione interna, non e' una diagnosi e non viene mostrata al paziente
     priority: data.priorita || 'normal',
+    urgenza_dichiarata: !!data.urgenza,
     tags: data.tags || [],
     modalita: data.modalita,
     canale_contatto: data.canale || '',

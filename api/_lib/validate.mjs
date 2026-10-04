@@ -3,7 +3,7 @@
  * Non si fida mai del client: il browser puo' essere aggirato.
  */
 
-import { byService, validateAnswers, computePriority, computeTags, buildSummary, flows } from './flows.mjs';
+import { byService, validateAnswers, computePriority, computeTags, buildSummary, maxPriority, flows } from './flows.mjs';
 import { orariDelGiorno } from './orari.mjs';
 
 /** L'elenco dei servizi arriva dalla configurazione, non da una copia qui. */
@@ -134,9 +134,16 @@ export function validateBooking(body = {}, opts = {}) {
     d.secondaData = '';
     d.secondaOra = '';
     d.canale = clean(body.canale, 20);
-    if (!['telefono', 'whatsapp', 'email'].includes(d.canale)) errors.canale = 'Scegli come preferisci essere contattato.';
+    if (!['telefono', 'whatsapp'].includes(d.canale)) errors.canale = 'Scegli come preferisci essere contattato.';
     d.fascia = clean(body.fascia, 20);
-    if (!['mattina', 'pausa-pranzo', 'pomeriggio', 'sera'].includes(d.fascia)) errors.fascia = 'Scegli quando preferisci essere contattato.';
+    if (!['mattina', 'pomeriggio'].includes(d.fascia)) errors.fascia = 'Scegli quando preferisci essere contattato.';
+  }
+
+  // urgenza dichiarata dal paziente: alza la priorita' interna, la valutazione resta allo studio
+  d.urgenza = body.urgenza === true || body.urgenza === 'on' || body.urgenza === 'true';
+  if (d.urgenza) {
+    d.priorita = maxPriority(d.priorita || 'normal', 'urgent');
+    d.tags = [...new Set([...(d.tags || []), 'URGENT_DECLARED'])];
   }
 
   d.dottore = clean(body.dottore, LIMITS.dottore) || 'Nessuna preferenza';

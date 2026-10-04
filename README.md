@@ -231,17 +231,12 @@ validazione lato server      api/_lib/validate.mjs
         v
 codice richiesta APT-2026-000124
         v
-CONFERMA AUTOMATICA          api/_lib/availability.mjs   <- solo se e' una
-        v                                                   prenotazione con
-   slot libero?                                             data/ora, non una
-   /         \                                               richiamata
- si            no
-  v              v
-CONFIRMED      PENDING  <- raro: slot appena occupato o giorno chiuso
-  v              v
-SALVATAGGIO   api/_lib/store.mjs    <- prima delle email, in entrambi i casi
+richiesta "da confermare"    (PENDING)  <- la conferma e' dello studio, da /staff/
+                             (conferma automatica solo se BOOKING_AUTOCONFIRM=1)
         v
-email al paziente (conferma+.ics, oppure richiesta ricevuta) + email allo
+SALVATAGGIO   api/_lib/store.mjs    <- prima delle email
+        v
+email al paziente (richiesta ricevuta; conferma+.ics solo se confermata) + email allo
 studio                                <- se falliscono, la richiesta resta salva
         v
 schermata finale, diversa nei due casi
@@ -253,33 +248,35 @@ perdono e l'errore finisce nei log.
 
 ### Cosa dice al paziente, e cosa non dice
 
-Se lo slot richiesto e' libero, la prenotazione viene **confermata subito**:
-il paziente riceve l'email di conferma con l'invito per il calendario nello
-stesso momento in cui invia il form, senza restare in attesa di un controllo
-manuale. E' un compromesso deliberato: lo studio conosce solo le prenotazioni
-fatte attraverso il sito, quindi in rarissimi casi (una richiesta quasi
-simultanea sullo stesso orario, o l'archivio che non riesce a occupare lo
-slot) la conferma automatica puo' rivelarsi sbagliata — a quel punto tocca
-allo staff spostare o annullare dalla dashboard, come per qualunque altra
-modifica. Il compromesso e' esplicito: certezza immediata per il paziente,
-a fronte di un'eccezione rara che lo staff puo' sempre correggere dopo.
+Il dentista prende gli appuntamenti soprattutto per telefono (o WhatsApp) e,
+alla prima visita, valuta con il paziente se si tratta di un'urgenza o di una
+visita programmata. Per questo il sito non conferma mai da solo: ogni invio e'
+una **richiesta** che resta `PENDING` ("Da confermare") finche' la segreteria
+non la conferma dall'area `/staff/`. L'email e la schermata finale dicono
+"abbiamo ricevuto la tua richiesta" e che lo studio ricontattera' il paziente
+appena possibile — mai "confermato" quando non lo e' davvero.
 
-Se lo slot non e' libero (o non c'e' uno slot, come per una richiamata), la
-richiesta resta `PENDING`: l'email e la schermata finale dicono "abbiamo
-ricevuto la tua richiesta" e annunciano che la segreteria ricontattera' il
-paziente — mai "confermato" quando non lo e' davvero.
+Il paziente descrive il problema (campo libero) e puo' spuntare "E' un'urgenza":
+la valutazione resta allo studio, il sito la usa solo per mostrare l'urgenza
+indicata in cima alla scheda e nell'email interna. Non ci sono questionari
+clinici, durate per servizio, preventivi o pagamenti online: i preventivi si
+fanno in studio dopo la prima visita e i pagamenti sono in studio.
 
-In entrambi i casi, se l'email non parte, la schermata lo dice invece di
-promettere un riepilogo mai spedito. Se l'invio fallisce del tutto, compare
-un errore con i recapiti dello studio, mai una falsa conferma.
+**Conferma automatica (opzionale, spenta).** Se in futuro lo studio la volesse,
+basta impostare `BOOKING_AUTOCONFIRM=1`: una richiesta con data e ora (non una
+richiamata) viene confermata subito se lo slot e' libero, come prima. In quel
+caso la scheda staff "Da rivedere" mostra le richieste confermate e non ancora
+spuntate. E' disattivata di default perche' non corrisponde al modo di lavorare
+descritto dal dentista.
 
-**Verifica interna.** Una prenotazione confermata automaticamente non e'
-comunque stata guardata da nessuno: l'interfaccia staff (`/staff/`) la mostra
-nella scheda "Da rivedere" finche' qualcuno non la spunta con "Segna come
-vista" — un controllo leggero, non un'approvazione: non blocca il paziente,
-serve solo a dare allo staff visibilita' su cosa e' arrivato. Le prenotazioni
-confermate a mano (da staff, sempre da `/staff/` o da
-`scripts/invia-conferma.mjs`) sono gia' considerate viste.
+**Finestra di preavviso per annullare/spostare (opzionale, assente).** Il
+dentista non ha indicato alcuna regola di disdetta: di base il paziente puo'
+annullare o spostare online finche' l'appuntamento non e' iniziato. Per imporre
+un preavviso si imposta `MANAGE_WINDOW_HOURS` (es. `24`).
+
+Se l'email non parte, la schermata lo dice invece di promettere un riepilogo
+mai spedito. Se l'invio fallisce del tutto, compare un errore con i recapiti
+dello studio, mai una falsa conferma.
 
 ### Distribuzione su Vercel con Resend
 
@@ -322,11 +319,11 @@ un servizio significa aggiungere un oggetto al file, mai toccare il codice.
 ```
 scelta del servizio
         v
-domande del servizio (max 5, solo quelle pertinenti)
+descrizione libera del problema (solo per Prima visita e Altro)
         v
-appuntamento oppure richiamata
+richiesta di appuntamento oppure richiamata (telefono o WhatsApp)
         v
-dati personali + riepilogo automatico
+dati personali, casella "e' un'urgenza" e riepilogo
 ```
 
 **Domande saltate.** Una domanda con `when` compare solo se la condizione e'
@@ -338,12 +335,11 @@ percorso passa da otto a sette passi da solo.
 da "Estetica dentale" si finisce su sbiancamento, faccette o allineatori senza
 che il paziente debba ricominciare. Il servizio di partenza resta nel riepilogo.
 
-**Priorita' e tag** sono calcolati **sul server** a partire dalle risposte, mai
-inviati dal browser. Un'opzione puo' portare `priority` (`high`, `urgent`) e
-`tag`; il motore prende la priorita' piu' alta fra quelle incontrate. Trauma
-dentale nasce gia' `urgent`, il dolore moderato porta a `high`, un controllo
-resta `normal`. L'oggetto dell'email allo studio si apre con `[URGENTE]` o
-`[PRIORITA ALTA]` quando serve.
+**Priorita' e tag** sono calcolati **sul server**, mai inviati dal browser. Nel
+percorso attuale la priorita' sale a `urgent` solo se il paziente spunta "E'
+un'urgenza" (tag `URGENT_DECLARED`); il motore supporta comunque `priority` e
+`tag` sulle opzioni delle domande, se in futuro serviranno. L'oggetto
+dell'email allo studio si apre con `[URGENTE]` quando serve.
 
 Questa classificazione e' **organizzativa, non clinica**: serve alla segreteria
 per mettere in ordine le richieste, non viene mostrata al paziente e non compare
@@ -371,16 +367,12 @@ perdere le risposte gia' date, ricerca fra i 27 servizi.
 
 La terza e' l'unica in cui compare la parola "confermato". Contiene data e ora
 in evidenza, trattamento, professionista, indirizzo, codice richiesta,
-eventuale nota dello studio, cosa portare, un pulsante per aggiungere
-l'appuntamento al calendario, le indicazioni stradali, il promemoria della
-disdetta con 24 ore di anticipo e un link per prenotare di nuovo con nome,
+eventuale nota dello studio, un pulsante per aggiungere l'appuntamento al
+calendario, le indicazioni stradali e un link per prenotare di nuovo con nome,
 cognome, email e telefono gia' pronti (vedi sotto).
 
-Parte **subito, automaticamente**, se lo slot richiesto e' libero (vedi
-"Come funziona" piu' sopra): in quel caso la richiesta passa direttamente a
-`CONFIRMED` senza intervento dello staff. Se lo slot non e' libero, la
-richiesta resta `PENDING` e la terza email parte solo quando lo staff la
-conferma (dashboard `/staff/` o da riga di comando):
+Parte quando lo studio conferma la richiesta (dashboard `/staff/` o da riga di
+comando), oppure subito se e' attiva la conferma automatica opzionale:
 
 ```bash
 npm run email:preview                       # anteprime in dist/_email
@@ -428,15 +420,15 @@ piattaforma, l'ultima rete di sicurezza.
 ### Autogestione: annullare o spostare con un click
 
 Il paziente puo' annullare o spostare l'appuntamento da solo, senza
-telefonare, finche' mancano **almeno 24 ore** all'orario prenotato. Il link
+telefonare, finche' l'appuntamento non e' iniziato (o finche' non scade
+l'eventuale preavviso `MANAGE_WINDOW_HOURS`). Il link
 compare nell'email di conferma ("Gestisci la tua prenotazione") e porta alla
 pagina `/gestisci/`, dove sceglie un nuovo giorno/orario o annulla con un
-click. Sotto le 24 ore l'azione online si disattiva da sola e la pagina
-mostra telefono ed email dello studio: da quel punto serve una decisione
-umana, perche' liberare uno slot all'ultimo momento ha un costo reale.
+click. Se un preavviso e' configurato e non e' piu' rispettato, l'azione
+online si disattiva da sola e la pagina mostra telefono ed email dello studio.
 
 Il link e' firmato (HMAC, `BOOKING_TOKEN_SECRET`): non serve un account, ma
-solo chi ha ricevuto l'email puo' usarlo. La regola delle 24 ore e' applicata
+solo chi ha ricevuto l'email puo' usarlo. L'eventuale preavviso e' applicato
 **dal server** (`api/_lib/manage.mjs`), non dal browser, e si basa sempre
 sull'appuntamento originale — anche quando si sta valutando dove spostarlo.
 
@@ -445,7 +437,7 @@ stesso numero di slot del servizio prenotato (`slotCount`, vedi sopra); se il
 nuovo orario nel frattempo e' stato preso da un'altra prenotazione, non
 cambia nulla e la pagina lo segnala.
 
-**Casi fuori dalla finestra delle 24 ore.** Il paziente chiama o scrive; se lo
+**Casi fuori dall'eventuale finestra di preavviso.** Il paziente chiama o scrive; se lo
 studio approva la modifica, la esegue da riga di comando, bypassando la
 regola (il paziente non puo' farlo da solo, ma lo studio si':
 
@@ -472,10 +464,9 @@ compilato il form.
 
 Alternativa agli script da riga di comando sopra: la pagina `/staff/`
 (non collegata dal sito pubblico, esclusa da sitemap e `robots.txt`) mostra
-l'elenco delle prenotazioni, divise in schede: **Da rivedere** (confermate
-automaticamente, non ancora spuntate dallo staff — la scheda di apertura),
-**Da confermare** (`PENDING`: slot occupato o chiuso al momento dell'invio,
-serve una decisione umana), **Confermate**, **Annullate / concluse**, **Tutte**.
+l'elenco delle prenotazioni, divise in schede: **Da confermare** (`PENDING`: le richieste
+arrivate dal sito — la scheda di apertura), **Da rivedere** (solo con la
+conferma automatica attiva), **Confermate**, **Annullate / concluse**, **Tutte**.
 
 Ogni prenotazione ha i pulsanti utili al suo stato: **Segna come vista**
 (solo scheda "Da rivedere": non cambia nulla, toglie solo il promemoria),

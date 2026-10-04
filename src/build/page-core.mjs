@@ -1,4 +1,4 @@
-import { site, team, technologies, faqs, treatments, orari, giorniOrari, passoMinuti, chiusure, esc, attr, arrow, imgTag, figure, lines, personName, byTreatment, byPerson, metaTitle, treatmentPath, PATH, teamPath } from './utils.mjs';
+import { site, waUrl, team, technologies, faqs, treatments, orari, giorniOrari, passoMinuti, chiusure, esc, attr, arrow, imgTag, figure, lines, personName, byTreatment, byPerson, metaTitle, treatmentPath, PATH, teamPath } from './utils.mjs';
 import { t, t as tt, getLang } from './i18n.mjs';
 import { clientConfig } from '../../api/_lib/flows.mjs';
 import { layout, dentistLd } from './layout.mjs';
@@ -390,7 +390,7 @@ ${pageHero({
       <div class="col-5">
         <div class="info-list">
           <div class="info-list__row"><span class="label">${esc(t('common.phone'))}</span><span><a class="link-inline" href="tel:${attr(site.phoneHref)}">${esc(site.phone)}</a></span></div>
-          <div class="info-list__row"><span class="label">${esc(t('common.whatsapp'))}</span><span><a class="link-inline" href="https://wa.me/${attr(site.whatsappHref)}" target="_blank" rel="noopener">${esc(site.whatsapp)}</a></span></div>
+          <div class="info-list__row"><span class="label">${esc(t('common.whatsapp'))}</span><span><a class="link-inline" href="${attr(waUrl())}" target="_blank" rel="noopener">${esc(site.whatsapp)}</a></span></div>
           <div class="info-list__row"><span class="label">${esc(t('common.email'))}</span><span><a class="link-inline" href="mailto:${attr(site.email)}">${esc(site.email)}</a></span></div>
           <div class="info-list__row"><span class="label">${esc(t('common.address'))}</span><span>${esc(site.address.street)}<br>${esc(site.address.zip)} ${esc(site.address.city)}</span></div>
           ${site.hours.map((h) => `<div class="info-list__row"><span class="label">${esc(h.d)}</span><span>${esc(h.h)}</span></div>`).join('')}
@@ -463,6 +463,11 @@ ${pageHero({
   <div class="wrap">
     <div class="grid">
       <div class="col-8">
+        <div class="row mb-3">
+          <a class="btn" href="tel:${attr(site.phoneHref)}">${esc(t('common.callUs'))} ${esc(site.phone)}</a>
+          <a class="btn btn--ghost" href="${attr(waUrl())}" target="_blank" rel="noopener">${esc(t('common.whatsapp'))}</a>
+        </div>
+        <p class="body measure-sm mb-4" style="color:var(--stone)">${esc(t('book.requestNote'))}</p>
         <div data-wizard data-endpoint="${attr(site.booking?.endpoint || '')}" data-mode="${attr(site.booking?.mode || 'demo')}">
           <div class="wizard__progress">
             <div class="row row--between">
@@ -496,6 +501,12 @@ ${pageHero({
               <div aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden">
                 <label>${esc(t('form.company'))}<input type="text" name="azienda" tabindex="-1" autocomplete="off"></label>
               </div>
+
+              <label class="check mt-3">
+                <input type="checkbox" name="urgenza">
+                <span class="check__box" aria-hidden="true"></span>
+                <span>${esc(t('form.urgent'))}<br><span class="small" style="color:var(--stone-light)">${esc(t('form.urgentHint'))}</span></span>
+              </label>
 
               <p class="label mt-4">${esc(t('form.summary'))}</p>
               <dl class="summary-list mt-2" data-summary-list></dl>
@@ -551,7 +562,7 @@ ${pageHero({
             <span class="label">${esc(t('book.preferPhone'))}</span>
             <p class="h4 mt-2"><a class="link-inline" href="tel:${attr(site.phoneHref)}">${esc(site.phone)}</a></p>
             <p class="small mt-2" style="color:var(--stone)">${site.hours.map((h) => `${esc(h.d)} ${esc(h.h)}`).join('<br>')}</p>
-            <p class="mt-3"><a class="link-u" href="https://wa.me/${attr(site.whatsappHref)}" target="_blank" rel="noopener">${esc(t('common.whatsapp'))} ${arrow}</a></p>
+            <p class="mt-3"><a class="link-u" href="${attr(waUrl())}" target="_blank" rel="noopener">${esc(t('common.whatsapp'))} ${arrow}</a></p>
           </div>
           <div class="sidebar-card">
             <span class="label">${esc(t('book.urgent'))}</span>
@@ -608,7 +619,7 @@ ${pageHero({
 
   return layout({
     title: metaTitle(t('manage.title1') + ' ' + t('manage.title2')),
-    description: t('manage.lead'),
+    description: t('meta.manage.desc'),
     path: PATH.manage,
     depth: 1,
     current: PATH.manage,

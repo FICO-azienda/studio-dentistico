@@ -1,8 +1,8 @@
 /**
  * Email da inviare dopo un annullamento o uno spostamento: al paziente e,
  * in forma breve, allo studio. Usato sia dagli endpoint self-service sia
- * dallo script che lo staff lancia per i casi approvati fuori dalla
- * finestra delle 24 ore.
+ * dallo script che lo staff lancia per i casi approvati fuori dall'eventuale
+ * finestra di preavviso.
  */
 import { emailAnnullamento, emailConferma, emailInternaBreve } from './templates.mjs';
 import { sendMail } from './mail.mjs';

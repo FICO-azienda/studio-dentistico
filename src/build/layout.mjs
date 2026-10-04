@@ -1,4 +1,4 @@
-import { site, rel, esc, attr, arrow, treatments, cases, imgTag, catPath, PATH, nav, assetRoot } from './utils.mjs';
+import { site, waUrl, rel, esc, attr, arrow, treatments, cases, imgTag, catPath, PATH, nav, assetRoot } from './utils.mjs';
 import { t, getLang, LANGS, LANG_LABEL, HTML_LANG, OG_LOCALE, DEFAULT_LANG, altPath } from './i18n.mjs';
 
 /* -- dati strutturati ----------------------------------------------------- */
@@ -145,7 +145,7 @@ const footer = (base, asset) => `
         <span class="label">Contatti</span>
         <p><a href="${base}${PATH.contact}">${esc(site.address.street)}<br>${esc(site.address.zip)} ${esc(site.address.city)}</a></p>
         <p><a href="tel:${attr(site.phoneHref)}">${esc(site.phone)}</a></p>
-        <p><a href="https://wa.me/${attr(site.whatsappHref)}" target="_blank" rel="noopener">WhatsApp ${arrow}</a></p>
+        <p><a href="${attr(waUrl())}" target="_blank" rel="noopener">WhatsApp ${arrow}</a></p>
         <p><a href="mailto:${attr(site.email)}">${esc(site.email)}</a></p>
         <p class="mt-2"><a class="btn btn--sm btn--outline-light" href="${base}${PATH.book}">${esc(t('nav.book'))}</a></p>
       </div>
@@ -172,11 +172,11 @@ const footer = (base, asset) => `
 
 <div class="mobile-cta" aria-label="${attr(t('common.quickActions'))}">
   <div class="mobile-cta__row">
-    <a class="btn btn--sm" href="${base}${PATH.book}">${esc(t('nav.bookShort'))}</a>
-    <a class="btn btn--sm btn--ghost" href="tel:${attr(site.phoneHref)}">${esc(t('common.callUs'))}</a>
-    <a class="mobile-cta__icon" href="https://wa.me/${attr(site.whatsappHref)}" target="_blank" rel="noopener" aria-label="${attr(t('common.whatsapp'))}">
+    <a class="btn btn--sm" href="tel:${attr(site.phoneHref)}">${esc(t('common.callUs'))}</a>
+    <a class="mobile-cta__icon" href="${attr(waUrl())}" target="_blank" rel="noopener" aria-label="${attr(t('common.whatsapp'))}">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3 21l2.2-5.2A8.5 8.5 0 1 1 21 11.5Z"/></svg>
     </a>
+    <a class="btn btn--sm btn--ghost" href="${base}${PATH.book}">${esc(t('nav.bookShort'))}</a>
   </div>
 </div>`;
 

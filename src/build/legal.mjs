@@ -12,8 +12,8 @@ const LEGAL_IT = [
       { h: 'Titolare del trattamento', p: [`${site.legalName}, ${site.address.street}, ${site.address.zip} ${site.address.city} — P. IVA ${site.vat}. Email: ${site.email}. Telefono: ${site.phone}.`] },
       { h: 'Dati trattati', p: [
         'Dati di navigazione raccolti automaticamente dal sito (indirizzo IP, tipo di browser, pagine visitate) per finalità tecniche e statistiche in forma aggregata.',
-        'Dati identificativi e di contatto conferiti volontariamente tramite i moduli di contatto e di prenotazione: nome, cognome, email, telefono ed eventuali note.',
-        'Dati relativi alla salute, trattati esclusivamente nell\'ambito della prestazione sanitaria e mai raccolti attraverso i moduli online.'
+        'Dati identificativi e di contatto conferiti volontariamente tramite i moduli di contatto e di richiesta appuntamento: nome, cognome, email, telefono e la descrizione del problema.',
+        'Dati relativi alla salute: la descrizione del problema, se contiene informazioni sulla salute, è usata solo per gestire la richiesta e valutare con il paziente se si tratta di un\'urgenza o di una visita programmata. I dati sanitari della prestazione sono trattati nell\'ambito della cura.'
       ] },
       { h: 'Finalità e base giuridica', p: [
         'I dati conferiti tramite i moduli sono trattati per rispondere alle richieste e gestire gli appuntamenti, sulla base del consenso dell\'interessato e dell\'esecuzione di misure precontrattuali.',
@@ -65,8 +65,8 @@ const LEGAL_IT = [
         'Le immagini dei casi clinici hanno valore esemplificativo e sono pubblicate previo consenso informato scritto. I risultati mostrati si riferiscono a situazioni individuali e non sono estendibili ad altri pazienti.'
       ] },
       { h: 'Proprietà intellettuale', p: ['Testi, immagini e progetto grafico sono protetti dalle norme sul diritto d\'autore. Ne è vietata la riproduzione senza autorizzazione scritta.'] },
-      { h: 'Prenotazioni online', p: [
-        'Se lo slot richiesto risulta libero, la richiesta viene confermata automaticamente al momento dell\'invio: il paziente riceve subito l\'email di conferma con l\'invito per il calendario. Se lo slot non è più disponibile, la richiesta resta in attesa e la segreteria ricontatta il paziente per concordare data e orario.'
+      { h: 'Richieste di appuntamento online', p: [
+        'La richiesta inviata dal sito non è una conferma: lo studio ricontatta il paziente, per telefono o WhatsApp, per concordare giorno e orario e valutare se si tratta di un\'urgenza o di una visita programmata. Le prenotazioni si prendono soprattutto per telefono.'
       ] }
     ]
   }
@@ -91,8 +91,8 @@ const LEGAL_EN = [
         h: 'Data processed',
         p: [
           'Browsing data collected automatically by the website (IP address, browser type, pages visited) for technical purposes and for statistics in aggregate form.',
-          'Identification and contact data provided voluntarily through the contact and booking forms: first name, last name, email, phone and any notes.',
-          'Health data, processed exclusively within the provision of dental care and never collected through the online forms.'
+          'Identification and contact data provided voluntarily through the contact and appointment request forms: first name, last name, email, phone and the description of the problem.',
+          'Health data: the description of the problem, if it contains health information, is used only to handle the request and to assess with the patient whether it is an emergency or a scheduled visit. Health data from the care itself is processed within the provision of care.'
         ]
       },
       {
@@ -184,9 +184,9 @@ const LEGAL_EN = [
         p: ['Texts, images and design are protected by copyright. Reproduction without written permission is prohibited.']
       },
       {
-        h: 'Online booking',
+        h: 'Online appointment requests',
         p: [
-          'If the requested slot is available, the request is confirmed automatically as soon as it is sent, and the patient immediately receives a confirmation email with a calendar invite. If the slot is no longer available, the request remains pending and our front desk contacts the patient to arrange a date and time.'
+          'A request sent through the website is not a confirmation: the practice contacts the patient, by phone or WhatsApp, to arrange the date and time and to assess whether it is an emergency or a scheduled visit. Appointments are mainly booked by phone.'
         ]
       }
     ]

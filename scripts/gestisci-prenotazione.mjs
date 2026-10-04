@@ -1,8 +1,8 @@
 /**
- * Annulla o sposta una prenotazione da riga di comando, forzando la regola
- * delle 24 ore: serve per i casi che il paziente non può più gestire da
- * solo online (meno di 24 ore all'appuntamento) e che lo studio ha
- * approvato per telefono o email.
+ * Annulla o sposta una prenotazione da riga di comando, forzando l'eventuale
+ * finestra di preavviso (MANAGE_WINDOW_HOURS): serve per i casi che il paziente
+ * non può più gestire da solo online e che lo studio ha approvato per
+ * telefono o email.
  *
  *   node scripts/gestisci-prenotazione.mjs APT-2026-000124 --annulla
  *   node scripts/gestisci-prenotazione.mjs APT-2026-000124 --sposta --data 2026-11-26 --ora 15:00

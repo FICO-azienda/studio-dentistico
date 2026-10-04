@@ -2,9 +2,10 @@
  * Funzione serverless per l'annullamento self-service — runtime Node di Vercel.
  *
  * Endpoint: POST /api/prenotazione-cancella  { b, t }
- * Consentito solo se mancano almeno 24 ore all'appuntamento (vedi
- * api/_lib/manage.mjs): sotto quella soglia risponde 409 e il paziente va
- * indirizzato a chiamare o scrivere allo studio.
+ * Consentito finche' non scade l'eventuale finestra di preavviso
+ * MANAGE_WINDOW_HOURS (di base nessuna, vedi api/_lib/manage.mjs): oltre
+ * quella soglia risponde 409 e il paziente va indirizzato a chiamare o
+ * scrivere allo studio.
  */
 import { corsHeaders } from './_lib/handler.mjs';
 import { verifyToken } from './_lib/token.mjs';

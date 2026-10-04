@@ -3,6 +3,9 @@ import path from 'node:path';
 import { setLang, getLang, ROUTES, t } from './i18n.mjs';
 
 export const ROOT = path.resolve(import.meta.dirname, '..', '..');
+
+/** Link WhatsApp dello studio, con un messaggio iniziale neutro che invita a descrivere il problema. */
+export const waUrl = () => 'https://wa.me/' + BASE.site.whatsappHref + '?text=' + encodeURIComponent(t('wa.message'));
 const leggi = (f, dir = 'content') => JSON.parse(fs.readFileSync(path.join(ROOT, dir, f), 'utf8'));
 
 /** Traduzione opzionale: se il file non c'e', si resta in italiano. */

@@ -1,4 +1,4 @@
-import { site, treatments, technologies, team, cases, esc, attr, arrow, imgTag, figure, lines, catPath, treatmentPath, PATH } from './utils.mjs';
+import { site, waUrl, treatments, technologies, team, cases, esc, attr, arrow, imgTag, figure, lines, catPath, treatmentPath, PATH } from './utils.mjs';
 import { t } from './i18n.mjs';
 import { layout, dentistLd } from './layout.mjs';
 import { sectionHead, personCard, bookingBand, testimonials, journalPreview } from './components.mjs';
@@ -263,7 +263,7 @@ const contactSection = () => `
         <div class="info-list">
           <div class="info-list__row"><span class="label">${esc(t('common.address'))}</span><span>${esc(site.address.street)}, ${esc(site.address.zip)} ${esc(site.address.city)}</span></div>
           <div class="info-list__row"><span class="label">${esc(t('common.phone'))}</span><span><a class="link-inline" href="tel:${attr(site.phoneHref)}">${esc(site.phone)}</a></span></div>
-          <div class="info-list__row"><span class="label">${esc(t('common.whatsapp'))}</span><span><a class="link-inline" href="https://wa.me/${attr(site.whatsappHref)}" target="_blank" rel="noopener">${esc(site.whatsapp)}</a></span></div>
+          <div class="info-list__row"><span class="label">${esc(t('common.whatsapp'))}</span><span><a class="link-inline" href="${attr(waUrl())}" target="_blank" rel="noopener">${esc(site.whatsapp)}</a></span></div>
           <div class="info-list__row"><span class="label">${esc(t('common.email'))}</span><span><a class="link-inline" href="mailto:${attr(site.email)}">${esc(site.email)}</a></span></div>
           <div class="info-list__row"><span class="label">${esc(t('common.hours'))}</span><span>${site.hours.map((h) => `${esc(h.d)} · ${esc(h.h)}`).join('<br>')}</span></div>
         </div>

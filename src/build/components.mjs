@@ -1,4 +1,4 @@
-import { site, esc, attr, arrow, imgTag, figure, lines, dateIt, personName, journal, faqs, reviews, PATH, articlePath, teamPath } from './utils.mjs';
+import { site, waUrl, esc, attr, arrow, imgTag, figure, lines, dateIt, personName, journal, faqs, reviews, PATH, articlePath, teamPath } from './utils.mjs';
 import { t } from './i18n.mjs';
 
 /* -- intestazione di sezione ---------------------------------------------- */
@@ -79,8 +79,9 @@ export const bookingBand = (base) => `
             ${esc(t('band.lead'))}
           </p>
           <div class="row mt-4 reveal" data-delay="3">
-            <a class="btn btn--light" href="${base}${PATH.book}">${esc(t('common.bookNow'))}</a>
-            <a class="btn btn--outline-light" href="${base}${PATH.contact}">${esc(t('common.contactUs'))}</a>
+            <a class="btn btn--light" href="tel:${attr(site.phoneHref)}">${esc(t('common.callUs'))} ${esc(site.phone)}</a>
+            <a class="btn btn--outline-light" href="${attr(waUrl())}" target="_blank" rel="noopener">${esc(t('common.whatsapp'))}</a>
+            <a class="btn btn--outline-light" href="${base}${PATH.book}">${esc(t('common.requestOnline'))}</a>
           </div>
         </div>
       </div>
@@ -91,7 +92,7 @@ export const bookingBand = (base) => `
         </div>
         <div class="band__contact">
           <span class="label">${esc(t('common.whatsapp'))}</span>
-          <a href="https://wa.me/${attr(site.whatsappHref)}" target="_blank" rel="noopener">${esc(site.whatsapp)}</a>
+          <a href="${attr(waUrl())}" target="_blank" rel="noopener">${esc(site.whatsapp)}</a>
         </div>
         <div class="band__contact">
           <span class="label">${esc(t('common.email'))}</span>

@@ -102,6 +102,7 @@ const UI = {
   'common.howItWorks': ['Come funziona', 'How it works'],
   'common.contactUs': ['Contattaci', 'Contact us'],
   'common.bookNow': ['Prenota ora', 'Book now'],
+  'common.requestOnline': ['Lascia una richiesta online', 'Leave a request online'],
   'common.callUs': ['Chiama', 'Call'],
   'common.whatsapp': ['WhatsApp', 'WhatsApp'],
   'common.phone': ['Telefono', 'Phone'],
@@ -250,10 +251,12 @@ const UI = {
   'form.surname': ['Cognome', 'Last name'],
   'form.email': ['Email', 'Email'],
   'form.phone': ['Telefono', 'Phone'],
-  'form.notes': ['Note', 'Notes'],
+  'form.notes': ['Altro da segnalare allo studio (facoltativo)', 'Anything else for the practice (optional)'],
+  'form.urgent': ["È un'urgenza", 'It is an emergency'],
+  'form.urgentHint': ["Lo studio valuterà con te se si tratta di un'urgenza o di una visita programmata.", 'The practice will assess with you whether it is an emergency or a scheduled visit.'],
   'form.notesPlaceholder': [
-    "Qualcosa che è utile sapere prima dell'appuntamento",
-    'Anything useful for us to know before the appointment'
+    'Per esempio da quanto tempo hai il problema, o a che ora puoi essere chiamato',
+    'For example how long you have had the problem, or when you can be called'
   ],
   'form.required': ['Campo obbligatorio', 'Required field'],
   'form.invalidEmail': ['Inserisci un indirizzo email valido', 'Enter a valid email address'],
@@ -331,8 +334,8 @@ const UI = {
   'meta.contact.desc': ["Studio Liddi, Via Rovigo 9, 20132 Milano. Telefono, WhatsApp, email, orari di apertura e indicazioni per raggiungerci.", "Studio Liddi, Via Rovigo 9, 20132 Milan. Phone, WhatsApp, email, opening hours and how to reach us."],
   'meta.book.title': ['Prenota una visita — Studio Liddi, dentista a Milano', 'Book an appointment — Studio Liddi, dentist in Milan'],
   'meta.book.desc': [
-    'Prenota online la tua visita allo Studio Liddi di Milano: scegli il servizio, rispondi a poche domande e indica quando preferisci.',
-    'Book your appointment online at Studio Liddi in Milan: choose the service, answer a few questions and tell us when suits you.'
+    'Prenota la tua visita allo Studio Liddi di Milano per telefono o su WhatsApp, oppure lascia una richiesta online: ti ricontatteremo noi.',
+    'Book your visit at Studio Liddi in Milan by phone or on WhatsApp, or leave a request online: we will get back to you.'
   ],
   'meta.treatments.title': ['Trattamenti — Studio Liddi, dentista a Milano', 'Treatments — Studio Liddi, dentist in Milan'],
   'meta.treatments.desc': [
@@ -451,15 +454,17 @@ const UI = {
   'book.title1': ['Prenota', 'Book'],
   'book.title2': ['una visita.', 'an appointment.'],
   'book.lead': [
-    'Scegli il servizio: le domande cambiano di conseguenza e sono al massimo cinque. Puoi prenotare un appuntamento oppure chiedere di essere ricontattato.',
-    'Choose the service: the questions change accordingly, and there are never more than five. You can book an appointment or ask us to call you back.'
+    "Di solito ci si prenota per telefono; puoi anche scrivere su WhatsApp. Se preferisci, lascia qui una richiesta: descrivi il problema e lo studio ti ricontatterà appena possibile per concordare l'appuntamento.",
+    'Appointments are usually booked by phone; you can also write on WhatsApp. If you prefer, leave a request here: describe the problem and the practice will get back to you as soon as possible to arrange the appointment.'
   ],
-  'book.preferPhone': ['Preferisci parlare?', 'Prefer to talk?'],
+  'book.preferPhone': ['Prenota per telefono', 'Book by phone'],
   'book.step': ['Passo', 'Step'],
   'book.of': ['di', 'of'],
   'book.chooseService': ['Scegli il servizio', 'Choose the service'],
   'book.urgent': ['Urgenze', 'Urgent care'],
-  'book.urgentText': ["In caso di urgenza chiama direttamente lo studio o scrivi su WhatsApp: cerchiamo insieme di soddisfare le tue esigenze.", "In an emergency, call the practice directly or write on WhatsApp: together we will try to meet your needs."],
+  'book.urgentText': ["In caso di urgenza chiama direttamente lo studio o scrivi su WhatsApp: valutiamo insieme a te se si tratta di un'urgenza o di una visita programmata.", "In an emergency, call the practice directly or write on WhatsApp: we will assess with you whether it is an emergency or a scheduled visit."],
+  'wa.message': ['Buongiorno, vorrei prenotare una visita. Il problema che vorrei descrivere è: ', 'Hello, I would like to book a visit. The problem I would like to describe is: '],
+  'book.requestNote': ["Per prenotare chiama lo studio o scrivi su WhatsApp. Oppure lascia qui una richiesta: non è una conferma, ti ricontattiamo noi.", "To book, call the practice or write on WhatsApp. Or leave a request here: it is not a confirmation, we will get back to you."],
   'book.received': ['Richiesta ricevuta.', 'Request received.'],
   'book.code': ['Codice richiesta', 'Request code'],
   'book.demoNote': [
@@ -467,20 +472,20 @@ const UI = {
     'Demo mode: no email was sent and no appointment was recorded.'
   ],
   'book.emailSent': [
-    'Ti abbiamo inviato una email con il riepilogo. Il nostro team ti contatterà per confermare definitivamente la disponibilità.',
-    'We have sent you an email with the summary. Our team will contact you to confirm availability.'
+    'Ti abbiamo inviato una email con il riepilogo. La richiesta non è ancora una conferma: lo studio ti contatterà appena possibile.',
+    'We have sent you an email with the summary. Your request is not yet a confirmation: the practice will contact you as soon as possible.'
   ],
   'book.emailFailed': [
-    "Non siamo riusciti a inviarti l'email di riepilogo, ma la richiesta è registrata. Il nostro team ti contatterà per confermare la disponibilità.",
-    'We could not send you the summary email, but your request has been recorded. Our team will contact you to confirm availability.'
+    "Non siamo riusciti a inviarti l'email di riepilogo, ma la richiesta è registrata. Lo studio ti contatterà appena possibile.",
+    'We could not send you the summary email, but your request has been recorded. The practice will contact you as soon as possible.'
   ],
   'book.thanksFor': ['Grazie, {nome}. Abbiamo ricevuto la tua richiesta {quando}.', 'Thank you, {nome}. We have received your request {quando}.'],
   'book.forDate': ['per {giorno} alle {ora}', 'for {giorno} at {ora}'],
   'book.forCallback': ['e la richiamata che ci hai chiesto', 'and the call back you asked for'],
   'book.when': ['Quando ti è comodo?', 'When suits you?'],
   'book.whenHint': [
-    'Gli orari mostrati sono indicativi: la segreteria conferma la disponibilità effettiva.',
-    'The times shown are indicative: our front desk confirms actual availability.'
+    'Gli orari mostrati seguono quelli di apertura dello studio e sono indicativi: la richiesta non è una conferma, lo studio ti ricontatterà.',
+    'The times shown follow the practice opening hours and are indicative: your request is not a confirmation, the practice will contact you.'
   ],
   'book.day': ['Giorno', 'Day'],
   'book.time': ['Orario', 'Time'],
@@ -491,16 +496,20 @@ const UI = {
   'book.noPreference': ['Nessuna preferenza', 'No preference'],
   'book.professional': ['Professionista', 'Practitioner'],
   'book.multiHint': ['Puoi scegliere più di una risposta.', 'You can choose more than one answer.'],
-  'book.bookOption': ['Scegli giorno e orario dal calendario.', 'Pick a day and time from the calendar.'],
-  'book.callbackOption': ['Ti richiamiamo noi quando preferisci.', 'We call you back when it suits you.'],
+  'book.bookOption': ['Indica giorno e orario che preferisci: lo studio ti ricontatta per confermare.', 'Tell us the day and time you prefer: the practice will contact you to confirm.'],
+  'book.callbackOption': ['Ti ricontattiamo appena possibile, per telefono o WhatsApp.', 'We will get back to you as soon as possible, by phone or WhatsApp.'],
 
   /* autogestione prenotazione */
   'manage.label': ['Gestisci', 'Manage'],
   'manage.title1': ['Gestisci la tua', 'Manage your'],
   'manage.title2': ['prenotazione.', 'booking.'],
   'manage.lead': [
-    'Annulla o sposta il tuo appuntamento, gratuitamente, fino a 24 ore prima.',
-    'Cancel or reschedule your appointment, free of charge, up to 24 hours before.'
+    'Annulla o sposta il tuo appuntamento.',
+    'Cancel or reschedule your appointment.'
+  ],
+  'meta.manage.desc': [
+    "Annulla o sposta il tuo appuntamento allo Studio Liddi di Milano: pagina riservata a chi ha ricevuto il link nell'email.",
+    'Cancel or reschedule your appointment at Studio Liddi in Milan: page for patients who received the link by email.'
   ],
   'manage.loading': ['Caricamento…', 'Loading…'],
   'contact.lead': ["Via Rovigo 9, Milano, nelle vicinanze della MM Crescenzago. Per le prime visite ci si prenota di solito per telefono, oppure su WhatsApp per essere ricontattati appena possibile.", "Via Rovigo 9, Milan, near the Crescenzago metro station. First visits are usually booked by phone, or on WhatsApp to be contacted as soon as possible."],

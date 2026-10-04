@@ -5,7 +5,7 @@
  * Header:   Authorization: Bearer <STAFF_TOKEN>
  *
  * Come lo spostamento self-service (api/prenotazione-sposta.js) ma con
- * forza:true: bypassa la regola delle 24 ore. Il nuovo orario deve comunque
+ * forza:true: bypassa l'eventuale finestra di preavviso. Il nuovo orario deve comunque
  * essere libero e non cadere in un giorno di chiusura.
  */
 import { corsHeaders } from '../_lib/handler.mjs';

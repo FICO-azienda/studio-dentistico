@@ -21,10 +21,10 @@
     it: {
       searchService: 'Cerca un servizio',
       multiHint: 'Puoi scegliere più di una risposta.',
-      modeBookHint: 'Scegli giorno e orario dal calendario.',
-      modeCallHint: 'Ti richiamiamo noi quando preferisci.',
-      whenTitle: 'Quando ti è comodo?',
-      whenSub: 'Gli orari mostrati riflettono la disponibilità reale: se lo slot è libero, l\'appuntamento viene confermato subito.',
+      modeBookHint: 'Indica giorno e orario che preferisci: lo studio ti ricontatta per confermare.',
+      modeCallHint: 'Ti ricontattiamo appena possibile, per telefono o WhatsApp.',
+      whenTitle: 'Quando preferisci venire?',
+      whenSub: 'Gli orari mostrati seguono quelli di apertura dello studio e sono indicativi: la richiesta non è una conferma, lo studio ti ricontatterà.',
       day: 'Giorno',
       time: 'Orario',
       secondChoice: 'Seconda preferenza',
@@ -54,9 +54,9 @@
       whenCallback: 'e la richiamata che ci hai chiesto',
       demoNote: 'Modalità dimostrativa: nessuna email è stata inviata e nessun appuntamento è stato registrato.',
       emailSentNote:
-        'Ti abbiamo inviato una email con il riepilogo. Il nostro team ti contatterà per confermare definitivamente la disponibilità.',
+        'Ti abbiamo inviato una email con il riepilogo. La richiesta non è ancora una conferma: lo studio ti contatterà appena possibile.',
       emailFailedNote:
-        "Non siamo riusciti a inviarti l'email di riepilogo, ma la richiesta è registrata. Il nostro team ti contatterà per confermare la disponibilità.",
+        "Non siamo riusciti a inviarti l'email di riepilogo, ma la richiesta è registrata. Lo studio ti contatterà appena possibile.",
       confirmedTitle: 'Appuntamento confermato.',
       confirmedNote: "Il tuo appuntamento è confermato: ti abbiamo inviato l'email con l'invito al calendario.",
       confirmedFailedNote:
@@ -71,7 +71,7 @@
         `Chiamaci al <a class="link-inline" href="tel:${telHref}">${tel}</a> oppure scrivici a <a class="link-inline" href="mailto:${email}">${email}</a>.`,
       atHour: (h) => `alle ${h}`,
       code: (id) => `Codice ${id}`,
-      outOfWindow: 'Mancano meno di 24 ore a questo appuntamento: la modifica online non è più disponibile. Se hai un imprevisto, contattaci il prima possibile.',
+      outOfWindow: 'La modifica online non è più disponibile per questo appuntamento. Contatta lo studio il prima possibile.',
       statusCancelled: 'annullato',
       statusCompleted: 'concluso',
       notManageable: (stato) => `Questo appuntamento risulta ${stato}: non ci sono ulteriori azioni disponibili.`,
@@ -94,10 +94,10 @@
     en: {
       searchService: 'Search for a service',
       multiHint: 'You can choose more than one answer.',
-      modeBookHint: 'Pick a day and time from the calendar.',
-      modeCallHint: "We'll call you back whenever suits you.",
-      whenTitle: 'When suits you best?',
-      whenSub: 'The times shown reflect real availability: if the slot is free, your appointment is confirmed right away.',
+      modeBookHint: 'Tell us the day and time you prefer: the practice will contact you to confirm.',
+      modeCallHint: "We'll get back to you as soon as possible, by phone or WhatsApp.",
+      whenTitle: 'When would you like to come?',
+      whenSub: 'The times shown follow the practice opening hours and are indicative: your request is not a confirmation, the practice will contact you.',
       day: 'Day',
       time: 'Time',
       secondChoice: 'Second choice',
@@ -126,9 +126,9 @@
       whenFor: (day, hour) => `for ${day} at ${hour}`,
       whenCallback: 'and the call back you asked for',
       demoNote: 'Demo mode: no email was sent and no appointment was recorded.',
-      emailSentNote: "We've sent you a summary email. Our team will contact you to confirm final availability.",
+      emailSentNote: "We've sent you a summary email. Your request is not yet a confirmation: the practice will contact you as soon as possible.",
       emailFailedNote:
-        "We couldn't send you the summary email, but your request has been recorded. Our team will contact you to confirm availability.",
+        "We couldn't send you the summary email, but your request has been recorded. The practice will contact you as soon as possible.",
       confirmedTitle: 'Appointment confirmed.',
       confirmedNote: "Your appointment is confirmed: we've sent you the email with the calendar invite.",
       confirmedFailedNote:
@@ -143,7 +143,7 @@
         `Call us at <a class="link-inline" href="tel:${telHref}">${tel}</a> or email <a class="link-inline" href="mailto:${email}">${email}</a>.`,
       atHour: (h) => `at ${h}`,
       code: (id) => `Code ${id}`,
-      outOfWindow: 'Less than 24 hours remain before this appointment: the online change is no longer available. If something has come up, please contact us as soon as possible.',
+      outOfWindow: 'The online change is no longer available for this appointment. Please contact the practice as soon as possible.',
       statusCancelled: 'cancelled',
       statusCompleted: 'completed',
       notManageable: (stato) => `This appointment is ${stato}: there are no further actions available.`,
@@ -1011,6 +1011,7 @@
         secondaData: state.secondaData,
         secondaOra: state.secondaOra,
         messaggio: form.messaggio?.value || '',
+        urgenza: form.urgenza?.checked || false,
         privacy: form.privacy.checked,
         comunicazioni: form.comunicazioni?.checked || false,
         azienda: form.azienda?.value || '',
@@ -1071,7 +1072,7 @@
 
 
   /* -- Autogestione prenotazione: annulla o sposta con un click -----------
-     La regola delle 24 ore la applica il server (e' l'unica fonte di
+     L'eventuale finestra di preavviso la applica il server (e' l'unica fonte di
      verita': un orologio del browser non e' affidabile). Qui si mostra
      semplicemente cio' che il server dice di poter fare.               */
   const gestisciPrenotazione = () => {

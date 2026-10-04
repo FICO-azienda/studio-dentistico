@@ -4,7 +4,7 @@
  * Endpoint: GET /api/prenotazione?b=APT-2026-000124&t=<token>
  * Usato dalla pagina di autogestione per sapere cosa mostrare: i dettagli
  * dell'appuntamento e se l'azione self-service (annulla/sposta) e' ancora
- * consentita (regola delle 24 ore, vedi api/_lib/manage.mjs).
+ * consentita (eventuale finestra di preavviso, vedi api/_lib/manage.mjs).
  */
 import { corsHeaders } from './_lib/handler.mjs';
 import { verifyToken } from './_lib/token.mjs';

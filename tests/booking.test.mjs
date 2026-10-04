@@ -21,7 +21,7 @@ import { byService, visibleQuestions, computePriority, computeTags, buildSummary
 import { giornoChiuso, chiusure } from '../api/_lib/chiusure.mjs';
 import { reserveSlots, releaseSlots, getDayOccupied, slotsRichiesti } from '../api/_lib/availability.mjs';
 import { saveBooking, getBooking, listBookings } from '../api/_lib/store.mjs';
-import { sposta, statoPrenotazione } from '../api/_lib/manage.mjs';
+import { sposta, statoPrenotazione, selfServiceConsentita } from '../api/_lib/manage.mjs';
 import { mintToken, rebookUrl } from '../api/_lib/token.mjs';
 import { kvCredenziali, assertArchivioAffidabile } from '../api/_lib/kv-config.mjs';
 import { confermaPrenotazione } from '../api/_lib/confirm.mjs';
@@ -30,6 +30,8 @@ import { staffTokenValido, estraiToken } from '../api/_lib/staff-auth.mjs';
 // niente email vere durante i test
 const ENV = { MAIL_PROVIDER: 'console', BOOKING_STORE: 'log', BOOKING_NOTIFY_EMAIL: 'studio@example.it' };
 const ENV_MAIL_ROTTA = { ...ENV, MAIL_PROVIDER: 'resend' }; // senza chiave: fallisce
+// la conferma automatica e' opzionale e spenta di default: si accende solo qui, dove la si prova
+const ENV_AUTOCONFERMA = { ...ENV, BOOKING_AUTOCONFIRM: '1' };
 
 // la modalita' 'log' persiste su disco (.data/): un residuo di una sessione
 // manuale precedente (es. il dev-api.mjs usato per una prova a mano) potrebbe
@@ -72,12 +74,7 @@ const base = () => ({
   email: 'mario.rossi@example.com',
   telefono: '+39 340 1234567',
   servizio: 'prima-visita',
-  risposte: {
-    'prima-volta': 'si',
-    motivo: 'controllo-generale',
-    dolore: 'no',
-    'ultima-visita': 'meno-di-6-mesi-fa'
-  },
+  risposte: { descrizione: 'Mi fa male un dente da due giorni' },
   modalita: 'prenota',
   dataRichiesta: giornoUnico(),
   oraRichiesta: '15:00', // il pomeriggio e' aperto tutti i giorni feriali
@@ -89,32 +86,70 @@ const ctx = (extra = {}) => ({ ip: 'test-' + ++ipSeq, userAgent: 'node-test', en
 
 test.beforeEach(() => _reset());
 
-/* -- 1. prenotazione normale --------------------------------------------- */
-test('prenotazione valida: 201, codice richiesta, confermata subito (lo slot e\' libero)', async () => {
+/* -- 1. richiesta di appuntamento ------------------------------------------ */
+test('richiesta valida: 201, codice richiesta, resta PENDING (la conferma e\' dello studio)', async () => {
   const r = await handleBooking(base(), ctx());
   assert.equal(r.status, 201);
   assert.equal(r.body.ok, true);
   assert.match(r.body.bookingId, /^APT-\d{4}-\d{6}$/);
-  assert.equal(r.body.status, 'CONFIRMED');
+  assert.equal(r.body.status, 'PENDING');
   assert.equal(r.body.emailSent, true);
   assert.equal(r.body.studioNotified, true);
 });
 
-test('se lo slot e\' gia\' occupato la prenotazione resta PENDING invece di essere confermata', async () => {
+test('la richiesta non occupa lo slot finche\' lo studio non la conferma', async () => {
+  const dati = base();
+  await handleBooking(dati, ctx());
+  const occupati = await getDayOccupied(dati.dataRichiesta, ENV);
+  assert.ok(!(dati.oraRichiesta in occupati), 'nessuno slot occupato da una richiesta non confermata');
+});
+
+test('conferma automatica opzionale: se e\' accesa e lo slot e\' libero, la richiesta e\' CONFIRMED', async () => {
+  const r = await handleBooking(base(), ctx({ env: ENV_AUTOCONFERMA }));
+  assert.equal(r.status, 201);
+  assert.equal(r.body.status, 'CONFIRMED');
+});
+
+test('conferma automatica accesa ma slot occupato: resta PENDING', async () => {
   const dati = base();
   const occupato = await reserveSlots(dati.dataRichiesta, dati.oraRichiesta, 1, 'GIA-OCCUPATO', ENV);
   assert.equal(occupato.ok, true);
 
-  const r = await handleBooking(dati, ctx());
+  const r = await handleBooking(dati, ctx({ env: ENV_AUTOCONFERMA }));
   assert.equal(r.body.status, 'PENDING');
 
   await releaseSlots(dati.dataRichiesta, 'GIA-OCCUPATO', ENV);
 });
 
-test('una richiamata (senza data/ora) resta PENDING: non c\'e\' uno slot da confermare', async () => {
+test('una richiamata (senza data/ora) resta PENDING, anche con la conferma automatica accesa', async () => {
   const dati = { ...base(), modalita: 'ricontatto', canale: 'telefono', fascia: 'mattina' };
-  const r = await handleBooking(dati, ctx());
+  const r = await handleBooking(dati, ctx({ env: ENV_AUTOCONFERMA }));
   assert.equal(r.body.status, 'PENDING');
+});
+
+test('urgenza dichiarata dal paziente: priorita\' urgent, tag, registrata e visibile allo studio', async () => {
+  const v = validateBooking({ ...base(), urgenza: true });
+  assert.equal(v.ok, true);
+  assert.equal(v.data.priorita, 'urgent');
+  assert.ok(v.data.tags.includes('URGENT_DECLARED'));
+  const rec = buildRecord(v.data, { bookingId: 'APT-2026-000009' });
+  assert.equal(rec.urgenza_dichiarata, true);
+  assert.match(emailStudio(rec).subject, /\[URGENTE\]/);
+  assert.match(emailStudio(rec).text, /Urgenza indicata: sì/);
+  // senza la casella la richiesta resta normale e non lo dice
+  const n = buildRecord(validateBooking(base()).data, { bookingId: 'APT-2026-000010' });
+  assert.equal(n.urgenza_dichiarata, false);
+  assert.equal(n.priority, 'normal');
+  assert.ok(!/Urgenza indicata/.test(emailStudio(n).text));
+});
+
+test('richiamata: solo telefono o WhatsApp, solo mattina o pomeriggio (gli orari di apertura)', () => {
+  const b = { ...base(), modalita: 'ricontatto', dataRichiesta: '', oraRichiesta: '' };
+  for (const canale of ['telefono', 'whatsapp']) assert.equal(validateBooking({ ...b, canale, fascia: 'mattina' }).ok, true);
+  for (const fascia of ['mattina', 'pomeriggio']) assert.equal(validateBooking({ ...b, canale: 'telefono', fascia }).ok, true);
+  assert.equal(validateBooking({ ...b, canale: 'email', fascia: 'mattina' }).ok, false);
+  assert.equal(validateBooking({ ...b, canale: 'telefono', fascia: 'sera' }).ok, false);
+  assert.equal(validateBooking({ ...b, canale: 'telefono', fascia: 'pausa-pranzo' }).ok, false);
 });
 
 /* -- 2. con messaggio ----------------------------------------------------- */
@@ -130,7 +165,7 @@ test('senza messaggio la richiesta resta valida e le email mostrano un trattino'
   assert.equal(v.ok, true);
   assert.equal(v.data.messaggio, '');
   const rec = buildRecord(v.data, { bookingId: 'APT-2026-000001' });
-  assert.match(emailPaziente(rec).text, /Messaggio: —/);
+  assert.match(emailPaziente(rec).text, /Problema \/ messaggio: —/);
 });
 
 /* -- 4. seconda preferenza assente o incompleta --------------------------- */
@@ -158,46 +193,75 @@ test('seconda preferenza completa finisce nel record', () => {
 });
 
 /* -- 5. email non valida -------------------------------------------------- */
-/* -- logica condizionale per servizio ------------------------------------- */
-test('le domande non pertinenti vengono saltate', () => {
-  const s = byService.implantologia;
-  const senza = visibleQuestions(s, {}).map((q) => q.id);
-  const con = visibleQuestions(s, { estratto: 'si' }).map((q) => q.id);
-  assert.ok(!senza.includes('da-quanto'), 'se non si sa se il dente e\' estratto, non si chiede da quanto');
+/* -- servizi e domande ------------------------------------------------------ */
+// il motore delle domande condizionali resta generico: lo si prova con servizi
+// inline, perche' i percorsi reali non ne hanno piu' (il paziente descrive il problema)
+const servizioProva = {
+  id: 'prova',
+  tag: 'SERVICE_PROVA',
+  priority: 'normal',
+  questions: [
+    { id: 'estratto', q: 'Estratto?', type: 'single', options: [{ v: 'si', l: 'Si' }, { v: 'no', l: 'No' }, { v: 'urgente', l: 'Urgente', priority: 'urgent', tag: 'TAG_X' }] },
+    { id: 'da-quanto', q: 'Da quanto?', type: 'single', when: { q: 'estratto', in: ['si'] }, options: [{ v: 'poco', l: 'Poco' }] }
+  ]
+};
+
+test('le domande non pertinenti vengono saltate (motore generico)', () => {
+  const senza = visibleQuestions(servizioProva, {}).map((q) => q.id);
+  const con = visibleQuestions(servizioProva, { estratto: 'si' }).map((q) => q.id);
+  assert.ok(!senza.includes('da-quanto'));
   assert.ok(con.includes('da-quanto'));
 });
 
-test('ogni servizio ha da una a cinque domande', () => {
+test('i servizi sono solo quelli indicati dal dentista, senza durate proprie', () => {
+  const attesi = ['prima-visita', 'igiene', 'sbiancamento', 'ortodonzia', 'implantologia', 'conservativa', 'endodonzia', 'parodontologia', 'protesi', 'chirurgia', 'dente-del-giudizio', 'altro'];
+  assert.deepEqual(Object.keys(byService).sort(), [...attesi].sort());
   for (const s of Object.values(byService)) {
-    assert.ok(s.questions.length >= 1 && s.questions.length <= 5, `${s.id}: ${s.questions.length} domande`);
+    assert.equal(s.slotCount, 1, `${s.id}: una durata non indicata dal dentista`);
+    assert.ok(s.questions.length <= 5, `${s.id}: troppe domande`);
   }
 });
 
-test('priorita\' interna calcolata dalle risposte, non dal client', () => {
-  assert.equal(computePriority(byService['controllo-generale'], { segnalazione: 'no' }), 'normal');
-  assert.equal(computePriority(byService['controllo-generale'], { segnalazione: 'dolore' }), 'high');
-  assert.equal(computePriority(byService.urgenza, { problema: 'gonfiore' }), 'high');
-  assert.equal(computePriority(byService.trauma, {}), 'urgent');
-  assert.equal(computePriority(byService['dente-del-giudizio'], { apertura: 'si-importante' }), 'urgent');
+test('prima visita e altro chiedono la descrizione del problema, in campo libero', () => {
+  for (const id of ['prima-visita', 'altro']) {
+    const q = byService[id].questions.find((x) => x.id === 'descrizione');
+    assert.ok(q && q.type === 'text', `${id} deve avere la descrizione libera`);
+  }
+  const senza = validateAnswers('prima-visita', {});
+  assert.equal(senza.ok, false);
+  assert.ok(senza.errors.descrizione);
+  assert.equal(validateAnswers('prima-visita', { descrizione: 'Mi fa male un dente' }).ok, true);
+  assert.equal(validateAnswers('igiene', {}).ok, true, 'gli altri servizi non hanno domande obbligatorie');
+});
+
+test('percorsi che il dentista non ha indicato non esistono piu\'', () => {
+  for (const id of ['urgenza', 'trauma', 'dente-rotto', 'corona', 'ponte', 'dentiera', 'controllo-generale', 'secondo-parere', 'post-trattamento']) {
+    assert.equal(byService[id], undefined, id);
+    assert.equal(validateAnswers(id, {}).ok, false, id);
+  }
+});
+
+test('priorita\' interna calcolata dalle risposte, non dal client (motore generico)', () => {
+  assert.equal(computePriority(servizioProva, { estratto: 'no' }), 'normal');
+  assert.equal(computePriority(servizioProva, { estratto: 'urgente' }), 'urgent');
 });
 
 test('tag automatici: servizio piu\' eventuali tag delle risposte', () => {
   assert.deepEqual(computeTags(byService.igiene, {}), ['SERVICE_HYGIENE']);
-  assert.deepEqual(computeTags(byService.ortodonzia, { 'per-chi': 'figlio' }), ['SERVICE_ORTHODONTICS', 'SERVICE_PEDIATRIC']);
+  assert.deepEqual(computeTags(servizioProva, { estratto: 'urgente' }), ['SERVICE_PROVA', 'TAG_X']);
 });
 
 test('riepilogo: una riga per domanda pertinente', () => {
-  const s = byService.sbiancamento;
-  const a = { 'gia-fatto': 'mai', obiettivo: 'ridurre-macchie', sensibilita: 'no', tempi: 'non-ho-fretta' };
-  const r = buildSummary(s, a);
-  assert.equal(r.length, 4);
-  assert.equal(r[1].value, 'Ridurre macchie');
+  const r = buildSummary(byService['prima-visita'], { descrizione: 'Mi fa male un dente' });
+  assert.equal(r.length, 1);
+  assert.equal(r[0].value, 'Mi fa male un dente');
+  assert.equal(buildSummary(byService.igiene, {}).length, 0);
 });
 
 test('risposta non prevista dalla configurazione: rifiutata', () => {
-  const r = validateAnswers('igiene', { 'ultima-igiene': 'inventata', problemi: ['nessuno'], dispositivi: 'no' });
+  const r = validateAnswers('prima-visita', { descrizione: 'ok' }); // troppo corta
   assert.equal(r.ok, false);
-  assert.ok(r.errors['ultima-igiene']);
+  assert.ok(r.errors.descrizione);
 });
 
 test('richiesta di richiamata: niente data, servono canale e fascia', async () => {
@@ -344,12 +408,12 @@ test('email allo studio: oggetto riconoscibile e azioni rapide', () => {
   assert.ok(html.includes('tel:'));
   assert.ok(html.includes('mailto:'));
   assert.ok(html.includes('wa.me'));
-  assert.ok(html.includes('PENDING'));
+  assert.ok(html.includes('DA CONFERMARE'), 'lo studio vede che la richiesta e\' da confermare');
   assert.ok(html.includes('SERVICE_FIRST_VISIT'), 'i tag interni compaiono nella mail allo studio');
 });
 
 test('oggetto in evidenza quando la priorita\' e\' alta o urgente', () => {
-  const v = validateBooking({ ...base(), servizio: 'trauma', risposte: { quando: 'meno-di-2-ore-fa', cosa: ['dente-perso'] } });
+  const v = validateBooking({ ...base(), urgenza: true });
   assert.equal(v.ok, true);
   const rec = buildRecord(v.data, { bookingId: 'APT-2026-000008' });
   assert.equal(rec.priority, 'urgent');
@@ -373,17 +437,18 @@ test('la conferma e\' l\'unica email che dice "confermato"', () => {
   assert.ok(!/confermato/i.test(emailPaziente(rec).subject));
 
   rec.status = 'CONFIRMED';
-  const c = emailConferma(rec, { professionista: 'Dr. Andrea Vitali', note: 'Porta la panoramica.' });
+  const c = emailConferma(rec, { professionista: 'Dott. Arturo Liddi', note: 'Porta la panoramica.' });
   assert.match(c.subject, /^Appuntamento confermato — /);
   assert.ok(c.text.includes('APT-2026-000009'));
   assert.ok(c.html.includes('calendar.google.com'), 'c\'e\' il link per il calendario');
   assert.ok(c.html.includes('google.com/maps'), 'ci sono le indicazioni stradali');
   assert.ok(c.html.includes('Porta la panoramica.'), 'la nota dello studio compare');
-  assert.ok(/24 ore/.test(c.text), 'si ricorda la disdetta con preavviso');
+  // nessuna regola o consiglio che il dentista non abbia dato
+  assert.ok(!/24 ore|24 hours|gratuitamente|altro paziente|documento d.identit/i.test(c.text + c.html), 'niente politiche di disdetta o istruzioni inventate');
 });
 
 test('la conferma non espone priorita\' o tag interni', () => {
-  const v = validateBooking({ ...base(), servizio: 'urgenza', risposte: { problema: 'dolore-forte', 'da-quanto': 'da-oggi', intensita: '9-10', gonfiore: 'si' } });
+  const v = validateBooking({ ...base(), urgenza: true });
   const rec = buildRecord(v.data, { bookingId: 'APT-2026-000010' });
   const c = emailConferma(rec);
   assert.ok(!/SERVICE_|priorit|URGENTE/i.test(c.text));
@@ -411,7 +476,7 @@ test('le email al paziente seguono la lingua del sito che ha usato', () => {
 
 test('il riepilogo del servizio e\' tradotto per il paziente inglese', () => {
   const v = validateBooking({ ...base(), lang: 'en' });
-  assert.equal(v.data.riepilogoServizio[0].label, 'Is this your first time at our practice?');
+  assert.equal(v.data.riepilogoServizio[0].label, 'Briefly describe the problem');
 });
 
 test('lingua non riconosciuta: si resta in italiano', () => {
@@ -430,7 +495,7 @@ test('l\'invito .ics converte l\'ora locale tenendo conto dell\'ora legale', () 
 test('l\'invito .ics e\' valido e contiene l\'appuntamento', () => {
   const v = validateBooking(base());
   const rec = buildRecord(v.data, { bookingId: 'APT-2026-000011' });
-  const ics = buildIcs(rec, studio, { professionista: 'Dr. Andrea Vitali' });
+  const ics = buildIcs(rec, studio, { professionista: 'Dott. Arturo Liddi' });
   // le righe lunghe sono spezzate come prescrive lo standard: si ricompongono
   const piatto = ics.replace(/\r\n /g, '');
 
@@ -564,10 +629,10 @@ test('confermaPrenotazione occupa lo slot, salva CONFIRMED e prova a inviare l\'
   const record = buildRecord(base(), { bookingId });
   await saveBooking(record, ENV);
 
-  const esito = await confermaPrenotazione(bookingId, { professionista: 'Dr. Andrea Vitali', env: ENV });
+  const esito = await confermaPrenotazione(bookingId, { professionista: 'Dott. Arturo Liddi', env: ENV });
   assert.equal(esito.ok, true);
   assert.equal(esito.record.status, 'CONFIRMED');
-  assert.equal(esito.record.professionista, 'Dr. Andrea Vitali');
+  assert.equal(esito.record.professionista, 'Dott. Arturo Liddi');
   assert.equal(esito.emailSent, true);
 
   const occupati = await getDayOccupied(record.data_richiesta, ENV);
@@ -659,4 +724,20 @@ test('email di annullamento invita a prenotare di nuovo con lo stesso link, non 
   const link = rebookUrl(rec.booking_id, 'it', process.env);
   assert.ok(a.html.includes(escapeHtml(link)));
   assert.ok(a.text.includes(link));
+});
+
+/* -- annullare o spostare: nessuna regola di preavviso inventata ----------- */
+test('di base si puo\' annullare o spostare online fino all\'inizio dell\'appuntamento (nessun preavviso imposto)', () => {
+  const rec = { data_richiesta: '2026-12-10', ora_richiesta: '15:00' };
+  const treOrePrima = new Date(localeToUtc('2026-12-10', '15:00').getTime() - 3 * 3600 * 1000);
+  const dopo = new Date(localeToUtc('2026-12-10', '15:00').getTime() + 60 * 1000);
+  assert.equal(selfServiceConsentita(rec, treOrePrima, {}), true);
+  assert.equal(selfServiceConsentita(rec, dopo, {}), false, 'a visita iniziata non si modifica piu\' online');
+});
+
+test('un preavviso minimo si impone solo se lo studio lo configura (MANAGE_WINDOW_HOURS)', () => {
+  const rec = { data_richiesta: '2026-12-10', ora_richiesta: '15:00' };
+  const treOrePrima = new Date(localeToUtc('2026-12-10', '15:00').getTime() - 3 * 3600 * 1000);
+  assert.equal(selfServiceConsentita(rec, treOrePrima, { MANAGE_WINDOW_HOURS: '24' }), false);
+  assert.equal(selfServiceConsentita(rec, treOrePrima, { MANAGE_WINDOW_HOURS: '2' }), true);
 });

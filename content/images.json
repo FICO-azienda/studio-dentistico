@@ -6,7 +6,7 @@
   },
   "studio-interno": {
     "origine": "studio",
-    "alt": "Sala operativa con poltrona odontoiatrica beige, parete color terracotta e finestra",
+    "alt": "Ingresso dello studio con il bancone della reception in vetro, l'orologio a muro e il corridoio sullo sfondo",
     "ar": "3/2"
   },
   "studio-reception": {
@@ -117,6 +117,11 @@
   "studio-ingresso": {
     "origine": "studio",
     "alt": "Cancello d'ingresso al civico 9, con la targa dello studio",
+    "ar": "3/4"
+  },
+  "studio-targa": {
+    "origine": "studio",
+    "alt": "Targa all'ingresso: Studio Dentistico Liddi dott. Arturo, si riceve su appuntamento",
     "ar": "3/4"
   }
 }

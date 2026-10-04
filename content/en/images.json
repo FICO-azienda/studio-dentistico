@@ -3,7 +3,7 @@
     "alt": "Treatment room with a beige dental chair, a window and a wisteria painted on the wall"
   },
   "studio-interno": {
-    "alt": "Treatment room with a beige dental chair, a terracotta wall and a window"
+    "alt": "Practice entrance with the glass reception counter, the wall clock and the corridor beyond"
   },
   "studio-dettaglio": {
     "alt": "The practice entrance door, with its nameplate, and the reception beyond the threshold"
@@ -70,5 +70,8 @@
   },
   "liddi-sala-glicine": {
     "alt": "Treatment room with a dental chair and a wisteria painted on the wall next to the television"
+  },
+  "studio-targa": {
+    "alt": "Nameplate at the entrance: Studio Dentistico Liddi dott. Arturo, by appointment"
   }
 }

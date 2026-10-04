@@ -113,11 +113,12 @@ const studioSection = () => `
     })}
     <div class="grid">
       <div class="col-7">
-        ${figure('studio-interno', { base, ar: '16/10', className: 'media__zoom', sizes: '(max-width: 1000px) 100vw, 58vw' })}
+        ${figure('studio-interno', { base, ar: '4/3', className: 'media__zoom', sizes: '(max-width: 1000px) 100vw, 58vw' })}
       </div>
-      <div class="col-4 start-9" style="grid-column:9 / span 4">
+      <div class="col-4 start-9">
         <p class="lead reveal">${esc(t('home.studio.lead'))}</p>
         <p class="mt-4 reveal" data-delay="1"><a class="btn btn--ghost" href="${PATH.studio}">${esc(t('common.discoverStudio'))}</a></p>
+        ${figure('liddi-corridoio', { base, ar: '4/5', className: 'media__zoom studio-aside', sizes: '(max-width: 1000px) 60vw, 24vw' })}
       </div>
     </div>
   </div>
@@ -268,8 +269,11 @@ const contactSection = () => `
           <div class="info-list__row"><span class="label">${esc(t('common.hours'))}</span><span>${site.hours.map((h) => `${esc(h.d)} · ${esc(h.h)}`).join('<br>')}</span></div>
         </div>
       </div>
-      <div class="col-5 start-8" style="grid-column:8 / span 5">
-        ${figure('studio-reception', { base, ar: '4/3', className: 'media__zoom', sizes: '(max-width: 1000px) 100vw, 40vw' })}
+      <div class="col-5 start-8">
+        <div class="photo-pair">
+          ${figure('studio-ingresso', { base, ar: '3/4', className: 'media__zoom', sizes: '(max-width: 1000px) 50vw, 20vw' })}
+          ${figure('studio-targa', { base, ar: '3/4', className: 'media__zoom', sizes: '(max-width: 1000px) 50vw, 20vw' })}
+        </div>
         <div class="row mt-4">
           <a class="btn" href="${PATH.book}">${esc(t('nav.book'))}</a>
           <a class="btn btn--ghost" href="${PATH.contact}">${esc(t('home.contact.all'))}</a>

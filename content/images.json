@@ -1,22 +1,12 @@
 {
   "hero-studio": {
-    "id": "_kKTH1pEZ-I",
-    "alt": "Sala operativa dello studio, boiserie in legno e luce naturale",
+    "origine": "studio",
+    "alt": "Sala operativa dello studio con poltrona beige, finestra e un glicine dipinto sulla parete",
     "ar": "3/4"
   },
   "studio-interno": {
-    "id": "IAKubWDzTQA",
-    "alt": "Ambiente clinico luminoso con arredi in legno chiaro",
-    "ar": "3/2"
-  },
-  "studio-scala": {
-    "id": "0B7ijYKaKcE",
-    "alt": "Scala minimale in cemento chiaro",
-    "ar": "3/4"
-  },
-  "studio-attesa": {
-    "id": "Um6FLceJexg",
-    "alt": "Area di attesa con sedute color crema",
+    "origine": "studio",
+    "alt": "Sala operativa con poltrona odontoiatrica beige, parete color terracotta e finestra",
     "ar": "3/2"
   },
   "studio-reception": {
@@ -25,9 +15,9 @@
     "ar": "3/2"
   },
   "studio-dettaglio": {
-    "id": "1ptwQdf0N8s",
-    "alt": "Ombre geometriche su una parete chiara",
-    "ar": "3/2"
+    "origine": "studio",
+    "alt": "Porta d'ingresso dello studio, con la targa, e la reception oltre la soglia",
+    "ar": "4/5"
   },
   "cat-generale": {
     "origine": "studio",
@@ -45,14 +35,9 @@
     "ar": "3/2"
   },
   "cat-ortodonzia": {
-    "id": "WFsNCIn8OF4",
-    "alt": "Allineatori trasparenti con custodia",
+    "id": "7Mut2WMWttA",
+    "alt": "Sorriso in primo piano, denti visibili",
     "ar": "3/2"
-  },
-  "trattamento-lavoro": {
-    "id": "rm7Mgu33tHU",
-    "alt": "Odontoiatra durante una seduta con il paziente",
-    "ar": "3/4"
   },
   "trattamento-equipe": {
     "id": "hl6uG9cHW5A",
@@ -85,133 +70,33 @@
     "ar": "3/2"
   },
   "tech-scanner": {
-    "id": "4wrZr7RYyw8",
-    "alt": "Scanner intraorale impugnato durante una scansione",
-    "ar": "3/4"
-  },
-  "tech-radiologia": {
-    "id": "v_2FRXEba94",
-    "alt": "Lettura di radiografie dentali su schermo diagnostico",
-    "ar": "3/4"
-  },
-  "tech-implantologia": {
-    "id": "eHwRLpfHSKY",
-    "alt": "Impianto dentale e corona protesica tenuti in mano",
-    "ar": "3/4"
-  },
-  "tech-microscopio": {
-    "id": "3fk-FifqtHw",
-    "alt": "Riunito con microscopio operatorio in sala",
-    "ar": "3/4"
-  },
-  "tech-dsd": {
-    "id": "VckdJzo7ig0",
-    "alt": "Progettazione digitale del sorriso su schermo",
-    "ar": "3/4"
-  },
-  "tech-stampa3d": {
-    "id": "6dvjlBU3pQQ",
-    "alt": "Realizzazione di un manufatto protesico in laboratorio",
-    "ar": "3/4"
+    "id": "47fKvu4niMk",
+    "alt": "Scansione intraorale su una paziente con lo scanner a mano",
+    "ar": "2/3"
   },
   "sorriso-01": {
     "id": "RCQnbyQsnUg",
     "alt": "Sorriso naturale in primo piano",
     "ar": "3/2"
   },
-  "sorriso-02": {
-    "id": "glPVwPr1FKo",
-    "alt": "Dettaglio di un sorriso in primo piano",
-    "ar": "3/2"
-  },
-  "sorriso-03": {
-    "id": "yN07lt_5wso",
-    "alt": "Ritratto femminile con sorriso appena accennato",
-    "ar": "2/3"
-  },
   "sorriso-04": {
     "id": "yIitNO2Bgdo",
-    "alt": "Sorriso luminoso in primo piano",
+    "alt": "Sorriso in primo piano con lo sguardo rivolto in basso",
     "ar": "3/2"
-  },
-  "sorriso-05": {
-    "id": "7Mut2WMWttA",
-    "alt": "Dettaglio ravvicinato di un sorriso",
-    "ar": "3/2"
-  },
-  "sorriso-06": {
-    "id": "47fKvu4niMk",
-    "alt": "Persona con spazzolino, luce morbida",
-    "ar": "2/3"
   },
   "igiene-filo": {
     "id": "cADflhZzgyo",
     "alt": "Spazzolini e cura quotidiana, composizione minimale",
     "ar": "2/3"
   },
-  "allineatori-mano": {
-    "id": "uTUsnv_UCSQ",
-    "alt": "Applicazione di allineatori trasparenti sull arcata",
-    "ar": "3/2"
-  },
-  "allineatori-dettaglio": {
-    "id": "fmB7IdFjhTM",
-    "alt": "Inserimento di un allineatore trasparente",
-    "ar": "4/3"
-  },
   "impianto-modello": {
     "id": "W9YEY6G8LVM",
     "alt": "Modello didattico di impianto dentale",
     "ar": "3/2"
   },
-  "team-vitali": {
-    "id": "i8tPCHU4hNY",
-    "alt": "Ritratto del Dr. Andrea Vitali",
-    "ar": "3/4"
-  },
-  "team-bonetti": {
-    "id": "s3aDHKxHZSc",
-    "alt": "Ritratto della Dr.ssa Chiara Bonetti",
-    "ar": "3/4"
-  },
-  "team-ferretti": {
-    "id": "bbOOTiq-EPA",
-    "alt": "Ritratto del Dr. Marco Ferretti",
-    "ar": "3/4"
-  },
-  "team-ranieri": {
-    "id": "jayzO5nC4d4",
-    "alt": "Ritratto della Dr.ssa Sofia Ranieri",
-    "ar": "3/4"
-  },
-  "team-moretti": {
-    "id": "Hoc8u4HJO7w",
-    "alt": "Ritratto della Dr.ssa Elena Moretti",
-    "ar": "3/4"
-  },
-  "team-sartori": {
-    "id": "VBU3WW_Japk",
-    "alt": "Ritratto del Dr. Luca Sartori",
-    "ar": "3/4"
-  },
-  "team-pace": {
-    "id": "UZmSn5GaSWY",
-    "alt": "Ritratto della Dr.ssa Giulia Pace",
-    "ar": "3/4"
-  },
-  "team-colombo": {
-    "id": "5FqewAqvzqU",
-    "alt": "Ritratto della Dr.ssa Marta Colombo",
-    "ar": "3/4"
-  },
-  "team-ferrari": {
-    "id": "0Zx1bDv5BNY",
-    "alt": "Ritratto di Silvia Ferrari",
-    "ar": "3/4"
-  },
   "studio-corridoio": {
-    "id": "HIB5kZNkVjo",
-    "alt": "Corridoio dello studio in legno scuro",
+    "origine": "studio",
+    "alt": "Corridoio con pareti in legno che porta alla porta dello studio",
     "ar": "3/2"
   },
   "liddi-corridoio": {
@@ -228,5 +113,10 @@
     "origine": "studio",
     "alt": "Sala operativa con poltrona odontoiatrica e un glicine dipinto sulla parete accanto al televisore",
     "ar": "4/3"
+  },
+  "studio-ingresso": {
+    "origine": "studio",
+    "alt": "Cancello d'ingresso al civico 9, con la targa dello studio",
+    "ar": "3/4"
   }
 }

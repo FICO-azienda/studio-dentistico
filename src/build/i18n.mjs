@@ -152,7 +152,7 @@ const UI = {
   'home.hero.l4': ['persone.', 'people.'],
   'home.hero.lead': ["Tutte le specialità dell'odontoiatria in un unico studio a Milano, con esperienza clinica e attenzione alla persona.", "All the specialities of dentistry in a single practice in Milan, with clinical experience and attention to the person."],
   'home.hero.badge': ["Prenotazioni per<br>telefono o WhatsApp", "Bookings by<br>phone or WhatsApp"],
-  'home.hero.hours': ["Lun — Ven<br>pomeriggio 14:00 — 19:00", "Mon — Fri<br>afternoons 14:00 — 19:00"],
+  'home.hero.hours': ["Mattina e pomeriggio<br>mercoledì solo pomeriggio", "Mornings and afternoons<br>Wednesday afternoon only"],
 
   /* navigazione rapida */
   'home.quick.treatments': ["{n} trattamenti", "{n} treatments"],

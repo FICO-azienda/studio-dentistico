@@ -40,6 +40,7 @@ export const chiusure = leggi('chiusure.json');
 /* -- traduzioni ------------------------------------------------------------ */
 const EN = {
   site: leggiEn('site.json'),
+  images: leggiEn('images.json'),
   team: leggiEn('team.json'),
   treatments: leggiEn('treatments.json'),
   technologies: leggiEn('technologies.json'),
@@ -87,7 +88,10 @@ export function applyLang(lang) {
 
   site = fondi(BASE.site, tr.site);
   if (tr.site?.address) site.address = { ...BASE.site.address, ...tr.site.address };
-  images = BASE.images;
+  // in inglese cambia solo il testo alternativo (alt): file, formati e fonti restano quelli del manifest
+  images = tr.images
+    ? Object.fromEntries(Object.entries(BASE.images).map(([k, v]) => [k, tr.images[k]?.alt ? { ...v, alt: tr.images[k].alt } : v]))
+    : BASE.images;
 
   team = fondiElenco(BASE.team, tr.team);
   technologies = fondiElenco(BASE.technologies, tr.technologies);

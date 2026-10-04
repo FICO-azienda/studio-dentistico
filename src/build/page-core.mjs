@@ -399,6 +399,7 @@ ${pageHero({
           ${site.directions.map((d) => `<div class="info-list__row"><span class="label">${esc(d.label)}</span><span>${esc(d.value)}</span></div>`).join('')}
         </div>
         <p class="mt-4"><a class="btn btn--ghost btn--sm" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(site.address.street + ', ' + site.address.city)}" target="_blank" rel="noopener">Apri in Google Maps ${arrow}</a></p>
+        ${figure('studio-ingresso', { base, ar: '3/4', className: 'mt-4 media__zoom', sizes: '(max-width: 1000px) 100vw, 40vw' })}
       </div>
 
       <div class="col-6 start-7">

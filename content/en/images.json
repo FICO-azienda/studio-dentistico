@@ -1,0 +1,74 @@
+{
+  "hero-studio": {
+    "alt": "Treatment room with a beige dental chair, a window and a wisteria painted on the wall"
+  },
+  "studio-interno": {
+    "alt": "Treatment room with a beige dental chair, a terracotta wall and a window"
+  },
+  "studio-dettaglio": {
+    "alt": "The practice entrance door, with its nameplate, and the reception beyond the threshold"
+  },
+  "studio-corridoio": {
+    "alt": "Wood-panelled corridor leading to the practice door"
+  },
+  "studio-ingresso": {
+    "alt": "Entrance gate at number 9, with the practice nameplate"
+  },
+  "studio-reception": {
+    "alt": "Practice reception with a glass counter, pendant lights and a terracotta wall"
+  },
+  "cat-generale": {
+    "alt": "Treatment room with a beige dental chair, lamp and sink unit, lit by natural light"
+  },
+  "cat-estetica": {
+    "alt": "Smiling portrait in natural light"
+  },
+  "cat-implantologia": {
+    "alt": "Dental team during a procedure"
+  },
+  "cat-ortodonzia": {
+    "alt": "Close-up of a smile with teeth showing"
+  },
+  "trattamento-equipe": {
+    "alt": "Two professionals during a procedure"
+  },
+  "trattamento-visita": {
+    "alt": "Conversation with the patient before the check-up"
+  },
+  "trattamento-cura": {
+    "alt": "Check-up with a mirror during restorative treatment"
+  },
+  "strumenti-vassoio": {
+    "alt": "Mirrors and instruments neatly arranged on a tray"
+  },
+  "strumenti-macro": {
+    "alt": "Dental instruments on a light surface"
+  },
+  "strumenti-set": {
+    "alt": "Surgical steel instruments laid out in a row"
+  },
+  "tech-scanner": {
+    "alt": "Intraoral scan of a patient with a handheld scanner"
+  },
+  "sorriso-01": {
+    "alt": "Natural smile in close-up"
+  },
+  "sorriso-04": {
+    "alt": "Close-up of a smile with the gaze turned downwards"
+  },
+  "igiene-filo": {
+    "alt": "Toothbrushes and daily care, minimal composition"
+  },
+  "impianto-modello": {
+    "alt": "Teaching model of a dental implant"
+  },
+  "liddi-corridoio": {
+    "alt": "Bright corridor of the practice with a frosted glass panel and light stone floor"
+  },
+  "liddi-attesa": {
+    "alt": "Waiting room with transparent chairs behind the glass reception counter and pendant lights"
+  },
+  "liddi-sala-glicine": {
+    "alt": "Treatment room with a dental chair and a wisteria painted on the wall next to the television"
+  }
+}
